@@ -1,0 +1,10 @@
+{{- include "ffc-helm-library.container-config-map" (list . "ffc-grants-addvalue-web.config-map") -}}
+{{- define "ffc-grants-addvalue-web.config-map" -}}
+data:
+  NODE_ENV: {{ quote .Values.environment }}
+  PORT: {{ quote .Values.container.port }}  
+  REDIS_HOSTNAME: {{ .Values.container.redisHostname | quote }}
+  REDIS_PORT: {{ .Values.container.redisPort | quote }}
+  REDIS_PARTITION: {{ .Values.container.redisPartition | quote }}
+  SESSION_CACHE_TTL: {{ .Values.container.sessionCacheTTL | quote }}
+{{- end -}}

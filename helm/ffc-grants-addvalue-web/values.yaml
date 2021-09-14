@@ -1,0 +1,57 @@
+environment: development
+name: ffc-grants-addvalue-web
+namespace: ffc-grants
+workstream: ffc-grants
+image: ffc-grants-addvalue-web
+
+labels: {}
+
+containerConfigMap:
+  name: ffc-grants-addvalue-web-config-map
+
+containerSecret:
+  name: ffc-grants-addvalue-web-container-secret
+  type: Opaque
+
+deployment:
+  restartPolicy: Always
+  priorityClassName: default
+  replicas: 1
+  minReadySeconds: 0
+
+container:
+  imagePullPolicy: IfNotPresent
+  requestMemory: 10Mi
+  requestCpu: 10m
+  limitMemory: 40Mi
+  limitCpu: 40m
+  port: 3000
+  redisHostname: redis
+  redisPassword: redis
+  cookiePassword: thisisnotarealpasswordthisisnotarealpassword
+  redisPort: 6379
+  redisPartition: ffc-grants-addvalue-web
+  sessionCacheTTL: 3600000
+
+livenessProbe:
+  path: /healthz
+  port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
+
+readinessProbe:
+  path: /healthy
+  port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
+
+service:
+  port: 80
+
+ingress:
+  class: nginx
+  endpoint: ffc-grants-frontend
+  server: example.com
+  path: /addvalue

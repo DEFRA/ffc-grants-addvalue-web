@@ -1,0 +1,54 @@
+{% extends '.layout.njk' %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% block pageTitle %}
+  {{ siteTitle }} - Start
+{% endblock %}
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "./"
+      },
+      {
+        text: "Check if you can apply for a Farming Transformation Fund Improving Farm addvalue Grant",
+        href: "./"
+      }
+    ]
+  }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds govuk-body">
+      <h1 class="govuk-heading-l">Check if you can apply for a Farming Transformation Fund Improving Farm Adding Value Grant</h1>
+      <p>Use this service to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>check if you can apply for a grant for your project (takes about 5 minutes)</li>
+        <li>check how well your project fits the funding priorities (takes about 15 minutes if you have all the project details)</li>
+      </ul>      
+      <p>If your project is eligible, you can submit your answers to the Rural Payments Agency (RPA) to request the full application form.</p>
+        {{ govukButton({
+        classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
+        href: button.nextLink,
+        isStartButton: true,
+        text: button.text
+      }) }}
+      <h2 class="govuk-heading-m">Before you start</h2>
+      <p>You need:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Your business details (for example, legal status)</li>
+        <li>Information about the project (for example, processing outcomes and benefits)</li>
+        <li>An estimated total cost of the items you need</li>
+      </ul>
+      <h2 class="govuk-heading-s">Problems  using  the  online  service</h2>
+      <span>If you have any problems using the online service, contact the RPA.</span>
+      <p>Telephone: <b><a href="tel:03000200301"> 03000 200 301 </a></b></p>
+      <span>Monday to Friday, 9am to 5pm (except public holidays) </span><br/>
+      <a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges">Find out about call charges (opens in new tab)</a><br/>
+      <p>Email: <a class="govuk-link" href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a></p>
+    </div>
+  </div>
+{% endblock %}
