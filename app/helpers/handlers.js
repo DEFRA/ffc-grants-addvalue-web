@@ -6,39 +6,70 @@ const { formatUKCurrency } = require('../helpers/data-formats')
 const { SELECT_VARIABLE_TO_REPLACE, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex')
 const { getHtml } = require('../helpers/conditionalHTML')
 const { getUrl } = require('../helpers/urls')
+const { guardPage } = require('../helpers/page-guard')
 const { setOptionsLabel } = require('../helpers/answer-options')
-
+const { notUniqueSelection, uniqueSelection } = require('../helpers/utils')
+const senders = require('../messaging/senders')
+const createMsg = require('../messaging/create-msg')
+const gapiService = require('../services/gapi-service')
+const { startPageUrl } = require('../config/server')
+const { ALL_QUESTIONS } = require('../config/question-bank')
 const getConfirmationId = (guid, journey) => {
   const prefix = journey === 'Slurry acidification' ? 'SL' : 'RI'
   return `${prefix}-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
 }
 
-const handleConditinalHtmlData = (type, yarKey, request) => {
+const handleConditinalHtmlData = (type, labelData, yarKey, request) => {
   const isMultiInput = type === 'multi-input'
   const label = isMultiInput ? 'sbi' : yarKey
   const fieldValue = isMultiInput ? getYarValue(request, yarKey)?.sbi : getYarValue(request, yarKey)
-  return getHtml(label, fieldValue)
+  return getHtml(label, labelData, fieldValue)
 }
 
-const getPage = (question, request, h) => {
-  const { url, backUrl, dependantNextUrl, type, title, yarKey } = question
-  const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
+const saveValuesToArray = (yarKey, fields) => {
+  const result = []
 
+  if (yarKey) {
+    fields.forEach(field => {
+      if (yarKey[field]) {
+        result.push(yarKey[field])
+      }
+    })
+  }
+
+  return result
+}
+
+const getPage = async (question, request, h) => {
+  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys } = question
+  const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
+  const isRedirect = guardPage(request, preValidationKeys)
+  if (isRedirect) {
+    return h.redirect(startPageUrl)
+  }
+  let confirmationId = ''
   if (question.maybeEligible) {
     let { maybeEligibleContent } = question
+    maybeEligibleContent.title = question.title
     let consentOptionalData
 
     if (maybeEligibleContent.reference) {
       if (!getYarValue(request, 'consentMain')) {
-        return h.redirect('/addvalue/start')
+        return h.redirect(startPageUrl)
+      }
+      confirmationId = getConfirmationId(request.yar.id, getYarValue(request, 'projectSubject'))
+      try {
+        await senders.sendContactDetails(createMsg.getAllDetails(request, confirmationId), request.yar.id)
+      } catch (err) {
+        console.log('ERROR: ', err)
       }
       maybeEligibleContent = {
         ...maybeEligibleContent,
         reference: {
           ...maybeEligibleContent.reference,
           html: maybeEligibleContent.reference.html.replace(
-            SELECT_VARIABLE_TO_REPLACE, (_ignore, confirmationId) => (
-              getConfirmationId(request.yar.id, getYarValue(request, 'projectSubject'))
+            SELECT_VARIABLE_TO_REPLACE, (_ignore, confirmatnId) => (
+              confirmationId
             )
           )
         }
@@ -90,11 +121,109 @@ const getPage = (question, request, h) => {
 
   const data = getYarValue(request, yarKey) || null
   let conditionalHtml
-  if (yarKey === 'inEngland' || yarKey === 'businessDetails') {
-    const conditional = yarKey === 'inEngland' ? question.conditionalKey : yarKey
-    conditionalHtml = handleConditinalHtmlData(type, conditional, request)
+  if (question?.conditionalKey && question?.conditionalLabelData) {
+    const conditional = yarKey === 'businessDetails' ? yarKey : question.conditionalKey
+    conditionalHtml = handleConditinalHtmlData(
+      type,
+      question.conditionalLabelData,
+      conditional,
+      request
+    )
   }
-  return h.view('page', getModel(data, question, request, conditionalHtml))
+  if (question.ga) {
+    await gapiService.processGA(request, question.ga, confirmationId)
+  }
+  if (url === 'check-details') {
+    setYarValue(request, 'reachedCheckDetails', true)
+
+    const applying = getYarValue(request, 'applying')
+    const businessDetails = getYarValue(request, 'businessDetails')
+    const agentDetails = getYarValue(request, 'agentsDetails')
+    const farmerDetails = getYarValue(request, 'farmerDetails')
+
+    const agentContact = saveValuesToArray(agentDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
+    const agentAddress = saveValuesToArray(agentDetails, ['address1', 'address2', 'county', 'postcode'])
+
+    const farmerContact = saveValuesToArray(farmerDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
+    const farmerAddress = saveValuesToArray(farmerDetails, ['address1', 'address2', 'county', 'postcode'])
+
+    const MODEL = {
+      ...question.pageData,
+      backUrl,
+      nextUrl,
+      applying,
+      businessDetails,
+      farmerDetails: {
+        ...farmerDetails,
+        ...(farmerDetails
+          ? {
+              name: `${farmerDetails.firstName} ${farmerDetails.lastName}`,
+              contact: farmerContact.join('<br/>'),
+              address: farmerAddress.join('<br/>')
+            }
+          : {}
+        )
+      },
+      agentDetails: {
+        ...agentDetails,
+        ...(agentDetails
+          ? {
+              name: `${agentDetails.firstName} ${agentDetails.lastName}`,
+              contact: agentContact.join('<br/>'),
+              address: agentAddress.join('<br/>')
+            }
+          : {}
+        )
+      }
+
+    }
+
+    return h.view('check-details', MODEL)
+  }
+
+  switch (url) {
+    case 'score':
+    case 'business-details':
+    case 'agents-details':
+    case 'farmers-details': {
+      let MODEL = getModel(data, question, request, conditionalHtml)
+      const reachedCheckDetails = getYarValue(request, 'reachedCheckDetails')
+
+      if (reachedCheckDetails) {
+        MODEL = {
+          ...MODEL,
+          reachedCheckDetails
+        }
+      }
+
+      return h.view('page', MODEL)
+    }
+    default:
+      break
+  }
+
+  let PAGE_MODEL = getModel(data, question, request, conditionalHtml)
+
+  if (url === 'robotics/project-cost') {
+    const roboticsProjectItems = getYarValue(request, 'projectItems')
+    const otherRoboticsEquipment = getYarValue(request, 'otherRoboticEquipment')
+    let projectCostBackUrl
+
+    if (!roboticsProjectItems.includes('Other robotic equipment')) {
+      projectCostBackUrl = 'project-items'
+    } else if (otherRoboticsEquipment === 'Yes') {
+      projectCostBackUrl = 'other-robotic-conditional'
+    } else {
+      projectCostBackUrl = 'other-robotic-equipment'
+    }
+
+    PAGE_MODEL = {
+      ...PAGE_MODEL,
+      backUrl: projectCostBackUrl
+    }
+  }
+
+  return h.view('page', PAGE_MODEL)
 }
 
 const showPostPage = (currentQuestion, request, h) => {
@@ -106,11 +235,11 @@ const showPostPage = (currentQuestion, request, h) => {
   if (yarKey === 'consentOptional' && !Object.keys(payload).includes(yarKey)) {
     setYarValue(request, yarKey, '')
   }
-
   for (const [key, value] of Object.entries(payload)) {
     thisAnswer = answers?.find(answer => (answer.value === value))
 
-    if (type !== 'multi-input') {
+    if (type !== 'multi-input' && key !== 'secBtn') {
+      payload.projectImpacts === 'Introduce acidification for the first time' && setYarValue(request, 'slurryCurrentlyTreated', 0)
       setYarValue(request, key, key === 'projectPostcode' ? value.replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase() : value)
     }
   }
@@ -118,7 +247,7 @@ const showPostPage = (currentQuestion, request, h) => {
   if (type === 'multi-input') {
     allFields.forEach(field => {
       const payloadYarVal = payload[field.yarKey]
-        ? payload[field.yarKey].split(/(?=.{3}$)/).join(' ').toUpperCase()
+        ? payload[field.yarKey].replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase()
         : ''
       dataObject = {
         ...dataObject,
@@ -147,7 +276,46 @@ const showPostPage = (currentQuestion, request, h) => {
     return errors
   }
 
-  if (thisAnswer?.notEligible || (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)) {
+  if (thisAnswer?.notEligible ||
+      (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
+  ) {
+    gapiService.sendEligibilityEvent(request)
+
+    if (thisAnswer?.alsoMaybeEligible) {
+      const {
+        dependentQuestionKey,
+        dependentQuestionYarKey,
+        uniqueAnswer,
+        notUniqueAnswer,
+        maybeEligibleContent
+      } = thisAnswer.alsoMaybeEligible
+
+      const prevAnswer = getYarValue(request, dependentQuestionYarKey)
+
+      const dependentQuestion = ALL_QUESTIONS.find(thisQuestion => (
+        thisQuestion.key === dependentQuestionKey &&
+        thisQuestion.yarKey === dependentQuestionYarKey
+      ))
+
+      let dependentAnswer
+      let openMaybeEligible
+
+      if (notUniqueAnswer) {
+        dependentAnswer = dependentQuestion.answers.find(({ key }) => (key === notUniqueAnswer)).value
+        openMaybeEligible = notUniqueSelection(prevAnswer, dependentAnswer)
+      } else if (uniqueAnswer) {
+        dependentAnswer = dependentQuestion.answers.find(({ key }) => (key === uniqueAnswer)).value
+        openMaybeEligible = uniqueSelection(prevAnswer, dependentAnswer)
+      }
+
+      if (openMaybeEligible) {
+        maybeEligibleContent.title = currentQuestion.title
+        const { url } = currentQuestion
+        const MAYBE_ELIGIBLE = { ...maybeEligibleContent, url, backUrl: baseUrl }
+        return h.view('maybe-eligible', MAYBE_ELIGIBLE)
+      }
+    }
+
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
     return h.redirect(thisAnswer?.redirectUrl)
@@ -160,7 +328,7 @@ const showPostPage = (currentQuestion, request, h) => {
     setYarValue(request, 'remainingCost', remainingCost)
   }
 
-  return h.redirect(getUrl(dependantNextUrl, nextUrl, request))
+  return h.redirect(getUrl(dependantNextUrl, nextUrl, request, payload.secBtn))
 }
 
 const getHandler = (question) => {

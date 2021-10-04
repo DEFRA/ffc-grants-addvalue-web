@@ -6,6 +6,9 @@ image: ffc-grants-addvalue-web
 
 labels: {}
 
+appInsights:
+  key: not-a-real-key
+
 containerConfigMap:
   name: ffc-grants-addvalue-web-config-map
 
@@ -21,10 +24,10 @@ deployment:
 
 container:
   imagePullPolicy: IfNotPresent
-  requestMemory: 10Mi
-  requestCpu: 10m
-  limitMemory: 40Mi
-  limitCpu: 40m
+  requestMemory: 120Mi
+  requestCpu: 120m
+  limitMemory: 120Mi
+  limitCpu: 120m
   port: 3000
   redisHostname: redis
   redisPassword: redis
