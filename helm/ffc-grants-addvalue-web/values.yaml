@@ -9,6 +9,10 @@ labels: {}
 appInsights:
   key: not-a-real-key
 
+azureIdentity:
+  clientID: not-a-real-clientID
+  resourceID: not-a-real-resourceID
+  
 containerConfigMap:
   name: ffc-grants-addvalue-web-config-map
 
@@ -18,9 +22,16 @@ containerSecret:
 
 deployment:
   restartPolicy: Always
-  priorityClassName: default
-  replicas: 1
-  minReadySeconds: 0
+  priorityClassName: high
+  minReadySeconds: 2
+  redeployOnChange: update this field to force a change
+  runAsNonRoot: true
+  runAsUser: 30303
+  replicas: 2
+  minReplicas: 2
+  maxReplicas: 4
+  cpuThreshold: 80
+  memoryThreshold: 80
 
 container:
   imagePullPolicy: IfNotPresent
@@ -34,21 +45,37 @@ container:
   cookiePassword: thisisnotarealpasswordthisisnotarealpassword
   redisPort: 6379
   redisPartition: ffc-grants-addvalue-web
-  sessionCacheTTL: 3600000
+  sessionCacheTTL: 900000
+  messageQueueHost: dummy
+  projectDetailsQueueAddress: project-details
+  contactDetailsQueueAddress: contact-details
+  loginRequired: false
+  authUsername: grants
+  authPasswordHash: dummy
+  backendPollingHost: http://ffc-grants-addval-eligibility
+  pollingInterval: 200
+  pollingRetries: 20
+  protectiveMonitoringUrl:
+  googleTagManagerKey: dummy
+  googleTagManagerServerKey: dummy
+  startPageUrl: dummy
+  surveyLink: dummy
 
 livenessProbe:
   path: /healthz
   port: 3000
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 readinessProbe:
   path: /healthy
   port: 3000
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
+  initialDelaySeconds: 20
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 service:
   port: 80
