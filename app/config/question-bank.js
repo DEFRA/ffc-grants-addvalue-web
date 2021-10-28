@@ -166,7 +166,15 @@ const questionBank = {
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          sidebar: null,
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'Public organisations and local authorities cannot apply for this grant.',
+                items: []
+              }]
+            }]
+          },
           validate: {
             errorEmptyField: 'Select the legal status of the farm business'
           },
@@ -205,17 +213,29 @@ const questionBank = {
             },
             {
               key: 'legal-status-A7',
-              value: 'Limited partnership'
+              value: 'Community interest company'
             },
             {
               key: 'legal-status-A8',
-              value: 'Co-operative'
+              value: 'Limited partnership'
+            },
+            {
+              key: 'legal-status-A9',
+              value: 'Industrial and provident society'
+            },
+            {
+              key: 'legal-status-A10',
+              value: 'Co-operative society (Co-Op)'
+            },
+            {
+              key: 'legal-status-A11',
+              value: 'Community benefit society (BenCom)'
             },
             {
               value: 'divider'
             },
             {
-              key: 'legal-status-A9',
+              key: 'legal-status-A12',
               value: 'None of the above',
               notEligible: true
             }
