@@ -457,11 +457,21 @@ const questionBank = {
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          sidebar:
-          {
-            heading: 'Eligibility',
-            para: 'You will invalidate your application if you start the project or commit to any costs (such as placing orders) before you receive a funding agreement.\n \n Before you start the project, you can:',
-            items: ['get quotes from suppliers', 'Apply for planning permission or other necessary licences.']
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: `
+                You will invalidate your application if you start the project or commit to any costs (such as placing orders) before you receive a funding agreement.
+                
+                Before you start the project, you can:`,
+                items: [
+                  'get quotes from suppliers',
+                  'apply for planning permission (this can take a long time)',
+                  'apply for licences'
+                ]
+              }]
+            }]
           },
           validate: {
             errorEmptyField: 'Select the option that applies to your project'
@@ -486,7 +496,7 @@ const questionBank = {
               key: 'project-start-A2',
               value: 'Yes, we have begun project work',
               hint: {
-                text: 'For example, digging, signing contracts, placing orders'
+                text: 'For example, started construction work, signing contracts, placing orders'
               },
               notEligible: true
             },
