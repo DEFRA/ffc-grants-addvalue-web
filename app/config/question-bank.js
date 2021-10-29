@@ -166,7 +166,15 @@ const questionBank = {
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          sidebar: null,
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'Public organisations and local authorities cannot apply for this grant.',
+                items: []
+              }]
+            }]
+          },
           validate: {
             errorEmptyField: 'Select the legal status of the farm business'
           },
@@ -205,17 +213,29 @@ const questionBank = {
             },
             {
               key: 'legal-status-A7',
-              value: 'Limited partnership'
+              value: 'Community interest company'
             },
             {
               key: 'legal-status-A8',
-              value: 'Co-operative'
+              value: 'Limited partnership'
+            },
+            {
+              key: 'legal-status-A9',
+              value: 'Industrial and provident society'
+            },
+            {
+              key: 'legal-status-A10',
+              value: 'Co-operative society (Co-Op)'
+            },
+            {
+              key: 'legal-status-A11',
+              value: 'Community benefit society (BenCom)'
             },
             {
               value: 'divider'
             },
             {
-              key: 'legal-status-A9',
+              key: 'legal-status-A12',
               value: 'None of the above',
               notEligible: true
             }
@@ -294,7 +314,7 @@ const questionBank = {
           backUrl: 'country',
           nextUrl: 'project-start',
           ineligibleContent: {
-            messageContent: 'Any planning permission must be in place by 31 March 2022 (the end of the application window).',
+            messageContent: 'Any planning permission must be in place by 31 December 2022.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
@@ -304,11 +324,13 @@ const questionBank = {
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          sidebar:
-          {
-            heading: 'Eligibility',
-            para: 'Any planning permission must be in place by 31 March 2022 (the end of the application window).',
-            items: []
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'Any planning permission must be in place by 31 December 2022.'
+              }]
+            }]
           },
           validate: {
             errorEmptyField: 'Select when the project will have planning permission'
@@ -332,12 +354,12 @@ const questionBank = {
             },
             {
               key: 'planning-permission-A3',
-              value: 'Should be in place by 31 March 2022',
+              value: 'Should be in place by 31 December 2022',
               redirectUrl: 'planning-required-condition'
             },
             {
               key: 'planning-permission-A4',
-              value: 'Will not be in place by 31 March 2022',
+              value: 'Will not be in place by 31 December 2022',
               notEligible: true
             }
           ],
@@ -352,7 +374,7 @@ const questionBank = {
           maybeEligible: true,
           maybeEligibleContent: {
             messageHeader: 'You may be able to apply for a grant from this scheme',
-            messageContent: 'Any planning permission must be in place by 31 March 2022 (the end of the application window).'
+            messageContent: 'Any planning permission must be in place by 31 December 2022.'
           }
         },
         {
@@ -437,11 +459,21 @@ const questionBank = {
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          sidebar:
-          {
-            heading: 'Eligibility',
-            para: 'You will invalidate your application if you start the project or commit to any costs (such as placing orders) before you receive a funding agreement.\n \n Before you start the project, you can:',
-            items: ['get quotes from suppliers', 'Apply for planning permission or other necessary licences.']
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: `
+                You will invalidate your application if you start the project or commit to any costs (such as placing orders) before you receive a funding agreement.
+                
+                Before you start the project, you can:`,
+                items: [
+                  'get quotes from suppliers',
+                  'apply for planning permission (this can take a long time)',
+                  'apply for licences'
+                ]
+              }]
+            }]
           },
           validate: {
             errorEmptyField: 'Select the option that applies to your project'
@@ -466,7 +498,7 @@ const questionBank = {
               key: 'project-start-A2',
               value: 'Yes, we have begun project work',
               hint: {
-                text: 'For example, digging, signing contracts, placing orders'
+                text: 'For example, started construction work, signing contracts, placing orders'
               },
               notEligible: true
             },
