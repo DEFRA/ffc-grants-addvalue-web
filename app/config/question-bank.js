@@ -281,14 +281,7 @@ const questionBank = {
             }]
           },
           validate: {
-            errorEmptyField: 'Select yes if the project is in England',
-            conditionalValidate: {
-              errorEmptyField: 'Enter a postcode, like AA1 1AA',
-              checkRegex: {
-                regex: POSTCODE_REGEX,
-                error: 'Enter a postcode, like AA1 1AA'
-              }
-            }
+            errorEmptyField: 'Select yes if the project is in England'
           },
           validations: [
             {
@@ -310,8 +303,7 @@ const questionBank = {
               notEligible: true
             }
           ],
-          yarKey: 'inEngland',
-          conditionalKey: 'projectPostcode'
+          yarKey: 'inEngland'
         },
         {
           key: 'planning-permission',
