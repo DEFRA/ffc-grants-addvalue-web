@@ -141,7 +141,7 @@ const questionBank = {
         {
           key: 'legal-status',
           order: 20,
-          title: 'What is the legal status of the applicant business?',
+          title: 'What is the legal status of the business?',
           pageTitle: '',
           backUrl: 'applicant-business',
           nextUrl: 'country',
@@ -176,7 +176,7 @@ const questionBank = {
             }]
           },
           validate: {
-            errorEmptyField: 'Select the legal status of the farm business'
+            errorEmptyField: 'Select the legal status of the business'
           },
           validations: [
             {
