@@ -69,44 +69,45 @@ const questionBank = {
       title: 'Eligibility',
       questions: [
         {
-          key: 'applicant-business',
+          key: 'nature-of-business',
           order: 10,
-          title: 'What is the nature of the applicant business?',
+          title: 'What is your business?',
           pageTitle: '',
           backUrl: 'start',
           nextUrl: 'legal-status',
-          url: 'applicant-business',
-          baseUrl: 'applicant-business',
+          url: 'nature-of-business',
+          baseUrl: 'nature-of-business',
           type: 'single-answer',
           fundingPriorities: '',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           ineligibleContent: {
-            messageContent: 'Your business is not eligible',
-            details: {
-              summaryText: 'Who is eligible',
-              html: ''
-            },
+            messageContent: 'This grant is for businesses who:',
+            messageContentItems: [
+              'are agricultural, horticultural or forestry producers (primary producers)',
+              'provide processing services to a primary producer',
+              'are a separate processing business 100% owned by a primary producer'
+            ],
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
-            },
-            warning: {
-              text: 'Other types of business may be supported in future schemes',
-              iconFallbackText: 'Warning'
             }
           },
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'This scheme is only open to:',
-            items: [
-              'a grower or producer owned business, or',
-              'those providing contracted services on behalf of the original growers/producers.'
-            ],
-            footer: 'Contract processors must be returning the added-value outputs to the ownership of the grower/producer.'
-          },
           validate: {
-            errorEmptyField: 'Select the nature of the applicant business'
+            errorEmptyField: 'Select the option that applies to your business'
+          },
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'This grant is for businesses who:',
+                items: [
+                  'are agricultural, horticultural or forestry producers (primary producers)',
+                  'provide processing services to a primary producer',
+                  'are a separate processing business 100% owned by a primary producer'
+                ]
+              }]
+            }]
           },
           validations: [
             {
@@ -118,21 +119,32 @@ const questionBank = {
           ],
           answers: [
             {
-              key: 'applicant-business-A1',
-              value: 'The Grower/Producer of the primary products to be processed,'
+              key: 'nature-of-business-A1',
+              value: 'An agricultural, horticultural or forestry business (a primary producer)',
+              hint: {
+                text: 'For example, arable or livestock farmer, growing trees, fruit producer, salad grower'
+              }
             },
             {
-              key: 'applicant-business-A2',
-              value: 'A business linked to the original grower/producer through majority ownership,'
+              key: 'nature-of-business-A2',
+              value: 'Providing processing services to a primary producer',
+              hint: {
+                text: 'For example, vegetable washing, mobile livestock slaughter services'
+              }
             },
             {
-              key: 'applicant-business-A3',
-              value: 'A Processer, using purchased primary products for eventual own onward sale,',
-              notEligible: true
+              key: 'nature-of-business-A3',
+              value: 'A separate processing business 100% owned by a primary producer',
+              hint: {
+                text: 'For example, cheese processing business owned by a dairy farmer'
+              }
             },
             {
-              key: 'applicant-business-A4',
-              value: 'None of the above.',
+              value: 'divider'
+            },
+            {
+              key: 'nature-of-business-A4',
+              value: 'None of the above',
               notEligible: true
             }
           ],
@@ -143,7 +155,7 @@ const questionBank = {
           order: 20,
           title: 'What is the legal status of the business?',
           pageTitle: '',
-          backUrl: 'applicant-business',
+          backUrl: 'nature-of-business',
           nextUrl: 'country',
           url: 'legal-status',
           baseUrl: 'legal-status',
