@@ -2071,7 +2071,7 @@ const questionBank = {
             reference: {
               titleText: 'Details submitted',
               html: 'Your reference number<br><strong>{{_confirmationId_}}</strong>',
-              surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/form/SV_26sUm6qNA26AoK2'
+              surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/preview/SV_9EwLLuCwWGJMz8a?Q_CHL=preview&Q_SurveyVersionID=current'
             },
             messageContent: `You will get an email with a record of your answers.<br/><br/>
             If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Transformation Fund scheme:<br/><br/>
