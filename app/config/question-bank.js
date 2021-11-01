@@ -249,6 +249,10 @@ const questionBank = {
           key: 'country',
           order: 30,
           title: 'Is the planned project in England?',
+          hint: {
+            text: 'The site where the work will happen'
+          },
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           pageTitle: '',
           backUrl: 'legal-status',
           nextUrl: 'planning-permission',
@@ -267,9 +271,14 @@ const questionBank = {
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           sidebar: {
-            heading: 'Eligibility',
-            para: 'This grant is only for projects in England. \n \n Scotland, Wales and Northern Ireland have other grants available.',
-            items: []
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: `This grant is only for projects in England.
+                
+                Scotland, Wales and Northern Ireland have other grants available.`
+              }]
+            }]
           },
           validate: {
             errorEmptyField: 'Select yes if the project is in England',
