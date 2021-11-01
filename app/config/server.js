@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const urlPrefix = '/addvalue'
+const urlPrefix = '/adding-value'
 
 // Define config schema
 const schema = Joi.object({

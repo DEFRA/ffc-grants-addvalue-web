@@ -442,8 +442,8 @@ const questionBank = {
             dependentQuestionYarKey: 'planningPermission',
             dependentAnswerKeysArray: ['planning-permission-A3'],
             urlOptions: {
-              thenUrl: '/addvalue/planning-required-condition',
-              elseUrl: '/addvalue/planning-permission'
+              thenUrl: '/adding-value/planning-required-condition',
+              elseUrl: '/adding-value/planning-permission'
             }
           },
           nextUrl: 'project-items',
@@ -516,7 +516,7 @@ const questionBank = {
           pageTitle: '',
           url: 'project-items',
           baseUrl: 'project-items',
-          backUrl: '/addvalue/project-start',
+          backUrl: '/adding-value/project-start',
           nextUrl: 'result-products',
           sidebar: {
             heading: 'Eligibility',
@@ -1321,7 +1321,7 @@ const questionBank = {
           url: 'business-details',
           baseUrl: 'business-details',
           backUrl: 'score',
-          nextUrl: '/addvalue/applying',
+          nextUrl: '/adding-value/applying',
           eliminationAnswerKeys: '',
           ineligibleContent: {},
           fundingPriorities: '',
@@ -1522,12 +1522,12 @@ const questionBank = {
             {
               key: 'applying-A1',
               value: 'Farmer',
-              redirectUrl: '/addvalue/farmers-details'
+              redirectUrl: '/adding-value/farmers-details'
             },
             {
               key: 'applying-A2',
               value: 'Agent',
-              redirectUrl: '/addvalue/agents-details'
+              redirectUrl: '/adding-value/agents-details'
             }
           ],
           yarKey: 'applying'
@@ -1540,7 +1540,7 @@ const questionBank = {
           pageTitle: '',
           url: 'farmers-details',
           baseUrl: 'farmer-details',
-          backUrl: '/addvalue/applying',
+          backUrl: '/adding-value/applying',
           nextUrl: 'check-details',
           eliminationAnswerKeys: '',
           ineligibleContent: {
@@ -1555,8 +1555,8 @@ const questionBank = {
             dependentQuestionYarKey: 'applying',
             dependentAnswerKeysArray: ['applying-A1'],
             urlOptions: {
-              thenUrl: '/addvalue/applying',
-              elseUrl: '/addvalue/agents-details'
+              thenUrl: '/adding-value/applying',
+              elseUrl: '/adding-value/agents-details'
             }
           },
           fundingPriorities: '',
@@ -1999,8 +1999,8 @@ const questionBank = {
             dependentQuestionYarKey: 'applying',
             dependentAnswerKeysArray: ['applying-A1'],
             urlOptions: {
-              thenUrl: '/addvalue/farmers-details',
-              elseUrl: '/addvalue/agents-details'
+              thenUrl: '/adding-value/farmers-details',
+              elseUrl: '/adding-value/agents-details'
             }
           },
           maybeEligible: true,
