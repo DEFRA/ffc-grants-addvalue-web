@@ -82,12 +82,13 @@ const questionBank = {
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           ineligibleContent: {
-            messageContent: 'This grant is for businesses who:',
-            messageContentItems: [
-              'are agricultural, horticultural or forestry producers (primary producers)',
-              'provide processing services to a primary producer',
-              'are a separate processing business 100% owned by a primary producer'
-            ],
+            messageContent: `
+            <span>This grant is for businesses who:</span>
+            <ul class="govuk-body">
+              <li>are agricultural, horticultural or forestry producers (primary producers)'</li>
+              <li>provide processing services to a primary producer</li>
+              <li>are a separate processing business 100% owned by a primary producer</li>
+            </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
