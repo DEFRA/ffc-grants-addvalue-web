@@ -1,6 +1,6 @@
 # FFC addvalue Web
 
-Web frontend for FTF addvalue scheme
+Web frontend for FTF adding value scheme
 
 ## Licence
 

@@ -69,44 +69,46 @@ const questionBank = {
       title: 'Eligibility',
       questions: [
         {
-          key: 'applicant-business',
+          key: 'nature-of-business',
           order: 10,
-          title: 'What is the nature of the applicant business?',
+          title: 'What is your business?',
           pageTitle: '',
           backUrl: 'start',
           nextUrl: 'legal-status',
-          url: 'applicant-business',
-          baseUrl: 'applicant-business',
+          url: 'nature-of-business',
+          baseUrl: 'nature-of-business',
           type: 'single-answer',
           fundingPriorities: '',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           ineligibleContent: {
-            messageContent: 'Your business is not eligible',
-            details: {
-              summaryText: 'Who is eligible',
-              html: ''
-            },
+            messageContent: `
+            <span>This grant is for businesses who:</span>
+            <ul class="govuk-body">
+              <li>are agricultural, horticultural or forestry producers (primary producers)'</li>
+              <li>provide processing services to a primary producer</li>
+              <li>are a separate processing business 100% owned by a primary producer</li>
+            </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
-            },
-            warning: {
-              text: 'Other types of business may be supported in future schemes',
-              iconFallbackText: 'Warning'
             }
           },
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'This scheme is only open to:',
-            items: [
-              'a grower or producer owned business, or',
-              'those providing contracted services on behalf of the original growers/producers.'
-            ],
-            footer: 'Contract processors must be returning the added-value outputs to the ownership of the grower/producer.'
-          },
           validate: {
-            errorEmptyField: 'Select the nature of the applicant business'
+            errorEmptyField: 'Select the option that applies to your business'
+          },
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'This grant is for businesses who:',
+                items: [
+                  'are agricultural, horticultural or forestry producers (primary producers)',
+                  'provide processing services to a primary producer',
+                  'are a separate processing business 100% owned by a primary producer'
+                ]
+              }]
+            }]
           },
           validations: [
             {
@@ -118,21 +120,32 @@ const questionBank = {
           ],
           answers: [
             {
-              key: 'applicant-business-A1',
-              value: 'The Grower/Producer of the primary products to be processed,'
+              key: 'nature-of-business-A1',
+              value: 'An agricultural, horticultural or forestry business (a primary producer)',
+              hint: {
+                text: 'For example, arable or livestock farmer, growing trees, fruit producer, salad grower'
+              }
             },
             {
-              key: 'applicant-business-A2',
-              value: 'A business linked to the original grower/producer through majority ownership,'
+              key: 'nature-of-business-A2',
+              value: 'Providing processing services to a primary producer',
+              hint: {
+                text: 'For example, vegetable washing, mobile livestock slaughter services'
+              }
             },
             {
-              key: 'applicant-business-A3',
-              value: 'A Processer, using purchased primary products for eventual own onward sale,',
-              notEligible: true
+              key: 'nature-of-business-A3',
+              value: 'A separate processing business 100% owned by a primary producer',
+              hint: {
+                text: 'For example, cheese processing business owned by a dairy farmer'
+              }
             },
             {
-              key: 'applicant-business-A4',
-              value: 'None of the above.',
+              value: 'divider'
+            },
+            {
+              key: 'nature-of-business-A4',
+              value: 'None of the above',
               notEligible: true
             }
           ],
@@ -141,9 +154,9 @@ const questionBank = {
         {
           key: 'legal-status',
           order: 20,
-          title: 'What is the legal status of the applicant business?',
+          title: 'What is the legal status of the business?',
           pageTitle: '',
-          backUrl: 'applicant-business',
+          backUrl: 'nature-of-business',
           nextUrl: 'country',
           url: 'legal-status',
           baseUrl: 'legal-status',
@@ -176,7 +189,7 @@ const questionBank = {
             }]
           },
           validate: {
-            errorEmptyField: 'Select the legal status of the farm business'
+            errorEmptyField: 'Select the legal status of the business'
           },
           validations: [
             {
@@ -249,6 +262,10 @@ const questionBank = {
           key: 'country',
           order: 30,
           title: 'Is the planned project in England?',
+          hint: {
+            text: 'The site where the work will happen'
+          },
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           pageTitle: '',
           backUrl: 'legal-status',
           nextUrl: 'planning-permission',
@@ -267,19 +284,17 @@ const questionBank = {
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           sidebar: {
-            heading: 'Eligibility',
-            para: 'This grant is only for projects in England. \n \n Scotland, Wales and Northern Ireland have other grants available.',
-            items: []
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: `This grant is only for projects in England.
+                
+                Scotland, Wales and Northern Ireland have other grants available.`
+              }]
+            }]
           },
           validate: {
-            errorEmptyField: 'Select yes if the project is in England',
-            conditionalValidate: {
-              errorEmptyField: 'Enter a postcode, like AA1 1AA',
-              checkRegex: {
-                regex: POSTCODE_REGEX,
-                error: 'Enter a postcode, like AA1 1AA'
-              }
-            }
+            errorEmptyField: 'Select yes if the project is in England'
           },
           validations: [
             {
@@ -301,8 +316,7 @@ const questionBank = {
               notEligible: true
             }
           ],
-          yarKey: 'inEngland',
-          conditionalKey: 'projectPostcode'
+          yarKey: 'inEngland'
         },
         {
           key: 'planning-permission',
@@ -442,8 +456,8 @@ const questionBank = {
             dependentQuestionYarKey: 'planningPermission',
             dependentAnswerKeysArray: ['planning-permission-A3'],
             urlOptions: {
-              thenUrl: '/addvalue/planning-required-condition',
-              elseUrl: '/addvalue/planning-permission'
+              thenUrl: '/adding-value/planning-required-condition',
+              elseUrl: '/adding-value/planning-permission'
             }
           },
           nextUrl: 'project-items',
@@ -516,7 +530,7 @@ const questionBank = {
           pageTitle: '',
           url: 'project-items',
           baseUrl: 'project-items',
-          backUrl: '/addvalue/project-start',
+          backUrl: '/adding-value/project-start',
           nextUrl: 'result-products',
           sidebar: {
             heading: 'Eligibility',
@@ -1321,7 +1335,7 @@ const questionBank = {
           url: 'business-details',
           baseUrl: 'business-details',
           backUrl: 'score',
-          nextUrl: '/addvalue/applying',
+          nextUrl: '/adding-value/applying',
           eliminationAnswerKeys: '',
           ineligibleContent: {},
           fundingPriorities: '',
@@ -1522,12 +1536,12 @@ const questionBank = {
             {
               key: 'applying-A1',
               value: 'Farmer',
-              redirectUrl: '/addvalue/farmers-details'
+              redirectUrl: '/adding-value/farmers-details'
             },
             {
               key: 'applying-A2',
               value: 'Agent',
-              redirectUrl: '/addvalue/agents-details'
+              redirectUrl: '/adding-value/agents-details'
             }
           ],
           yarKey: 'applying'
@@ -1540,7 +1554,7 @@ const questionBank = {
           pageTitle: '',
           url: 'farmers-details',
           baseUrl: 'farmer-details',
-          backUrl: '/addvalue/applying',
+          backUrl: '/adding-value/applying',
           nextUrl: 'check-details',
           eliminationAnswerKeys: '',
           ineligibleContent: {
@@ -1555,8 +1569,8 @@ const questionBank = {
             dependentQuestionYarKey: 'applying',
             dependentAnswerKeysArray: ['applying-A1'],
             urlOptions: {
-              thenUrl: '/addvalue/applying',
-              elseUrl: '/addvalue/agents-details'
+              thenUrl: '/adding-value/applying',
+              elseUrl: '/adding-value/agents-details'
             }
           },
           fundingPriorities: '',
@@ -1999,8 +2013,8 @@ const questionBank = {
             dependentQuestionYarKey: 'applying',
             dependentAnswerKeysArray: ['applying-A1'],
             urlOptions: {
-              thenUrl: '/addvalue/farmers-details',
-              elseUrl: '/addvalue/agents-details'
+              thenUrl: '/adding-value/farmers-details',
+              elseUrl: '/adding-value/agents-details'
             }
           },
           maybeEligible: true,
@@ -2058,7 +2072,7 @@ const questionBank = {
             reference: {
               titleText: 'Details submitted',
               html: 'Your reference number<br><strong>{{_confirmationId_}}</strong>',
-              surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/form/SV_26sUm6qNA26AoK2'
+              surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/preview/SV_9EwLLuCwWGJMz8a?Q_CHL=preview&Q_SurveyVersionID=current'
             },
             messageContent: `You will get an email with a record of your answers.<br/><br/>
             If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Transformation Fund scheme:<br/><br/>

@@ -1,7 +1,7 @@
 {
   "name": "ffc-grants-addvalue-web",
-  "version": "1.0.2",
-  "description": "Web frontend for FTF addvalue scheme",
+  "version": "1.0.3",
+  "description": "Web frontend for FTF adding value scheme",
   "homepage": "https://github.com/DEFRA/ffc-grants-addvalue-web",
   "main": "app/index.js",
   "scripts": {
