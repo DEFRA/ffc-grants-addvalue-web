@@ -460,7 +460,7 @@ const questionBank = {
               elseUrl: '/adding-value/planning-permission'
             }
           },
-          nextUrl: 'project-items',
+          nextUrl: 'tenancy',
           ineligibleContent: {
             messageContent: 'You cannot apply for a grant if you have already started work on the project.',
             insertText: { text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.' },
@@ -524,13 +524,119 @@ const questionBank = {
           yarKey: 'projectStart'
         },
         {
+          key: 'tenancy',
+          order: 60,
+          title: 'Is the planned project on land the business owns?',
+          hint: {
+            text: 'The site where the work will happen'
+          },
+          pageTitle: '',
+          url: 'tenancy',
+          baseUrl: 'tenancy',
+          backUrl: 'project-start',
+          nextUrl: 'project-items',
+          ineligibleContent: {
+            messageContent: 'You cannot apply for a grant if you have already started work on the project.',
+            insertText: { text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.' },
+            messageLink: {
+              url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+              title: 'See other grants you may be eligible for.'
+            }
+          },
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'The land must be owned or have a tenancy in place until 2027 before starting the project.'
+              }]
+            }]
+          },
+          validate: {
+            errorEmptyField: 'Select yes if the planned project is on land the business owns'
+          },
+          answers: [
+            {
+              key: 'tenancy-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'tenancy-A2',
+              value: 'No',
+              redirectUrl: 'tenancy-length'
+            },
+            {
+              key: 'tenancy-A3',
+              value: 'Not applicable - I’m a mobile contractor'
+            }
+          ],
+          yarKey: 'tenancy'
+        },
+        {
+          key: 'tenancy-length',
+          order: 70,
+          title: 'Do you have a tenancy agreement until 2027 or after?',
+          pageTitle: '',
+          url: 'tenancy-length',
+          baseUrl: 'tenancy-length',
+          backUrl: 'tenancy',
+          preValidationKeys: ['tenancy'],
+          nextUrl: 'project-items',
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'The land must be owned or have a tenancy in place until 2027 before starting the project.',
+                items: []
+              }]
+            }]
+          },
+          validate: {
+            errorEmptyField: 'Select yes if the land has a tenancy agreement in place until 2027 or after'
+          },
+          answers: [
+            {
+              key: 'tenancy-length-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'tenancy-length-A2',
+              value: 'No',
+              redirectUrl: 'tenancy-length-condition'
+            }
+          ],
+          yarKey: 'tenancyLength'
+        },
+        {
+          key: 'tenancy-length-condition',
+          title: 'You may be able to apply for a grant from this scheme',
+          order: 75,
+          url: 'tenancy-length-condition',
+          backUrl: 'tenancy',
+          preValidationKeys: ['tenancyLength'],
+          nextUrl: 'project-items',
+          maybeEligible: true,
+          maybeEligibleContent: {
+            messageHeader: 'You may be able to apply for a grant from this scheme',
+            messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
+          }
+        },
+        {
           key: 'project-items',
           order: 80,
           title: 'What type of primary products are being processed?',
           pageTitle: '',
           url: 'project-items',
           baseUrl: 'project-items',
-          backUrl: '/adding-value/project-start',
+          backUrl: '/adding-value/tenancy',
           nextUrl: 'result-products',
           sidebar: {
             heading: 'Eligibility',
