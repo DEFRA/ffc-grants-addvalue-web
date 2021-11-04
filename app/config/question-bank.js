@@ -1,4 +1,6 @@
 const {
+  CURRENCY_FORMAT,
+  CHARS_MAX_10,
   DIGITS_MAX_7,
   CHARS_MIN_10,
   POSTCODE_REGEX,
@@ -702,18 +704,20 @@ const questionBank = {
           grantInfo: {
             minGrant: 35000,
             maxGrant: 500000,
-            grantPercentage: 40
+            grantPercentage: 40,
+            cappedGrant: true
           },
           label: {
-            text: 'What is the estimated cost of the items?',
+            text: 'What is the total estimated cost of the items?',
             classes: 'govuk-label--l',
             isPageHeading: true
           },
           hint: {
             html: `
               You can only apply for a grant of up to 40% of the estimated costs.
-              <br/>Do not include VAT.
-              <br/>The minimum grant you can apply for this project is £35,000 (40% of £87,500). The maximum grant is £500,000.
+              <br/>The minimum grant you can apply for this project is £35,000 (40% of £87,500).
+              <br/>The maximum grant is £500,000.
+              <br/><br/>Do not include VAT.
               <br/><br/>Enter amount, for example 95,000`
           },
           eliminationAnswerKeys: '',
@@ -726,34 +730,37 @@ const questionBank = {
             }
           },
           sidebar: {
-            heading: 'Items selected',
-            para: '',
-            items: [],
-            dependentYarKey: 'projectItems'
-          },
-          validate: {
-            errorEmptyField: 'Enter the estimated cost for the items',
-            checkRegex: {
-              regex: DIGITS_MAX_7,
-              error: 'Enter a whole number with a maximum of 7 digits'
-            }
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: '',
-              value: ''
-            }
-          ],
-          yarKey: 'projectCost'
+            values: [
+              {
+                heading: 'Selected items',
+                content: [{
+                  para: '',
+                  items: []
+                }]
+              }
+            ],
+            dependentYarKey: 'projectItems',
+            dependentQuestionKey: 'project-items'
 
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter the estimated cost for the items'
+            },
+            {
+              type: 'REGEX',
+              regex: CURRENCY_FORMAT,
+              error: 'Enter a whole number in correct format'
+            },
+            {
+              type: 'REGEX',
+              regex: CHARS_MAX_10,
+              error: 'Enter a whole number with a maximum of 10 digits'
+            }
+          ],
+          answers: [],
+          yarKey: 'projectCost'
         },
         {
           key: 'potential-amount',
