@@ -626,29 +626,15 @@ const questionBank = {
           order: 80,
           title: 'What eligible items does your project need?',
           pageTitle: '',
+          hint: {
+            text: 'Select all the items your project needs'
+          },
           url: 'project-items',
           baseUrl: 'project-items',
           backUrl: 'tenancy',
           nextUrl: 'project-cost',
-          ineligibleContent: {
-            messageContent: `
-              <span>Your project must process following types of primary products: </span>
-              <ul class="govuk-body">
-                <li>Arable crops – Cereals/Legumes/Oilseeds</li>
-                <li>Horticultural crops – Vegetables/Fruits & Nuts/Edible Flowers</li>
-                <li>Dairy or Meat produce</li>
-                <li>Forestry products</li>
-                <li>Fodder crops</li>
-                <li>Non-edible flowers</li>
-                <li>Fibre products</li>
-              </ul>`,
-            messageLink: {
-              url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for'
-            }
-          },
           fundingPriorities: '',
-          type: 'single-answer',
+          type: 'multi-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           validate: {
