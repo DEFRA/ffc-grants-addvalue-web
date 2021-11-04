@@ -624,16 +624,12 @@ const questionBank = {
         {
           key: 'project-items',
           order: 80,
-          title: 'What type of primary products are being processed?',
+          title: 'What eligible items does your project need?',
           pageTitle: '',
           url: 'project-items',
           baseUrl: 'project-items',
-          backUrl: '/adding-value/tenancy',
-          nextUrl: 'result-products',
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'Only primary agricultural, horticultural, livestock, or forestry products are eligible under this scheme. Only wood sourced direct from harvested trees is eligible for this scheme: waste wood, offcuts, and sawmill waste are not eligible.'
-          },
+          backUrl: 'tenancy',
+          nextUrl: 'project-cost',
           ineligibleContent: {
             messageContent: `
               <span>Your project must process following types of primary products: </span>
@@ -656,249 +652,53 @@ const questionBank = {
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           validate: {
-            errorEmptyField: 'Select one of the answer'
+            errorEmptyField: 'Select all the items your project needs'
           },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
           answers: [
             {
               key: 'project-items-A1',
-              value: 'Arable crops – Cereals/Legumes/Oilseeds'
+              value: 'Processing equipment or machinery',
+              hint: {
+                text: 'For example, equipment for milk pasteurising or vegetable washing, packing machinery'
+              }
             },
             {
               key: 'project-items-A2',
-              value: 'Horticultural crops – Vegetables/Fruits & Nuts/Edible Flowers'
+              value: 'Controlled-atmosphere storage',
+              hint: {
+                text: 'Monitoring and controlling the temperature and humidity of products'
+              }
             },
             {
               key: 'project-items-A3',
-              value: 'Dairy or Meat produce'
+              value: 'Dynamic controlled-atmosphere storage',
+              hint: {
+                text: 'Monitoring and controlling gases produced by or changes in the products, as well as temperature and humidity'
+              }
             },
             {
               key: 'project-items-A4',
-              value: 'Forestry products'
+              value: 'Constructing or improving buildings',
+              hint: {
+                text: 'For example, a new building for cheese making, extending an existing building to install a new meat-cutting and packing line'
+              }
             },
             {
               key: 'project-items-A5',
-              value: 'Fodder crops'
+              value: 'Specialist vehicles',
+              hint: {
+                text: 'For example, forklift trucks, refrigerated vans or lorries'
+              }
             },
             {
               key: 'project-items-A6',
-              value: 'Non-edible flowers'
-            },
-            {
-              key: 'project-items-A7',
-              value: 'Fibre products'
-            },
-            {
-              key: 'project-items-A8',
-              value: 'None of the above',
-              notEligible: true
+              value: 'Retail facilities',
+              hint: {
+                text: 'For example, farm shops'
+              }
             }
           ],
           yarKey: 'projectItems'
-        },
-        {
-          key: 'result-products',
-          order: 81,
-          title: 'What products will you produce as a result of the project?',
-          hint: {
-            text: 'Any work to adapt or install pipework, pumps etc to get  into the acidification system and then out to storage.'
-          },
-          pageTitle: '',
-          url: 'result-products',
-          baseUrl: 'result-products',
-          backUrl: 'project-items',
-          nextUrl: 'eligible-items',
-          eliminationAnswerKeys: '',
-          ineligibleContent: {},
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'Eligible Added-Value outputs include',
-            items: [
-              'Primary products that have (only) been sorted and/or packaged to accrue a higher value.',
-              'Processed products made by transforming primary products into a new type of product.',
-              'Primary products in lengthy Controlled Atmosphere or Dynamic Controlled Atmosphere storage to accrue a higher value.'
-            ]
-          },
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          maxAnswerCount: 3,
-          ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select one of the answer'
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'result-products-A1',
-              value: 'primary product that are kept in controlled atmosphere storage for longer so that they can be sold at a higher price'
-            },
-            {
-              key: 'result-products-A2',
-              value: 'primary product that are kept in dynamic controlled atmosphere storage, so that they can be sold at a higher price'
-            },
-            {
-              key: 'result-products-A3',
-              value: 'Primary product(s) that is prepared so that it can be sold at a higher price i.e washed veg/top and tail.'
-            },
-            {
-              key: 'result-products-A4',
-              value: 'primary product(s) that is graded so that it can be sold at a higher price'
-            },
-            {
-              key: 'result-products-A5',
-              value: 'primary product(s) that is packaged so that it can be sold at a higher price'
-            },
-            {
-              key: 'result-products-A6',
-              value: 'A new product(s) from the primary product(s) that you grow so that it can be sold at a higher price'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'result-products-A7',
-              value: 'None of the above',
-              notEligible: true
-            }
-          ],
-          yarKey: 'resultProducts'
-        },
-        {
-          key: 'eligible-items',
-          order: 82,
-          title: 'What eligible items does your project need?',
-          pageTitle: '',
-          url: 'eligible-items',
-          baseUrl: 'eligible-items',
-          backUrl: 'result-products',
-          nextUrl: 'auxiliary-items',
-          eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: 'You cannot apply for a grant if you will not be using low emission precision application equipment.',
-            messageLink: {
-              url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
-            }
-          },
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select the option'
-          },
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'You must use low-emission precision application equipment.',
-            items: []
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'eligible-items-A1',
-              value: 'Processing equipment or machinery'
-            },
-            {
-              key: 'eligible-items-A2',
-              value: 'Controlled atmosphere storage facilities'
-            },
-            {
-              key: 'eligible-items-A3',
-              value: 'Dynamic Controlled atmosphere storage facilities'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'eligible-items-A4',
-              value: 'No, I won’t be using the equipment',
-              notEligible: true
-            }
-          ],
-          yarKey: 'Application'
-        },
-        {
-          key: 'auxiliary-items',
-          order: 82,
-          title: 'what Auxiliary items does your project need?',
-          pageTitle: '',
-          url: 'auxiliary-items',
-          baseUrl: 'eligible-items',
-          backUrl: 'result-products',
-          nextUrl: 'project-cost',
-          eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: 'You cannot apply for a grant if you will not be using low emission precision application equipment.',
-            messageLink: {
-              url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
-            }
-          },
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select the option'
-          },
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'You must use low-emission precision application equipment.',
-            items: []
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'eligible-items-A1',
-              value: 'Specialist vehicles'
-            },
-            {
-              key: 'eligible-items-A2',
-              value: 'Retail facilities'
-            },
-            {
-              key: 'eligible-items-A3',
-              value: 'Storage facilities *'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'eligible-items-A4',
-              value: 'No auxiliary facilities required.',
-              notEligible: true
-            }
-          ],
-          yarKey: 'Application'
         },
         {
           key: 'project-cost',
@@ -906,7 +706,7 @@ const questionBank = {
           pageTitle: '',
           url: 'project-cost',
           baseUrl: 'project-cost',
-          backUrl: 'eligible-items',
+          backUrl: 'project-items',
           nextUrl: 'potential-amount',
           classes: 'govuk-input--width-10',
           id: 'projectCost',
