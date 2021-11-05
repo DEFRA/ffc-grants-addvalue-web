@@ -96,9 +96,12 @@ const questionBank = {
               title: 'See other grants you may be eligible for.'
             }
           },
-          validate: {
-            errorEmptyField: 'Select the option that applies to your business'
-          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select the option that applies to your business'
+            }
+          ],
           sidebar: {
             values: [{
               heading: 'Eligibility',
@@ -190,15 +193,10 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select the legal status of the business'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select the legal status of the business'
             }
           ],
           answers: [
@@ -295,15 +293,10 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select yes if the project is in England'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the project is in England'
             }
           ],
           answers: [
@@ -348,15 +341,10 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select when the project will have planning permission'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select when the project will have planning permission'
             }
           ],
           answers: [
@@ -419,15 +407,10 @@ const questionBank = {
             para: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
             items: []
           },
-          validate: {
-            errorEmptyField: 'Select when the project will have planning permission'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select when the project will have planning permission'
             }
           ],
           answers: [
@@ -491,15 +474,10 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select the option that applies to your project'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select the option that applies to your project'
             }
           ],
           answers: [
@@ -549,9 +527,12 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select yes if the planned project is on land the business owns'
-          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the planned project is on land the business owns'
+            }
+          ],
           answers: [
             {
               key: 'tenancy-A1',
@@ -593,9 +574,12 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select yes if the land has a tenancy agreement in place until 2027 or after'
-          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the land has a tenancy agreement in place until 2027 or after'
+            }
+          ],
           answers: [
             {
               key: 'tenancy-length-A1',
@@ -639,9 +623,12 @@ const questionBank = {
           type: 'multi-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select all the items your project needs'
-          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select all the items your project needs'
+            }
+          ],
           answers: [
             {
               key: 'project-items-A1',
@@ -809,15 +796,10 @@ const questionBank = {
             `,
             items: []
           },
-          validate: {
-            errorEmptyField: 'Select yes if you can pay the remaining costs without using any other grant money'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you can pay the remaining costs without using any other grant money'
             }
           ],
           answers: [
@@ -865,15 +847,10 @@ const questionBank = {
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select yes if the project directly impacts a Site of Special Scientific Interest'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the project directly impacts a Site of Special Scientific Interest'
             }
           ],
           answers: [
@@ -907,9 +884,12 @@ const questionBank = {
           hint: {
             html: '<br>Select one option<br>'
           },
-          validate: {
-            errorEmptyField: 'Select one option to describe the project impact'
-          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select one option to describe the project impact'
+            }
+          ],
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: '',
@@ -1121,15 +1101,10 @@ const questionBank = {
             Your project’s positive environmental benefit and the increase to Adding Value will be assessed at full application stage.`,
             items: []
           },
-          validate: {
-            errorEmptyField: 'Select the type of new technology your project needs'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select the type of new technology your project needs'
             }
           ],
           answers: [
@@ -1412,15 +1387,10 @@ const questionBank = {
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select who is applying for this grant'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select who is applying for this grant'
             }
           ],
           answers: [
