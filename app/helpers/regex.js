@@ -1,3 +1,5 @@
+const CURRENCY_FORMAT = /^(\d+|\d{1,3}(,\d{3})*)(\d+)?$/
+const CHARS_MAX_10 = /^.{1,10}$/
 const DIGITS_MAX_7 = /^\d{0,7}$/
 const CHARS_MIN_10 = /^.{10,}$/
 const CHARS_MAX_100 = /^.{0,100}$/
@@ -12,7 +14,9 @@ const PHONE_REGEX = /^[0-9\{\[\(\)\}\]— -+]{10,}$/
 const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/
 
 module.exports = {
+  CURRENCY_FORMAT,
   DIGITS_MAX_7,
+  CHARS_MAX_10,
   CHARS_MIN_10,
   CHARS_MAX_100,
   WORDS_MAX_60,

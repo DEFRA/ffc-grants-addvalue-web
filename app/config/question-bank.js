@@ -776,8 +776,17 @@ const questionBank = {
           nextUrl: 'project-impact',
           eliminationAnswerKeys: '',
           ineligibleContent: {
-            messageContent: 'You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.',
-            insertText: { text: 'You can use loans, overdrafts and certain other grants, such as the Basic Payment Scheme or agri-environment schemes such as the Countryside Stewardship Scheme.Funds from a Producer Organisation are not an eligible source for this scheme.' },
+            messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
+            <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
+            insertText: {
+              html: `You can use:
+              <ul>
+              <li>loans</li>
+              <li>overdrafts</li>
+              <li>the Basic Payment Scheme</li>
+              <li> agri-environment schemes such as the Countryside Stewardship Scheme</li>
+              </ul>`
+            },
             messageLink: {
               url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
               title: 'See other grants you may be eligible for.'
@@ -789,12 +798,24 @@ const questionBank = {
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           sidebar: {
-            heading: 'Eligibility',
-            para: `
-              You cannot use any grant funding from government or local authorities.
-              \n\nYou can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.
-            `,
-            items: []
+            values: [
+              {
+                heading: 'Eligibility',
+                content: [{
+                  para: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
+                  
+                  You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.
+                  
+                  You can use:`,
+                  items: [
+                    'loans',
+                    'overdrafts',
+                    'the Basic Payment Scheme',
+                    'agri-environment schemes such as the Countryside Stewardship Scheme'
+                  ]
+                }]
+              }
+            ]
           },
           validate: [
             {
