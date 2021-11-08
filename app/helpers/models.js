@@ -38,6 +38,7 @@ const getDependentSideBar = (sidebar, request) => {
           }
         })
       } else {
+        addUpdatedValue = true
         formattedSidebarValues = [].concat(yarValue)
       }
 

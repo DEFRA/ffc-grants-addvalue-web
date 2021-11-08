@@ -1,4 +1,6 @@
 const {
+  CURRENCY_FORMAT,
+  CHARS_MAX_10,
   DIGITS_MAX_7,
   CHARS_MIN_10,
   POSTCODE_REGEX,
@@ -74,7 +76,7 @@ const questionBank = {
           title: 'What is your business?',
           pageTitle: '',
           backUrl: 'start',
-          nextUrl: 'legal-status',
+          nextUrl: 'business-location',
           url: 'nature-of-business',
           baseUrl: 'nature-of-business',
           type: 'single-answer',
@@ -94,9 +96,12 @@ const questionBank = {
               title: 'See other grants you may be eligible for.'
             }
           },
-          validate: {
-            errorEmptyField: 'Select the option that applies to your business'
-          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select the option that applies to your business'
+            }
+          ],
           sidebar: {
             values: [{
               heading: 'Eligibility',
@@ -152,11 +157,56 @@ const questionBank = {
           yarKey: 'applicantBusiness'
         },
         {
+          key: 'business-location',
+          order: 15,
+          title: 'Is your business in England?',
+          pageTitle: '',
+          backUrl: 'nature-of-business',
+          nextUrl: 'legal-status',
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          url: 'business-location',
+          baseUrl: 'business-location',
+          ineligibleContent: {
+            messageContent: 'This grant is only for businesses registered in England.',
+            insertText: { text: 'Scotland, Wales and Northern Ireland have other grants available.' }
+          },
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'This grant is only for businesses registered in England. \n \n Scotland, Wales and Northern Ireland have other grants available.',
+                items: []
+              }]
+            }]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the business is in England'
+            }
+          ],
+          answers: [
+            {
+              key: 'business-location-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'business-location-A2',
+              value: 'No',
+              notEligible: true
+            }
+          ],
+          yarKey: 'businessLocation'
+        },
+        {
           key: 'legal-status',
           order: 20,
           title: 'What is the legal status of the business?',
           pageTitle: '',
-          backUrl: 'nature-of-business',
+          backUrl: 'business-location',
           nextUrl: 'country',
           url: 'legal-status',
           baseUrl: 'legal-status',
@@ -188,15 +238,10 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select the legal status of the business'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select the legal status of the business'
             }
           ],
           answers: [
@@ -293,15 +338,10 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select yes if the project is in England'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the project is in England'
             }
           ],
           answers: [
@@ -346,15 +386,10 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select when the project will have planning permission'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select when the project will have planning permission'
             }
           ],
           answers: [
@@ -417,15 +452,10 @@ const questionBank = {
             para: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
             items: []
           },
-          validate: {
-            errorEmptyField: 'Select when the project will have planning permission'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select when the project will have planning permission'
             }
           ],
           answers: [
@@ -460,7 +490,7 @@ const questionBank = {
               elseUrl: '/adding-value/planning-permission'
             }
           },
-          nextUrl: 'project-items',
+          nextUrl: 'tenancy',
           ineligibleContent: {
             messageContent: 'You cannot apply for a grant if you have already started work on the project.',
             insertText: { text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.' },
@@ -489,15 +519,10 @@ const questionBank = {
               }]
             }]
           },
-          validate: {
-            errorEmptyField: 'Select the option that applies to your project'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select the option that applies to your project'
             }
           ],
           answers: [
@@ -524,283 +549,176 @@ const questionBank = {
           yarKey: 'projectStart'
         },
         {
-          key: 'project-items',
-          order: 80,
-          title: 'What type of primary products are being processed?',
+          key: 'tenancy',
+          order: 60,
+          title: 'Is the planned project on land the business owns?',
+          hint: {
+            text: 'The site where the work will happen'
+          },
           pageTitle: '',
-          url: 'project-items',
-          baseUrl: 'project-items',
-          backUrl: '/adding-value/project-start',
-          nextUrl: 'result-products',
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'Only primary agricultural, horticultural, livestock, or forestry products are eligible under this scheme. Only wood sourced direct from harvested trees is eligible for this scheme: waste wood, offcuts, and sawmill waste are not eligible.'
-          },
-          ineligibleContent: {
-            messageContent: `
-              <span>Your project must process following types of primary products: </span>
-              <ul class="govuk-body">
-                <li>Arable crops – Cereals/Legumes/Oilseeds</li>
-                <li>Horticultural crops – Vegetables/Fruits & Nuts/Edible Flowers</li>
-                <li>Dairy or Meat produce</li>
-                <li>Forestry products</li>
-                <li>Fodder crops</li>
-                <li>Non-edible flowers</li>
-                <li>Fibre products</li>
-              </ul>`,
-            messageLink: {
-              url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for'
-            }
-          },
+          url: 'tenancy',
+          baseUrl: 'tenancy',
+          backUrl: 'project-start',
+          nextUrl: 'project-items',
           fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select one of the answer'
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'The land must be owned or have a tenancy in place until 2027 before starting the project.'
+              }]
+            }]
           },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the planned project is on land the business owns'
+            }
+          ],
+          answers: [
+            {
+              key: 'tenancy-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'tenancy-A2',
+              value: 'No',
+              redirectUrl: 'tenancy-length'
+            },
+            {
+              key: 'tenancy-A3',
+              value: 'Not applicable - I’m a mobile contractor'
+            }
+          ],
+          yarKey: 'tenancy'
+        },
+        {
+          key: 'tenancy-length',
+          order: 70,
+          title: 'Do you have a tenancy agreement until 2027 or after?',
+          pageTitle: '',
+          url: 'tenancy-length',
+          baseUrl: 'tenancy-length',
+          backUrl: 'tenancy',
+          preValidationKeys: ['tenancy'],
+          nextUrl: 'project-items',
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'The land must be owned or have a tenancy in place until 2027 before starting the project.',
+                items: []
+              }]
+            }]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the land has a tenancy agreement in place until 2027 or after'
+            }
+          ],
+          answers: [
+            {
+              key: 'tenancy-length-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'tenancy-length-A2',
+              value: 'No',
+              redirectUrl: 'tenancy-length-condition'
+            }
+          ],
+          yarKey: 'tenancyLength'
+        },
+        {
+          key: 'tenancy-length-condition',
+          title: 'You may be able to apply for a grant from this scheme',
+          order: 75,
+          url: 'tenancy-length-condition',
+          backUrl: 'tenancy',
+          preValidationKeys: ['tenancyLength'],
+          nextUrl: 'project-items',
+          maybeEligible: true,
+          maybeEligibleContent: {
+            messageHeader: 'You may be able to apply for a grant from this scheme',
+            messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
+          }
+        },
+        {
+          key: 'project-items',
+          order: 80,
+          title: 'What eligible items does your project need?',
+          pageTitle: '',
+          hint: {
+            text: 'Select all the items your project needs'
+          },
+          url: 'project-items',
+          baseUrl: 'project-items',
+          backUrl: 'tenancy',
+          nextUrl: 'project-cost',
+          fundingPriorities: '',
+          type: 'multi-answer',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select all the items your project needs'
             }
           ],
           answers: [
             {
               key: 'project-items-A1',
-              value: 'Arable crops – Cereals/Legumes/Oilseeds'
+              value: 'Processing equipment or machinery',
+              hint: {
+                text: 'For example, equipment for milk pasteurising or vegetable washing, packing machinery'
+              }
             },
             {
               key: 'project-items-A2',
-              value: 'Horticultural crops – Vegetables/Fruits & Nuts/Edible Flowers'
+              value: 'Controlled-atmosphere storage',
+              hint: {
+                text: 'Monitoring and controlling the temperature and humidity of products'
+              }
             },
             {
               key: 'project-items-A3',
-              value: 'Dairy or Meat produce'
+              value: 'Dynamic controlled-atmosphere storage',
+              hint: {
+                text: 'Monitoring and controlling gases produced by or changes in the products, as well as temperature and humidity'
+              }
             },
             {
               key: 'project-items-A4',
-              value: 'Forestry products'
+              value: 'Constructing or improving buildings',
+              hint: {
+                text: 'For example, a new building for cheese making, extending an existing building to install a new meat-cutting and packing line'
+              }
             },
             {
               key: 'project-items-A5',
-              value: 'Fodder crops'
+              value: 'Specialist vehicles',
+              hint: {
+                text: 'For example, forklift trucks, refrigerated vans or lorries'
+              }
             },
             {
               key: 'project-items-A6',
-              value: 'Non-edible flowers'
-            },
-            {
-              key: 'project-items-A7',
-              value: 'Fibre products'
-            },
-            {
-              key: 'project-items-A8',
-              value: 'None of the above',
-              notEligible: true
+              value: 'Retail facilities',
+              hint: {
+                text: 'For example, farm shops'
+              }
             }
           ],
           yarKey: 'projectItems'
-        },
-        {
-          key: 'result-products',
-          order: 81,
-          title: 'What products will you produce as a result of the project?',
-          hint: {
-            text: 'Any work to adapt or install pipework, pumps etc to get  into the acidification system and then out to storage.'
-          },
-          pageTitle: '',
-          url: 'result-products',
-          baseUrl: 'result-products',
-          backUrl: 'project-items',
-          nextUrl: 'eligible-items',
-          eliminationAnswerKeys: '',
-          ineligibleContent: {},
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'Eligible Added-Value outputs include',
-            items: [
-              'Primary products that have (only) been sorted and/or packaged to accrue a higher value.',
-              'Processed products made by transforming primary products into a new type of product.',
-              'Primary products in lengthy Controlled Atmosphere or Dynamic Controlled Atmosphere storage to accrue a higher value.'
-            ]
-          },
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          maxAnswerCount: 3,
-          ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select one of the answer'
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'result-products-A1',
-              value: 'primary product that are kept in controlled atmosphere storage for longer so that they can be sold at a higher price'
-            },
-            {
-              key: 'result-products-A2',
-              value: 'primary product that are kept in dynamic controlled atmosphere storage, so that they can be sold at a higher price'
-            },
-            {
-              key: 'result-products-A3',
-              value: 'Primary product(s) that is prepared so that it can be sold at a higher price i.e washed veg/top and tail.'
-            },
-            {
-              key: 'result-products-A4',
-              value: 'primary product(s) that is graded so that it can be sold at a higher price'
-            },
-            {
-              key: 'result-products-A5',
-              value: 'primary product(s) that is packaged so that it can be sold at a higher price'
-            },
-            {
-              key: 'result-products-A6',
-              value: 'A new product(s) from the primary product(s) that you grow so that it can be sold at a higher price'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'result-products-A7',
-              value: 'None of the above',
-              notEligible: true
-            }
-          ],
-          yarKey: 'resultProducts'
-        },
-        {
-          key: 'eligible-items',
-          order: 82,
-          title: 'What eligible items does your project need?',
-          pageTitle: '',
-          url: 'eligible-items',
-          baseUrl: 'eligible-items',
-          backUrl: 'result-products',
-          nextUrl: 'auxiliary-items',
-          eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: 'You cannot apply for a grant if you will not be using low emission precision application equipment.',
-            messageLink: {
-              url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
-            }
-          },
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select the option'
-          },
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'You must use low-emission precision application equipment.',
-            items: []
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'eligible-items-A1',
-              value: 'Processing equipment or machinery'
-            },
-            {
-              key: 'eligible-items-A2',
-              value: 'Controlled atmosphere storage facilities'
-            },
-            {
-              key: 'eligible-items-A3',
-              value: 'Dynamic Controlled atmosphere storage facilities'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'eligible-items-A4',
-              value: 'No, I won’t be using the equipment',
-              notEligible: true
-            }
-          ],
-          yarKey: 'Application'
-        },
-        {
-          key: 'auxiliary-items',
-          order: 82,
-          title: 'what Auxiliary items does your project need?',
-          pageTitle: '',
-          url: 'auxiliary-items',
-          baseUrl: 'eligible-items',
-          backUrl: 'result-products',
-          nextUrl: 'project-cost',
-          eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: 'You cannot apply for a grant if you will not be using low emission precision application equipment.',
-            messageLink: {
-              url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
-            }
-          },
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select the option'
-          },
-          sidebar: {
-            heading: 'Eligibility',
-            para: 'You must use low-emission precision application equipment.',
-            items: []
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'eligible-items-A1',
-              value: 'Specialist vehicles'
-            },
-            {
-              key: 'eligible-items-A2',
-              value: 'Retail facilities'
-            },
-            {
-              key: 'eligible-items-A3',
-              value: 'Storage facilities *'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'eligible-items-A4',
-              value: 'No auxiliary facilities required.',
-              notEligible: true
-            }
-          ],
-          yarKey: 'Application'
         },
         {
           key: 'project-cost',
@@ -808,7 +726,7 @@ const questionBank = {
           pageTitle: '',
           url: 'project-cost',
           baseUrl: 'project-cost',
-          backUrl: 'eligible-items',
+          backUrl: 'project-items',
           nextUrl: 'potential-amount',
           classes: 'govuk-input--width-10',
           id: 'projectCost',
@@ -818,18 +736,20 @@ const questionBank = {
           grantInfo: {
             minGrant: 35000,
             maxGrant: 500000,
-            grantPercentage: 40
+            grantPercentage: 40,
+            cappedGrant: true
           },
           label: {
-            text: 'What is the estimated cost of the items?',
+            text: 'What is the total estimated cost of the items?',
             classes: 'govuk-label--l',
             isPageHeading: true
           },
           hint: {
             html: `
               You can only apply for a grant of up to 40% of the estimated costs.
-              <br/>Do not include VAT.
-              <br/>The minimum grant you can apply for this project is £35,000 (40% of £87,500). The maximum grant is £500,000.
+              <br/>The minimum grant you can apply for this project is £35,000 (40% of £87,500).
+              <br/>The maximum grant is £500,000.
+              <br/><br/>Do not include VAT.
               <br/><br/>Enter amount, for example 95,000`
           },
           eliminationAnswerKeys: '',
@@ -842,34 +762,37 @@ const questionBank = {
             }
           },
           sidebar: {
-            heading: 'Items selected',
-            para: '',
-            items: [],
-            dependentYarKey: 'projectItems'
-          },
-          validate: {
-            errorEmptyField: 'Enter the estimated cost for the items',
-            checkRegex: {
-              regex: DIGITS_MAX_7,
-              error: 'Enter a whole number with a maximum of 7 digits'
-            }
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: '',
-              value: ''
-            }
-          ],
-          yarKey: 'projectCost'
+            values: [
+              {
+                heading: 'Selected items',
+                content: [{
+                  para: '',
+                  items: []
+                }]
+              }
+            ],
+            dependentYarKey: 'projectItems',
+            dependentQuestionKey: 'project-items'
 
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter the estimated cost for the items'
+            },
+            {
+              type: 'REGEX',
+              regex: CURRENCY_FORMAT,
+              error: 'Enter a whole number in correct format'
+            },
+            {
+              type: 'REGEX',
+              regex: CHARS_MAX_10,
+              error: 'Enter a whole number with a maximum of 10 digits'
+            }
+          ],
+          answers: [],
+          yarKey: 'projectCost'
         },
         {
           key: 'potential-amount',
@@ -898,8 +821,17 @@ const questionBank = {
           nextUrl: 'project-impact',
           eliminationAnswerKeys: '',
           ineligibleContent: {
-            messageContent: 'You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.',
-            insertText: { text: 'You can use loans, overdrafts and certain other grants, such as the Basic Payment Scheme or agri-environment schemes such as the Countryside Stewardship Scheme.Funds from a Producer Organisation are not an eligible source for this scheme.' },
+            messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
+            <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
+            insertText: {
+              html: `You can use:
+              <ul>
+              <li>loans</li>
+              <li>overdrafts</li>
+              <li>the Basic Payment Scheme</li>
+              <li> agri-environment schemes such as the Countryside Stewardship Scheme</li>
+              </ul>`
+            },
             messageLink: {
               url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
               title: 'See other grants you may be eligible for.'
@@ -911,22 +843,29 @@ const questionBank = {
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           sidebar: {
-            heading: 'Eligibility',
-            para: `
-              You cannot use any grant funding from government or local authorities.
-              \n\nYou can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.
-            `,
-            items: []
+            values: [
+              {
+                heading: 'Eligibility',
+                content: [{
+                  para: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
+                  
+                  You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.
+                  
+                  You can use:`,
+                  items: [
+                    'loans',
+                    'overdrafts',
+                    'the Basic Payment Scheme',
+                    'agri-environment schemes such as the Countryside Stewardship Scheme'
+                  ]
+                }]
+              }
+            ]
           },
-          validate: {
-            errorEmptyField: 'Select yes if you can pay the remaining costs without using any other grant money'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you can pay the remaining costs without using any other grant money'
             }
           ],
           answers: [
@@ -974,15 +913,10 @@ const questionBank = {
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select yes if the project directly impacts a Site of Special Scientific Interest'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the project directly impacts a Site of Special Scientific Interest'
             }
           ],
           answers: [
@@ -1016,9 +950,12 @@ const questionBank = {
           hint: {
             html: '<br>Select one option<br>'
           },
-          validate: {
-            errorEmptyField: 'Select one option to describe the project impact'
-          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select one option to describe the project impact'
+            }
+          ],
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: '',
@@ -1230,15 +1167,10 @@ const questionBank = {
             Your project’s positive environmental benefit and the increase to Adding Value will be assessed at full application stage.`,
             items: []
           },
-          validate: {
-            errorEmptyField: 'Select the type of new technology your project needs'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select the type of new technology your project needs'
             }
           ],
           answers: [
@@ -1521,15 +1453,10 @@ const questionBank = {
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          validate: {
-            errorEmptyField: 'Select who is applying for this grant'
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select who is applying for this grant'
             }
           ],
           answers: [
