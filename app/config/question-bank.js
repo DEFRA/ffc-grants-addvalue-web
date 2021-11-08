@@ -76,7 +76,7 @@ const questionBank = {
           title: 'What is your business?',
           pageTitle: '',
           backUrl: 'start',
-          nextUrl: 'legal-status',
+          nextUrl: 'business-location',
           url: 'nature-of-business',
           baseUrl: 'nature-of-business',
           type: 'single-answer',
@@ -157,11 +157,56 @@ const questionBank = {
           yarKey: 'applicantBusiness'
         },
         {
+          key: 'business-location',
+          order: 15,
+          title: 'Is your business in England?',
+          pageTitle: '',
+          backUrl: 'nature-of-business',
+          nextUrl: 'legal-status',
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          url: 'business-location',
+          baseUrl: 'business-location',
+          ineligibleContent: {
+            messageContent: 'This grant is only for businesses registered in England.',
+            insertText: { text: 'Scotland, Wales and Northern Ireland have other grants available.' }
+          },
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'This grant is only for businesses registered in England. \n \n Scotland, Wales and Northern Ireland have other grants available.',
+                items: []
+              }]
+            }]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if the business is in England'
+            }
+          ],
+          answers: [
+            {
+              key: 'business-location-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'business-location-A2',
+              value: 'No',
+              notEligible: true
+            }
+          ],
+          yarKey: 'businessLocation'
+        },
+        {
           key: 'legal-status',
           order: 20,
           title: 'What is the legal status of the business?',
           pageTitle: '',
-          backUrl: 'nature-of-business',
+          backUrl: 'business-location',
           nextUrl: 'country',
           url: 'legal-status',
           baseUrl: 'legal-status',
