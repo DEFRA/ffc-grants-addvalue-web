@@ -7,7 +7,7 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "./components/macro.njk" import crumbToken, multiSideBar %}
+{% from "./components/macro.njk" import crumbToken, multiSideBar, conditionalButtons %}
 
 {% block pageTitle %}
   {{siteTitle}} - {{title}}
@@ -64,7 +64,7 @@
               {{ govukCheckboxes(item) }}
             {%endif%}
 
-            {%if item.type ==='input' %}
+            {%if item.type ==='input' or item.type ==='email' or item.type ==='tel' %}
               {{ govukInput(item) }}
             {%endif%}
 
@@ -77,16 +77,19 @@
 
 
         <div class="govuk-!-padding-top-5">
-        {%if key !== 'slurry-to-be-treated'  and key !== 'robotics-technology' %}
-          {{ govukButton({
-          text: "Continue"
-          }) }}
-        {% else %}
-          {{ govukButton({
-            text: "Get your score"
-          }) }}
-        {% endif %}
+              {% set buttonText = 'Continue' %}
+              {% set secButtonText = 'Back to score' %}
+
+              {%if key === 'slurry-to-be-treated' or key === 'robotics-technology' %}
+                {% set buttonText = 'Get your score' %}
+                {% set diaplaySecondryBtn = false %}
+              {% elif reachedCheckDetails %}
+                {% set diaplaySecondryBtn = true %}
+                {% set secButtonText = 'Back to details' %}
+              {% endif %}
         </div>
+         
+            {{ conditionalButtons(diaplaySecondryBtn, buttonText, secButtonText) }}
       </form>
     </div>
     {%if sideBarText %}

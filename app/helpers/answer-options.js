@@ -81,10 +81,6 @@ const selectField = (data, question) => {
 
 const textField = (data, question, request = null) => {
   const { yarKey, prefix, suffix, label, classes } = question
-  const project = request ? getYarValue(request, 'projectSubject') : null
-  if (yarKey === 'projectName') {
-    question.hint.text = project === 'Slurry acidification' ? 'Browns Hill Farm slurry acidification' : 'Browns Hill Farm robotic milking'
-  }
   return {
     id: yarKey,
     name: yarKey,
@@ -110,9 +106,12 @@ const getAllInputs = (data, question, conditionalHtml, request) => {
     data = dataObject
   }
   return allFields.map((field) => {
-    const { type } = field
+    const { type, endFieldset } = field
     let fieldItems
     switch (type) {
+      case 'sub-heading':
+        fieldItems = { text: field.text }
+        break
       case 'input':
         fieldItems = textField(data[field.yarKey], field, request)
         break
@@ -132,6 +131,7 @@ const getAllInputs = (data, question, conditionalHtml, request) => {
 
     return {
       type,
+      endFieldset,
       ...fieldItems
     }
   })

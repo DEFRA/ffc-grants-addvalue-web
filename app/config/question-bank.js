@@ -1,10 +1,11 @@
 const {
   CURRENCY_FORMAT,
   CHARS_MAX_10,
-  DIGITS_MAX_7,
   CHARS_MIN_10,
+  CHARS_MAX_100,
   POSTCODE_REGEX,
-  NUMBER_REGEX,
+  WHOLE_NUMBER_REGEX,
+  SBI_REGEX,
   NAME_ONLY_REGEX,
   PHONE_REGEX,
   EMAIL_REGEX
@@ -166,6 +167,7 @@ const questionBank = {
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           url: 'business-location',
           baseUrl: 'business-location',
+          preValidationKeys: ['applicantBusiness'],
           ineligibleContent: {
             messageContent: 'This grant is only for businesses registered in England.',
             insertText: { text: 'Scotland, Wales and Northern Ireland have other grants available.' }
@@ -210,6 +212,7 @@ const questionBank = {
           nextUrl: 'country',
           url: 'legal-status',
           baseUrl: 'legal-status',
+          preValidationKeys: ['businessLocation'],
           ineligibleContent: {
             messageContent: 'Your business does not have an eligible legal status.',
             details: {
@@ -316,6 +319,7 @@ const questionBank = {
           nextUrl: 'planning-permission',
           url: 'country',
           baseUrl: 'country',
+          preValidationKeys: ['legalStatus'],
           ineligibleContent: {
             messageContent: 'This grant is only for projects in England.',
             insertText: { text: 'Scotland, Wales and Northern Ireland have other grants available.' },
@@ -367,6 +371,7 @@ const questionBank = {
           baseUrl: 'planning-permission',
           backUrl: 'country',
           nextUrl: 'project-start',
+          preValidationKeys: ['inEngland'],
           ineligibleContent: {
             messageContent: 'Any planning permission must be in place by 31 December 2022.',
             messageLink: {
@@ -421,6 +426,7 @@ const questionBank = {
           backUrl: 'planning-permission',
           nextUrl: 'project-start',
           maybeEligible: true,
+          preValidationKeys: ['planningPermission'],
           maybeEligibleContent: {
             messageHeader: 'You may be able to apply for a grant from this scheme',
             messageContent: 'Any planning permission must be in place by 31 December 2022.'
@@ -435,6 +441,7 @@ const questionBank = {
           baseUrl: 'project-location-owned-rented',
           backUrl: 'planning-permission',
           nextUrl: 'project-start',
+          preValidationKeys: ['planningPermission'],
           ineligibleContent: {
             messageContent: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
             messageLink: {
@@ -491,6 +498,7 @@ const questionBank = {
             }
           },
           nextUrl: 'tenancy',
+          preValidationKeys: ['planningPermission'],
           ineligibleContent: {
             messageContent: 'You cannot apply for a grant if you have already started work on the project.',
             insertText: { text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.' },
@@ -560,6 +568,7 @@ const questionBank = {
           baseUrl: 'tenancy',
           backUrl: 'project-start',
           nextUrl: 'project-items',
+          preValidationKeys: ['projectStart'],
           fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
@@ -644,7 +653,7 @@ const questionBank = {
           order: 75,
           url: 'tenancy-length-condition',
           backUrl: 'tenancy',
-          preValidationKeys: ['tenancyLength'],
+          preValidationKeys: ['tenancy'],
           nextUrl: 'project-items',
           maybeEligible: true,
           maybeEligibleContent: {
@@ -665,6 +674,7 @@ const questionBank = {
           backUrl: 'tenancy',
           nextUrl: 'project-cost',
           fundingPriorities: '',
+          preValidationKeys: ['projectStart', 'tenancy'],
           type: 'multi-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
@@ -728,6 +738,7 @@ const questionBank = {
           baseUrl: 'project-cost',
           backUrl: 'project-items',
           nextUrl: 'potential-amount',
+          preValidationKeys: ['projectItems'],
           classes: 'govuk-input--width-10',
           id: 'projectCost',
           name: 'projectCost',
@@ -800,6 +811,7 @@ const questionBank = {
           url: 'potential-amount',
           backUrl: 'project-cost',
           nextUrl: 'remaining-costs',
+          preValidationKeys: ['projectCost'],
           maybeEligible: true,
           maybeEligibleContent: {
             messageHeader: 'Potential grant funding',
@@ -818,7 +830,7 @@ const questionBank = {
           url: 'remaining-costs',
           baseUrl: 'remaining-costs',
           backUrl: 'project-cost',
-          nextUrl: 'project-impact',
+          nextUrl: 'products-processed',
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
@@ -884,14 +896,20 @@ const questionBank = {
 
         },
         {
-          key: 'project-impact',
+          key: 'products-processed',
           order: 120,
-          title: 'What impact will the project have?',
+          title: 'What type of products are being processed?',
           pageTitle: '',
-          url: 'project-impact',
-          baseUrl: 'project-impact',
+          url: 'products-processed',
+          baseUrl: 'products-processed',
           backUrl: 'remaining-costs',
-          nextUrl: 'business-impact',
+          nextUrl: 'how-adding-value',
+          preValidationKeys: ['canPayRemainingCost'],
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Products processed'
+          },
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: '',
@@ -905,10 +923,10 @@ const questionBank = {
             heading: 'Funding priorities',
             para: 'RPA wants to fund projects that:',
             items: [
-              'Improve processing and supply chains',
-              'Grow your business']
+              'improve processing and supply chains'
+            ]
           },
-          fundingPriorities: '',
+          fundingPriorities: '<ul><li>Improve processing and supply chains</li></ul>',
           type: 'single-answer',
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
@@ -916,349 +934,597 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if the project directly impacts a Site of Special Scientific Interest'
+              error: 'Select the type of products being processed'
+            }
+          ],
+          answers: [
+            {
+              key: 'products-processed-A1',
+              value: 'Arable crops',
+              hint: {
+                text: 'For example, cereals, legumes, oilseeds'
+              }
+            },
+            {
+              key: 'products-processed-A2',
+              value: 'Horticultural crops',
+              hint: {
+                text: 'For example, vegetables, fruits, nuts, edible flowers'
+              }
+            },
+            {
+              key: 'products-processed-A3',
+              value: 'Dairy or meat produce',
+              hint: {
+                text: 'For example, processing and bottling milk, cutting, processing and packing meat'
+              }
+            },
+            {
+              key: 'products-processed-A4',
+              value: 'Forestry products',
+              hint: {
+                text: 'For example, wood from harvested trees before industrial processing'
+              }
+            },
+            {
+              key: 'products-processed-A5',
+              value: 'Fodder crops',
+              hint: {
+                text: 'For example, processing and repacking hay and straw for specialist markets or retail sale'
+              }
+            },
+            {
+              key: 'products-processed-A6',
+              value: 'Non-edible crops',
+              hint: {
+                text: 'For example, processing and packing ornamental flowers and bulbs after harvesting'
+              }
+            },
+            {
+              key: 'products-processed-A7',
+              value: 'Fibre products',
+              hint: {
+                text: 'For example, processing animal hides and leather, processing fibres such as flax and hemp'
+              }
+            }
+          ],
+          yarKey: 'productsProcessed'
+        },
+        {
+          key: 'how-adding-value',
+          order: 130,
+          title: 'How will you add value to the products?',
+          pageTitle: '',
+          url: 'how-adding-value',
+          baseUrl: 'how-adding-value',
+          backUrl: 'remaining-costs',
+          nextUrl: 'project-impact',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Adding value'
+          },
+          eliminationAnswerKeys: '',
+          preValidationKeys: ['productsProcessed'],
+          ineligibleContent: {
+            messageContent: '',
+            insertText: { text: '' },
+            messageLink: {
+              url: '',
+              title: ''
+            }
+          },
+          sidebar: {
+            heading: 'Funding priorities',
+            para: 'RPA wants to fund projects that:',
+            items: [
+              'improve processing and supply chains',
+              'grow your business']
+          },
+          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
+          type: 'single-answer',
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select how you will add value to the products'
+            }
+          ],
+          answers: [
+            {
+              key: 'how-adding-value-A1',
+              value: 'Processing or preparing primary product',
+              hint: {
+                text: 'For example, cut and packed meat, yogurt to cheese, brewing or distilling'
+              }
+            },
+            {
+              key: 'how-adding-value-A2',
+              value: 'Grading or sorting primary product',
+              hint: {
+                text: 'For example, washing and grading vegetables, egg grading, optical grading of top fruit'
+              }
+            },
+            {
+              key: 'how-adding-value-A3',
+              value: 'Packing primary product',
+              hint: {
+                text: 'For example, packing top fruit, bagging vegetables, bottling wine'
+              }
+            },
+            {
+              key: 'how-adding-value-A4',
+              value: 'Dynamic controlled-atmosphere storage',
+              hint: {
+                text: 'Controlled-atmosphere storage'
+              }
+            }
+          ],
+          yarKey: 'howAddingValue'
+        },
+        {
+          key: 'project-impact',
+          order: 140,
+          title: 'What impact will the project have?',
+          pageTitle: '',
+          url: 'project-impact',
+          baseUrl: 'project-impact',
+          backUrl: 'how-adding-value',
+          nextUrl: 'current-customers',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Project impact'
+          },
+          eliminationAnswerKeys: '',
+          preValidationKeys: ['howAddingValue'],
+          ineligibleContent: {
+            messageContent: '',
+            insertText: { text: '' },
+            messageLink: {
+              url: '',
+              title: ''
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: ['Improve processing and supply chains',
+                  'Grow your business']
+              }]
+            }]
+          },
+          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select the impact your project will have'
             }
           ],
           answers: [
             {
               key: 'project-impact-A1',
-              value: 'Enables creation of new added-value products for the applicant business'
+              value: 'Diversifying into creating added-value products'
             },
             {
               key: 'project-impact-A2',
-              value: 'Increases volume of existing added-value products for the applicant business'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'project-impact-A3',
-              value: 'None of the above'
+              value: 'Increase volume or range of added-value products'
             }
           ],
-          yarKey: 'project-impact'
+          yarKey: 'projectImpact'
         },
         {
-          key: 'business-impact',
-          order: 130,
-          title: 'What growth impact will the project have on your business?',
-          pageTitle: '',
-          url: 'business-impact',
-          nextUrl: 'market-impacts',
-          baseUrl: 'business-impact',
-          backUrl: 'project-impact',
-          hint: {
-            html: '<br>Select one option<br>'
-          },
-          validate: [
-            {
-              type: 'NOT_EMPTY',
-              error: 'Select one option to describe the project impact'
-            }
-          ],
-          eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: '',
-            insertText: { text: '' },
-            messageLink: {
-              url: '',
-              title: ''
-            }
-          },
-          fundingPriorities: '<ul><li>improve Adding Value</li><li>improve the environment</li><li>introduce innovation</li></ul>',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          sidebar:
-          {
-            heading: 'Funding priorities',
-            para: 'RPA wants to fund projects that:',
-            items: ['improve addvalue', 'improve the environment', 'introduce innovation']
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'business-impact-A1',
-              value: 'Increased productivity'
-            },
-            {
-              key: 'business-impact-A2',
-              value: 'Increased profits'
-            },
-            {
-              key: 'business-impact-A3',
-              value: 'Increased jobs'
-            },
-            {
-              key: 'business-impact-A4',
-              value: 'Introduces innovative equipment or processes new to the business '
-            },
-            {
-              key: 'business-impact-A5',
-              value: 'Introduces added-value processing as entirely new business activity'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'business-impact-A6',
-              value: 'none of the above'
-            }
-          ],
-          yarKey: 'businessImpact'
-        },
-        {
-          key: 'market-impacts',
-          order: 140,
-          pageTitle: '',
-          title: 'What impact will the project have on your markets?',
-          url: 'market-impacts',
-          baseUrl: 'market-impacts',
-          backUrl: 'business-impact',
-          nextUrl: 'supply-chain-impacts',
-          type: 'single-answer',
-          eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: '',
-            insertText: { text: '' },
-            messageLink: {
-              url: '',
-              title: ''
-            }
-          },
-          fundingPriorities: '',
-          ga: { dimension: '', value: '' },
-          sidebar:
-          {
-            heading: 'Funding priorities',
-            para: 'RPA wants to fund projects that:',
-            items: ['improve addvalue', 'improve the environment']
-          },
-          validate: {
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'market-impacts-A1',
-              value: 'Expands existing routes to market'
-            },
-            {
-              key: 'market-impacts-A2',
-              value: 'Opens new Wholesale routes to market'
-            },
-            {
-              key: 'market-impacts-A3',
-              value: 'Opens new Retail routes to market'
-            },
-            {
-              key: 'market-impacts-A4',
-              value: 'Introduces exporting'
-            },
-            {
-              key: 'market-impacts-A5',
-              value: 'Increases exports'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'market-impacts-A6',
-              value: 'none of the above'
-            }
-          ],
-          yarKey: 'marketImpacts'
-        },
-        {
-          key: 'supply-chain-impacts',
+          key: 'current-customers',
           order: 150,
+          title: 'Who are your current customers?',
           pageTitle: '',
-          title: 'What impact will the project have on supply chain businesses?',
-          url: 'supply-chain-impacts',
-          baseUrl: 'supply-chain-impacts',
-          nextUrl: 'food-mile-impacts',
-          type: 'single-answer',
-          fundingPriorities: '',
-          ga: { dimension: '', value: '' },
-          sidebar:
-          {
-            heading: 'Funding priorities',
-            para: 'RPA wants to fund projects that:',
-            items: ['improve addvalue', 'improve the environment', 'introduce innovation ']
-          },
-          validate: {
-          },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [
-            {
-              key: 'business-impact-A1',
-              value: 'Produces quantifiable benefits to other named producers'
-            },
-            {
-              key: 'business-impact-A2',
-              value: 'Enables new collaborations or formal partnerships'
-            },
-            {
-              key: 'business-impact-A3',
-              value: 'Benefits existing  collaborations or formal partnerships'
-            },
-            {
-              key: 'business-impact-A4',
-              value: 'Shortens Supply chain (reduced miles)'
-            },
-            {
-              key: 'business-impact-A5',
-              value: 'Increases local supply chain resilience'
-            },
-            {
-              key: 'business-impact-A6',
-              value: 'Reduces imports (substitution)'
-            }
-          ],
-          yarKey: 'supplyChainImpacts'
-        },
-        {
-          key: 'food-mile-impacts',
-          order: 290,
-          title: 'What impact will the project have on ‘food miles’?',
-          pageTitle: '',
-          url: 'food-mile-impacts',
-          baseUrl: 'food-mile-impacts',
-          nextUrl: 'environment-impacts',
-          hint: {
-            text: 'Location of processing to Add Value:'
+          url: 'current-customers',
+          baseUrl: 'current-customers',
+          backUrl: 'project-impact',
+          nextUrl: 'future-customers',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Current customers'
           },
           eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: 'Your cannot apply for a grant if your project does not include the purchase of robotic or innovative technology.',
-            messageLink: {
-              url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
-            }
-          },
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          sidebar:
-          {
-            heading: 'Eligibility',
-            para: `Equipment must increase the Adding Value of primary agricultural or horticultural practices.\n\n
-            Your project’s positive environmental benefit and the increase to Adding Value will be assessed at full application stage.`,
-            items: []
-          },
-          validate: [
-            {
-              type: 'NOT_EMPTY',
-              error: 'Select the type of new technology your project needs'
-            }
-          ],
-          answers: [
-            {
-              key: 'food-mile-impacts-A1',
-              value: 'At Point of Origin - at growers/producers location'
-            },
-            {
-              key: 'food-mile-impacts-A2',
-              value: 'Locally – within 10 miles of origin'
-            },
-            {
-              key: 'food-mile-impacts-A3',
-              value: 'Regionally – within 50 miles of origin'
-            },
-            {
-              key: 'food-mile-impacts-A4',
-              value: 'Nationally – within the UK'
-            },
-            {
-              key: 'food-mile-impacts-A5',
-              value: 'Internationally – outside the UK'
-            }
-          ],
-          yarKey: 'foodMileImpacts'
-
-        },
-        {
-          key: 'environment-impacts',
-          order: 300,
-          title: 'What impact will the project have on the environment?',
-          pageTitle: '',
-          url: 'environment-impacts',
-          baseUrl: 'environment-impacts',
-          backUrl: 'food-mile-impacts',
-          nextUrl: 'score',
-          eliminationAnswerKeys: '',
+          preValidationKeys: ['projectImpact'],
           ineligibleContent: {
             messageContent: '',
+            insertText: { text: '' },
             messageLink: {
               url: '',
               title: ''
             }
           },
-          fundingPriorities: '',
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: ['Improve processing and supply chains',
+                  'Grow your business']
+              }]
+            }]
+          },
+          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
           type: 'multi-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          validate: {
-          },
-          validations: [
+          validate: [
             {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
+              type: 'NOT_EMPTY',
+              error: 'Select who are your current customers'
             }
           ],
           answers: [
             {
-              key: 'environment-impacts-A1',
-              value: 'Energy efficiency improvements'
+              key: 'current-customers-A1',
+              value: 'Processors'
             },
             {
-              key: 'environment-impacts-A2',
-              value: 'Water efficiency improvements'
+              key: 'current-customers-A2',
+              value: 'Wholesalers'
             },
             {
-              key: 'environment-impacts-A3',
-              value: 'Wastage efficiency improvements'
+              key: 'current-customers-A3',
+              value: 'Retailers'
             },
             {
-              key: 'environment-impacts-A4',
-              value: 'Reduces single use plastics'
-            },
-            {
-              value: 'divider'
-            },
-            {
-              key: 'environment-impacts-A5',
-              value: 'None of the above'
+              key: 'current-customers-A4',
+              value: 'Selling direct to consumers'
             }
           ],
-          yarKey: 'environmentImpacts'
-
+          yarKey: 'currentCustomers'
+        },
+        {
+          key: 'future-customers',
+          order: 160,
+          title: 'Who will your customers be after the project?',
+          pageTitle: '',
+          url: 'future-customers',
+          baseUrl: 'future-customers',
+          backUrl: 'current-customers',
+          nextUrl: 'collaboration',
+          preValidationKeys: ['currentCustomers'],
+          eliminationAnswerKeys: '',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Future customers'
+          },
+          ineligibleContent: {
+            messageContent: '',
+            insertText: { text: '' },
+            messageLink: {
+              url: '',
+              title: ''
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: ['Improve processing and supply chains',
+                  'Grow your business']
+              }]
+            }]
+          },
+          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
+          type: 'multi-answer',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select all options that apply'
+            }
+          ],
+          answers: [
+            {
+              key: 'future-customers-A1',
+              value: 'Processors'
+            },
+            {
+              key: 'future-customers-A2',
+              value: 'Wholesalers'
+            },
+            {
+              key: 'future-customers-A3',
+              value: 'Retailers'
+            },
+            {
+              key: 'future-customers-A4',
+              value: 'Selling direct to consumers'
+            }
+          ],
+          yarKey: 'futureCustomers'
+        },
+        {
+          key: 'collaboration',
+          order: 170,
+          title: 'Will you buy materials from other farmers?',
+          pageTitle: '',
+          url: 'collaboration',
+          baseUrl: 'collaboration',
+          backUrl: 'future-customers',
+          nextUrl: 'products-coming-from',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Buying from farmers'
+          },
+          eliminationAnswerKeys: '',
+          preValidationKeys: ['futureCustomers'],
+          ineligibleContent: {
+            messageContent: '',
+            insertText: { text: '' },
+            messageLink: {
+              url: '',
+              title: ''
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: ['improve processing and supply chains', 'encourage collaboration and partnerships']
+              }]
+            }]
+          },
+          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Encourage collaboration and partnerships</li></ul>',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you will be buying materials from other farmers'
+            }
+          ],
+          answers: [
+            {
+              key: 'collaboration-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'collaboration-A2',
+              value: 'No'
+            }
+          ],
+          yarKey: 'collaboration'
+        },
+        {
+          key: 'products-coming-from',
+          order: 180,
+          title: 'Where are the primary products coming from?',
+          pageTitle: '',
+          url: 'products-coming-from',
+          baseUrl: 'products-coming-from',
+          backUrl: 'collaboration',
+          nextUrl: 'processed-sold',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Products coming from'
+          },
+          eliminationAnswerKeys: '',
+          preValidationKeys: ['collaboration'],
+          ineligibleContent: {
+            messageContent: '',
+            insertText: { text: '' },
+            messageLink: {
+              url: '',
+              title: ''
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: ['improve the environment']
+              }]
+            }]
+          },
+          fundingPriorities: '<ul><li>Improve the environment</li></ul>',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select where the primary products are coming from'
+            }
+          ],
+          answers: [
+            {
+              key: 'products-coming-from-A1',
+              value: 'Processing point'
+            },
+            {
+              key: 'products-coming-from-A2',
+              value: 'Within 10 miles'
+            },
+            {
+              key: 'products-coming-from-A3',
+              value: 'Within 50 miles'
+            },
+            {
+              key: 'products-coming-from-A4',
+              value: 'More than 50 miles'
+            },
+            {
+              key: 'products-coming-from-A5',
+              value: 'Outside the UK'
+            }
+          ],
+          yarKey: 'productsComingFrom'
+        },
+        {
+          key: 'processed-sold',
+          order: 190,
+          title: 'Where are the processed products being sold?',
+          pageTitle: '',
+          url: 'processed-sold',
+          baseUrl: 'processed-sold',
+          backUrl: 'products-coming-from',
+          nextUrl: 'environmental-impact',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Where products sold'
+          },
+          eliminationAnswerKeys: '',
+          preValidationKeys: ['productsComingFrom'],
+          ineligibleContent: {
+            messageContent: '',
+            insertText: { text: '' },
+            messageLink: {
+              url: '',
+              title: ''
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: ['improve the environment']
+              }]
+            }]
+          },
+          fundingPriorities: '<ul><li>Improve the environment</li></ul>',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select where the processed products will be sold'
+            }
+          ],
+          answers: [
+            {
+              key: 'processed-sold-A1',
+              value: 'Processing point'
+            },
+            {
+              key: 'processed-sold-A2',
+              value: 'Within 10 miles'
+            },
+            {
+              key: 'processed-sold-A3',
+              value: 'Within 50 miles'
+            },
+            {
+              key: 'processed-sold-A4',
+              value: 'More than 50 miles'
+            },
+            {
+              key: 'processed-sold-A5',
+              value: 'Outside the UK'
+            }
+          ],
+          yarKey: 'processedSold'
+        },
+        {
+          key: 'environmental-impact',
+          order: 200,
+          title: 'How will the project improve the environment?',
+          pageTitle: '',
+          url: 'environmental-impact',
+          baseUrl: 'environmental-impact',
+          backUrl: 'processed-sold',
+          nextUrl: 'score',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Environmental impact'
+          },
+          eliminationAnswerKeys: '',
+          preValidationKeys: ['processedSold'],
+          ineligibleContent: {
+            messageContent: '',
+            insertText: { text: '' },
+            messageLink: {
+              url: '',
+              title: ''
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: ['improve the environment']
+              }]
+            }]
+          },
+          fundingPriorities: '<ul><li>Improve the environment</li></ul>',
+          type: 'multi-answer',
+          minAnswerCount: 1,
+          ga: { dimension: '', value: '' },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select all the options that apply'
+            }
+          ],
+          answers: [
+            {
+              key: 'environmental-impact-A1',
+              value: 'Energy efficiency',
+              hint: {
+                text: 'For example, using variable speed motors or heat exchangers'
+              }
+            },
+            {
+              key: 'environmental-impact-A2',
+              value: 'Water efficiency',
+              hint: {
+                text: 'For example, recycling waste water, rainwater harvesting'
+              }
+            },
+            {
+              key: 'environmental-impact-A3',
+              value: 'Waste efficiency',
+              hint: {
+                text: 'For example, separating waste, maximising waste recycling'
+              }
+            },
+            {
+              key: 'environmental-impact-A4',
+              value: 'Reduce single-use plastics',
+              hint: {
+                text: 'For example, removing unnecessary packaging, replacing plastic packaging'
+              }
+            },
+            {
+              key: 'environmental-impact-A5',
+              value: 'Reduce harmful emissions or pollutants',
+              hint: {
+                text: 'For example, reducing emission from waste water, using dynamic controlled-atmosphere storage to reduce emissions'
+              }
+            },
+            {
+              key: 'environmental-impact-A6',
+              value: 'My project will not improve the environment'
+            }
+          ],
+          yarKey: 'environmentalImpact'
         },
 
-        /// ////// ***************** ROBOTICS END  ************************************/////////////////////
+        /// ////// ***************** After Score  ************************************/////////////////////
         {
           key: 'business-details',
           order: 180,
@@ -1267,22 +1533,18 @@ const questionBank = {
           url: 'business-details',
           baseUrl: 'business-details',
           backUrl: 'score',
-          nextUrl: '/adding-value/applying',
+          nextUrl: 'applying',
+          preValidationKeys: ['current-score'],
+          ga: [
+            { dimension: 'cd2', value: { type: 'score' } },
+            { dimension: 'cm1', value: { type: 'journey-time' } }
+          ],
           eliminationAnswerKeys: '',
           ineligibleContent: {},
           fundingPriorities: '',
           type: 'multi-input',
           minAnswerCount: '',
           maxAnswerCount: '',
-          ga: { dimension: '', value: '' },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
           allFields: [
             {
               yarKey: 'projectName',
@@ -1292,7 +1554,7 @@ const questionBank = {
                 classes: 'govuk-label'
               },
               hint: {
-                text: 'For example, Brown Hill Farm reservoir'
+                text: 'For example, Brown Hill Farm adding value project'
               },
               validate: [
                 {
@@ -1317,8 +1579,8 @@ const questionBank = {
                   error: 'Enter a business name'
                 },
                 {
-                  type: 'MIN_MAX',
-                  min: 5,
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
                   max: 100,
                   error: 'Name must be 100 characters or fewer'
                 }
@@ -1342,14 +1604,14 @@ const questionBank = {
                 },
                 {
                   type: 'REGEX',
-                  regex: NUMBER_REGEX,
-                  error: 'Employee number must be 7 digits or fewer'
+                  regex: WHOLE_NUMBER_REGEX,
+                  error: 'Number of employees must be a whole number, like 305'
                 },
                 {
                   type: 'MIN_MAX',
                   min: 1,
-                  max: 7,
-                  error: 'Employee number must be 7 digits or fewer'
+                  max: 9999999,
+                  error: 'Number must be between 1-9999999'
                 }
               ]
             },
@@ -1371,65 +1633,41 @@ const questionBank = {
                 },
                 {
                   type: 'REGEX',
-                  regex: NUMBER_REGEX,
-                  error: 'Business turnover must be 9 digits or fewer'
+                  regex: WHOLE_NUMBER_REGEX,
+                  error: 'Business turnover must be a whole number, like 100000'
                 },
                 {
                   type: 'MIN_MAX',
                   min: 1,
-                  max: 9,
-                  error: 'Business turnover must be 9 digits or fewer'
+                  max: 999999999,
+                  error: 'Number must be between 1-999999999'
                 }
               ]
             },
             {
-              yarKey: 'inSbi',
-              conditionalKey: 'sbi',
-              type: 'single-answer',
+              yarKey: 'sbi',
+              type: 'input',
               title: 'Single Business Identifier (SBI)',
-              classes: 'govuk-fieldset__legend--s',
+              classes: 'govuk-input govuk-input--width-10',
+              label: {
+                text: 'Single Business Identifier (SBI)',
+                classes: 'govuk-label'
+              },
               hint: {
-                text: 'Select one option'
+                html: 'If you do not have an SBI, you will need to get one for full application'
               },
               validate: [
                 {
-                  type: 'NOT_EMPTY',
-                  error: 'Select if you have an SBI number'
-                },
-                {
-                  dependentKey: 'sbi',
-                  type: 'NOT_EMPTY',
-                  error: 'SBI number must have 9 characters, like 011115678'
-                },
-                {
-                  dependentKey: 'sbi',
                   type: 'REGEX',
-                  regex: NUMBER_REGEX,
-                  error: 'SBI number must have 9 characters, like 011115678'
-                },
-                {
-                  dependentKey: 'sbi',
-                  type: 'MIN_MAX',
-                  min: 9,
-                  max: 9,
+                  regex: SBI_REGEX,
                   error: 'SBI number must have 9 characters, like 011115678'
                 }
+
               ],
-              answers: [
-                {
-                  key: 'inSbi-A1',
-                  conditional: true,
-                  value: 'Yes'
-                },
-                {
-                  key: 'inSbi-A2',
-                  value: 'No'
-                }
-              ]
+              answers: []
             }
           ],
-          yarKey: 'businessDetails',
-          conditionalKey: 'sbi'
+          yarKey: 'businessDetails'
         },
         {
           key: 'applying',
@@ -1439,20 +1677,12 @@ const questionBank = {
           url: 'applying',
           baseUrl: 'applying',
           backUrl: 'business-details',
+          preValidationKeys: ['businessDetails'],
           eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: '',
-            insertText: { text: '' },
-            messageLink: {
-              url: '',
-              title: ''
-            }
-          },
           fundingPriorities: '',
           type: 'single-answer',
-          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          classes: 'govuk-fieldset__legend--l',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1462,17 +1692,16 @@ const questionBank = {
           answers: [
             {
               key: 'applying-A1',
-              value: 'Farmer',
-              redirectUrl: '/adding-value/farmers-details'
+              value: 'Applicant',
+              redirectUrl: 'farmers-details'
             },
             {
               key: 'applying-A2',
               value: 'Agent',
-              redirectUrl: '/adding-value/agents-details'
+              redirectUrl: 'agents-details'
             }
           ],
           yarKey: 'applying'
-
         },
         {
           key: 'farmer-details',
@@ -1481,40 +1710,33 @@ const questionBank = {
           pageTitle: '',
           url: 'farmers-details',
           baseUrl: 'farmer-details',
-          backUrl: '/adding-value/applying',
           nextUrl: 'check-details',
+          preValidationKeys: ['applying'],
           eliminationAnswerKeys: '',
-          ineligibleContent: {
-            messageContent: '',
-            insertText: { text: '' },
-            messageLink: {
-              url: '',
-              title: ''
-            }
-          },
           backUrlObject: {
             dependentQuestionYarKey: 'applying',
-            dependentAnswerKeysArray: ['applying-A1'],
+            dependentAnswerKeysArray: ['applying-A2'],
             urlOptions: {
-              thenUrl: '/adding-value/applying',
-              elseUrl: '/adding-value/agents-details'
+              thenUrl: 'agents-details',
+              elseUrl: 'applying'
             }
           },
           fundingPriorities: '',
           type: 'multi-input',
           minAnswerCount: '',
           maxAnswerCount: '',
-          ga: { dimension: '', value: '' },
-          validations: [],
+          ga: [{ dimension: 'cd3', value: { type: 'yar', key: 'applying' } }],
           allFields: [
+            {
+              type: 'sub-heading',
+              text: 'Name'
+            },
             {
               yarKey: 'firstName',
               type: 'input',
               classes: 'govuk-input--width-20',
               label: {
-                html: `
-                  <span class="govuk-heading-m">Name</span><span>First name</span>
-                `,
+                text: 'First name',
                 classes: 'govuk-label'
               },
               validate: [
@@ -1532,6 +1754,7 @@ const questionBank = {
             {
               yarKey: 'lastName',
               type: 'input',
+              endFieldset: 'true',
               classes: 'govuk-input--width-20',
               label: {
                 text: 'Last name',
@@ -1550,18 +1773,19 @@ const questionBank = {
               ]
             },
             {
+              type: 'sub-heading',
+              text: 'Contact details'
+            },
+            {
               yarKey: 'emailAddress',
-              type: 'input',
+              type: 'email',
               classes: 'govuk-input--width-20',
               label: {
-                text: '',
-                html: `
-                  <span class="govuk-heading-m">Contact details</span><span>Email address</span>
-                `,
+                text: 'Email address',
                 classes: 'govuk-label'
               },
               hint: {
-                text: 'We will only use this to send you a confirmation'
+                text: "We'll only use this to send them confirmation"
               },
               validate: [
                 {
@@ -1577,7 +1801,7 @@ const questionBank = {
             },
             {
               yarKey: 'mobileNumber',
-              type: 'input',
+              type: 'tel',
               classes: 'govuk-input--width-20',
               label: {
                 text: 'Mobile number',
@@ -1589,7 +1813,7 @@ const questionBank = {
               validate: [
                 {
                   type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a landline or mobile number',
+                  error: 'Enter a mobile or landline number',
                   extraFieldsToCheck: ['landlineNumber']
                 },
                 {
@@ -1606,7 +1830,8 @@ const questionBank = {
             },
             {
               yarKey: 'landlineNumber',
-              type: 'input',
+              endFieldset: 'true',
+              type: 'tel',
               classes: 'govuk-input--width-20',
               label: {
                 text: 'Landline number',
@@ -1616,6 +1841,11 @@ const questionBank = {
                 text: 'We will only use this to contact you about your application'
               },
               validate: [
+                {
+                  type: 'NOT_EMPTY_EXTRA',
+                  error: 'Enter a landline or mobile number',
+                  extraFieldsToCheck: ['mobileNumber']
+                },
                 {
                   type: 'REGEX',
                   regex: CHARS_MIN_10,
@@ -1629,13 +1859,15 @@ const questionBank = {
               ]
             },
             {
+              type: 'sub-heading',
+              text: 'Business Address'
+            },
+            {
               yarKey: 'address1',
               type: 'input',
               classes: 'govuk-input--width-20',
               label: {
-                html: `
-                  <span class="govuk-heading-m">Address</span><span>Building and street</span>
-                `,
+                html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>',
                 classes: 'govuk-label'
               },
               validate: [
@@ -1648,7 +1880,11 @@ const questionBank = {
             {
               yarKey: 'address2',
               type: 'input',
-              classes: 'govuk-input--width-20'
+              classes: 'govuk-input--width-20',
+              label: {
+                html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>',
+                classes: 'govuk-label'
+              }
             },
             {
               yarKey: 'town',
@@ -1688,18 +1924,42 @@ const questionBank = {
               type: 'input',
               classes: 'govuk-input--width-5',
               label: {
-                text: 'Postcode',
+                text: 'Business postcode',
                 classes: 'govuk-label'
               },
               validate: [
                 {
                   type: 'NOT_EMPTY',
-                  error: 'Enter your postcode, like AA1 1AA'
+                  error: 'Enter your business postcode, like AA1 1AA'
                 },
                 {
                   type: 'REGEX',
                   regex: POSTCODE_REGEX,
-                  error: 'Enter a postcode, like AA1 1AA'
+                  error: 'Enter a business postcode, like AA1 1AA'
+                }
+              ]
+            },
+            {
+              yarKey: 'projectPostcode',
+              type: 'input',
+              endFieldset: 'true',
+              classes: 'govuk-input--width-5',
+              label: {
+                text: 'Project postcode',
+                classes: 'govuk-label'
+              },
+              hint: {
+                text: 'The site postcode where the work will happen'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your project postcode, like AA1 1AA'
+                },
+                {
+                  type: 'REGEX',
+                  regex: POSTCODE_REGEX,
+                  error: 'Enter a project postcode, like AA1 1AA'
                 }
               ]
             }
@@ -1708,31 +1968,40 @@ const questionBank = {
 
         },
         {
-          key: 'agents-details',
+          key: 'contractors-details',
           order: 201,
-          title: 'Agent’s details',
+          title: 'Contractor’s details',
           pageTitle: '',
-          url: 'agents-details',
-          baseUrl: 'agents-details',
+          url: 'contractors-details',
+          baseUrl: 'contractors-details',
           backUrl: 'applying',
-          nextUrl: 'farmers-details',
+          nextUrl: 'check-details',
+          preValidationKeys: ['applying'],
           eliminationAnswerKeys: '',
-          ineligibleContent: {},
+          backUrlObject: {
+            dependentQuestionYarKey: 'applying',
+            dependentAnswerKeysArray: ['applying-A2'],
+            urlOptions: {
+              thenUrl: 'applying',
+              elseUrl: 'agents-details'
+            }
+          },
           fundingPriorities: '',
           type: 'multi-input',
           minAnswerCount: '',
           maxAnswerCount: '',
-          ga: { dimension: '', value: '' },
-          validations: [],
+          ga: [{ dimension: 'cd3', value: { type: 'yar', key: 'applying' } }],
           allFields: [
+            {
+              type: 'sub-heading',
+              text: 'Name'
+            },
             {
               yarKey: 'firstName',
               type: 'input',
               classes: 'govuk-input--width-20',
               label: {
-                html: `
-                  <span class="govuk-heading-m">Name</span><span>First name</span>
-                `,
+                text: 'First name',
                 classes: 'govuk-label'
               },
               validate: [
@@ -1750,6 +2019,7 @@ const questionBank = {
             {
               yarKey: 'lastName',
               type: 'input',
+              endFieldset: 'true',
               classes: 'govuk-input--width-20',
               label: {
                 text: 'Last name',
@@ -1768,18 +2038,19 @@ const questionBank = {
               ]
             },
             {
+              type: 'sub-heading',
+              text: 'Contact details'
+            },
+            {
               yarKey: 'emailAddress',
-              type: 'input',
+              type: 'email',
               classes: 'govuk-input--width-20',
               label: {
-                text: '',
-                html: `
-                  <span class="govuk-heading-m">Contact details</span><span>Email address</span>
-                `,
+                text: 'Email address',
                 classes: 'govuk-label'
               },
               hint: {
-                text: 'We will only use this to send you a confirmation'
+                text: "We'll only use this to send them confirmation"
               },
               validate: [
                 {
@@ -1795,19 +2066,19 @@ const questionBank = {
             },
             {
               yarKey: 'mobileNumber',
-              type: 'input',
+              type: 'tel',
               classes: 'govuk-input--width-20',
               label: {
                 text: 'Mobile number',
                 classes: 'govuk-label'
               },
               hint: {
-                text: 'We will only use this to contact you about your application'
+                text: 'We will only use this to contact them about their application'
               },
               validate: [
                 {
                   type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a landline or mobile number',
+                  error: 'Enter a mobile or landline number',
                   extraFieldsToCheck: ['landlineNumber']
                 },
                 {
@@ -1824,7 +2095,8 @@ const questionBank = {
             },
             {
               yarKey: 'landlineNumber',
-              type: 'input',
+              endFieldset: 'true',
+              type: 'tel',
               classes: 'govuk-input--width-20',
               label: {
                 text: 'Landline number',
@@ -1834,6 +2106,11 @@ const questionBank = {
                 text: 'We will only use this to contact you about your application'
               },
               validate: [
+                {
+                  type: 'NOT_EMPTY_EXTRA',
+                  error: 'Enter a landline or mobile number',
+                  extraFieldsToCheck: ['mobileNumber']
+                },
                 {
                   type: 'REGEX',
                   regex: CHARS_MIN_10,
@@ -1847,13 +2124,15 @@ const questionBank = {
               ]
             },
             {
+              type: 'sub-heading',
+              text: 'Business address'
+            },
+            {
               yarKey: 'address1',
               type: 'input',
               classes: 'govuk-input--width-20',
               label: {
-                html: `
-                  <span class="govuk-heading-m">Address</span><span>Building and street</span>
-                `,
+                html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>',
                 classes: 'govuk-label'
               },
               validate: [
@@ -1866,7 +2145,11 @@ const questionBank = {
             {
               yarKey: 'address2',
               type: 'input',
-              classes: 'govuk-input--width-20'
+              classes: 'govuk-input--width-20',
+              label: {
+                html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>',
+                classes: 'govuk-label'
+              }
             },
             {
               yarKey: 'town',
@@ -1904,6 +2187,269 @@ const questionBank = {
             {
               yarKey: 'postcode',
               type: 'input',
+              endFieldset: 'true',
+              classes: 'govuk-input--width-5',
+              label: {
+                text: 'Postcode',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your postcode, like AA1 1AA'
+                },
+                {
+                  type: 'REGEX',
+                  regex: POSTCODE_REGEX,
+                  error: 'Enter a postcode, like AA1 1AA'
+                }
+              ]
+            }
+          ],
+          yarKey: 'contractorsDetails'
+
+        },
+        {
+          key: 'agents-details',
+          order: 202,
+          title: 'Agent’s details',
+          pageTitle: '',
+          url: 'agents-details',
+          baseUrl: 'agents-details',
+          backUrl: 'applying',
+          dependantNextUrl: {
+            dependentQuestionYarKey: 'tenancy',
+            dependentAnswerKeysArray: ['tenancy-A3'],
+            urlOptions: {
+              thenUrl: 'contractors-details',
+              elseUrl: 'farmers-details'
+            }
+          },
+          summaryPageUrl: 'check-details',
+          preValidationKeys: ['applying'],
+          eliminationAnswerKeys: '',
+          ineligibleContent: {},
+          fundingPriorities: '',
+          type: 'multi-input',
+          minAnswerCount: '',
+          maxAnswerCount: '',
+          allFields: [
+            {
+              type: 'sub-heading',
+              text: 'Name'
+            },
+            {
+              yarKey: 'firstName',
+              type: 'input',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'First name',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your first name'
+                },
+                {
+                  type: 'REGEX',
+                  regex: NAME_ONLY_REGEX,
+                  error: 'Name must only include letters, hyphens and apostrophes'
+                }
+              ]
+            },
+            {
+              yarKey: 'lastName',
+              type: 'input',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Last name',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your last name'
+                },
+                {
+                  type: 'REGEX',
+                  regex: NAME_ONLY_REGEX,
+                  error: 'Name must only include letters, hyphens and apostrophes'
+                }
+              ]
+            },
+            {
+              yarKey: 'businessName',
+              type: 'input',
+              endFieldset: 'true',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Business name',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your business name'
+                },
+                {
+                  type: 'REGEX',
+                  regex: CHARS_MAX_100,
+                  error: 'Name must be 100 characters or fewer'
+                }
+              ]
+            },
+            {
+              type: 'sub-heading',
+              text: 'Contact details'
+            },
+            {
+              yarKey: 'emailAddress',
+              type: 'email',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Email address',
+                classes: 'govuk-label'
+              },
+              hint: {
+                text: 'We will only use this to send you a confirmation'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your email address'
+                },
+                {
+                  type: 'REGEX',
+                  regex: EMAIL_REGEX,
+                  error: 'Enter an email address in the correct format, like name@example.com'
+                }
+              ]
+            },
+            {
+              yarKey: 'mobileNumber',
+              type: 'tel',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Mobile number',
+                classes: 'govuk-label'
+              },
+              hint: {
+                text: 'We will only use this to contact you about your application'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY_EXTRA',
+                  error: 'Enter a mobile or landline number',
+                  extraFieldsToCheck: ['landlineNumber']
+                },
+                {
+                  type: 'REGEX',
+                  regex: CHARS_MIN_10,
+                  error: 'Your mobile number must have at least 10 characters'
+                },
+                {
+                  type: 'REGEX',
+                  regex: PHONE_REGEX,
+                  error: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
+                }
+              ]
+            },
+            {
+              yarKey: 'landlineNumber',
+              type: 'tel',
+              endFieldset: 'true',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Landline number',
+                classes: 'govuk-label'
+              },
+              hint: {
+                text: 'We will only use this to contact you about your application'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY_EXTRA',
+                  error: 'Enter a landline or mobile number',
+                  extraFieldsToCheck: ['mobileNumber']
+                },
+                {
+                  type: 'REGEX',
+                  regex: CHARS_MIN_10,
+                  error: 'Your landline number must have at least 10 characters'
+                },
+                {
+                  type: 'REGEX',
+                  regex: PHONE_REGEX,
+                  error: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
+                }
+              ]
+            },
+            {
+              type: 'sub-heading',
+              text: 'Business address'
+            },
+            {
+              yarKey: 'address1',
+              type: 'input',
+              classes: 'govuk-input--width-20',
+              label: {
+                html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your building and street details'
+                }
+              ]
+            },
+            {
+              yarKey: 'address2',
+              type: 'input',
+              classes: 'govuk-input--width-20',
+              label: {
+                html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>',
+                classes: 'govuk-label'
+              }
+            },
+            {
+              yarKey: 'town',
+              type: 'input',
+              classes: 'govuk-input--width-10',
+              label: {
+                text: 'Town',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your town'
+                }
+              ]
+            },
+            {
+              yarKey: 'county',
+              type: 'select',
+              classes: 'govuk-input--width-10',
+              label: {
+                text: 'County',
+                classes: 'govuk-label'
+              },
+              answers: [
+                ...LIST_COUNTIES
+              ],
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Select your county'
+                }
+              ]
+            },
+            {
+              yarKey: 'postcode',
+              type: 'input',
+              endFieldset: 'true',
               classes: 'govuk-input--width-5',
               label: {
                 text: 'Postcode',
@@ -1931,53 +2477,46 @@ const questionBank = {
           title: 'Check your details',
           pageTitle: 'Check details',
           url: 'check-details',
-          baseUrl: 'check-details',
-          backUrl: 'farmers-details',
-          nextUrl: 'confirm',
-          eliminationAnswerKeys: '',
-          ineligibleContent: {},
           backUrlObject: {
             dependentQuestionYarKey: 'applying',
-            dependentAnswerKeysArray: ['applying-A1'],
+            dependentAnswerKeysArray: ['applying-A2'],
             urlOptions: {
-              thenUrl: '/adding-value/farmers-details',
-              elseUrl: '/adding-value/agents-details'
+              thenUrl: 'contractors-details',
+              elseUrl: 'farmers-details'
             }
           },
-          maybeEligible: true,
-          maybeEligibleContent: {
-            messageHeader: 'Check details',
-            messageContent: ''
+          nextUrl: 'confirm',
+          preValidationKeys: ['applying'],
+          eliminationAnswerKeys: '',
+          ineligibleContent: {},
+          pageData: {
+            businessDetailsLink: 'business-details',
+            agentDetailsLink: 'agents-details',
+            contractorDetailsLink: 'contractors-details',
+            farmerDetailsLink: 'farmers-details'
           },
           fundingPriorities: '',
           type: '',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
-          answers: [],
-          yarKey: 'checkDetails'
-
+          answers: []
         },
         {
           key: 'confirm',
+          title: 'Confirm and send',
           order: 220,
           url: 'confirm',
           backUrl: 'check-details',
           nextUrl: 'confirmation',
+          preValidationKeys: ['farmerDetails'],
+          preValidationKeysRule: { condition: 'ANY' },
           maybeEligible: true,
           maybeEligibleContent: {
             messageHeader: 'Confirm and send',
             messageContent: `<ul class="govuk-list"> <li>I confirm that, to the best of my knowledge, the details I have provided are correct.</li>
             <li> I understand the score was based on the answers I provided.</li>
             <li> I am aware the information I submit will be checked.</li>
-            <li> I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.</li></ul>`
+            <li> I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.</li></ul>
+            <br/>So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.`
           },
           answers: [
             {
@@ -1994,12 +2533,18 @@ const questionBank = {
           pageTitle: '',
           url: 'confirmation',
           baseUrl: 'confirmation',
+          preValidationKeys: ['consentOptional'],
+          ga: [
+            { dimension: 'cd2', value: { type: 'score' } },
+            { dimension: 'cd5', value: { type: 'confirmationId' } },
+            { dimension: 'cm1', value: { type: 'journey-time' } }
+          ],
           maybeEligible: true,
           maybeEligibleContent: {
             reference: {
               titleText: 'Details submitted',
               html: 'Your reference number<br><strong>{{_confirmationId_}}</strong>',
-              surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/preview/SV_9EwLLuCwWGJMz8a?Q_CHL=preview&Q_SurveyVersionID=current'
+              surveyLink: process.env.SURVEY_LINK
             },
             messageContent: `You will get an email with a record of your answers.<br/><br/>
             If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Transformation Fund scheme:<br/><br/>
@@ -2007,7 +2552,7 @@ const questionBank = {
             <br/>Monday to Friday, 9am to 5pm (except public holidays)<br/>
             <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges">Find out about call charges (opens in new tab)</a></p>
             
-            Email: <a class="govuk-link" target="_blank" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a>
+            Email: <a class="govuk-link" title="Send email to RPA" target="_blank" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a>
             
             <p>RPA will be in touch when the full application period opens. They'll tell you about the application form and any guidance you need to submit a full application.</p>`,
             warning: {
@@ -2017,18 +2562,14 @@ const questionBank = {
             <p>Before you start the project, you can:</p>
             <ul>
               <li>get quotes from suppliers</li>
-              <li>apply for planning permission or an abstraction licence</li>
+              <li>apply for planning permission</li>
             </ul>
             <p><b>You will not automatically get a grant.</b> The grant is expected to be highly competitive and you are competing against other projects.</p>`
           },
           fundingPriorities: '',
           type: '',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          validations: [],
-          answers: [],
-          yarKey: ''
-
+          answers: []
         }
       ]
     }

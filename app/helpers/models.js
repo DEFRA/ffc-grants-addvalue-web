@@ -64,7 +64,7 @@ const getDependentSideBar = (sidebar, request) => {
 
 const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
   const url = getUrl(backUrlObject, backUrl, request)
-  return hasScore && (url === 'project-impact' || url === 'SSSI') ? null : url
+  return hasScore ? null : url
 }
 
 const getModel = (data, question, request, conditionalHtml = '') => {
@@ -85,7 +85,6 @@ const getModel = (data, question, request, conditionalHtml = '') => {
   } else if (warning) {
     warningDetails = warning
   }
-
   return {
     type,
     key,

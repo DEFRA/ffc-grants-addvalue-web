@@ -2,7 +2,7 @@ const { senders, getDesirabilityAnswers } = require('../messaging')
 const Wreck = require('@hapi/wreck')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
-const { setYarValue, getYarValue } = require('../helpers/session')
+const { setYarValue } = require('../helpers/session')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -11,7 +11,7 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const nextPath = `${urlPrefix}/business-details`
 
 function createModel (data, request) {
-  const previousPath = `${urlPrefix}/${getYarValue(request, 'projectSubject') === 'Robotics and innovation' ? 'robotics/technology' : 'slurry/slurry-to-be-treated'}`
+  const previousPath = `${urlPrefix}/environmental-impact`
 
   return {
     backLink: previousPath,
@@ -65,7 +65,7 @@ module.exports = [{
       if (!msgDataToSend) {
         throw new Error('no data available for score.')
       }
-      console.log('Scoring...2')
+      console.log('Scoring...2', msgDataToSend)
       // Always re-calculate our score before rendering this page
       await senders.sendProjectDetails(msgDataToSend, request.yar.id)
 
@@ -76,8 +76,7 @@ module.exports = [{
       if (msgData) {
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
           const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
-          console.log(bankQuestion, 'bankQuestion')
-          desirabilityQuestion.title = bankQuestion.title
+          desirabilityQuestion.title = bankQuestion.score.title ?? bankQuestion.title
           desirabilityQuestion.desc = bankQuestion.desc ?? ''
           desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
           desirabilityQuestion.order = bankQuestion.order
@@ -86,7 +85,6 @@ module.exports = [{
           desirabilityQuestion.fundingPriorities = bankQuestion.fundingPriorities
           return desirabilityQuestion
         })
-        console.log('questions', questions)
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {
           case 'strong':
