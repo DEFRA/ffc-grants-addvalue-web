@@ -78,9 +78,9 @@ const getModel = (data, question, request, conditionalHtml = '') => {
 
   let warningDetails
   if (warningCondition) {
-    const { dependentWarningQuestionKey, dependentWarningAnswerKeysArray, warning } = warningCondition
+    const { dependentWarningQuestionKey, dependentWarningAnswerKeysArray } = warningCondition
     if (allAnswersSelected(request, dependentWarningQuestionKey, dependentWarningAnswerKeysArray)) {
-      warningDetails = warning
+      warningDetails = warningCondition.warning
     }
   } else if (warning) {
     warningDetails = warning
