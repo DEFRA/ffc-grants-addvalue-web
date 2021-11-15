@@ -3,6 +3,8 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "./components/macro.njk" import crumbToken %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
 {% block pageTitle %}
   Scoring results - {{siteTitle}}
 {% endblock %}
@@ -55,6 +57,12 @@
             </div>
           </dl>
         </div>
+        <br/>
+        {{ govukWarningText({
+          text: "The likelihood of a full application being successful will also depend on the number and value of applications we receive.",
+          iconFallbackText: "Warning"
+        }) }}
+        <p class="govuk-body">Value for money will be assessed alongside the funding priorities at full application stage and this may impact your overall project score.</p>
       </div>
     </div>
 
@@ -79,7 +87,7 @@
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">
             {% for answer in question.answers %}
-              {{answer.title}}
+              {{question.title}}
               <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
                 {% for selectedAns in answer.input %}
                 <li>{{selectedAns.value}} {{question.unit}}</li>

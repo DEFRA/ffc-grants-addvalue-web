@@ -14,8 +14,8 @@ const createMsg = require('../messaging/create-msg')
 const gapiService = require('../services/gapi-service')
 const { startPageUrl } = require('../config/server')
 const { ALL_QUESTIONS } = require('../config/question-bank')
-const getConfirmationId = (guid, journey) => {
-  const prefix = journey === 'Slurry acidification' ? 'SL' : 'RI'
+const getConfirmationId = (guid) => {
+  const prefix = 'AV'
   return `${prefix}-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
 }
 
@@ -41,9 +41,10 @@ const saveValuesToArray = (yarKey, fields) => {
 }
 
 const getPage = async (question, request, h) => {
-  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys } = question
+  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
   const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
-  const isRedirect = guardPage(request, preValidationKeys)
+  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
+  console.log(isRedirect, 'isRedirect')
   if (isRedirect) {
     return h.redirect(startPageUrl)
   }
@@ -57,7 +58,7 @@ const getPage = async (question, request, h) => {
       if (!getYarValue(request, 'consentMain')) {
         return h.redirect(startPageUrl)
       }
-      confirmationId = getConfirmationId(request.yar.id, getYarValue(request, 'projectSubject'))
+      confirmationId = getConfirmationId(request.yar.id)
       try {
         await senders.sendContactDetails(createMsg.getAllDetails(request, confirmationId), request.yar.id)
       } catch (err) {
@@ -202,27 +203,7 @@ const getPage = async (question, request, h) => {
       break
   }
 
-  let PAGE_MODEL = getModel(data, question, request, conditionalHtml)
-
-  if (url === 'robotics/project-cost') {
-    const roboticsProjectItems = getYarValue(request, 'projectItems')
-    const otherRoboticsEquipment = getYarValue(request, 'otherRoboticEquipment')
-    let projectCostBackUrl
-
-    if (!roboticsProjectItems.includes('Other robotic equipment')) {
-      projectCostBackUrl = 'project-items'
-    } else if (otherRoboticsEquipment === 'Yes') {
-      projectCostBackUrl = 'other-robotic-conditional'
-    } else {
-      projectCostBackUrl = 'other-robotic-equipment'
-    }
-
-    PAGE_MODEL = {
-      ...PAGE_MODEL,
-      backUrl: projectCostBackUrl
-    }
-  }
-
+  const PAGE_MODEL = getModel(data, question, request, conditionalHtml)
   return h.view('page', PAGE_MODEL)
 }
 
@@ -239,7 +220,6 @@ const showPostPage = (currentQuestion, request, h) => {
     thisAnswer = answers?.find(answer => (answer.value === value))
 
     if (type !== 'multi-input' && key !== 'secBtn') {
-      payload.projectImpacts === 'Introduce acidification for the first time' && setYarValue(request, 'slurryCurrentlyTreated', 0)
       setYarValue(request, key, key === 'projectPostcode' ? value.replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase() : value)
     }
   }

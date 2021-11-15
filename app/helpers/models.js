@@ -64,7 +64,7 @@ const getDependentSideBar = (sidebar, request) => {
 
 const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
   const url = getUrl(backUrlObject, backUrl, request)
-  return hasScore && (url === 'project-impact' || url === 'SSSI') ? null : url
+  return hasScore ? url : null
 }
 
 const getModel = (data, question, request, conditionalHtml = '') => {
@@ -78,14 +78,13 @@ const getModel = (data, question, request, conditionalHtml = '') => {
 
   let warningDetails
   if (warningCondition) {
-    const { dependentWarningQuestionKey, dependentWarningAnswerKeysArray, warning } = warningCondition
+    const { dependentWarningQuestionKey, dependentWarningAnswerKeysArray } = warningCondition
     if (allAnswersSelected(request, dependentWarningQuestionKey, dependentWarningAnswerKeysArray)) {
-      warningDetails = warning
+      warningDetails = warningCondition.warning
     }
   } else if (warning) {
     warningDetails = warning
   }
-
   return {
     type,
     key,

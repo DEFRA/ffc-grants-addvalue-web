@@ -13,40 +13,29 @@ function getAllDetails (request, confirmationId) {
 }
 
 const desirabilityAnswersSchema = Joi.object({
-  projectSubject: Joi.string(),
-  projectImpacts: Joi.string().allow(null),
-  dataAnalytics: Joi.string().allow(null),
-  energySource: Joi.array().allow(null).items(Joi.string()),
-  agriculturalSector: Joi.array().allow(null).items(Joi.string()),
-  roboticProjectImpacts: Joi.string().allow(null)
+  productsProcessed: Joi.string(),
+  howAddingValue: Joi.string(),
+  projectImpact: Joi.string(),
+  currentCustomers: Joi.array().items(Joi.string()),
+  futureCustomers: Joi.array().items(Joi.string()),
+  collaboration: Joi.string(),
+  productsComingFrom: Joi.string(),
+  processedSold: Joi.string(),
+  environmentalImpact: Joi.array().items(Joi.string())
 })
 
 function getDesirabilityAnswers (request) {
   try {
-    let val = {}
-    const projectSubject = getYarValue(request, 'projectSubject')
-    if (projectSubject === 'Robotics and innovation') {
-      const energySource = []
-      if (!Array.isArray(getYarValue(request, 'energySource'))) {
-        energySource.push(getYarValue(request, 'energySource'))
-      }
-      const agriculturalSector = []
-      if (!Array.isArray(getYarValue(request, 'agriculturalSector'))) {
-        agriculturalSector.push(getYarValue(request, 'agriculturalSector'))
-      }
-      val = {
-        projectSubject: getYarValue(request, 'projectSubject'),
-        projectImpacts: getYarValue(request, 'projectImpacts'),
-        dataAnalytics: getYarValue(request, 'dataAnalytics'),
-        energySource: energySource.length > 0 ? energySource : getYarValue(request, 'energySource'),
-        agriculturalSector: agriculturalSector.length > 0 ? agriculturalSector : getYarValue(request, 'agriculturalSector'),
-        roboticProjectImpacts: getYarValue(request, 'technology')
-      }
-    } else {
-      val = {
-        projectSubject: getYarValue(request, 'projectSubject'),
-        projectImpacts: getYarValue(request, 'projectImpacts')
-      }
+    const val = {
+      productsProcessed: getYarValue(request, 'productsProcessed'),
+      howAddingValue: getYarValue(request, 'howAddingValue'),
+      projectImpact: getYarValue(request, 'projectImpact'),
+      currentCustomers: getYarValue(request, 'currentCustomers'),
+      futureCustomers: getYarValue(request, 'futureCustomers'),
+      collaboration: getYarValue(request, 'collaboration'),
+      productsComingFrom: getYarValue(request, 'productsComingFrom'),
+      processedSold: getYarValue(request, 'processedSold'),
+      environmentalImpact: getYarValue(request, 'environmentalImpact')
     }
     const result = desirabilityAnswersSchema.validate(val, {
       abortEarly: false

@@ -1,138 +1,179 @@
 
 const msgData = {
   grantScheme: {
-    key: 'PROD002',
-    name: 'Prod Grant Robotics'
+    key: 'ADDVAL01',
+    name: 'Adding Value Grant'
   },
   desirability: {
     questions: [
       {
-        key: 'project-subject',
+        key: 'products-processed',
         answers: [
           {
-            key: 'project-subject',
-            title: 'Project details',
+            key: 'products-processed',
+            title: 'What type of products are being processed?',
             input: [
               {
-                key: 'project-subject-A1',
-                value: 'Robotics and innovation'
-              }
-            ]
-          }
-        ],
-        rating: {
-          score: 1,
-          band: 'Weak'
-        }
-      },
-      {
-        key: 'robotics-technology',
-        answers: [
-          {
-            key: 'robotics-technology',
-            title: 'Robotics Technology',
-            input: [
-              {
-                "key": "robotics-technology-A1",
-                "value": "Yes, we’re using it now"
-              }
-            ]
-          }
-        ],
-        rating: {
-          score: 6,
-          band: 'Average'
-        }
-      },
-      {
-        key: 'robotics-data-analytics',
-        answers: [
-          {
-            key: 'robotics-data-analytics',
-            title: 'Robotics Data Analytics',
-            input: [
-              {
-                key: 'robotics-data-analytics-A1',
-                value: 'Yes, we have the technology already'
-              }
-            ]
-          }
-        ],
-        rating: {
-          score: 40,
-          band: 'Strong'
-        }
-      },
-      {
-        key: 'robotics-data-analytics',
-        answers: [
-          {
-            key: 'robotics-data-analytics',
-            title: 'Robotics Data Analytics',
-            input: [
-              {
-                key: 'robotics-data-analyticsa-A1',
-                value: 'Yes, we have the technology already'
-              }
-            ]
-          }
-        ],
-        rating: {
-          score: 25,
-          band: 'Strong'
-        }
-      },
-      {
-        key: 'robotics-energy-source',
-        answers: [
-          {
-            key: 'robotics-energy-source',
-            title: 'Robotics Energy Source',
-            input: [
-              {
-                key: 'robotics-energy-source-A1',
-                value: 'Electricity – derived from renewable generation on farm'
-              }
-            ]
-          }
-        ],
-        rating: {
-          score: 0.5,
-          band: 'Weak'
-        }
-      },
-      {
-        key: 'robotics-agricultural-sector',
-        answers: [
-          {
-            key: 'robotics-agricultural-sector',
-            title: 'Robotics Agricultural Sector',
-            input: [
-              {
-                key: 'robotics-agricultural-sector-A1',
-                value: 'Horticulture'
+                key: 'products-processed-A1',
+                value: 'Arable crops'
               }
             ]
           }
         ],
         rating: {
           score: 4,
-          band: 'Strong'
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
+        key: 'how-adding-value',
+        answers: [
+          {
+            key: 'how-adding-value',
+            title: 'How will you add value to the products?',
+            input: [
+              {
+                key: 'how-adding-value-A1',
+                value: 'Processing or preparing primary product'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 0.8,
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
+        key: 'project-impact',
+        answers: [
+          {
+            key: 'project-impact',
+            title: 'What impact will the project have?',
+            input: [
+              {
+                key: 'project-impact-A1',
+                value: 'Diversifying into creating added-value products'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 1.6,
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
+        key: 'current-customers',
+        answers: [
+          {
+            key: 'current-customers',
+            title: 'Who are your current customers?',
+            input: [
+              {
+                key: 'current-customers-A1',
+                value: 'Processors'
+              },
+              {
+                key: 'current-customers-A2',
+                value: 'Wholesalers'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 4,
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
+        key: 'future-customers',
+        answers: [
+          {
+            key: 'future-customers',
+            title: 'Who are your current customers?',
+            input: [
+              {
+                key: 'future-customers-A1',
+                value: 'Processors'
+              },
+              {
+                key: 'future-customers-A2',
+                value: 'Wholesalers'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 4,
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
+        key: 'collaboration',
+        answers: [
+          {
+            key: 'collaboration',
+            title: 'Who are your current customers?',
+            input: [
+              {
+                key: 'collaboration-A1',
+                value: 'Yes'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 4,
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
+        key: 'environmental-impact',
+        answers: [
+          {
+            key: 'environmental-impact',
+            title: 'How will the project improve the environment?',
+            input: [
+              {
+                key: 'environmental-impact-A1',
+                value: 'Energy efficiency'
+              },
+              {
+                key: 'environmental-impact-A2',
+                value: 'Water efficiency'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 0.8,
+          band: 'Strong',
+          importance: null
         }
       }
     ],
     overallRating: {
-      score: 76.5,
-      band: 'Strong'
+      score: 19,
+      band: 'Weak'
     }
   },
   questionMapping: {
-    projectSubject: 'project-subject',
-    projectImpacts: 'project-impacts',
-    dataAnalytics: 'robotics-data-analytics',
-    energySource: 'robotics-energy-source',
-    agriculturalSector: 'robotics-agricultural-sector',
-    roboticProjectImpacts: 'waterSourcePlanned'
+    productsProcessed: 'products-processed',
+    howAddingValue: 'how-adding-value',
+    projectImpact: 'project-impact',
+    currentCustomers: 'current-customers',
+    futureCustomers: 'future-customers',
+    collaboration: 'collaboration',
+    productsComingFrom: 'products-coming-from',
+    processedSold: 'processed-sold',
+    environmentalImpact: 'environmental-impact'
   }
 }
 module.exports = msgData
