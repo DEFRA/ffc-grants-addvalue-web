@@ -1111,11 +1111,19 @@ const questionBank = {
           answers: [
             {
               key: 'project-impact-A1',
-              value: 'Diversifying into creating added-value products'
+              value: 'Creating added-value products for the first time'
             },
             {
               key: 'project-impact-A2',
-              value: 'Increase volume or range of added-value products'
+              value: 'Increasing volume of added-value products'
+            },
+            {
+              key: 'project-impact-A3',
+              value: 'Increasing range of added-value products'
+            },
+            {
+              key: 'project-impact-A4',
+              value: 'Allow selling direct to consumer ( i.e. retail and dis)'
             }
           ],
           yarKey: 'projectImpact'
