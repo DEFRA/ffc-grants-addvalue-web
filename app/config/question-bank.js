@@ -1035,7 +1035,7 @@ const questionBank = {
           answers: [
             {
               key: 'how-adding-value-A1',
-              value: 'Processing or preparing primary product',
+              value: 'Slaughtering, processing or preparing primary product',
               hint: {
                 text: 'For example, cut and packed meat, yogurt to cheese, brewing or distilling'
               }
@@ -1056,10 +1056,14 @@ const questionBank = {
             },
             {
               key: 'how-adding-value-A4',
-              value: 'Dynamic controlled-atmosphere storage',
+              value: 'Controlled atmosphere or dynamic controlled atmosphere storage',
               hint: {
                 text: 'Controlled-atmosphere storage'
               }
+            },
+            {
+              key: 'how-adding-value-A5',
+              value: 'New retail facility to sell direct to consumers'
             }
           ],
           yarKey: 'howAddingValue'
@@ -1252,6 +1256,10 @@ const questionBank = {
             {
               key: 'future-customers-A4',
               value: 'Selling direct to consumers'
+            },
+            {
+              key: 'future-customers-A5',
+              value: 'No change'
             }
           ],
           yarKey: 'futureCustomers'
