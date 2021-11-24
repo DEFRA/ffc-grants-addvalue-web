@@ -3,7 +3,6 @@ const Wreck = require('@hapi/wreck')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 const { setYarValue } = require('../helpers/session')
-const { addSummaryRow } = require('../helpers/score-helpers')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -73,11 +72,8 @@ module.exports = [{
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
-      const howAddingValueQuestion = ALL_QUESTIONS.find(question => question.key === 'how-adding-value')
-
-      const howAddingValueQuestionObj = addSummaryRow(howAddingValueQuestion, request)
+      console.log('msgData', msgData)
       if (msgData) {
-        msgData.desirability.questions.push(howAddingValueQuestionObj)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
           const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = bankQuestion.score.title ?? bankQuestion.title
