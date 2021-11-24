@@ -1082,6 +1082,9 @@ const questionBank = {
             isDisplay: true,
             title: 'Project impact'
           },
+          hint: {
+            text: 'Select one option'
+          },
           eliminationAnswerKeys: '',
           preValidationKeys: ['howAddingValue'],
           ineligibleContent: {
