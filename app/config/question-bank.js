@@ -905,6 +905,9 @@ const questionBank = {
           backUrl: 'remaining-costs',
           nextUrl: 'how-adding-value',
           preValidationKeys: ['canPayRemainingCost'],
+          hint: {
+            text: 'Select one option'
+          },
           score: {
             isScore: true,
             isDisplay: true,
@@ -920,10 +923,16 @@ const questionBank = {
             }
           },
           sidebar: {
-            heading: 'Funding priorities',
-            para: 'RPA wants to fund projects that:',
-            items: [
-              'improve processing and supply chains'
+            values: [
+              {
+                heading: 'Funding priorities',
+                content: [{
+                  para: 'RPA wants to fund projects that:',
+                  items: [
+                    'create and expand processing capacity to provide more English-grown food for customers to buy'
+                  ]
+                }]
+              }
             ]
           },
           fundingPriorities: '<ul><li>Improve processing and supply chains</li></ul>',
