@@ -120,7 +120,10 @@ const getPage = async (question, request, h) => {
     }
   }
 
-  const data = getYarValue(request, yarKey) || null
+  let data = getYarValue(request, yarKey) || null
+  if (type === 'multi-answer' && !!data) {
+    data = [data].flat()
+  }
   let conditionalHtml
   if (question?.conditionalKey && question?.conditionalLabelData) {
     const conditional = yarKey === 'businessDetails' ? yarKey : question.conditionalKey
