@@ -25,6 +25,8 @@ const desirabilityAnswersSchema = Joi.object({
 
 function getDesirabilityAnswers (request) {
   try {
+    let envImpactVal = getYarValue(request, 'environmentalImpact')
+    envImpactVal = Array.isArray(envImpactVal) ? envImpactVal : [envImpactVal]
     const val = {
       productsProcessed: getYarValue(request, 'productsProcessed'),
       howAddingValue: getYarValue(request, 'howAddingValue'),
@@ -33,7 +35,7 @@ function getDesirabilityAnswers (request) {
       collaboration: getYarValue(request, 'collaboration'),
       productsComingFrom: getYarValue(request, 'productsComingFrom'),
       processedSold: getYarValue(request, 'processedSold'),
-      environmentalImpact: getYarValue(request, 'environmentalImpact')
+      environmentalImpact: envImpactVal
     }
     const result = desirabilityAnswersSchema.validate(val, {
       abortEarly: false
