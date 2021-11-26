@@ -111,7 +111,7 @@
               },
               {
                 key: {
-                  text: "Address"
+                  text: "Business address"
                 },
                 value: {
                   html: agentDetails.address
@@ -123,13 +123,13 @@
 
         <br/>
       
-        {% set farmerSummaryItems = [
+        {% set applicantSummaryItems = [
             {
               key: {
                 text: "Name"
               },
               value: {
-                text:  farmerDetails.name
+                text:  applicantDetails.name
               }
             },
             {
@@ -137,15 +137,23 @@
                 text: "Contact details"
               },
               value: {
-                html: farmerDetails.contact
+                html: applicantDetails.contact
               }
             },
             {
               key: {
-                text: "Address"
+                text: "Business address"
               },
               value: {
-                html: farmerDetails.address
+                html: applicantDetails.address
+              }
+            },
+            {
+              key: {
+                text: "Project postcode"
+              },
+              value: {
+                html: applicantDetails.projectPostcode
               }
             }
           ]
@@ -153,11 +161,11 @@
 
         <div>
             <h2 class="govuk-heading-m check-detail-heading">Applicant’s details</h2>
-            <a title="Change Applicant’s details" class="check-detail-change" href="{{farmerDetailsLink}}">Change<span class="govuk-visually-hidden">Change farmer's details</span></a>
+            <a title="Change Applicant’s details" class="check-detail-change" href="{{applicantDetailsLink}}">Change<span class="govuk-visually-hidden">Change applicant's details</span></a>
             <hr/>
         </div>
 
-        {{ govukSummaryList({ rows: farmerSummaryItems }) }}
+        {{ govukSummaryList({ rows: applicantSummaryItems }) }}
       
       </div>
     </div>

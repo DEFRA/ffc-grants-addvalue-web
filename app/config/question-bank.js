@@ -2252,14 +2252,7 @@ const questionBank = {
           title: 'Check your details',
           pageTitle: 'Check details',
           url: 'check-details',
-          backUrlObject: {
-            dependentQuestionYarKey: 'applying',
-            dependentAnswerKeysArray: ['applying-A2'],
-            urlOptions: {
-              thenUrl: 'contractors-details',
-              elseUrl: 'applicant-details'
-            }
-          },
+          backUrl: 'applicant-details',
           nextUrl: 'confirm',
           preValidationKeys: ['applying'],
           eliminationAnswerKeys: '',
@@ -2267,7 +2260,6 @@ const questionBank = {
           pageData: {
             businessDetailsLink: 'business-details',
             agentDetailsLink: 'agents-details',
-            contractorDetailsLink: 'contractors-details',
             applicantDetailsLink: 'applicant-details'
           },
           fundingPriorities: '',

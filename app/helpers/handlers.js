@@ -143,13 +143,13 @@ const getPage = async (question, request, h) => {
     const applying = getYarValue(request, 'applying')
     const businessDetails = getYarValue(request, 'businessDetails')
     const agentDetails = getYarValue(request, 'agentsDetails')
-    const farmerDetails = getYarValue(request, 'farmerDetails')
+    const applicantDetails = getYarValue(request, 'applicantDetails')
 
     const agentContact = saveValuesToArray(agentDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
-    const agentAddress = saveValuesToArray(agentDetails, ['address1', 'address2', 'county', 'postcode'])
+    const agentAddress = saveValuesToArray(agentDetails, ['address1', 'address2', 'town', 'county', 'postcode'])
 
-    const farmerContact = saveValuesToArray(farmerDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
-    const farmerAddress = saveValuesToArray(farmerDetails, ['address1', 'address2', 'county', 'postcode'])
+    const applicantContact = saveValuesToArray(applicantDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
+    const applicantAddress = saveValuesToArray(applicantDetails, ['address1', 'address2', 'town', 'county', 'postcode'])
 
     const MODEL = {
       ...question.pageData,
@@ -157,13 +157,13 @@ const getPage = async (question, request, h) => {
       nextUrl,
       applying,
       businessDetails,
-      farmerDetails: {
-        ...farmerDetails,
-        ...(farmerDetails
+      applicantDetails: {
+        ...applicantDetails,
+        ...(applicantDetails
           ? {
-              name: `${farmerDetails.firstName} ${farmerDetails.lastName}`,
-              contact: farmerContact.join('<br/>'),
-              address: farmerAddress.join('<br/>')
+              name: `${applicantDetails.firstName} ${applicantDetails.lastName}`,
+              contact: applicantContact.join('<br/>'),
+              address: applicantAddress.join('<br/>')
             }
           : {}
         )
@@ -189,7 +189,7 @@ const getPage = async (question, request, h) => {
     case 'score':
     case 'business-details':
     case 'agents-details':
-    case 'farmers-details': {
+    case 'applicant-details': {
       let MODEL = getModel(data, question, request, conditionalHtml)
       const reachedCheckDetails = getYarValue(request, 'reachedCheckDetails')
 
