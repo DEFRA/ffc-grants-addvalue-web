@@ -453,11 +453,15 @@ const questionBank = {
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
-          sidebar:
-          {
-            heading: 'Eligibility',
-            para: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
-            items: []
+          sidebar: {
+            values: [
+              {
+                heading: 'Eligibility',
+                content: [{
+                  para: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
+                  items: []
+                }]
+              }]
           },
           validate: [
             {
@@ -920,11 +924,15 @@ const questionBank = {
             }
           },
           sidebar: {
-            heading: 'Funding priorities',
-            para: 'RPA wants to fund projects that:',
-            items: [
-              'improve processing and supply chains'
-            ]
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: [
+                  'improve processing and supply chains'
+                ]
+              }]
+            }]
           },
           fundingPriorities: '<ul><li>Improve processing and supply chains</li></ul>',
           type: 'single-answer',
@@ -1004,6 +1012,9 @@ const questionBank = {
             isDisplay: true,
             title: 'Adding value'
           },
+          hint: {
+            text: 'Select one option'
+          },
           eliminationAnswerKeys: '',
           preValidationKeys: ['productsProcessed'],
           ineligibleContent: {
@@ -1015,11 +1026,15 @@ const questionBank = {
             }
           },
           sidebar: {
-            heading: 'Funding priorities',
-            para: 'RPA wants to fund projects that:',
-            items: [
-              'improve processing and supply chains',
-              'grow your business']
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that:',
+                items: [
+                  'improve processing and supply chains',
+                  'grow your business']
+              }]
+            }]
           },
           fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
           type: 'single-answer',
@@ -1215,6 +1230,9 @@ const questionBank = {
             isDisplay: true,
             title: 'Future customers'
           },
+          hint: {
+            text: 'Select all that apply'
+          },
           ineligibleContent: {
             messageContent: '',
             insertText: { text: '' },
@@ -1336,6 +1354,9 @@ const questionBank = {
             isDisplay: true,
             title: 'Products coming from'
           },
+          hint: {
+            text: 'Select one option'
+          },
           eliminationAnswerKeys: '',
           preValidationKeys: ['collaboration'],
           ineligibleContent: {
@@ -1403,6 +1424,9 @@ const questionBank = {
             isDisplay: true,
             title: 'Where products sold'
           },
+          hint: {
+            text: 'Select one option'
+          },
           eliminationAnswerKeys: '',
           preValidationKeys: ['productsComingFrom'],
           ineligibleContent: {
@@ -1469,6 +1493,9 @@ const questionBank = {
             isScore: true,
             isDisplay: true,
             title: 'Environmental impact'
+          },
+          hint: {
+            text: 'Select all that apply'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['processedSold'],
