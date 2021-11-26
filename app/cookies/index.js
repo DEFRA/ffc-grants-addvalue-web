@@ -41,7 +41,7 @@ module.exports = {
     `${urlPrefix}/session-timeout`,
     `${urlPrefix}/cookies`,
     `${urlPrefix}/accessibility`,
-    `${urlPrefix}/project-subject`,
+    `${urlPrefix}/nature-of-business`,
     `${urlPrefix}/assets`,
     '/healthy',
     '/healthz',
