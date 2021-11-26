@@ -1696,16 +1696,11 @@ const questionBank = {
               title: 'Single Business Identifier (SBI)',
               classes: 'govuk-input govuk-input--width-10',
               label: {
-                html: `
-                <br/>
-                <label class= "govuk-label--s">Single Business Identifier (SBI)</label>
-                <div id="sbi-hint" class="govuk-hint">
-                  If you do not have an SBI, you will need to get one for full application
-                </div>
-                <label class="govuk-label govuk-label" for="sbi">
-                  SBI number
-                </label>`,
+                text: 'Single Business Identifier (SBI)',
                 classes: 'govuk-label'
+              },
+              hint: {
+                html: 'If you do not have an SBI, you will need to get one for full application'
               },
               validate: [
                 {
