@@ -1717,7 +1717,7 @@ const questionBank = {
             {
               key: 'applying-A1',
               value: 'Applicant',
-              redirectUrl: 'farmers-details'
+              redirectUrl: 'applicant-details'
             },
             {
               key: 'applying-A2',
@@ -1728,12 +1728,12 @@ const questionBank = {
           yarKey: 'applying'
         },
         {
-          key: 'farmer-details',
+          key: 'applicant-details',
           order: 200,
-          title: 'Farmer’s details',
+          title: 'Applicant’s details',
           pageTitle: '',
-          url: 'farmers-details',
-          baseUrl: 'farmer-details',
+          url: 'applicant-details',
+          baseUrl: 'applicant-details',
           nextUrl: 'check-details',
           preValidationKeys: ['applying'],
           eliminationAnswerKeys: '',
@@ -1809,7 +1809,7 @@ const questionBank = {
                 classes: 'govuk-label'
               },
               hint: {
-                text: "We'll only use this to send them confirmation"
+                text: 'We will only use this to send you a confirmation'
               },
               validate: [
                 {
@@ -1833,271 +1833,6 @@ const questionBank = {
               },
               hint: {
                 text: 'We will only use this to contact you about your application'
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a mobile or landline number',
-                  extraFieldsToCheck: ['landlineNumber']
-                },
-                {
-                  type: 'REGEX',
-                  regex: CHARS_MIN_10,
-                  error: 'Your mobile number must have at least 10 characters'
-                },
-                {
-                  type: 'REGEX',
-                  regex: PHONE_REGEX,
-                  error: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
-                }
-              ]
-            },
-            {
-              yarKey: 'landlineNumber',
-              endFieldset: 'true',
-              type: 'tel',
-              classes: 'govuk-input--width-20',
-              label: {
-                text: 'Landline number',
-                classes: 'govuk-label'
-              },
-              hint: {
-                text: 'We will only use this to contact you about your application'
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a landline or mobile number',
-                  extraFieldsToCheck: ['mobileNumber']
-                },
-                {
-                  type: 'REGEX',
-                  regex: CHARS_MIN_10,
-                  error: 'Your landline number must have at least 10 characters'
-                },
-                {
-                  type: 'REGEX',
-                  regex: PHONE_REGEX,
-                  error: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
-                }
-              ]
-            },
-            {
-              type: 'sub-heading',
-              text: 'Business Address'
-            },
-            {
-              yarKey: 'address1',
-              type: 'input',
-              classes: 'govuk-input--width-20',
-              label: {
-                html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>',
-                classes: 'govuk-label'
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY',
-                  error: 'Enter your building and street details'
-                }
-              ]
-            },
-            {
-              yarKey: 'address2',
-              type: 'input',
-              classes: 'govuk-input--width-20',
-              label: {
-                html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>',
-                classes: 'govuk-label'
-              }
-            },
-            {
-              yarKey: 'town',
-              type: 'input',
-              classes: 'govuk-input--width-10',
-              label: {
-                text: 'Town',
-                classes: 'govuk-label'
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY',
-                  error: 'Enter your town'
-                }
-              ]
-            },
-            {
-              yarKey: 'county',
-              type: 'select',
-              classes: 'govuk-input--width-10',
-              label: {
-                text: 'County',
-                classes: 'govuk-label'
-              },
-              answers: [
-                ...LIST_COUNTIES
-              ],
-              validate: [
-                {
-                  type: 'NOT_EMPTY',
-                  error: 'Select your county'
-                }
-              ]
-            },
-            {
-              yarKey: 'postcode',
-              type: 'input',
-              classes: 'govuk-input--width-5',
-              label: {
-                text: 'Business postcode',
-                classes: 'govuk-label'
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY',
-                  error: 'Enter your business postcode, like AA1 1AA'
-                },
-                {
-                  type: 'REGEX',
-                  regex: POSTCODE_REGEX,
-                  error: 'Enter a business postcode, like AA1 1AA'
-                }
-              ]
-            },
-            {
-              yarKey: 'projectPostcode',
-              type: 'input',
-              endFieldset: 'true',
-              classes: 'govuk-input--width-5',
-              label: {
-                text: 'Project postcode',
-                classes: 'govuk-label'
-              },
-              hint: {
-                text: 'The site postcode where the work will happen'
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY',
-                  error: 'Enter your project postcode, like AA1 1AA'
-                },
-                {
-                  type: 'REGEX',
-                  regex: POSTCODE_REGEX,
-                  error: 'Enter a project postcode, like AA1 1AA'
-                }
-              ]
-            }
-          ],
-          yarKey: 'farmerDetails'
-
-        },
-        {
-          key: 'contractors-details',
-          order: 201,
-          title: 'Contractor’s details',
-          pageTitle: '',
-          url: 'contractors-details',
-          baseUrl: 'contractors-details',
-          backUrl: 'applying',
-          nextUrl: 'check-details',
-          preValidationKeys: ['applying'],
-          eliminationAnswerKeys: '',
-          backUrlObject: {
-            dependentQuestionYarKey: 'applying',
-            dependentAnswerKeysArray: ['applying-A2'],
-            urlOptions: {
-              thenUrl: 'applying',
-              elseUrl: 'agents-details'
-            }
-          },
-          fundingPriorities: '',
-          type: 'multi-input',
-          minAnswerCount: '',
-          maxAnswerCount: '',
-          ga: [{ dimension: 'cd3', value: { type: 'yar', key: 'applying' } }],
-          allFields: [
-            {
-              type: 'sub-heading',
-              text: 'Name'
-            },
-            {
-              yarKey: 'firstName',
-              type: 'input',
-              classes: 'govuk-input--width-20',
-              label: {
-                text: 'First name',
-                classes: 'govuk-label'
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY',
-                  error: 'Enter your first name'
-                },
-                {
-                  type: 'REGEX',
-                  regex: NAME_ONLY_REGEX,
-                  error: 'Name must only include letters, hyphens and apostrophes'
-                }
-              ]
-            },
-            {
-              yarKey: 'lastName',
-              type: 'input',
-              endFieldset: 'true',
-              classes: 'govuk-input--width-20',
-              label: {
-                text: 'Last name',
-                classes: 'govuk-label'
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY',
-                  error: 'Enter your last name'
-                },
-                {
-                  type: 'REGEX',
-                  regex: NAME_ONLY_REGEX,
-                  error: 'Name must only include letters, hyphens and apostrophes'
-                }
-              ]
-            },
-            {
-              type: 'sub-heading',
-              text: 'Contact details'
-            },
-            {
-              yarKey: 'emailAddress',
-              type: 'email',
-              classes: 'govuk-input--width-20',
-              label: {
-                text: 'Email address',
-                classes: 'govuk-label'
-              },
-              hint: {
-                text: "We'll only use this to send them confirmation"
-              },
-              validate: [
-                {
-                  type: 'NOT_EMPTY',
-                  error: 'Enter your email address'
-                },
-                {
-                  type: 'REGEX',
-                  regex: EMAIL_REGEX,
-                  error: 'Enter an email address in the correct format, like name@example.com'
-                }
-              ]
-            },
-            {
-              yarKey: 'mobileNumber',
-              type: 'tel',
-              classes: 'govuk-input--width-20',
-              label: {
-                text: 'Mobile number',
-                classes: 'govuk-label'
-              },
-              hint: {
-                text: 'We will only use this to contact them about their application'
               },
               validate: [
                 {
@@ -2211,26 +1946,49 @@ const questionBank = {
             {
               yarKey: 'postcode',
               type: 'input',
-              endFieldset: 'true',
               classes: 'govuk-input--width-5',
               label: {
-                text: 'Postcode',
+                text: 'Business postcode',
                 classes: 'govuk-label'
               },
               validate: [
                 {
                   type: 'NOT_EMPTY',
-                  error: 'Enter your postcode, like AA1 1AA'
+                  error: 'Enter your business postcode, like AA1 1AA'
                 },
                 {
                   type: 'REGEX',
                   regex: POSTCODE_REGEX,
-                  error: 'Enter a postcode, like AA1 1AA'
+                  error: 'Enter a business postcode, like AA1 1AA'
+                }
+              ]
+            },
+            {
+              yarKey: 'projectPostcode',
+              type: 'input',
+              endFieldset: 'true',
+              classes: 'govuk-input--width-5',
+              label: {
+                text: 'Project postcode',
+                classes: 'govuk-label'
+              },
+              hint: {
+                text: 'The site postcode where the work will happen'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Enter your project postcode, like AA1 1AA'
+                },
+                {
+                  type: 'REGEX',
+                  regex: POSTCODE_REGEX,
+                  error: 'Enter a project postcode, like AA1 1AA'
                 }
               ]
             }
           ],
-          yarKey: 'contractorsDetails'
+          yarKey: 'applicantDetails'
 
         },
         {
@@ -2241,14 +1999,7 @@ const questionBank = {
           url: 'agents-details',
           baseUrl: 'agents-details',
           backUrl: 'applying',
-          dependantNextUrl: {
-            dependentQuestionYarKey: 'tenancy',
-            dependentAnswerKeysArray: ['tenancy-A3'],
-            urlOptions: {
-              thenUrl: 'contractors-details',
-              elseUrl: 'farmers-details'
-            }
-          },
+          nextUrl: 'applicant-details',
           summaryPageUrl: 'check-details',
           preValidationKeys: ['applying'],
           eliminationAnswerKeys: '',
@@ -2364,7 +2115,7 @@ const questionBank = {
               validate: [
                 {
                   type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a mobile or landline number',
+                  error: 'Enter a landline or mobile number',
                   extraFieldsToCheck: ['landlineNumber']
                 },
                 {
@@ -2506,7 +2257,7 @@ const questionBank = {
             dependentAnswerKeysArray: ['applying-A2'],
             urlOptions: {
               thenUrl: 'contractors-details',
-              elseUrl: 'farmers-details'
+              elseUrl: 'applicant-details'
             }
           },
           nextUrl: 'confirm',
@@ -2517,7 +2268,7 @@ const questionBank = {
             businessDetailsLink: 'business-details',
             agentDetailsLink: 'agents-details',
             contractorDetailsLink: 'contractors-details',
-            farmerDetailsLink: 'farmers-details'
+            applicantDetailsLink: 'applicant-details'
           },
           fundingPriorities: '',
           type: '',
@@ -2531,7 +2282,7 @@ const questionBank = {
           url: 'confirm',
           backUrl: 'check-details',
           nextUrl: 'confirmation',
-          preValidationKeys: ['farmerDetails'],
+          preValidationKeys: ['applicantDetails'],
           preValidationKeysRule: { condition: 'ANY' },
           maybeEligible: true,
           maybeEligibleContent: {
