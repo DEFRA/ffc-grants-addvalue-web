@@ -1755,7 +1755,7 @@ const questionBank = {
           yarKey: 'applying'
         },
         {
-          key: 'applicant-details',
+          key: 'farmer-details',
           order: 200,
           title: 'Applicant’s details',
           pageTitle: '',
@@ -2015,7 +2015,7 @@ const questionBank = {
               ]
             }
           ],
-          yarKey: 'applicantDetails'
+          yarKey: 'farmerDetails'
 
         },
         {
