@@ -123,13 +123,13 @@
 
         <br/>
       
-        {% set applicantSummaryItems = [
+        {% set farmerSummaryItems = [
             {
               key: {
                 text: "Name"
               },
               value: {
-                text:  applicantDetails.name
+                text:  farmerDetails.name
               }
             },
             {
@@ -137,7 +137,7 @@
                 text: "Contact details"
               },
               value: {
-                html: applicantDetails.contact
+                html: farmerDetails.contact
               }
             },
             {
@@ -145,7 +145,7 @@
                 text: "Business address"
               },
               value: {
-                html: applicantDetails.address
+                html: farmerDetails.address
               }
             },
             {
@@ -153,7 +153,7 @@
                 text: "Project postcode"
               },
               value: {
-                html: applicantDetails.projectPostcode
+                html: farmerDetails.projectPostcode
               }
             }
           ]
@@ -161,11 +161,11 @@
 
         <div>
             <h2 class="govuk-heading-m check-detail-heading">Applicant’s details</h2>
-            <a title="Change Applicant’s details" class="check-detail-change" href="{{applicantDetailsLink}}">Change<span class="govuk-visually-hidden">Change applicant's details</span></a>
+            <a title="Change Applicant’s details" class="check-detail-change" href="{{farmerDetailsLink}}">Change<span class="govuk-visually-hidden">Change applicant's details</span></a>
             <hr/>
         </div>
 
-        {{ govukSummaryList({ rows: applicantSummaryItems }) }}
+        {{ govukSummaryList({ rows: farmerSummaryItems }) }}
       
       </div>
     </div>

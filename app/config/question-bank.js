@@ -2282,7 +2282,7 @@ const questionBank = {
           pageData: {
             businessDetailsLink: 'business-details',
             agentDetailsLink: 'agents-details',
-            applicantDetailsLink: 'applicant-details'
+            farmerDetailsLink: 'applicant-details'
           },
           fundingPriorities: '',
           type: '',
@@ -2296,7 +2296,7 @@ const questionBank = {
           url: 'confirm',
           backUrl: 'check-details',
           nextUrl: 'confirmation',
-          preValidationKeys: ['applicantDetails'],
+          preValidationKeys: ['farmerDetails'],
           preValidationKeysRule: { condition: 'ANY' },
           maybeEligible: true,
           maybeEligibleContent: {

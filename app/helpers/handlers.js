@@ -142,13 +142,13 @@ const getPage = async (question, request, h) => {
     const applying = getYarValue(request, 'applying')
     const businessDetails = getYarValue(request, 'businessDetails')
     const agentDetails = getYarValue(request, 'agentsDetails')
-    const applicantDetails = getYarValue(request, 'farmerDetails')
+    const farmerDetails = getYarValue(request, 'farmerDetails')
 
     const agentContact = saveValuesToArray(agentDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
     const agentAddress = saveValuesToArray(agentDetails, ['address1', 'address2', 'town', 'county', 'postcode'])
 
-    const applicantContact = saveValuesToArray(applicantDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
-    const applicantAddress = saveValuesToArray(applicantDetails, ['address1', 'address2', 'town', 'county', 'postcode'])
+    const farmerContact = saveValuesToArray(farmerDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
+    const farmerAddress = saveValuesToArray(farmerDetails, ['address1', 'address2', 'town', 'county', 'postcode'])
 
     const MODEL = {
       ...question.pageData,
@@ -156,13 +156,13 @@ const getPage = async (question, request, h) => {
       nextUrl,
       applying,
       businessDetails,
-      applicantDetails: {
-        ...applicantDetails,
-        ...(applicantDetails
+      farmerDetails: {
+        ...farmerDetails,
+        ...(farmerDetails
           ? {
-              name: `${applicantDetails.firstName} ${applicantDetails.lastName}`,
-              contact: applicantContact.join('<br/>'),
-              address: applicantAddress.join('<br/>')
+              name: `${farmerDetails.firstName} ${farmerDetails.lastName}`,
+              contact: farmerContact.join('<br/>'),
+              address: farmerAddress.join('<br/>')
             }
           : {}
         )
