@@ -90,7 +90,7 @@ const questionBank = {
             <ul class="govuk-body">
               <li>are agricultural, horticultural or forestry producers (primary producers)'</li>
               <li>provide processing services to a primary producer</li>
-              <li>are a separate processing business 100% owned by a primary producer</li>
+              <li>are a separate processing business owned by a primary producer</li>
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
@@ -111,7 +111,7 @@ const questionBank = {
                 items: [
                   'are agricultural, horticultural or forestry producers (primary producers)',
                   'provide processing services to a primary producer',
-                  'are a separate processing business 100% owned by a primary producer'
+                  'are a separate processing business owned by a primary producer'
                 ]
               }]
             }]
@@ -127,7 +127,7 @@ const questionBank = {
           answers: [
             {
               key: 'nature-of-business-A1',
-              value: 'An agricultural, horticultural or forestry business (a primary producer)',
+              value: 'A grower or producer of agricultural, horticultural or forestry agri-products (a primary producer)',
               hint: {
                 text: 'For example, arable or livestock farmer, growing trees, fruit producer, salad grower'
               }
@@ -141,7 +141,7 @@ const questionBank = {
             },
             {
               key: 'nature-of-business-A3',
-              value: 'A separate processing business 100% owned by a primary producer',
+              value: 'A separate processing business owned by a primary producer',
               hint: {
                 text: 'For example, cheese processing business owned by a dairy farmer'
               }
@@ -187,7 +187,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if the business is in England'
+              error: 'Select yes if the business is registered in England'
             }
           ],
           answers: [
@@ -581,7 +581,7 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'The land must be owned or have a tenancy in place until 2027 before starting the project.'
+                para: 'You must own the land or have a tenancy in place until 2027 before starting the project.'
               }]
             }]
           },
@@ -603,7 +603,7 @@ const questionBank = {
             },
             {
               key: 'tenancy-A3',
-              value: 'Not applicable - I’m a mobile contractor'
+              value: 'Not applicable – I’m a mobile contractor'
             }
           ],
           yarKey: 'tenancy'
@@ -627,7 +627,7 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'The land must be owned or have a tenancy in place until 2027 before starting the project.',
+                para: 'You must own the land or have a tenancy in place until 2027 before starting the project.',
                 items: []
               }]
             }]
@@ -691,41 +691,34 @@ const questionBank = {
           answers: [
             {
               key: 'project-items-A1',
-              value: 'Processing equipment or machinery',
-              hint: {
-                text: 'For example, equipment for milk pasteurising or vegetable washing, packing machinery'
-              }
-            },
-            {
-              key: 'project-items-A2',
-              value: 'Controlled-atmosphere storage',
-              hint: {
-                text: 'Monitoring and controlling the temperature and humidity of products'
-              }
-            },
-            {
-              key: 'project-items-A3',
-              value: 'Dynamic controlled-atmosphere storage',
-              hint: {
-                text: 'Monitoring and controlling gases produced by or changes in the products, as well as temperature and humidity'
-              }
-            },
-            {
-              key: 'project-items-A4',
               value: 'Constructing or improving buildings',
               hint: {
                 text: 'For example, a new building for cheese making, extending an existing building to install a new meat-cutting and packing line'
               }
             },
             {
-              key: 'project-items-A5',
+              key: 'project-items-A2',
+              value: 'Processing equipment or machinery',
+              hint: {
+                text: 'For example, equipment and machinery for pasteurising and bottling milk, a meat cutting and packing line or vegetable washing and packing'
+              }
+            },
+            {
+              key: 'project-items-A3',
+              value: 'Controlled atmosphere (CA) or dynamic controlled atmosphere (DCA) storage',
+              hint: {
+                text: 'For example, CA storage of apples or DCA storage for top fruit'
+              }
+            },
+            {
+              key: 'project-items-A4',
               value: 'Specialist vehicles',
               hint: {
                 text: 'For example, forklift trucks, refrigerated vans or lorries'
               }
             },
             {
-              key: 'project-items-A6',
+              key: 'project-items-A5',
               value: 'Retail facilities',
               hint: {
                 text: 'For example, farm shops'
@@ -1001,7 +994,7 @@ const questionBank = {
         {
           key: 'how-adding-value',
           order: 130,
-          title: 'How will you add value to the products?',
+          title: 'How will your project add value to the products?',
           pageTitle: '',
           url: 'how-adding-value',
           baseUrl: 'how-adding-value',
@@ -1072,9 +1065,6 @@ const questionBank = {
             {
               key: 'how-adding-value-A4',
               value: 'Controlled atmosphere or dynamic controlled atmosphere storage',
-              hint: {
-                text: 'Controlled-atmosphere storage'
-              }
             },
             {
               key: 'how-adding-value-A5',
