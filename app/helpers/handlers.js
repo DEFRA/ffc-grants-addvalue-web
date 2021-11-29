@@ -119,7 +119,10 @@ const getPage = async (question, request, h) => {
     }
   }
 
-  const data = getYarValue(request, yarKey) || null
+  let data = getYarValue(request, yarKey) || null
+  if (type === 'multi-answer' && !!data) {
+    data = [data].flat()
+  }
   let conditionalHtml
   if (question?.conditionalKey && question?.conditionalLabelData) {
     const conditional = yarKey === 'businessDetails' ? yarKey : question.conditionalKey
@@ -142,10 +145,10 @@ const getPage = async (question, request, h) => {
     const farmerDetails = getYarValue(request, 'farmerDetails')
 
     const agentContact = saveValuesToArray(agentDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
-    const agentAddress = saveValuesToArray(agentDetails, ['address1', 'address2', 'county', 'postcode'])
+    const agentAddress = saveValuesToArray(agentDetails, ['address1', 'address2', 'town', 'county', 'postcode'])
 
     const farmerContact = saveValuesToArray(farmerDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
-    const farmerAddress = saveValuesToArray(farmerDetails, ['address1', 'address2', 'county', 'postcode'])
+    const farmerAddress = saveValuesToArray(farmerDetails, ['address1', 'address2', 'town', 'county', 'postcode'])
 
     const MODEL = {
       ...question.pageData,
@@ -185,7 +188,7 @@ const getPage = async (question, request, h) => {
     case 'score':
     case 'business-details':
     case 'agents-details':
-    case 'farmers-details': {
+    case 'applicant-details': {
       let MODEL = getModel(data, question, request, conditionalHtml)
       const reachedCheckDetails = getYarValue(request, 'reachedCheckDetails')
 
