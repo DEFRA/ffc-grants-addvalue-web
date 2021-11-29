@@ -897,6 +897,9 @@ const questionBank = {
           order: 120,
           title: 'What type of products are being processed?',
           pageTitle: '',
+          hint: {
+            text: 'Select one option'
+          },
           url: 'products-processed',
           baseUrl: 'products-processed',
           backUrl: 'remaining-costs',
@@ -922,7 +925,7 @@ const questionBank = {
               content: [{
                 para: 'RPA wants to fund projects that:',
                 items: [
-                  'improve processing and supply chains'
+                  'create and expand processing capacity to provide more English-grown food for customers to buy'
                 ]
               }]
             }]
@@ -1064,7 +1067,7 @@ const questionBank = {
             },
             {
               key: 'how-adding-value-A4',
-              value: 'Controlled atmosphere or dynamic controlled atmosphere storage',
+              value: 'Controlled atmosphere or dynamic controlled atmosphere storage'
             },
             {
               key: 'how-adding-value-A5',
