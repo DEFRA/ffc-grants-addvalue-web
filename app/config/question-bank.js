@@ -944,23 +944,23 @@ const questionBank = {
           answers: [
             {
               key: 'products-processed-A1',
-              value: 'Arable crops',
+              value: 'Arable products',
               hint: {
-                text: 'For example, cereals, legumes, oilseeds'
+                text: 'For example, crushing of oilseeds, rolling or flaking of grains as food ingredients'
               }
             },
             {
               key: 'products-processed-A2',
-              value: 'Horticultural crops',
+              value: 'Horticultural products',
               hint: {
-                text: 'For example, vegetables, fruits, nuts, edible flowers'
+                text: 'For example, grading and packing of soft fruit, washing and packing vegetables, packing salad crops'
               }
             },
             {
               key: 'products-processed-A3',
-              value: 'Dairy or meat produce',
+              value: 'Dairy or meat products',
               hint: {
-                text: 'For example, processing and bottling milk, cutting, processing and packing meat'
+                text: 'For example, processing and bottling milk or slaughtering, cutting, processing and packing meat'
               }
             },
             {
@@ -972,14 +972,14 @@ const questionBank = {
             },
             {
               key: 'products-processed-A5',
-              value: 'Fodder crops',
+              value: 'Fodder products',
               hint: {
                 text: 'For example, processing and repacking hay and straw for specialist markets or retail sale'
               }
             },
             {
               key: 'products-processed-A6',
-              value: 'Non-edible crops',
+              value: 'Non-edible products',
               hint: {
                 text: 'For example, processing and packing ornamental flowers and bulbs after harvesting'
               }
@@ -1084,14 +1084,14 @@ const questionBank = {
           url: 'project-impact',
           baseUrl: 'project-impact',
           backUrl: 'how-adding-value',
-          nextUrl: 'current-customers',
+          nextUrl: 'future-customers',
           score: {
             isScore: true,
             isDisplay: true,
             title: 'Project impact'
           },
           hint: {
-            text: 'Select one option'
+            text: 'Select up to 2 options'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['howAddingValue'],
@@ -1114,7 +1114,7 @@ const questionBank = {
             }]
           },
           fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
-          type: 'single-answer',
+          type: 'multi-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
           validate: [
@@ -1144,79 +1144,15 @@ const questionBank = {
           yarKey: 'projectImpact'
         },
         {
-          key: 'current-customers',
-          order: 150,
-          title: 'Who are your current customers?',
-          pageTitle: '',
-          url: 'current-customers',
-          baseUrl: 'current-customers',
-          backUrl: 'project-impact',
-          nextUrl: 'future-customers',
-          score: {
-            isScore: true,
-            isDisplay: true,
-            title: 'Current customers'
-          },
-          eliminationAnswerKeys: '',
-          preValidationKeys: ['projectImpact'],
-          ineligibleContent: {
-            messageContent: '',
-            insertText: { text: '' },
-            messageLink: {
-              url: '',
-              title: ''
-            }
-          },
-          sidebar: {
-            values: [{
-              heading: 'Funding priorities',
-              content: [{
-                para: 'RPA wants to fund projects that:',
-                items: ['Improve processing and supply chains',
-                  'Grow your business']
-              }]
-            }]
-          },
-          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
-          type: 'multi-answer',
-          minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
-          validate: [
-            {
-              type: 'NOT_EMPTY',
-              error: 'Select who are your current customers'
-            }
-          ],
-          answers: [
-            {
-              key: 'current-customers-A1',
-              value: 'Processors'
-            },
-            {
-              key: 'current-customers-A2',
-              value: 'Wholesalers'
-            },
-            {
-              key: 'current-customers-A3',
-              value: 'Retailers'
-            },
-            {
-              key: 'current-customers-A4',
-              value: 'Selling direct to consumers'
-            }
-          ],
-          yarKey: 'currentCustomers'
-        },
-        {
           key: 'future-customers',
           order: 160,
-          title: 'Who will your customers be after the project?',
+          title: 'Who will your new customers be after the project?',
           pageTitle: '',
           url: 'future-customers',
           baseUrl: 'future-customers',
-          backUrl: 'current-customers',
+          backUrl: 'project-impact',
           nextUrl: 'collaboration',
-          preValidationKeys: ['currentCustomers'],
+          preValidationKeys: ['projectImpact'],
           eliminationAnswerKeys: '',
           score: {
             isScore: true,
@@ -1257,22 +1193,29 @@ const questionBank = {
           answers: [
             {
               key: 'future-customers-A1',
-              value: 'Processors'
+              value: 'Producers or growers'
             },
             {
               key: 'future-customers-A2',
-              value: 'Wholesalers'
+              value: 'Processors'
             },
             {
               key: 'future-customers-A3',
-              value: 'Retailers'
+              value: 'Wholesalers'
             },
             {
               key: 'future-customers-A4',
-              value: 'Selling direct to consumers'
+              value: 'Retailers'
             },
             {
               key: 'future-customers-A5',
+              value: 'Selling direct to consumers'
+            },
+            {
+              value: 'divider'
+            },
+            {
+              key: 'future-customers-A6',
               value: 'No change'
             }
           ],
@@ -1281,7 +1224,11 @@ const questionBank = {
         {
           key: 'collaboration',
           order: 170,
-          title: 'Will you buy materials from other farmers?',
+          title: 'Will you work in partnership or collaborate with other farmers or producers?',
+          hint: {
+            text:'For example, in a formal partnership or contract supply arrangement for raw materials'
+          },
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           pageTitle: '',
           url: 'collaboration',
           baseUrl: 'collaboration',
@@ -1348,7 +1295,7 @@ const questionBank = {
             title: 'Products coming from'
           },
           hint: {
-            text: 'Select one option'
+            html: 'How far the majority of the raw materials will travel to get to your project site <br/><br/> Select one option'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['collaboration'],
@@ -1382,7 +1329,7 @@ const questionBank = {
           answers: [
             {
               key: 'products-coming-from-A1',
-              value: 'Processing point'
+              value: 'Within 1 mile'
             },
             {
               key: 'products-coming-from-A2',
@@ -1398,7 +1345,7 @@ const questionBank = {
             },
             {
               key: 'products-coming-from-A5',
-              value: 'Outside the UK'
+              value: 'From outside the UK'
             }
           ],
           yarKey: 'productsComingFrom'
@@ -1406,7 +1353,7 @@ const questionBank = {
         {
           key: 'processed-sold',
           order: 190,
-          title: 'Where are the processed products being sold?',
+          title: 'Where will the processed products be sold?',
           pageTitle: '',
           url: 'processed-sold',
           baseUrl: 'processed-sold',
@@ -1418,7 +1365,7 @@ const questionBank = {
             title: 'Where products sold'
           },
           hint: {
-            text: 'Select one option'
+            html: 'How far the majority of the processed products will travel from your project site<br/><br/>Select one option'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['productsComingFrom'],
@@ -1452,7 +1399,7 @@ const questionBank = {
           answers: [
             {
               key: 'processed-sold-A1',
-              value: 'Processing point'
+              value: 'Within 1 mile'
             },
             {
               key: 'processed-sold-A2',
