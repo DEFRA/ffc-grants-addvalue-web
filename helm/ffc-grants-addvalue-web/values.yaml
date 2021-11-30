@@ -30,8 +30,8 @@ deployment:
   replicas: 2
   minReplicas: 2
   maxReplicas: 4
-  cpuThreshold: 80
-  memoryThreshold: 80
+  cpuThreshold: 20
+  memoryThreshold: 20
 
 container:
   imagePullPolicy: IfNotPresent
@@ -66,16 +66,16 @@ livenessProbe:
   port: 3000
   initialDelaySeconds: 30
   periodSeconds: 30
-  timeoutSeconds: 50
-  failureThreshold: 50
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 readinessProbe:
   path: /healthy
   port: 3000
   initialDelaySeconds: 20
   periodSeconds: 30
-  timeoutSeconds: 50
-  failureThreshold: 50
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 service:
   port: 80
