@@ -1497,6 +1497,13 @@ const questionBank = {
             },
             {
               key: 'environmental-impact-A5',
+              value: 'Remove single-use plastics',
+              hint: {
+                text: 'For example, removing unnecessary packaging, replacing plastic packaging'
+              }
+            },
+            {
+              key: 'environmental-impact-A6',
               value: 'Reduce harmful emissions or pollutants',
               hint: {
                 text: 'For example, reducing pollutants in waste water'
@@ -1506,7 +1513,7 @@ const questionBank = {
               value: 'divider'
             },
             {
-              key: 'environmental-impact-A6',
+              key: 'environmental-impact-A7',
               value: 'My project will not improve the environment'
             }
           ],
