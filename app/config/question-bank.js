@@ -1188,6 +1188,11 @@ const questionBank = {
             {
               type: 'NOT_EMPTY',
               error: 'Select all options that apply'
+            },
+            {
+              type: 'STANDALONE_ANSWER',
+              error: 'You cannot select ‘No change’ and another option',
+              standaloneAnswers: ['No change']
             }
           ],
           answers: [
@@ -1226,7 +1231,7 @@ const questionBank = {
           order: 170,
           title: 'Will you work in partnership or collaborate with other farmers or producers?',
           hint: {
-            text:'For example, in a formal partnership or contract supply arrangement for raw materials'
+            text: 'For example, in a formal partnership or contract supply arrangement for raw materials'
           },
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           pageTitle: '',

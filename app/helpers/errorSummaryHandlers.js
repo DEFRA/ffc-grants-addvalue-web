@@ -19,6 +19,18 @@ const validateAnswerField = (value, validationType, details, payload) => {
       ))
     }
 
+    case 'STANDALONE_ANSWER': {
+      const selectedAnswers = [value].flat()
+      const selectedAnswersCount = selectedAnswers.length
+      const { standaloneAnswers } = details
+
+      return (
+        standaloneAnswers.every(thisAnswer =>
+          !(selectedAnswers.includes(thisAnswer) && selectedAnswersCount > 1)
+        )
+      )
+    }
+
     case 'REGEX': {
       const { regex } = details
       return (!value || regex.test(value))
