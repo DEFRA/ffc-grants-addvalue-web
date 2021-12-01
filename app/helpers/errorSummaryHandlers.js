@@ -1,6 +1,7 @@
 const { getModel } = require('../helpers/models')
 const { getHtml } = require('../helpers/conditionalHTML')
 const { getYarValue } = require('../helpers/session')
+const { getQuestionAnswer } = require('../helpers/utils')
 
 const validateAnswerField = (value, validationType, details, payload) => {
   switch (validationType) {
@@ -20,13 +21,20 @@ const validateAnswerField = (value, validationType, details, payload) => {
     }
 
     case 'STANDALONE_ANSWER': {
-      const selectedAnswers = [value].flat()
-      const selectedAnswersCount = selectedAnswers.length
-      const { standaloneAnswers } = details
+      const selected = [value].flat()
+      const selectedCount = selected.length
+      const {
+        standaloneObject: {
+          questionKey: standaloneQuestionKey,
+          answerKeys: standaloneAnswerKeys
+        }
+      } = details
 
       return (
-        standaloneAnswers.every(thisAnswer =>
-          !(selectedAnswers.includes(thisAnswer) && selectedAnswersCount > 1)
+        standaloneAnswerKeys.every(answerKey => {
+          const answer = getQuestionAnswer(standaloneQuestionKey, answerKey)
+          return (!(selected.includes(answer) && selectedCount > 1))
+        }
         )
       )
     }

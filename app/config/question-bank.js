@@ -1192,7 +1192,10 @@ const questionBank = {
             {
               type: 'STANDALONE_ANSWER',
               error: 'You cannot select ‘No change’ and another option',
-              standaloneAnswers: ['No change']
+              standaloneObject: {
+                questionKey: 'future-customers',
+                answerKeys: ['future-customers-A6']
+              }
             }
           ],
           answers: [
