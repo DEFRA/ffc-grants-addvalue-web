@@ -925,7 +925,7 @@ const questionBank = {
               content: [{
                 para: 'RPA wants to fund projects that:',
                 items: [
-                  'create and expand processing capacity to provide more English-grown food for customers to buy'
+                  'create and expand processing capacity to provide more English-grown food for consumers to buy'
                 ]
               }]
             }]
@@ -1435,7 +1435,7 @@ const questionBank = {
             title: 'Environmental impact'
           },
           hint: {
-            text: 'Select all that apply'
+            text: 'Select up to 2 options'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['processedSold'],
@@ -1469,38 +1469,41 @@ const questionBank = {
           answers: [
             {
               key: 'environmental-impact-A1',
+              value: 'Renewable energy',
+              hint: {
+                text: 'For example, majority of energy for the project is generated on site'
+              }
+            },
+            {
+              key: 'environmental-impact-A2',
               value: 'Energy efficiency',
               hint: {
                 text: 'For example, using variable speed motors or heat exchangers'
               }
             },
             {
-              key: 'environmental-impact-A2',
+              key: 'environmental-impact-A3',
               value: 'Water efficiency',
               hint: {
-                text: 'For example, recycling waste water, rainwater harvesting'
-              }
-            },
-            {
-              key: 'environmental-impact-A3',
-              value: 'Waste efficiency',
-              hint: {
-                text: 'For example, separating waste, maximising waste recycling'
+                text: 'For example, majority of water for the project is harvested or recycled on site'
               }
             },
             {
               key: 'environmental-impact-A4',
-              value: 'Reduce single-use plastics',
+              value: 'Waste efficiency',
               hint: {
-                text: 'For example, removing unnecessary packaging, replacing plastic packaging'
+                text: 'For example, majority of project waste is recycled or reused instead of going to landfill'
               }
             },
             {
               key: 'environmental-impact-A5',
               value: 'Reduce harmful emissions or pollutants',
               hint: {
-                text: 'For example, reducing emission from waste water, using dynamic controlled-atmosphere storage to reduce emissions'
+                text: 'For example, reducing pollutants in waste water'
               }
+            },
+            {
+              value: 'divider'
             },
             {
               key: 'environmental-impact-A6',
@@ -1540,7 +1543,7 @@ const questionBank = {
                 classes: 'govuk-label'
               },
               hint: {
-                text: 'For example, Brown Hill Farm adding value project'
+                text: 'For example, Browns Hill Farm vegetable washing and sorting project'
               },
               validate: [
                 {
