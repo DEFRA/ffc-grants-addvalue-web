@@ -1478,7 +1478,7 @@ const questionBank = {
               key: 'environmental-impact-A2',
               value: 'Energy efficiency',
               hint: {
-                text: 'For example, using variable speed motors or heat exchangers'
+                text: 'For example, majority of energy for the project is generated on site'
               }
             },
             {
@@ -1499,7 +1499,7 @@ const questionBank = {
               key: 'environmental-impact-A5',
               value: 'Remove single-use plastics',
               hint: {
-                text: 'For example, removing unnecessary packaging, replacing plastic packaging'
+                text: 'For example, majority of project waste is recycled or reused instead of going to landfill'
               }
             },
             {
