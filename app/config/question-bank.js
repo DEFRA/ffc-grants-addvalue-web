@@ -1478,7 +1478,7 @@ const questionBank = {
               key: 'environmental-impact-A2',
               value: 'Energy efficiency',
               hint: {
-                text: 'For example, using variable speed motors or heat exchangers'
+                text: 'For example, majority of energy for the project is generated on site'
               }
             },
             {
@@ -1497,6 +1497,13 @@ const questionBank = {
             },
             {
               key: 'environmental-impact-A5',
+              value: 'Remove single-use plastics',
+              hint: {
+                text: 'For example, majority of project waste is recycled or reused instead of going to landfill'
+              }
+            },
+            {
+              key: 'environmental-impact-A6',
               value: 'Reduce harmful emissions or pollutants',
               hint: {
                 text: 'For example, reducing pollutants in waste water'
@@ -1506,7 +1513,7 @@ const questionBank = {
               value: 'divider'
             },
             {
-              key: 'environmental-impact-A6',
+              key: 'environmental-impact-A7',
               value: 'My project will not improve the environment'
             }
           ],

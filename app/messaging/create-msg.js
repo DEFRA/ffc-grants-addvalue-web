@@ -15,7 +15,7 @@ function getAllDetails (request, confirmationId) {
 const desirabilityAnswersSchema = Joi.object({
   productsProcessed: Joi.string(),
   howAddingValue: Joi.string(),
-  projectImpact: Joi.string(),
+  projectImpact: Joi.array().items(Joi.string()),
   futureCustomers: Joi.array().items(Joi.string()),
   collaboration: Joi.string(),
   productsComingFrom: Joi.string(),
@@ -30,13 +30,14 @@ function getDesirabilityAnswers (request) {
     const val = {
       productsProcessed: getYarValue(request, 'productsProcessed'),
       howAddingValue: getYarValue(request, 'howAddingValue'),
-      projectImpact: getYarValue(request, 'projectImpact'),
+      projectImpact: [getYarValue(request, 'projectImpact')].flat(),
       futureCustomers: getYarValue(request, 'futureCustomers'),
       collaboration: getYarValue(request, 'collaboration'),
       productsComingFrom: getYarValue(request, 'productsComingFrom'),
       processedSold: getYarValue(request, 'processedSold'),
       environmentalImpact: envImpactVal
     }
+    console.log(val, 'LLLLLLLL')
     const result = desirabilityAnswersSchema.validate(val, {
       abortEarly: false
     })
