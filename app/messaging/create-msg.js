@@ -31,13 +31,12 @@ function getDesirabilityAnswers (request) {
       productsProcessed: getYarValue(request, 'productsProcessed'),
       howAddingValue: getYarValue(request, 'howAddingValue'),
       projectImpact: [getYarValue(request, 'projectImpact')].flat(),
-      futureCustomers: getYarValue(request, 'futureCustomers'),
+      futureCustomers: [getYarValue(request, 'futureCustomers')].flat(),
       collaboration: getYarValue(request, 'collaboration'),
       productsComingFrom: getYarValue(request, 'productsComingFrom'),
       processedSold: getYarValue(request, 'processedSold'),
       environmentalImpact: envImpactVal
     }
-    console.log(val, 'LLLLLLLL')
     const result = desirabilityAnswersSchema.validate(val, {
       abortEarly: false
     })
