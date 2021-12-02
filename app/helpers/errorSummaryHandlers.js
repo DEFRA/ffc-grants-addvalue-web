@@ -21,22 +21,31 @@ const validateAnswerField = (value, validationType, details, payload) => {
     }
 
     case 'STANDALONE_ANSWER': {
-      const selected = [value].flat()
-      const selectedCount = selected.length
+      const selectedAnswer = [value].flat()
+      console.log(selectedAnswer,'PPPPPPPPPPPPPPP')
+
+      // const selectedCount = selectedAnswer.length
       const {
         standaloneObject: {
           questionKey: standaloneQuestionKey,
-          answerKeys: standaloneAnswerKeys
+          answerKey: standaloneAnswerKey
         }
       } = details
+      const standAloneAnswer = getQuestionAnswer(standaloneQuestionKey, standaloneAnswerKey)
+      console.log(standaloneAnswerKey,'SAAnswerKey   ',standAloneAnswer )
 
-      return (
-        standaloneAnswerKeys.every(answerKey => {
-          const answer = getQuestionAnswer(standaloneQuestionKey, answerKey)
-          return (!(selected.includes(answer) && selectedCount > 1))
-        }
-        )
-      )
+      if (selectedAnswer.includes(standAloneAnswer)) {
+        return selectedAnswer.length == 1
+      }
+      return true
+
+      // return (
+      //   standaloneAnswerKeys.every(answerKey => {
+      //     const answer = getQuestionAnswer(standaloneQuestionKey, answerKey)
+      //     return (!(selectedAnswer.includes(answer) && selectedCount > 1))
+      //   }
+      //   )
+      // )
     }
 
     case 'REGEX': {
