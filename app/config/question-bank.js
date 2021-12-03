@@ -1138,7 +1138,7 @@ const questionBank = {
             },
             {
               key: 'project-impact-A4',
-              value: 'Allow selling direct to consumer ( i.e. retail and dis)'
+              value: 'Allow selling direct to consumer'
             }
           ],
           yarKey: 'projectImpact'
@@ -2343,7 +2343,7 @@ questionBank.sections.forEach(({ questions }) => {
 const ALL_URLS = []
 ALL_QUESTIONS.forEach(item => ALL_URLS.push(item.url))
 
-const YAR_KEYS = []
+const YAR_KEYS = ['remainingCost', 'calculatedGrant']
 ALL_QUESTIONS.forEach(item => YAR_KEYS.push(item.yarKey))
 module.exports = {
   questionBank,
