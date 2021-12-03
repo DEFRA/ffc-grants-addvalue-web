@@ -11,6 +11,7 @@ const viewTemplate = 'score'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const nextPath = `${urlPrefix}/business-details`
 
+
 function createModel (data, request) {
   const previousPath = `${urlPrefix}/environmental-impact`
 
@@ -61,12 +62,12 @@ module.exports = [{
   },
   handler: async (request, h, err) => {
     try {
-      console.log('Scoring...1')
+      console.log('Getting Desirability Answers .....')
       const msgDataToSend = getDesirabilityAnswers(request)
       if (!msgDataToSend) {
         throw new Error('no data available for score.')
       }
-      console.log('Scoring...2', msgDataToSend)
+      console.log('Sending scoring message .....', msgDataToSend)
       // Always re-calculate our score before rendering this page
       await senders.sendProjectDetails(msgDataToSend, request.yar.id)
 
