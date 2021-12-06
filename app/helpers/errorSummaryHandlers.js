@@ -36,6 +36,23 @@ const validateAnswerField = (value, validationType, details, payload) => {
       return true
     }
 
+    case 'COMBINATION_ANSWER': {
+      const selectedAnswer = [value].flat()
+      const {
+        combinationObject: {
+          questionKey: combinationQuestionKey,
+          combinationAnswerKeys: combinationAnswerKeys
+        }
+      } = details
+      const combinationanswers = combinationAnswerKeys.map(answerKey =>  getQuestionAnswer(combinationQuestionKey, answerKey))
+
+      if (selectedAnswer.includes(combinationanswers[0]) && selectedAnswer.length > 1) {
+        return selectedAnswer.every ((answer, index) => answer === combinationanswers[index])
+      }
+
+      return true
+    }
+
     case 'REGEX': {
       const { regex } = details
       return (!value || regex.test(value))
