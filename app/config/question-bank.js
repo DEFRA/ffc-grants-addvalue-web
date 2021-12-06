@@ -1121,6 +1121,19 @@ const questionBank = {
             {
               type: 'NOT_EMPTY',
               error: 'Select the impact your project will have'
+            },
+            {
+              type: 'MAX_SELECT',
+              max: 2,
+              error: 'Select up to 2 options'
+            },
+            {
+              type: 'COMBINATION_ANSWER',
+              error: 'You cannot select that combination of options',
+              combinationObject: {
+                questionKey: 'project-impact',
+                combinationAnswerKeys: ['project-impact-A1', 'project-impact-A4']
+              }
             }
           ],
           answers: [
@@ -1830,7 +1843,7 @@ const questionBank = {
               validate: [
                 {
                   type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a mobile or landline number',
+                  error: 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
                   extraFieldsToCheck: ['landlineNumber']
                 },
                 {
@@ -1860,7 +1873,7 @@ const questionBank = {
               validate: [
                 {
                   type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a landline or mobile number',
+                  error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
                   extraFieldsToCheck: ['mobileNumber']
                 },
                 {
@@ -2108,7 +2121,7 @@ const questionBank = {
               validate: [
                 {
                   type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a landline or mobile number',
+                  error: 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
                   extraFieldsToCheck: ['landlineNumber']
                 },
                 {
@@ -2138,7 +2151,7 @@ const questionBank = {
               validate: [
                 {
                   type: 'NOT_EMPTY_EXTRA',
-                  error: 'Enter a landline or mobile number',
+                  error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
                   extraFieldsToCheck: ['mobileNumber']
                 },
                 {
