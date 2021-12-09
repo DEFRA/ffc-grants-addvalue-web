@@ -68,7 +68,7 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <br>
+        <hr class= "govuk-!-margin-bottom-5"/>
         <h1 class="govuk-heading-l">Your scoring answers</h1>
         <p>You can go back through the checker as many times as you like but you can only submit your details once. Once you’re happy that your answers accurately reflect your project, add your contact details.</p>
 
@@ -78,7 +78,7 @@
             <th scope="col" class="govuk-table__header govuk-!-width-one-third">Answers</th>
             <th scope="col" class="govuk-table__header ">Score</th>
             <th scope="col" class="govuk-table__header govuk-!-width-one-third">Funding priorities</th>
-            <th scope="col" class="govuk-table__header">Change Answers</th>
+            <th scope="col" class="govuk-table__header">Change answers</th>
           </tr>
         </thead>
 
@@ -96,13 +96,13 @@
             {% endfor %}
           </th>
 
-      <td class="govuk-table__cell">
+      <td class="govuk-table__cell ">
         {{ question.rating.band }}
       </td>
       <td class="govuk-table__cell">
         {{question.fundingPriorities | safe}}
       </td>
-      <td class="govuk-table__cell">
+      <td class="govuk-table__cell ">
           <a class="govuk-link" href="{{question.url}}" title="Change {{question.answers[0].title}}">
             Change <span class="govuk-visually-hidden">{{question.answers[0].title}}</span>
           </a>

@@ -88,7 +88,7 @@ const questionBank = {
             messageContent: `
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
-              <li>are agricultural, horticultural or forestry producers (primary producers)'</li>
+              <li>are agricultural, horticultural or forestry producers (primary producers)</li>
               <li>provide processing services to a primary producer</li>
               <li>are a separate processing business owned by a primary producer</li>
             </ul>`,
@@ -428,7 +428,7 @@ const questionBank = {
           maybeEligible: true,
           preValidationKeys: ['planningPermission'],
           maybeEligibleContent: {
-            messageHeader: 'You may be able to apply for a grant from this scheme',
+            messageHeader: 'You may be able to apply for this grant',
             messageContent: 'Any planning permission must be in place by 31 December 2022.'
           }
         },
@@ -930,7 +930,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: '<ul><li>Improve processing and supply chains</li></ul>',
+          fundingPriorities: 'Improve processing and supply chains',
           type: 'single-answer',
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
@@ -1032,7 +1032,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
+          fundingPriorities: 'Improve processing and supply chains<br/><br/>Grow your business',
           type: 'single-answer',
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
@@ -1113,7 +1113,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
+          fundingPriorities: 'Improve processing and supply chains<br/><br/>Grow your business',
           type: 'multi-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
@@ -1193,7 +1193,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Grow your business</li></ul>',
+          fundingPriorities: 'Improve processing and supply chains<br/><br/>Grow your business',
           type: 'multi-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
@@ -1279,7 +1279,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: '<ul><li>Improve processing and supply chains</li><li>Encourage collaboration and partnerships</li></ul>',
+          fundingPriorities: 'Improve processing and supply chains<br/><br/>Encourage collaboration and partnerships',
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
@@ -1337,7 +1337,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: '<ul><li>Improve the environment</li></ul>',
+          fundingPriorities: 'Improve the environment',
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
@@ -1407,7 +1407,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: '<ul><li>Improve the environment</li></ul>',
+          fundingPriorities: 'Improve the environment',
           type: 'single-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
@@ -1477,7 +1477,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: '<ul><li>Improve the environment</li></ul>',
+          fundingPriorities: 'Improve the environment',
           type: 'multi-answer',
           minAnswerCount: 1,
           ga: { dimension: '', value: '' },
