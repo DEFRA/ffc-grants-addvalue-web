@@ -1258,7 +1258,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Buying from farmers'
+            title: 'collaboration'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['futureCustomers'],
@@ -1512,7 +1512,7 @@ const questionBank = {
               key: 'environmental-impact-A2',
               value: 'Energy efficiency',
               hint: {
-                text: 'For example, majority of energy for the project is generated on site'
+                text: 'For example, energy efficiency measures above standard building regulations'
               }
             },
             {
