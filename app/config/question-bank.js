@@ -740,7 +740,7 @@ const questionBank = {
           id: 'projectCost',
           name: 'projectCost',
           prefix: { text: '£' },
-          type: 'number',
+          type: 'input',
           grantInfo: {
             minGrant: 35000,
             maxGrant: 500000,
