@@ -62,9 +62,15 @@ const getDependentSideBar = (sidebar, request) => {
   }
 }
 
+const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
+  const url = getUrl(backUrlObject, backUrl, request)
+  return hasScore && (url === 'remaining-costs') ? null : url
+}
+
 const getModel = (data, question, request, conditionalHtml = '') => {
   let { type, backUrl, key, backUrlObject, sidebar, title, score, label, warning, warningCondition } = question
   const hasScore = !!getYarValue(request, 'current-score')
+  
   title = title ?? label?.text
 
   const sideBarText = (sidebar?.dependentYarKey)
@@ -84,7 +90,7 @@ const getModel = (data, question, request, conditionalHtml = '') => {
     type,
     key,
     title,
-    backUrl: getUrl(backUrlObject, backUrl, request),
+    backUrl: getBackUrl(hasScore, backUrlObject, backUrl, request),
     items: getOptions(data, question, conditionalHtml, request),
     sideBarText,
     ...(warningDetails ? ({ warning: warningDetails }) : {}),
