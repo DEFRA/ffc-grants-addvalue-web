@@ -740,7 +740,7 @@ const questionBank = {
           id: 'projectCost',
           name: 'projectCost',
           prefix: { text: '£' },
-          type: 'cost',
+          type: 'input',
           grantInfo: {
             minGrant: 35000,
             maxGrant: 500000,
@@ -1001,7 +1001,7 @@ const questionBank = {
           pageTitle: '',
           url: 'how-adding-value',
           baseUrl: 'how-adding-value',
-          backUrl: 'remaining-costs',
+          backUrl: 'products-processed',
           nextUrl: 'project-impact',
           score: {
             isScore: true,
