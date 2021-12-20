@@ -75,12 +75,13 @@ module.exports = [{
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
       const howAddingValueQuestion = ALL_QUESTIONS.find(question => question.key === 'how-adding-value')
-      const howAddingValueQuestionObj = addSummaryRow(howAddingValueQuestion, request)
+      const matrixQuestionRating = msgData.desirability.questions[0].rating
+      const howAddingValueQuestionObj = addSummaryRow(howAddingValueQuestion, matrixQuestionRating, request)
       console.log('msgData', msgData)
       if (msgData) {
         msgData.desirability.questions.push(howAddingValueQuestionObj)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
-          const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
+        const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = bankQuestion.score.title ?? bankQuestion.title
           desirabilityQuestion.desc = bankQuestion.desc ?? ''
           desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
@@ -90,6 +91,7 @@ module.exports = [{
           desirabilityQuestion.fundingPriorities = bankQuestion.fundingPriorities
           return desirabilityQuestion
         })
+
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {
           case 'strong':
@@ -102,6 +104,7 @@ module.exports = [{
             scoreChance = 'seems unlikely to'
             break
         }
+        
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
