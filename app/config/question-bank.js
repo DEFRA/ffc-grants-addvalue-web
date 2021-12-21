@@ -930,7 +930,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: 'Improve processing and supply chains',
+          fundingPriorities: 'Create and expand processing capacity to provide more English-grown food for consumers to buy',
           type: 'single-answer',
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
