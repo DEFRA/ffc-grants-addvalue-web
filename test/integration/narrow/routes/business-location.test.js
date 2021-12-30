@@ -19,6 +19,7 @@ describe('Page: /business-location', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('Is your business in England?')
     expect(response.payload).toContain('Yes')
     expect(response.payload).toContain('No')
   })

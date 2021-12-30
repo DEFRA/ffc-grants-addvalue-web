@@ -19,6 +19,7 @@ describe('Page: /legal-status', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('What is the legal status of the business?')
     expect(response.payload).toContain('Sole trader')
     expect(response.payload).toContain('Partnership')
     expect(response.payload).toContain('Limited company')
