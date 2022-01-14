@@ -11,7 +11,6 @@ const viewTemplate = 'score'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const nextPath = `${urlPrefix}/business-details`
 
-
 function createModel (data, request) {
   const previousPath = `${urlPrefix}/environmental-impact`
 
@@ -81,8 +80,8 @@ module.exports = [{
       if (msgData) {
         msgData.desirability.questions.push(howAddingValueQuestionObj)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
-        const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
-          desirabilityQuestion.title = bankQuestion.score.title ?? bankQuestion.title
+          const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
+          desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
           desirabilityQuestion.desc = bankQuestion.desc ?? ''
           desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
           desirabilityQuestion.order = bankQuestion.order
@@ -104,7 +103,7 @@ module.exports = [{
             scoreChance = 'seems unlikely to'
             break
         }
-        
+
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
