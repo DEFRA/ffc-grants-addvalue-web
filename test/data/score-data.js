@@ -67,30 +67,6 @@ const msgData = {
         }
       },
       {
-        key: 'current-customers',
-        answers: [
-          {
-            key: 'current-customers',
-            title: 'Who are your current customers?',
-            input: [
-              {
-                key: 'current-customers-A1',
-                value: 'Processors'
-              },
-              {
-                key: 'current-customers-A2',
-                value: 'Wholesalers'
-              }
-            ]
-          }
-        ],
-        rating: {
-          score: 4,
-          band: 'Strong',
-          importance: null
-        }
-      },
-      {
         key: 'future-customers',
         answers: [
           {
