@@ -9,15 +9,16 @@ function createModel (cookiesPolicy = {}, updated = false) {
     analytics: {
       idPrefix: 'analytics',
       name: 'analytics',
+      classes: 'govuk-radios--inline',
       items: [
         {
           value: true,
-          text: 'Use cookies that measure my website use',
+          text: 'Yes',
           checked: cookiesPolicy.analytics
         },
         {
           value: false,
-          text: 'Do not use cookies that measure my website use',
+          text: 'No',
           checked: !cookiesPolicy.analytics
         }
       ]
@@ -29,6 +30,9 @@ function createModel (cookiesPolicy = {}, updated = false) {
 module.exports = [{
   method: 'GET',
   path: currentPath,
+  options: {
+    auth: false
+  },
   handler: (request, h) => {
     return h.view(viewTemplate, createModel(request.state.cookies_policy, request.query.updated))
   }
@@ -36,6 +40,7 @@ module.exports = [{
   method: 'POST',
   path: currentPath,
   options: {
+    auth: false,
     validate: {
       payload: Joi.object({
         analytics: Joi.boolean(),
