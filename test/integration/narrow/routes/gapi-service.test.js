@@ -1,4 +1,4 @@
-const appInsights = jest.mock('../../app/services/app-insights')
+const appInsights = jest.mock('../../../../app/services/app-insights')
 appInsights.logException = jest.fn((req, event) => {
   return null
 })
