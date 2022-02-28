@@ -69,7 +69,7 @@ module.exports = [{
       console.log('Sending scoring message .....', msgDataToSend)
       // Always re-calculate our score before rendering this page
       await senders.sendProjectDetails(msgDataToSend, request.yar.id)
-
+      console.log('[PROJECT DETAILS SENT]')
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
