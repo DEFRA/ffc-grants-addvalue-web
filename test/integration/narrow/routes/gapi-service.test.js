@@ -2,7 +2,7 @@ const appInsights = jest.mock('../../../../app/services/app-insights')
 appInsights.logException = jest.fn((req, event) => {
   return null
 })
-const gapiService = require('../../app/services/gapi-service')
+const gapiService = require('../../../../app/services/gapi-service')
 const eventSuccess = jest.fn(async (obj) => {
   return null
 })
