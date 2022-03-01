@@ -2,7 +2,7 @@ const appInsights = require('./app-insights')
 const { getYarValue, setYarValue } = require('../helpers/session')
 const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 const blockDefaultPageViews = [
-  'start', 'applying', 'confirmation', 'sssi', 'remaining-costs',
+  'start', 'applying', 'confirmation', 'products-processed', 'remaining-costs',
   'project-cost', 'project-start', 'planning-permission', 'score',
   'country', 'legal-status', 'farming-type'
 ]
@@ -82,7 +82,7 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
   }
 }
 const sendEligibilityEvent = async (request, notEligible = true) => {
-  if (!notEligible) {
+  if (notEligible) {
     await sendDimensionOrMetrics(request, [{
       dimensionOrMetric: metrics.ELIMINATION,
       value: getTimeofJourneySinceStart(request).toString()
@@ -118,6 +118,7 @@ const processGA = async (request, ga, score, confirmationId) => {
     ga.forEach(async gaConfig => {
       if (gaConfig.journeyStart) {
         setYarValue(request, 'journey-start-time', Date.now())
+        console.log('[JOURNEY STARTED] ')
       }
       if (gaConfig.dimension) {
         let value

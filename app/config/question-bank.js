@@ -83,7 +83,7 @@ const questionBank = {
           type: 'single-answer',
           fundingPriorities: '',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
+          ga: [{ journeyStart: true }],
           ineligibleContent: {
             messageContent: `
             <span>This grant is for businesses who:</span>
@@ -231,7 +231,6 @@ const questionBank = {
           fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           sidebar: {
             values: [{
               heading: 'Eligibility',
@@ -331,7 +330,6 @@ const questionBank = {
           fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           sidebar: {
             values: [{
               heading: 'Eligibility',
@@ -382,7 +380,6 @@ const questionBank = {
           fundingPriorities: 'Improving Adding Value',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           sidebar: {
             values: [{
               heading: 'Eligibility',
@@ -452,7 +449,6 @@ const questionBank = {
           fundingPriorities: 'Improving Adding Value',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           sidebar: {
             values: [
               {
@@ -514,7 +510,6 @@ const questionBank = {
           fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           sidebar: {
             values: [{
               heading: 'Eligibility',
@@ -576,7 +571,6 @@ const questionBank = {
           fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           sidebar: {
             values: [{
               heading: 'Eligibility',
@@ -681,7 +675,6 @@ const questionBank = {
           preValidationKeys: ['projectStart', 'tenancy'],
           type: 'multi-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -850,7 +843,6 @@ const questionBank = {
           type: 'single-answer',
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           sidebar: {
             values: [
               {
@@ -910,7 +902,6 @@ const questionBank = {
             isDisplay: true,
             title: 'Products processed'
           },
-          eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: '',
             insertText: { text: '' },
@@ -934,7 +925,6 @@ const questionBank = {
           type: 'single-answer',
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1036,7 +1026,6 @@ const questionBank = {
           type: 'single-answer',
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1096,6 +1085,9 @@ const questionBank = {
           eliminationAnswerKeys: '',
           preValidationKeys: ['howAddingValue'],
           ineligibleContent: {},
+          ga: [
+            { dimension: 'cm2', value: { type: 'journey-time' } }
+          ],
           sidebar: {
             values: [{
               heading: 'Funding priorities',
@@ -1109,7 +1101,6 @@ const questionBank = {
           fundingPriorities: 'Improve processing and supply chains<br/><br/>Grow your business',
           type: 'multi-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1184,7 +1175,6 @@ const questionBank = {
           fundingPriorities: 'Improve processing and supply chains<br/><br/>Grow your business',
           type: 'multi-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1270,7 +1260,6 @@ const questionBank = {
           fundingPriorities: 'Improve processing and supply chains<br/><br/>Encourage collaboration and partnerships',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1328,7 +1317,6 @@ const questionBank = {
           fundingPriorities: 'Improve the environment',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1398,7 +1386,6 @@ const questionBank = {
           fundingPriorities: 'Improve the environment',
           type: 'single-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1468,7 +1455,6 @@ const questionBank = {
           fundingPriorities: 'Improve the environment',
           type: 'multi-answer',
           minAnswerCount: 1,
-          ga: { dimension: '', value: '' },
           validate: [
             {
               type: 'NOT_EMPTY',

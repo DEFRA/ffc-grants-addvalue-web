@@ -4,6 +4,7 @@ const { ALL_QUESTIONS } = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 const { setYarValue } = require('../helpers/session')
 const { addSummaryRow } = require('../helpers/score-helpers')
+const gapiService = require('../services/gapi-service')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -105,6 +106,14 @@ module.exports = [{
         }
 
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
+        await gapiService.sendDimensionOrMetrics(request, [{
+          dimensionOrMetric: gapiService.dimensions.SCORE,
+          value: msgData.desirability.overallRating.band
+        },
+        {
+          dimensionOrMetric: gapiService.metrics.SCORE,
+          value: 'TIME'
+        }])
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
