@@ -134,7 +134,8 @@ async function createServer () {
       assetpath: '/assets',
       govukAssetpath: '/assets',
       serviceName: 'FFC Grants Service',
-      pageTitle: 'FFC Grants Service'
+      pageTitle: 'FFC Grants Service',
+      googleTagManagerKey: config.googleTagManagerKey
     }
   })
 
