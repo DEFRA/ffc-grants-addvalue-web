@@ -10,9 +10,8 @@ describe('Page: /nature-of-business', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('What is your business?')
-    expect(response.payload).toContain('A grower or producer of agricultural, horticultural or forestry agri-products')
-    expect(response.payload).toContain('Providing processing services to a primary producer')
-    expect(response.payload).toContain('A separate processing business owned by a primary producer')
+    expect(response.payload).toContain('A grower or producer of primary agricultural or horticultural produce')
+    expect(response.payload).toContain('A separate processing business at least 50% owned by a growers or producers of agricultural or horticultural produce')
     expect(response.payload).toContain('None of the above')
   })
 

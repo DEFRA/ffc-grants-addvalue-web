@@ -88,9 +88,8 @@ const questionBank = {
             messageContent: `
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
-              <li>are agricultural, horticultural or forestry producers (primary producers)</li>
-              <li>provide processing services to a primary producer</li>
-              <li>are a separate processing business owned by a primary producer</li>
+              <li>are agricultural or horticultural growers or producers</li>
+              <li>are a separate processing business 100% owned by growers or producers of agricultural or horticultural produce</li>
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
@@ -109,39 +108,24 @@ const questionBank = {
               content: [{
                 para: 'This grant is for businesses who:',
                 items: [
-                  'are agricultural, horticultural or forestry producers (primary producers)',
-                  'provide processing services to a primary producer',
-                  'are a separate processing business owned by a primary producer'
+                  'are agricultural or horticultural growers or producers',
+                  'are a separate processing business at least 50% owned by growers or producers of agricultural or horticultural produce'
                 ]
               }]
             }]
           },
-          validations: [
-            {
-              type: '',
-              error: '',
-              regEx: '',
-              dependentAnswerKey: ''
-            }
-          ],
+          validations: [],
           answers: [
             {
               key: 'nature-of-business-A1',
-              value: 'A grower or producer of agricultural, horticultural or forestry agri-products (a primary producer)',
+              value: 'A grower or producer of primary agricultural or horticultural produce',
               hint: {
-                text: 'For example, arable or livestock farmer, growing trees, fruit producer, salad grower'
+                text: 'For example, arable or livestock farmer, fruit producer, salad grower'
               }
             },
             {
               key: 'nature-of-business-A2',
-              value: 'Providing processing services to a primary producer',
-              hint: {
-                text: 'For example, vegetable washing, mobile livestock slaughter services'
-              }
-            },
-            {
-              key: 'nature-of-business-A3',
-              value: 'A separate processing business owned by a primary producer',
+              value: 'A separate processing business at least 50% owned by a growers or producers of agricultural or horticultural produce',
               hint: {
                 text: 'For example, cheese processing business owned by a dairy farmer'
               }
@@ -150,7 +134,7 @@ const questionBank = {
               value: 'divider'
             },
             {
-              key: 'nature-of-business-A4',
+              key: 'nature-of-business-A3',
               value: 'None of the above',
               notEligible: true
             }
