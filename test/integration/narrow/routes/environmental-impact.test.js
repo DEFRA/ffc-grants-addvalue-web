@@ -48,7 +48,7 @@ describe('Page: /environmental-impact', () => {
       url: `${global.__URLPREFIX__}/environmental-impact`,
       headers: { cookie: 'crumb=' + crumbToken },
       payload: {
-        environmentalImpact: ['My project will not improve the environment'],
+        environmentalImpact: ['My project will not improve the environment', 'Energy efficiency'],
         crumb: crumbToken
       }
     }
