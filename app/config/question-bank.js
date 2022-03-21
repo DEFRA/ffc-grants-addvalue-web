@@ -77,7 +77,7 @@ const questionBank = {
           title: 'What is your business?',
           pageTitle: '',
           backUrl: 'start',
-          nextUrl: 'business-location',
+          nextUrl: 'legal-status',
           url: 'nature-of-business',
           baseUrl: 'nature-of-business',
           type: 'single-answer',
@@ -158,61 +158,15 @@ const questionBank = {
           yarKey: 'applicantBusiness'
         },
         {
-          key: 'business-location',
-          order: 15,
-          title: 'Is your business in England?',
-          pageTitle: '',
-          backUrl: 'nature-of-business',
-          nextUrl: 'legal-status',
-          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
-          url: 'business-location',
-          baseUrl: 'business-location',
-          preValidationKeys: ['applicantBusiness'],
-          ineligibleContent: {
-            messageContent: 'This grant is only for businesses registered in England.',
-            insertText: { text: 'Scotland, Wales and Northern Ireland have other grants available.' }
-          },
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          sidebar: {
-            values: [{
-              heading: 'Eligibility',
-              content: [{
-                para: 'This grant is only for businesses registered in England. \n \n Scotland, Wales and Northern Ireland have other grants available.',
-                items: []
-              }]
-            }]
-          },
-          validate: [
-            {
-              type: 'NOT_EMPTY',
-              error: 'Select yes if the business is registered in England'
-            }
-          ],
-          answers: [
-            {
-              key: 'business-location-A1',
-              value: 'Yes'
-            },
-            {
-              key: 'business-location-A2',
-              value: 'No',
-              notEligible: true
-            }
-          ],
-          yarKey: 'businessLocation'
-        },
-        {
           key: 'legal-status',
           order: 20,
           title: 'What is the legal status of the business?',
           pageTitle: '',
-          backUrl: 'business-location',
+          backUrl: 'nature-of-business',
           nextUrl: 'country',
           url: 'legal-status',
           baseUrl: 'legal-status',
-          preValidationKeys: ['businessLocation'],
+          preValidationKeys: ['applicantBusiness'],
           ineligibleContent: {
             messageContent: 'Your business does not have an eligible legal status.',
             details: {
@@ -571,11 +525,12 @@ const questionBank = {
           fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           sidebar: {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'You must own the land or have a tenancy in place until 2027 before starting the project.'
+                para: 'You must own the land or have a tenancy in place until 2028 before starting the project.'
               }]
             }]
           },
@@ -594,10 +549,6 @@ const questionBank = {
               key: 'tenancy-A2',
               value: 'No',
               redirectUrl: 'tenancy-length'
-            },
-            {
-              key: 'tenancy-A3',
-              value: 'Not applicable – I’m a mobile contractor'
             }
           ],
           yarKey: 'tenancy'
@@ -605,7 +556,7 @@ const questionBank = {
         {
           key: 'tenancy-length',
           order: 70,
-          title: 'Do you have a tenancy agreement until 2027 or after?',
+          title: 'Do you have a tenancy agreement until 2028 or after?',
           pageTitle: '',
           url: 'tenancy-length',
           baseUrl: 'tenancy-length',
@@ -621,7 +572,7 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'You must own the land or have a tenancy in place until 2027 before starting the project.',
+                para: 'You must own the land or have a tenancy in place until 2028 before starting the project.',
                 items: []
               }]
             }]
@@ -887,7 +838,7 @@ const questionBank = {
         {
           key: 'products-processed',
           order: 120,
-          title: 'What type of products are being processed?',
+          title: 'What type of produce is being processed?',
           pageTitle: '',
           hint: {
             text: 'Select one option'
@@ -900,7 +851,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Products processed'
+            title: 'Produce processed'
           },
           ineligibleContent: {
             messageContent: '',
@@ -923,7 +874,7 @@ const questionBank = {
           },
           fundingPriorities: 'Create and expand processing capacity to provide more English-grown food for consumers to buy',
           type: 'single-answer',
-          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          classes: 'govuk-fieldset__legend--l',
           minAnswerCount: 1,
           validate: [
             {
@@ -934,49 +885,42 @@ const questionBank = {
           answers: [
             {
               key: 'products-processed-A1',
-              value: 'Arable products',
+              value: 'Arable produce',
               hint: {
                 text: 'For example, crushing of oilseeds, rolling or flaking of grains as food ingredients'
               }
             },
             {
               key: 'products-processed-A2',
-              value: 'Horticultural products',
+              value: 'Horticultural produce',
               hint: {
                 text: 'For example, grading and packing of soft fruit, washing and packing vegetables, packing salad crops'
               }
             },
             {
               key: 'products-processed-A3',
-              value: 'Dairy or meat products',
+              value: 'Dairy or meat produce',
               hint: {
                 text: 'For example, processing and bottling milk or slaughtering, cutting, processing and packing meat'
               }
             },
             {
-              key: 'products-processed-A4',
-              value: 'Forestry products',
-              hint: {
-                text: 'For example, wood from harvested trees before industrial processing'
-              }
-            },
-            {
               key: 'products-processed-A5',
-              value: 'Fodder products',
+              value: 'Fodder produce',
               hint: {
                 text: 'For example, processing and repacking hay and straw for specialist markets or retail sale'
               }
             },
             {
               key: 'products-processed-A6',
-              value: 'Non-edible products',
+              value: 'Non-edible produce',
               hint: {
                 text: 'For example, processing and packing ornamental flowers and bulbs after harvesting'
               }
             },
             {
               key: 'products-processed-A7',
-              value: 'Fibre products',
+              value: 'Fibre produce',
               hint: {
                 text: 'For example, processing animal hides and leather, processing fibres such as flax and hemp'
               }
@@ -1152,7 +1096,8 @@ const questionBank = {
             title: 'Future customers'
           },
           hint: {
-            text: 'Select all that apply'
+            html: `For example, you will now sell directly to retailers 
+                  <br/><br/>Select all that apply`
           },
           ineligibleContent: {
             messageContent: '',
@@ -1431,7 +1376,7 @@ const questionBank = {
             title: 'Environmental impact'
           },
           hint: {
-            text: 'Select up to 2 options'
+            text: 'Select all that apply'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['processedSold'],
@@ -1458,7 +1403,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select up to 2 options'
+              error: 'Select all options that apply'
             },
             {
               type: 'STANDALONE_ANSWER',
@@ -1467,11 +1412,6 @@ const questionBank = {
                 questionKey: 'environmental-impact',
                 answerKey: 'environmental-impact-A7'
               }
-            },
-            {
-              type: 'MAX_SELECT',
-              max: 2,
-              error: 'Select up to 2 options'
             }
           ],
           answers: [
