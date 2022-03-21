@@ -39,25 +39,25 @@ describe('Page: /environmental-impact', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select up to 2 options')
+    expect(postResponse.payload).toContain('Select all options that apply')
   })
 
-  it('user selects more than 2 options -> show error message', async () => {
+  it('user selects OR option with others -> show error message', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/environmental-impact`,
       headers: { cookie: 'crumb=' + crumbToken },
       payload: {
-        environmentalImpact: ['Renewable energy', 'Water efficiency', 'Remove single-use plastics'],
+        environmentalImpact: ['My project will not improve the environment'],
         crumb: crumbToken
       }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.payload).toContain('Select up to 2 options')
+    expect(postResponse.payload).toContain('You cannot select that combination of options')
   })
 
-  it('user selects max 2 options -> store user response and redirect to /score', async () => {
+  it('user selects options -> store user response and redirect to /score', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/environmental-impact`,

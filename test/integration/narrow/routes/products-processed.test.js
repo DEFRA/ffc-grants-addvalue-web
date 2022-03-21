@@ -20,12 +20,12 @@ describe('Page: /products-processed', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('What type of produce is being processed?')
-    expect(response.payload).toContain('Arable producce')
-    expect(response.payload).toContain('Horticultural producce')
-    expect(response.payload).toContain('Dairy or meat producce')
-    expect(response.payload).toContain('Fodder producce')
-    expect(response.payload).toContain('Non-edible producce')
-    expect(response.payload).toContain('Fibre producce')
+    expect(response.payload).toContain('Arable produce')
+    expect(response.payload).toContain('Horticultural produce')
+    expect(response.payload).toContain('Dairy or meat produce')
+    expect(response.payload).toContain('Fodder produce')
+    expect(response.payload).toContain('Non-edible produce')
+    expect(response.payload).toContain('Fibre produce')
   })
 
   it('no option selected -> show error message', async () => {

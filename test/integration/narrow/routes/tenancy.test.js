@@ -22,7 +22,6 @@ describe('Page: /tenancy', () => {
     expect(response.payload).toContain('Is the planned project on land the business owns?')
     expect(response.payload).toContain('Yes')
     expect(response.payload).toContain('No')
-    expect(response.payload).toContain('Not applicable')
   })
 
   it('no option selected -> show error message', async () => {
@@ -62,18 +61,5 @@ describe('Page: /tenancy', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('tenancy-length')
-  })
-
-  it('user selects \'Not applicable – I’m a mobile contractor\' -> store user response and redirect to /project-items', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/tenancy`,
-      headers: { cookie: 'crumb=' + crumbToken },
-      payload: { tenancy: 'Not applicable – I’m a mobile contractor', crumb: crumbToken }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('project-items')
   })
 })
