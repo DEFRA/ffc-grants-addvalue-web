@@ -1,7 +1,7 @@
 const { crumbToken } = require('./test-helper')
 
 describe('Page: /environmental-impact', () => {
-  const varList = { processedSold: 'randomData' }
+  const varList = { collaboration: 'randomData' }
 
   jest.mock('../../../../app/helpers/session', () => ({
     setYarValue: (request, key, value) => null,

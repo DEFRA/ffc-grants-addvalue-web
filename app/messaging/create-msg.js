@@ -18,8 +18,6 @@ const desirabilityAnswersSchema = Joi.object({
   projectImpact: Joi.array().items(Joi.string()),
   futureCustomers: Joi.array().items(Joi.string()),
   collaboration: Joi.string(),
-  productsComingFrom: Joi.string(),
-  processedSold: Joi.string(),
   environmentalImpact: Joi.array().items(Joi.string())
 })
 
@@ -33,8 +31,6 @@ function getDesirabilityAnswers (request) {
       projectImpact: [getYarValue(request, 'projectImpact')].flat(),
       futureCustomers: [getYarValue(request, 'futureCustomers')].flat(),
       collaboration: getYarValue(request, 'collaboration'),
-      productsComingFrom: getYarValue(request, 'productsComingFrom'),
-      processedSold: getYarValue(request, 'processedSold'),
       environmentalImpact: envImpactVal
     }
     const result = desirabilityAnswersSchema.validate(val, {

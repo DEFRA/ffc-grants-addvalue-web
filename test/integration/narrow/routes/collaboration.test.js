@@ -37,7 +37,7 @@ describe('Page: /collaboration', () => {
     expect(postResponse.payload).toContain('Select yes if you will be buying materials from other farmers')
   })
 
-  it('user selects any option [Yes | No] -> store user response and redirect to /products-coming-from', async () => {
+  it('user selects any option [Yes | No] -> store user response and redirect to /environmental-impact', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/collaboration`,
@@ -47,6 +47,6 @@ describe('Page: /collaboration', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('products-coming-from')
+    expect(postResponse.headers.location).toBe('environmental-impact')
   })
 })

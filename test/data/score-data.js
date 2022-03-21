@@ -147,8 +147,6 @@ const msgData = {
     currentCustomers: 'current-customers',
     futureCustomers: 'future-customers',
     collaboration: 'collaboration',
-    productsComingFrom: 'products-coming-from',
-    processedSold: 'processed-sold',
     environmentalImpact: 'environmental-impact'
   }
 }

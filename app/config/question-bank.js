@@ -1161,7 +1161,7 @@ const questionBank = {
           url: 'collaboration',
           baseUrl: 'collaboration',
           backUrl: 'future-customers',
-          nextUrl: 'products-coming-from',
+          nextUrl: 'environmental-impact',
           score: {
             isScore: true,
             isDisplay: true,
@@ -1208,151 +1208,13 @@ const questionBank = {
           yarKey: 'collaboration'
         },
         {
-          key: 'products-coming-from',
-          order: 180,
-          title: 'Where are the primary products coming from?',
-          pageTitle: '',
-          url: 'products-coming-from',
-          baseUrl: 'products-coming-from',
-          backUrl: 'collaboration',
-          nextUrl: 'processed-sold',
-          score: {
-            isScore: true,
-            isDisplay: true,
-            title: 'Products coming from'
-          },
-          hint: {
-            html: 'How far the majority of the raw materials will travel to get to your project site <br/><br/> Select one option'
-          },
-          eliminationAnswerKeys: '',
-          preValidationKeys: ['collaboration'],
-          ineligibleContent: {
-            messageContent: '',
-            insertText: { text: '' },
-            messageLink: {
-              url: '',
-              title: ''
-            }
-          },
-          sidebar: {
-            values: [{
-              heading: 'Funding priorities',
-              content: [{
-                para: 'RPA wants to fund projects that:',
-                items: ['improve the environment']
-              }]
-            }]
-          },
-          fundingPriorities: 'Improve the environment',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          validate: [
-            {
-              type: 'NOT_EMPTY',
-              error: 'Select where the primary products are coming from'
-            }
-          ],
-          answers: [
-            {
-              key: 'products-coming-from-A1',
-              value: 'Within 1 mile'
-            },
-            {
-              key: 'products-coming-from-A2',
-              value: 'Within 10 miles'
-            },
-            {
-              key: 'products-coming-from-A3',
-              value: 'Within 50 miles'
-            },
-            {
-              key: 'products-coming-from-A4',
-              value: 'More than 50 miles'
-            },
-            {
-              key: 'products-coming-from-A5',
-              value: 'From outside the UK'
-            }
-          ],
-          yarKey: 'productsComingFrom'
-        },
-        {
-          key: 'processed-sold',
-          order: 190,
-          title: 'Where will the processed products be sold?',
-          pageTitle: '',
-          url: 'processed-sold',
-          baseUrl: 'processed-sold',
-          backUrl: 'products-coming-from',
-          nextUrl: 'environmental-impact',
-          score: {
-            isScore: true,
-            isDisplay: true,
-            title: 'Where products sold'
-          },
-          hint: {
-            html: 'How far the majority of the processed products will travel from your project site<br/><br/>Select one option'
-          },
-          eliminationAnswerKeys: '',
-          preValidationKeys: ['productsComingFrom'],
-          ineligibleContent: {
-            messageContent: '',
-            insertText: { text: '' },
-            messageLink: {
-              url: '',
-              title: ''
-            }
-          },
-          sidebar: {
-            values: [{
-              heading: 'Funding priorities',
-              content: [{
-                para: 'RPA wants to fund projects that:',
-                items: ['improve the environment']
-              }]
-            }]
-          },
-          fundingPriorities: 'Improve the environment',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          validate: [
-            {
-              type: 'NOT_EMPTY',
-              error: 'Select where the processed products will be sold'
-            }
-          ],
-          answers: [
-            {
-              key: 'processed-sold-A1',
-              value: 'Within 1 mile'
-            },
-            {
-              key: 'processed-sold-A2',
-              value: 'Within 10 miles'
-            },
-            {
-              key: 'processed-sold-A3',
-              value: 'Within 50 miles'
-            },
-            {
-              key: 'processed-sold-A4',
-              value: 'More than 50 miles'
-            },
-            {
-              key: 'processed-sold-A5',
-              value: 'Outside the UK'
-            }
-          ],
-          yarKey: 'processedSold'
-        },
-        {
           key: 'environmental-impact',
           order: 200,
           title: 'How will the project improve the environment?',
           pageTitle: '',
           url: 'environmental-impact',
           baseUrl: 'environmental-impact',
-          backUrl: 'processed-sold',
+          backUrl: 'collaboration',
           nextUrl: 'score',
           score: {
             isScore: true,
@@ -1363,7 +1225,7 @@ const questionBank = {
             text: 'Select all that apply'
           },
           eliminationAnswerKeys: '',
-          preValidationKeys: ['processedSold'],
+          preValidationKeys: ['collaboration'],
           ineligibleContent: {
             messageContent: '',
             insertText: { text: '' },
