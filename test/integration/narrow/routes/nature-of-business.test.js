@@ -10,9 +10,8 @@ describe('Page: /nature-of-business', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('What is your business?')
-    expect(response.payload).toContain('A grower or producer of agricultural, horticultural or forestry agri-products')
-    expect(response.payload).toContain('Providing processing services to a primary producer')
-    expect(response.payload).toContain('A separate processing business owned by a primary producer')
+    expect(response.payload).toContain('A grower or producer of primary agricultural or horticultural produce')
+    expect(response.payload).toContain('A separate processing business at least 50% owned by a growers or producers of agricultural or horticultural produce')
     expect(response.payload).toContain('None of the above')
   })
 
@@ -41,7 +40,7 @@ describe('Page: /nature-of-business', () => {
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
-  it('user selects eligible option -> store user response and redirect to /business-location', async () => {
+  it('user selects eligible option -> store user response and redirect to /legal-status', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/nature-of-business`,
@@ -51,6 +50,6 @@ describe('Page: /nature-of-business', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('business-location')
+    expect(postResponse.headers.location).toBe('legal-status')
   })
 })

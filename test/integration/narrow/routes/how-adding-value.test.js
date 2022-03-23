@@ -19,11 +19,10 @@ describe('Page: /how-adding-value', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('How will your project add value to the products?')
-    expect(response.payload).toContain('Slaughtering, processing or preparing primary product')
-    expect(response.payload).toContain('Grading or sorting primary product')
-    expect(response.payload).toContain('Packing primary product')
-    expect(response.payload).toContain('Controlled atmosphere or dynamic controlled atmosphere storage')
+    expect(response.payload).toContain('How will your project add value to the produce?')
+    expect(response.payload).toContain('Creating a new product')
+    expect(response.payload).toContain('Grading or sorting primary produce')
+    expect(response.payload).toContain('Packing primary produce')
     expect(response.payload).toContain('New retail facility to sell direct to consumers')
   })
 

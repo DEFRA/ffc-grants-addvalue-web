@@ -19,7 +19,7 @@ describe('Page: /tenancy-length', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('Do you have a tenancy agreement until 2027 or after?')
+    expect(response.payload).toContain('Do you have a tenancy agreement until 2028 or after?')
     expect(response.payload).toContain('Yes')
     expect(response.payload).toContain('No')
   })

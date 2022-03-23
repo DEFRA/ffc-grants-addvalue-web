@@ -11,7 +11,7 @@ const msgData = {
         answers: [
           {
             key: 'products-processed',
-            title: 'What type of products are being processed?',
+            title: 'What type of produce is being processed?',
             input: [
               {
                 key: 'products-processed-A1',

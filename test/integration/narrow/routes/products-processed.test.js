@@ -19,14 +19,13 @@ describe('Page: /products-processed', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('What type of products are being processed?')
-    expect(response.payload).toContain('Arable products')
-    expect(response.payload).toContain('Horticultural products')
-    expect(response.payload).toContain('Dairy or meat products')
-    expect(response.payload).toContain('Forestry products')
-    expect(response.payload).toContain('Fodder products')
-    expect(response.payload).toContain('Non-edible products')
-    expect(response.payload).toContain('Fibre products')
+    expect(response.payload).toContain('What type of produce is being processed?')
+    expect(response.payload).toContain('Arable produce')
+    expect(response.payload).toContain('Horticultural produce')
+    expect(response.payload).toContain('Dairy or meat produce')
+    expect(response.payload).toContain('Fodder produce')
+    expect(response.payload).toContain('Non-edible produce')
+    expect(response.payload).toContain('Fibre produce')
   })
 
   it('no option selected -> show error message', async () => {
@@ -47,7 +46,7 @@ describe('Page: /products-processed', () => {
       method: 'POST',
       url: `${global.__URLPREFIX__}/products-processed`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { productsProcessed: 'Horticultural products', crumb: crumbToken }
+      payload: { productsProcessed: 'Horticultural produce', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
