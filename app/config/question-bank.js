@@ -915,7 +915,7 @@ const questionBank = {
         {
           key: 'how-adding-value',
           order: 130,
-          title: 'How will your project add value to the products?',
+          title: 'How will your project add value to the produce?',
           pageTitle: '',
           url: 'how-adding-value',
           baseUrl: 'how-adding-value',
@@ -963,28 +963,24 @@ const questionBank = {
           answers: [
             {
               key: 'how-adding-value-A1',
-              value: 'Slaughtering, processing or preparing primary product',
+              value: 'Creating a new product',
               hint: {
-                text: 'For example, cut and packed meat, yogurt to cheese, brewing or distilling'
+                text: 'For example, slaughtering, cut and packed meat, yogurt to cheese, brewing or distilling'
               }
             },
             {
               key: 'how-adding-value-A2',
-              value: 'Grading or sorting primary product',
+              value: 'Grading or sorting primary produce',
               hint: {
                 text: 'For example, washing and grading vegetables, egg grading, optical grading of top fruit'
               }
             },
             {
               key: 'how-adding-value-A3',
-              value: 'Packing primary product',
+              value: 'Packing primary produce',
               hint: {
                 text: 'For example, packing top fruit, bagging vegetables, bottling wine'
               }
-            },
-            {
-              key: 'how-adding-value-A4',
-              value: 'Controlled atmosphere or dynamic controlled atmosphere storage'
             },
             {
               key: 'how-adding-value-A5',
@@ -1291,7 +1287,7 @@ const questionBank = {
             },
             {
               key: 'environmental-impact-A5',
-              value: 'Remove single-use plastics',
+              value: 'Sustainable packaging measures',
               hint: {
                 text: 'For example, majority of project waste is recycled or reused instead of going to landfill'
               }

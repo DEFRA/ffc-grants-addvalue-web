@@ -24,7 +24,7 @@ describe('Page: /environmental-impact', () => {
     expect(response.payload).toContain('Energy efficiency')
     expect(response.payload).toContain('Water efficiency')
     expect(response.payload).toContain('Waste efficiency')
-    expect(response.payload).toContain('Remove single-use plastics')
+    expect(response.payload).toContain('Sustainable packaging measures')
     expect(response.payload).toContain('Reduce harmful emissions or pollutants')
     expect(response.payload).toContain('My project will not improve the environment')
   })
