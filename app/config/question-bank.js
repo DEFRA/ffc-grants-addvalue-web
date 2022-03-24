@@ -671,7 +671,7 @@ const questionBank = {
           type: 'input',
           grantInfo: {
             minGrant: 35000,
-            maxGrant: 500000,
+            maxGrant: 300000,
             grantPercentage: 40,
             cappedGrant: true
           },
@@ -684,14 +684,14 @@ const questionBank = {
             html: `
               You can only apply for a grant of up to 40% of the estimated costs.
               <br/>The minimum grant you can apply for this project is £35,000 (40% of £87,500).
-              <br/>The maximum grant is £500,000.
+              <br/>The maximum grant is £300,000.
               <br/><br/>Do not include VAT.
               <br/><br/>Enter amount, for example 95,000`
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: 'You can only apply for a grant of up to 40% of the estimated costs.',
-            insertText: { text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.' },
+            insertText: { text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £300,000.' },
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
