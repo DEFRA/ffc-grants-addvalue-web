@@ -89,7 +89,7 @@ const questionBank = {
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
-              <li>are a separate processing business 100% owned by growers or producers of agricultural or horticultural produce</li>
+              <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
