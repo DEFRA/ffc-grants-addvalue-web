@@ -89,7 +89,7 @@ const questionBank = {
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
-              <li>are a separate processing business 100% owned by growers or producers of agricultural or horticultural produce</li>
+              <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
@@ -109,7 +109,7 @@ const questionBank = {
                 para: 'This grant is for businesses who:',
                 items: [
                   'are agricultural or horticultural growers or producers',
-                  'are a separate processing business at least 50% owned by growers or producers of agricultural or horticultural produce'
+                  'are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers'
                 ]
               }]
             }]
@@ -118,14 +118,14 @@ const questionBank = {
           answers: [
             {
               key: 'nature-of-business-A1',
-              value: 'A grower or producer of primary agricultural or horticultural produce',
+              value: 'A grower or producer of agricultural or horticultural produce',
               hint: {
                 text: 'For example, arable or livestock farmer, fruit producer, salad grower'
               }
             },
             {
               key: 'nature-of-business-A2',
-              value: 'A separate processing business at least 50% owned by a growers or producers of agricultural or horticultural produce',
+              value: 'A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers',
               hint: {
                 text: 'For example, cheese processing business owned by a dairy farmer'
               }
