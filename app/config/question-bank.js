@@ -564,7 +564,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if the land has a tenancy agreement in place until 2027 or after'
+              error: 'Select yes if the land has a tenancy agreement in place until 2028 or after'
             }
           ],
           answers: [
@@ -970,7 +970,7 @@ const questionBank = {
             },
             {
               key: 'how-adding-value-A2',
-              value: 'Grading or sorting primary produce',
+              value: 'Grading or sorting produce',
               hint: {
                 text: 'For example, washing and grading vegetables, egg grading, optical grading of top fruit'
               }

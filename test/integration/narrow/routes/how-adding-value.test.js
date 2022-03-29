@@ -21,7 +21,7 @@ describe('Page: /how-adding-value', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('How will your project add value to the produce?')
     expect(response.payload).toContain('Creating a new product')
-    expect(response.payload).toContain('Grading or sorting primary produce')
+    expect(response.payload).toContain('Grading or sorting produce')
     expect(response.payload).toContain('Packing produce')
     expect(response.payload).toContain('New retail facility to sell direct to consumers')
   })
