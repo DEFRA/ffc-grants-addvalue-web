@@ -22,7 +22,7 @@ describe('Page: /how-adding-value', () => {
     expect(response.payload).toContain('How will your project add value to the produce?')
     expect(response.payload).toContain('Creating a new product')
     expect(response.payload).toContain('Grading or sorting primary produce')
-    expect(response.payload).toContain('Packing primary produce')
+    expect(response.payload).toContain('Packing produce')
     expect(response.payload).toContain('New retail facility to sell direct to consumers')
   })
 
@@ -36,7 +36,7 @@ describe('Page: /how-adding-value', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select how you will add value to the products')
+    expect(postResponse.payload).toContain('Select how you will add value to the produce')
   })
 
   it('user selects an option -> store user response and redirect to /project-impact', async () => {

@@ -1,6 +1,6 @@
 const { crumbToken } = require('./test-helper')
 
-describe('Page: /products-processed', () => {
+describe('Page: /produce-processed', () => {
   const varList = { canPayRemainingCost: 'randomData' }
 
   jest.mock('../../../../app/helpers/session', () => ({
@@ -14,7 +14,7 @@ describe('Page: /products-processed', () => {
   it('page loads successfully, with all the options', async () => {
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/products-processed`
+      url: `${global.__URLPREFIX__}/produce-processed`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -31,20 +31,20 @@ describe('Page: /products-processed', () => {
   it('no option selected -> show error message', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/products-processed`,
+      url: `${global.__URLPREFIX__}/produce-processed`,
       headers: { cookie: 'crumb=' + crumbToken },
       payload: { productsProcessed: '', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select the type of products being processed')
+    expect(postResponse.payload).toContain('Select the type of produce being processed')
   })
 
   it('user selects an option -> store user response and redirect to /how-adding-value', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/products-processed`,
+      url: `${global.__URLPREFIX__}/produce-processed`,
       headers: { cookie: 'crumb=' + crumbToken },
       payload: { productsProcessed: 'Horticultural produce', crumb: crumbToken }
     }
