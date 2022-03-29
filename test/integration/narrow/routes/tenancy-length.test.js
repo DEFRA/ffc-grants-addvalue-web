@@ -34,7 +34,7 @@ describe('Page: /tenancy-length', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if the land has a tenancy agreement in place until 2027 or after')
+    expect(postResponse.payload).toContain('Select yes if the land has a tenancy agreement in place until 2028 or after')
   })
 
   it('user selects conditional option: \'No\' -> display conditional page', async () => {
