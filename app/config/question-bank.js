@@ -755,7 +755,7 @@ const questionBank = {
           url: 'remaining-costs',
           baseUrl: 'remaining-costs',
           backUrl: 'project-cost',
-          nextUrl: 'products-processed',
+          nextUrl: 'produce-processed',
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
@@ -827,8 +827,8 @@ const questionBank = {
           hint: {
             text: 'Select one option'
           },
-          url: 'products-processed',
-          baseUrl: 'products-processed',
+          url: 'produce-processed',
+          baseUrl: 'produce-processed',
           backUrl: 'remaining-costs',
           nextUrl: 'how-adding-value',
           preValidationKeys: ['canPayRemainingCost'],
@@ -863,7 +863,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select the type of products being processed'
+              error: 'Select the type of produce being processed'
             }
           ],
           answers: [
@@ -919,7 +919,7 @@ const questionBank = {
           pageTitle: '',
           url: 'how-adding-value',
           baseUrl: 'how-adding-value',
-          backUrl: 'products-processed',
+          backUrl: 'produce-processed',
           nextUrl: 'project-impact',
           score: {
             isScore: true,
@@ -957,7 +957,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select how you will add value to the products'
+              error: 'Select how you will add value to the produce'
             }
           ],
           answers: [
@@ -977,7 +977,7 @@ const questionBank = {
             },
             {
               key: 'how-adding-value-A3',
-              value: 'Packing primary produce',
+              value: 'Packing produce',
               hint: {
                 text: 'For example, packing top fruit, bagging vegetables, bottling wine'
               }
@@ -1161,7 +1161,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'collaboration'
+            title: 'Collaboration'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['futureCustomers'],
@@ -1268,7 +1268,7 @@ const questionBank = {
               key: 'environmental-impact-A2',
               value: 'Energy efficiency',
               hint: {
-                text: 'For example, energy efficiency measures above standard building regulations'
+                text: 'For example, using variable speed motors or heat exchangers'
               }
             },
             {
@@ -1289,7 +1289,7 @@ const questionBank = {
               key: 'environmental-impact-A5',
               value: 'Sustainable packaging measures',
               hint: {
-                text: 'For example, majority of project waste is recycled or reused instead of going to landfill'
+                text: 'For example, removing unnecessary packaging, replacing plastic packaging'
               }
             },
             {
