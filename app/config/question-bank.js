@@ -605,7 +605,7 @@ const questionBank = {
           url: 'project-items',
           baseUrl: 'project-items',
           backUrl: 'tenancy',
-          nextUrl: 'project-cost',
+          nextUrl: 'storage',
           fundingPriorities: '',
           preValidationKeys: ['projectStart', 'tenancy'],
           type: 'multi-answer',
@@ -619,7 +619,7 @@ const questionBank = {
           answers: [
             {
               key: 'project-items-A1',
-              value: 'Constructing or improving buildings',
+              value: 'Constructing or improving buildings for processing',
               hint: {
                 text: 'For example, a new building for cheese making, extending an existing building to install a new meat-cutting and packing line'
               }
@@ -633,27 +633,47 @@ const questionBank = {
             },
             {
               key: 'project-items-A3',
-              value: 'Controlled atmosphere (CA) or dynamic controlled atmosphere (DCA) storage',
-              hint: {
-                text: 'For example, CA storage of apples or DCA storage for top fruit'
-              }
-            },
-            {
-              key: 'project-items-A4',
-              value: 'Specialist vehicles',
-              hint: {
-                text: 'For example, forklift trucks, refrigerated vans or lorries'
-              }
-            },
-            {
-              key: 'project-items-A5',
               value: 'Retail facilities',
               hint: {
-                text: 'For example, farm shops'
+                text: 'For example, shops or display cabinets'
               }
             }
           ],
           yarKey: 'projectItems'
+        },
+        {
+          key: 'storage',
+          order: 81,
+          title: 'Does your project also need storage facilities?',
+          pageTitle: '',
+          url: 'storage',
+          baseUrl: 'storage',
+          backUrl: 'project-items',
+          nextUrl: 'project-cost',
+          preValidationKeys: ['projectItems'],
+          hint: {
+            text: 'For example, cold stores or controlled atmosphere storage'
+          },
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you will need storage facilities'
+            }
+          ],
+          answers: [
+            {
+              key: 'storage-A1',
+              value: 'Yes, we will need storage facilities'
+            },
+            {
+              key: 'storage-A2',
+              value: 'No, we don’t need it'
+            }
+          ],
+          yarKey: 'storage'
         },
         {
           key: 'project-cost',
@@ -661,9 +681,9 @@ const questionBank = {
           pageTitle: '',
           url: 'project-cost',
           baseUrl: 'project-cost',
-          backUrl: 'project-items',
+          backUrl: 'storage',
           nextUrl: 'potential-amount',
-          preValidationKeys: ['projectItems'],
+          preValidationKeys: ['storage'],
           classes: 'govuk-input--width-10',
           id: 'projectCost',
           name: 'projectCost',
