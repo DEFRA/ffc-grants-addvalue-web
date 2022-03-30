@@ -35,12 +35,12 @@ describe('Page: /project-cost', () => {
     expect(postResponse.payload).toContain('Enter the estimated cost for the items')
   })
 
-  it('user types in any amount less than £87500 -> display ineligible page', async () => {
+  it('user types in any amount less than £62500 -> display ineligible page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { projectCost: '87499', crumb: crumbToken }
+      payload: { projectCost: '62499', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
@@ -52,7 +52,7 @@ describe('Page: /project-cost', () => {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { projectCost: '87500q', crumb: crumbToken }
+      payload: { projectCost: '62500q', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
@@ -71,12 +71,12 @@ describe('Page: /project-cost', () => {
     expect(postResponse.payload).toContain('Enter a whole number with a maximum of 10 digits')
   })
 
-  it('user types in a valid value (eg £87500) -> store user response and redirect to /potential-amount', async () => {
+  it('user types in a valid value (eg £62500) -> store user response and redirect to /potential-amount', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { projectCost: '87500', crumb: crumbToken }
+      payload: { projectCost: '62500', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
