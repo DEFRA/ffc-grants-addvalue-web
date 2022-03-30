@@ -670,7 +670,8 @@ const questionBank = {
           answers: [
             {
               key: 'storage-A1',
-              value: 'Yes, we will need storage facilities'
+              value: 'Yes, we will need storage facilities',
+              sidebarFormattedValue: 'Storage Facilities'
             },
             {
               key: 'storage-A2',
@@ -727,12 +728,13 @@ const questionBank = {
                 heading: 'Selected items',
                 content: [{
                   para: '',
-                  items: []
+                  items: [],
+                  dependentAnswerExceptThese: ['storage-A2']
                 }]
               }
             ],
-            dependentYarKey: 'projectItems',
-            dependentQuestionKey: 'project-items'
+            dependentYarKeys: ['projectItems', 'storage'],
+            dependentQuestionKeys: ['project-items', 'storage']
 
           },
           validate: [
