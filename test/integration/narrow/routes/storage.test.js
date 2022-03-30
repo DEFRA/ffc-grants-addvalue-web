@@ -22,6 +22,7 @@ describe('Page: /storage', () => {
     expect(response.payload).toContain('Does your project also need storage facilities?')
     expect(response.payload).toContain('Yes, we will need storage facilities')
     expect(response.payload).toContain('No, we don’t need it')
+    expect(response.payload).toContain('Storage facilities cannot be more than 50% of the total grant funding.')
   })
 
   it('no option selected -> show error message', async () => {

@@ -654,6 +654,10 @@ const questionBank = {
           hint: {
             text: 'For example, cold stores or controlled atmosphere storage'
           },
+          warning: {
+            text: 'Storage facilities cannot be more than 50% of the total grant funding.',
+            iconFallbackText: 'Warning'
+          },
           fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
