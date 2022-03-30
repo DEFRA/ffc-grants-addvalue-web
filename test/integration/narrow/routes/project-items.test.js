@@ -22,8 +22,6 @@ describe('Page: /project-items', () => {
     expect(response.payload).toContain('What eligible items does your project need?')
     expect(response.payload).toContain('Constructing or improving buildings')
     expect(response.payload).toContain('Processing equipment or machinery')
-    expect(response.payload).toContain('Controlled atmosphere')
-    expect(response.payload).toContain('Specialist vehicles')
     expect(response.payload).toContain('Retail facilities')
   })
 
@@ -40,16 +38,16 @@ describe('Page: /project-items', () => {
     expect(postResponse.payload).toContain('Select all the items your project needs')
   })
 
-  it('user selects any number of options -> store user response and redirect to /project-cost', async () => {
+  it('user selects any number of options -> store user response and redirect to /storage', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-items`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { projectItems: ['Specialist vehicles', 'Retail facilities'], crumb: crumbToken }
+      payload: { projectItems: ['Constructing or improving buildings', 'Retail facilities'], crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('project-cost')
+    expect(postResponse.headers.location).toBe('storage')
   })
 })
