@@ -605,7 +605,7 @@ const questionBank = {
           url: 'project-items',
           baseUrl: 'project-items',
           backUrl: 'tenancy',
-          nextUrl: 'project-cost',
+          nextUrl: 'storage',
           fundingPriorities: '',
           preValidationKeys: ['projectStart', 'tenancy'],
           type: 'multi-answer',
@@ -619,7 +619,7 @@ const questionBank = {
           answers: [
             {
               key: 'project-items-A1',
-              value: 'Constructing or improving buildings',
+              value: 'Constructing or improving buildings for processing',
               hint: {
                 text: 'For example, a new building for cheese making, extending an existing building to install a new meat-cutting and packing line'
               }
@@ -633,27 +633,52 @@ const questionBank = {
             },
             {
               key: 'project-items-A3',
-              value: 'Controlled atmosphere (CA) or dynamic controlled atmosphere (DCA) storage',
-              hint: {
-                text: 'For example, CA storage of apples or DCA storage for top fruit'
-              }
-            },
-            {
-              key: 'project-items-A4',
-              value: 'Specialist vehicles',
-              hint: {
-                text: 'For example, forklift trucks, refrigerated vans or lorries'
-              }
-            },
-            {
-              key: 'project-items-A5',
               value: 'Retail facilities',
               hint: {
-                text: 'For example, farm shops'
+                text: 'For example, shops or display cabinets'
               }
             }
           ],
           yarKey: 'projectItems'
+        },
+        {
+          key: 'storage',
+          order: 81,
+          title: 'Does your project also need storage facilities?',
+          pageTitle: '',
+          url: 'storage',
+          baseUrl: 'storage',
+          backUrl: 'project-items',
+          nextUrl: 'project-cost',
+          preValidationKeys: ['projectItems'],
+          hint: {
+            text: 'For example, cold stores or controlled atmosphere storage'
+          },
+          warning: {
+            text: 'Storage facilities cannot be more than 50% of the total grant funding.',
+            iconFallbackText: 'Warning'
+          },
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you will need storage facilities'
+            }
+          ],
+          answers: [
+            {
+              key: 'storage-A1',
+              value: 'Yes, we will need storage facilities',
+              sidebarFormattedValue: 'Storage Facilities'
+            },
+            {
+              key: 'storage-A2',
+              value: 'No, we don’t need it'
+            }
+          ],
+          yarKey: 'storage'
         },
         {
           key: 'project-cost',
@@ -661,17 +686,17 @@ const questionBank = {
           pageTitle: '',
           url: 'project-cost',
           baseUrl: 'project-cost',
-          backUrl: 'project-items',
+          backUrl: 'storage',
           nextUrl: 'potential-amount',
-          preValidationKeys: ['projectItems'],
+          preValidationKeys: ['storage'],
           classes: 'govuk-input--width-10',
           id: 'projectCost',
           name: 'projectCost',
           prefix: { text: '£' },
           type: 'input',
           grantInfo: {
-            minGrant: 35000,
-            maxGrant: 500000,
+            minGrant: 25000,
+            maxGrant: 300000,
             grantPercentage: 40,
             cappedGrant: true
           },
@@ -683,15 +708,15 @@ const questionBank = {
           hint: {
             html: `
               You can only apply for a grant of up to 40% of the estimated costs.
-              <br/>The minimum grant you can apply for this project is £35,000 (40% of £87,500).
-              <br/>The maximum grant is £500,000.
+              <br/>The minimum grant you can apply for this project is £25,000 (40% of £62,500).
+              <br/>The maximum grant is £300,000.
               <br/><br/>Do not include VAT.
               <br/><br/>Enter amount, for example 95,000`
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: 'You can only apply for a grant of up to 40% of the estimated costs.',
-            insertText: { text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.' },
+            insertText: { text: 'The minimum grant you can apply for is £25,000 (40% of £62,500). The maximum grant is £300,000.' },
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
@@ -703,12 +728,13 @@ const questionBank = {
                 heading: 'Selected items',
                 content: [{
                   para: '',
-                  items: []
+                  items: [],
+                  dependentAnswerExceptThese: ['storage-A2']
                 }]
               }
             ],
-            dependentYarKey: 'projectItems',
-            dependentQuestionKey: 'project-items'
+            dependentYarKeys: ['projectItems', 'storage'],
+            dependentQuestionKeys: ['project-items', 'storage']
 
           },
           validate: [
