@@ -22,8 +22,8 @@ describe('Page: /planning-permission', () => {
     expect(response.payload).toContain('Does the project have planning permission?')
     expect(response.payload).toContain('Not needed')
     expect(response.payload).toContain('Secured')
-    expect(response.payload).toContain('Should be in place by 31 December 202')
-    expect(response.payload).toContain('Will not be in place by 31 December 2022')
+    expect(response.payload).toContain('Should be in place by 31 December 2024')
+    expect(response.payload).toContain('Will not be in place by 31 December 2024')
   })
 
   it('no option selected -> show error message', async () => {
@@ -39,24 +39,24 @@ describe('Page: /planning-permission', () => {
     expect(postResponse.payload).toContain('Select when the project will have planning permission')
   })
 
-  it('user selects ineligible option: \'Will not be in place by 31 December 2022\' -> display ineligible page', async () => {
+  it('user selects ineligible option: \'Will not be in place by 31 December 2024\' -> display ineligible page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/planning-permission`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { planningPermission: 'Will not be in place by 31 December 2022', crumb: crumbToken }
+      payload: { planningPermission: 'Will not be in place by 31 December 2024', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
-  it('user selects conditional option: \'Should be in place by 31 December 2022\' -> display conditional page', async () => {
+  it('user selects conditional option: \'Should be in place by 31 December 2024\' -> display conditional page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/planning-permission`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { planningPermission: 'Should be in place by 31 December 2022', crumb: crumbToken }
+      payload: { planningPermission: 'Should be in place by 31 December 2024', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)

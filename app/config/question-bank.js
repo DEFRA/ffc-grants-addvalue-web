@@ -309,7 +309,7 @@ const questionBank = {
           nextUrl: 'project-start',
           preValidationKeys: ['inEngland'],
           ineligibleContent: {
-            messageContent: 'Any planning permission must be in place by 31 December 2022.',
+            messageContent: 'Any planning permission be in place by 31 January 2024.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
@@ -322,7 +322,9 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'Any planning permission must be in place by 31 December 2022.'
+                para: `You must have secured planning permission before you submit a full application.
+                
+                Any planning permission be in place by 31 January 2024.`
               }]
             }]
           },
@@ -343,12 +345,12 @@ const questionBank = {
             },
             {
               key: 'planning-permission-A3',
-              value: 'Should be in place by 31 December 2022',
+              value: 'Should be in place by 31 December 2024',
               redirectUrl: 'planning-required-condition'
             },
             {
               key: 'planning-permission-A4',
-              value: 'Will not be in place by 31 December 2022',
+              value: 'Will not be in place by 31 December 2024',
               notEligible: true
             }
           ],
@@ -364,7 +366,7 @@ const questionBank = {
           preValidationKeys: ['planningPermission'],
           maybeEligibleContent: {
             messageHeader: 'You may be able to apply for this grant',
-            messageContent: 'Any planning permission must be in place by 31 December 2022.'
+            messageContent: 'Any planning permission must be in place by 31 December 2024.'
           }
         },
         {
@@ -953,7 +955,7 @@ const questionBank = {
             title: 'Adding value'
           },
           hint: {
-            text: 'Select one option'
+            text: 'Select the main option that applies'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['productsProcessed'],
