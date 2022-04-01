@@ -44,7 +44,7 @@ describe('Page: /how-adding-value', () => {
       method: 'POST',
       url: `${global.__URLPREFIX__}/how-adding-value`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { howAddingValue: 'Grading or sorting primary product', crumb: crumbToken }
+      payload: { howAddingValue: 'Grading or sorting produce', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
