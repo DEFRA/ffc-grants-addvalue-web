@@ -673,7 +673,7 @@ const questionBank = {
             {
               key: 'storage-A1',
               value: 'Yes, we will need storage facilities',
-              sidebarFormattedValue: 'Storage Facilities'
+              sidebarFormattedValue: 'Storage facilities'
             },
             {
               key: 'storage-A2',
