@@ -309,7 +309,7 @@ const questionBank = {
           nextUrl: 'project-start',
           preValidationKeys: ['inEngland'],
           ineligibleContent: {
-            messageContent: 'Any planning permission be in place by 31 January 2024.',
+            messageContent: 'Any planning permission must be in place by 31 January 2024.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
@@ -324,7 +324,7 @@ const questionBank = {
               content: [{
                 para: `You must have secured planning permission before you submit a full application.
                 
-                Any planning permission be in place by 31 January 2024.`
+                Any planning permission must be in place by 31 January 2024.`
               }]
             }]
           },
