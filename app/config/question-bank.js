@@ -345,12 +345,12 @@ const questionBank = {
             },
             {
               key: 'planning-permission-A3',
-              value: 'Should be in place by 31 December 2024',
+              value: 'Should be in place by 31 January 2024',
               redirectUrl: 'planning-required-condition'
             },
             {
               key: 'planning-permission-A4',
-              value: 'Will not be in place by 31 December 2024',
+              value: 'Will not be in place by 31 January 2024',
               notEligible: true
             }
           ],
@@ -366,7 +366,7 @@ const questionBank = {
           preValidationKeys: ['planningPermission'],
           maybeEligibleContent: {
             messageHeader: 'You may be able to apply for this grant',
-            messageContent: 'Any planning permission must be in place by 31 December 2024.'
+            messageContent: 'Any planning permission must be in place by 31 January 2024.'
           }
         },
         {
