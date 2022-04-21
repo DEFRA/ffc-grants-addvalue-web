@@ -1044,8 +1044,8 @@ const questionBank = {
               heading: 'Funding priorities',
               content: [{
                 para: 'RPA wants to fund projects that:',
-                items: ['Improve processing and supply chains',
-                  'Grow your business']
+                items: ['improve processing and supply chains',
+                  'grow your business']
               }]
             }]
           },
@@ -1119,8 +1119,8 @@ const questionBank = {
               heading: 'Funding priorities',
               content: [{
                 para: 'RPA wants to fund projects that:',
-                items: ['Improve processing and supply chains',
-                  'Grow your business']
+                items: ['improve processing and supply chains',
+                  'grow your business']
               }]
             }]
           },
