@@ -1044,8 +1044,8 @@ const questionBank = {
               heading: 'Funding priorities',
               content: [{
                 para: 'RPA wants to fund projects that:',
-                items: ['Improve processing and supply chains',
-                  'Grow your business']
+                items: ['improve processing and supply chains',
+                  'grow your business']
               }]
             }]
           },
@@ -1119,8 +1119,8 @@ const questionBank = {
               heading: 'Funding priorities',
               content: [{
                 para: 'RPA wants to fund projects that:',
-                items: ['Improve processing and supply chains',
-                  'Grow your business']
+                items: ['improve processing and supply chains',
+                  'grow your business']
               }]
             }]
           },
@@ -2102,15 +2102,22 @@ const questionBank = {
               html: 'Your reference number<br><strong>{{_confirmationId_}}</strong>',
               surveyLink: process.env.SURVEY_LINK
             },
-            messageContent: `You will get an email with a record of your answers.<br/><br/>
-            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Transformation Fund scheme:<br/><br/>
+            messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
+            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Transformation Fund scheme:<br/>
+            <h1 class="govuk-heading-m">RPA helpline</h1>
+            <h2 class="govuk-heading-s">Telephone</h2>
             Telephone: 03000 200 301<br/>
-            <br/>Monday to Friday, 9am to 5pm (except public holidays)<br/>
-            <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges (opens in new tab)</a></p>
+            Monday to Friday, 9am to 5pm (except public holidays)<br/>
+            <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges</a></p>
+            <h2 class="govuk-heading-s">Email</h2>
+            <a class="govuk-link" title="Send email to RPA" target="_blank" rel="noopener noreferrer" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a><br/><br/>
             
-            Email: <a class="govuk-link" title="Send email to RPA" target="_blank" rel="noopener noreferrer" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a>
-            
-            <p>RPA will be in touch when the full application period opens. They'll tell you about the application form and any guidance you need to submit a full application.</p>`,
+            <h2 class="govuk-heading-m">What happens next</h2>
+            <p>1. RPA will be in touch when the full application period opens. They will tell you if your project scored well enough to get the full application form.</p>
+            <p>2. If you submit an application, RPA will assess it against other projects and value for money. You will not automatically get a grant.
+            The grant is expected to be highly competitive and you are competing against other projects.</p>
+            <p>3. If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</p>
+            `,
             warning: {
               text: 'You must not start the project'
             },
@@ -2120,7 +2127,8 @@ const questionBank = {
               <li>get quotes from suppliers</li>
               <li>apply for planning permission</li>
             </ul>
-            <p><b>You will not automatically get a grant.</b> The grant is expected to be highly competitive and you are competing against other projects.</p>`
+            <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
+            `
           },
           fundingPriorities: '',
           type: '',
