@@ -7,6 +7,7 @@ const isDev = process.env.NODE_ENV === 'development' || process.env.NODE_ENV ===
 console.log(`Running webpack in ${isDev ? 'development' : 'production'} mode`)
 
 const urlPrefix = '/adding-value'
+const surveyLink = process.env.SURVEY_LINK
 
 module.exports = {
   entry: './app/assets/src/index.js',
@@ -79,7 +80,7 @@ module.exports = {
       inject: false,
       filename: '.layout.njk',
       template: 'app/assets/src/layout.njk',
-      metadata: { urlPrefix }
+      metadata: { urlPrefix, surveyLink }
     }),
     new MiniCssExtractPlugin({
       filename: 'css/application.[fullhash].css'
