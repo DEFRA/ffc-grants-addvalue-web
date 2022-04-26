@@ -601,7 +601,10 @@ const questionBank = {
           title: 'What eligible items does your project need?',
           pageTitle: '',
           hint: {
-            text: 'Select all the items your project needs'
+            html: `
+            Storage facilities will only be funded as part of a bigger project and cannot be more than 50% of total grant funding.<br/><br/>
+            Select all the items your project needs
+          `
           },
           url: 'project-items',
           baseUrl: 'project-items',
