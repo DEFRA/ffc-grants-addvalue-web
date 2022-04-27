@@ -1,4 +1,6 @@
 const createServer = require('../../../../app/server')
+const { startPageUrl } = require('../config/server')
+
 describe('Page Guard', () => {
   const OLD_ENV = process.env
   let server
@@ -24,7 +26,7 @@ describe('Page Guard', () => {
 
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toBe(302)
-    expect(getResponse.headers.location).toBe(process.env.START_PAGE_URL)
+    expect(getResponse.headers.location).toBe(startPageUrl)
   })
 
   it('should redirect to start page if the user skip journey question', async () => {
@@ -36,6 +38,6 @@ describe('Page Guard', () => {
 
     const response = await server.inject(getOptions)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(process.env.START_PAGE_URL)
+    expect(response.headers.location).toBe(startPageUrl)
   })
 })
