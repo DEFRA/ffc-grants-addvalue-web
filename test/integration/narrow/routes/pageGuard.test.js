@@ -1,5 +1,5 @@
 const createServer = require('../../../../app/server')
-const { startPageUrl } = require('../config/server')
+const { startPageUrl } = require('../../../../app/config/server')
 
 describe('Page Guard', () => {
   const OLD_ENV = process.env
