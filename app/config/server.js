@@ -1,10 +1,14 @@
 const Joi = require('joi')
 const urlPrefix = '/adding-value'
 const startPageUrl = '/start'
+const serviceEndDate = '2022/07/12'
+const serviceEndTime = '23:59:59'
 
 // Define config schema
 const schema = Joi.object({
   urlPrefix: Joi.string().default(urlPrefix),
+  serviceEndDate: Joi.string().default(serviceEndDate),
+  serviceEndTime: Joi.string().default(serviceEndTime),
   cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default('GTM-WJ5C78H'),
   googleTagManagerServerKey: Joi.string().default('UA-179628664-4'),
@@ -32,6 +36,8 @@ const config = {
   googleTagManagerServerKey: process.env.GOOGLE_TAG_MANAGER_SERVER_KEY,
   protectiveMonitoringUrl: process.env.PROTECTIVE_MONITORING_URL,
   startPageUrl: process.env.START_PAGE_URL,
+  serviceEndDate: process.env.SERVICE_END_DATE,
+  serviceEndTime: process.env.SERVICE_END_TIME,
   cookieOptions: {
     ttl: process.env.COOKIE_TTL_IN_MILLIS,
     encoding: 'base64json',
