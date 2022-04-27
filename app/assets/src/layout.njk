@@ -21,28 +21,40 @@
   {% endblock %}
 
   {% block header %}
-    {{ govukHeader({
-    homepageUrl: urlPrefix + "/start",
-    serviceName: "Check if you can apply for a Farming Transformation Fund Improving Farm Adding Value Grant",
-    serviceUrl: urlPrefix + "/start"
-  }) }}
+
+    {% set phase_banner_html %}
+      This is a new service – your <a class="govuk-link" href="{{ surveyLink }}" target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.'
+    {% endset %}
+
+    {{
+      govukHeader({
+        homepageUrl: urlPrefix + "/start",
+        serviceName: "Check if you can apply for a Farming Transformation Fund Improving Farm Adding Value Grant",
+        serviceUrl: urlPrefix + "/start"
+      })
+    }}
+
     <div class="govuk-grid-row govuk-width-container">
-      {{ govukPhaseBanner({
-      tag: {
-      text: "beta"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="https://defragroup.eu.qualtrics.com/jfe/form/SV_9EwLLuCwWGJMz8a" target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.'
-    }) }}
+      {{ 
+        govukPhaseBanner({
+          tag: {
+            text: "beta"
+          },
+          html: phase_banner_html
+        })
+      }}
     </div>
 
     {% if showTimeout %}  
-    {{govukTimeoutWarning({
-      "modalIdleTime":sessionTimeoutInMin,
-      "modalVisibleTime":5,
-      "redirectUrl":timeoutPath
-    })}}
-  {% endif %}
-{% endblock %}
+      {{
+        govukTimeoutWarning({
+          "modalIdleTime":sessionTimeoutInMin,
+          "modalVisibleTime":5,
+          "redirectUrl":timeoutPath
+        })
+      }}
+    {% endif %}
+  {% endblock %}
 
   {% block bodyStart %}
     {% if not cookiesPolicy.confirmed %}
@@ -54,10 +66,9 @@
     {% endif %}
   {% endblock %}
 
-  {% block footer %}
-    {{ govukFooter({
-  meta: {
-  html: '<h2 class="govuk-visually-hidden">Support links</h2>
+  {% block footer %}      
+      {% set footer_html_code %}
+      <h2 class="govuk-visually-hidden">Support links</h2>
           <ul class="govuk-footer__inline-list">
             <li class="govuk-footer__inline-list-item">
               <a class="govuk-footer__link" href="<%= htmlWebpackPlugin.options.metadata.urlPrefix %>/accessibility" rel="noopener noreferrer">
@@ -71,7 +82,7 @@
               </a>
             </li>
               <li class="govuk-footer__inline-list-item">
-              <a class="govuk-footer__link" href="https://defragroup.eu.qualtrics.com/jfe/form/SV_9EwLLuCwWGJMz8a" target="_blank" rel="noopener noreferrer">
+              <a class="govuk-footer__link" href="{{ surveyLink }}" target="_blank" rel="noopener noreferrer">
                 Feedback
               </a>
             </li>
@@ -81,9 +92,16 @@
                 Privacy
               </a>
             </li>
-          </ul>'
-    }
-}) }}
+          </ul>
+        {% endset %}
+
+    {{ 
+      govukFooter({
+        meta: {
+          html: footer_html_code
+        }
+      })
+    }}
   {% endblock %}
   {% block bodyEnd %}
     <%= htmlWebpackPlugin.tags.bodyTags %>
