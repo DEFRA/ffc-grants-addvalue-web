@@ -24,6 +24,7 @@ module.exports = {
           request.response.source.manager._context.cookiesPolicy = cookiesPolicy
           request.response.source.manager._context.showTimeout = showTimeout
           request.response.source.manager._context.sessionTimeoutInMin = (cacheConfig.expiresIn / 60000) - 5
+          request.response.source.manager._context.surveyLink = process.env.SURVEY_LINK
         }
 
         return h.continue
