@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const urlPrefix = '/adding-value'
 const startPageUrl = '/start'
-const serviceEndDate = '2022/07/12'
+const serviceEndDate = '2027/07/12'
 const serviceEndTime = '23:59:59'
 
 // Define config schema
