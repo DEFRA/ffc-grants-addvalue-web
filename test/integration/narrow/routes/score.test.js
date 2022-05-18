@@ -2,9 +2,7 @@ const scoreDataAddingValue = require('../../../data/score-data')
 
 describe('Score page', () => {
   let crumCookie
-  let server
   const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
-  const createServer = require('../../../../app/server')
   const Wreck = require('@hapi/wreck')
   const senders = require('../../../../app/messaging/senders')
   const createMsg = require('../../../../app/messaging/create-msg')
@@ -22,7 +20,6 @@ describe('Score page', () => {
   }))
 
   beforeEach(async () => {
-    global.__SERVER__.stop()
     jest.mock('../../../../app/messaging')
     jest.mock('../../../../app/messaging/senders')
     jest.mock('ffc-messaging')
@@ -33,8 +30,6 @@ describe('Score page', () => {
       return ''
     })
 
-    server = await createServer()
-    await server.start()
   })
 
   it('score cannot get desirability answers --> load page with error', async () => {
@@ -58,7 +53,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return wreckResponse
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -84,7 +79,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return wreckResponse
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -110,7 +105,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return wreckResponse
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -136,7 +131,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return wreckResponse
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -156,7 +151,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       throw new Error('can\'t reach')
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -176,7 +171,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return null
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -202,7 +197,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return wreckResponse
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -233,7 +228,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return wreckResponse
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -264,7 +259,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return wreckResponse
     })
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -286,12 +281,12 @@ describe('Score page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/business-details`)
   })
 
   afterEach(async () => {
-    await server.stop()
+    await global.__SERVER__.stop()
   })
 })
