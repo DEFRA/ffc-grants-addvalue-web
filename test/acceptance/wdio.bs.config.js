@@ -24,7 +24,7 @@ exports.config = {
     {
       'bstack:options': {
         os: 'Windows',
-        'projectName': 'DEFRA/ffc-grants/slurry-web',
+        'projectName': 'DEFRA/ffc-grants/adding-value-web',
         osVersion: '10',
         browserVersion: '112.0',
         browserName: 'Chrome',
