@@ -1,10 +1,10 @@
 {
   "author": "Seymour Pattisson <seymour.pattisson@defra.gov.uk>",
   "license": "OGL-UK-3.0",
-  "name": "ffc-addvalue-web-acceptance-tests",
+  "name": "ffc-grants-addvalue-web-acceptance-tests",
   "version": "1.0.0",
   "description": "Acceptance tests for FFC demo service",
-  "homepage": "https://github.com/DEFRA/ffc-demo-acceptance-tests",
+  "homepage": "https://github.com/DEFRA/ffc-grants-addvalue-web-acceptance-tests",
   "contributors": [
     "John Watson <john.watson2@rpa.gov.uk>",
     "Steve Hunt <steven.hunt@defra.gov.uk>",
