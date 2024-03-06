@@ -61,7 +61,7 @@ container:
   serviceEndDate: dummy
   serviceEndTime: dummy
   surveyLink: dummy
-    scoreRequestQueueAddress: ffc-grants-desirability-scoring-req
+  scoreRequestQueueAddress: ffc-grants-desirability-scoring-req
   scoreResponseQueueAddress: ffc-grants-desirability-scoring-res
   desirabilitySubmittedTopicAddress: desirability-submitted
   notifyEmailTemplate: dummy-template
