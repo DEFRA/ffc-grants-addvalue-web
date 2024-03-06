@@ -4,11 +4,11 @@ const appInsights = require('../services/app-insights')
 
 module.exports = async function (msg) {
   try {
-    const { body: submissionDetails, correlationId, scoring: desirabilityScore } = msg
+    const { body: submissionDetails, correlationId, overAllScore } = msg
 
     // Get details from cache regarding desirability score
     console.log('[ MADE IT TO DETAILS ]', submissionDetails)
-    const msgOut = createMsg(submissionDetails, desirabilityScore)
+    const msgOut = createMsg(submissionDetails, overAllScore)
 
     await sendDesirabilitySubmitted(msgOut, correlationId)
   } catch (err) {

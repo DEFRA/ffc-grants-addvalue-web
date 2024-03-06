@@ -1,10 +1,15 @@
-const { senders, getDesirabilityAnswers } = require('../messaging')
+const { getDesirabilityAnswers } = require('../messaging/create-msg')
 const Wreck = require('@hapi/wreck')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 const { setYarValue } = require('../helpers/session')
 const { addSummaryRow } = require('../helpers/score-helpers')
 const gapiService = require('../services/gapi-service')
+
+const { getUserScore } = require('../messaging/application')
+
+
+const createMsg = require('./../messaging/scoring/create-desirability-msg')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -69,11 +74,14 @@ module.exports = [{
       }
       console.log('Sending scoring message .....', msgDataToSend)
       // Always re-calculate our score before rendering this page
-      await senders.sendProjectDetails(msgDataToSend, request.yar.id)
-      console.log('[PROJECT DETAILS SENT]')
+
+      const formatAnswersForScoring = createMsg(msgDataToSend)
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
-      const msgData = await getResult(request.yar.id)
+      const msgData = await getuserScore(formatAnswersForScoring, request.yar.id)
+
+      setYarValue(request, 'overAllScore', msgData)
+
       const howAddingValueQuestion = ALL_QUESTIONS.find(question => question.key === 'how-adding-value')
       const matrixQuestionRating = msgData.desirability.questions[0].rating
       const howAddingValueQuestionObj = addSummaryRow(howAddingValueQuestion, matrixQuestionRating, request)
