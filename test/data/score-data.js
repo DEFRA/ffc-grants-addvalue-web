@@ -137,7 +137,7 @@ const msgData = {
     ],
     overallRating: {
       score: 19,
-      band: 'Weak'
+      band: 'Strong'
     }
   },
   questionMapping: {

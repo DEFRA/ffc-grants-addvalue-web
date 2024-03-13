@@ -19,6 +19,23 @@ const messageConfigSchema = Joi.object({
     type: Joi.string(),
     ...sharedConfigSchema
   },
+  scoreRequestQueue: {
+    address: Joi.string().default('scoreRequestQueue'),
+    type: Joi.string(),
+    ...sharedConfigSchema
+  },
+  scoreResponseQueue: {
+    address: Joi.string().default('scoreResponseQueue'),
+    type: Joi.string(),
+    ...sharedConfigSchema
+  },
+  desirabilitySubmittedTopic: {
+    address: Joi.string().default('desirabilitySubmittedTopic'),
+    type: Joi.string(),
+    ...sharedConfigSchema
+  },
+  desirabilitySubmittedMsgType: Joi.string(),
+  fetchScoreRequestMsgType: Joi.string(),
   eligibilityAnswersMsgType: Joi.string(),
   projectDetailsMsgType: Joi.string(),
   contactDetailsMsgType: Joi.string(),
@@ -46,6 +63,23 @@ const config = {
     type: 'queue',
     ...sharedConfig
   },
+  scoreRequestQueue: {
+    address: process.env.SCORE_REQUEST_QUEUE_ADDRESS,
+    type: 'queue',
+    ...sharedConfig
+  },
+  scoreResponseQueue: {
+    address: process.env.SCORE_RESPONSE_QUEUE_ADDRESS,
+    type: 'queue',
+    ...sharedConfig
+  },
+  desirabilitySubmittedTopic: {
+    address: process.env.DESIRABILITY_SUBMITTED_TOPIC_ADDRESS,
+    type: 'topic',
+    ...sharedConfig
+  },
+  desirabilitySubmittedMsgType: `${msgTypePrefix}.addval.desirability.notification`,
+  fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.score.request`,
   eligibilityAnswersMsgType: `${msgTypePrefix}.av.eligibility.details`,
   projectDetailsMsgType: `${msgTypePrefix}.av.project.details`,
   contactDetailsMsgType: `${msgTypePrefix}.av.contact.details`,

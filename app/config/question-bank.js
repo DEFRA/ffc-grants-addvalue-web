@@ -155,7 +155,19 @@ const questionBank = {
             messageContent: 'Your business does not have an eligible legal status.',
             details: {
               summaryText: 'Who is eligible',
-              html: '<ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Limited company</li><li>Charity</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Limited partnership</li><li>Industrial and provident society</li><li>Co-operative society (Co-Op)</li><li>Community benefit society (BenCom)</li></ul>'
+              html: `<ul class="govuk-list govuk-list--bullet">
+                <li>Sole trader</li>
+                <li>Partnership</li>
+                <li>Limited company</li>
+                <li>Charity</li>
+                <li>Trust</li>
+                <li>Limited liability partnership</li>
+                <li>Community interest company</li>
+                <li>Limited partnership</li>
+                <li>Industrial and provident society</li>
+                <li>Co-operative society (Co-Op)</li>
+                <li>Community benefit society (BenCom)</li>
+                </ul>`
             },
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
@@ -2071,11 +2083,15 @@ const questionBank = {
           maybeEligible: true,
           maybeEligibleContent: {
             messageHeader: 'Confirm and send',
-            messageContent: `<ul class="govuk-list"> <li>I confirm that, to the best of my knowledge, the details I have provided are correct.</li>
+            messageContent: `<ul class="govuk-list"> 
+            <li>I confirm that, to the best of my knowledge, the details I have provided are correct.</li>
             <li> I understand the score was based on the answers I provided.</li>
             <li> I am aware the information I submit will be checked.</li>
-            <li> I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.</li></ul>
-            <br/>So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.`
+            <li> I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.</li>
+            </ul>
+            <br/>
+            So that we can continue to improve our services and schemes, we may wish to contact you in the future. 
+            Please confirm if you are happy for us, or a third-party working for us, to contact you.`
           },
           answers: [
             {
@@ -2124,7 +2140,8 @@ const questionBank = {
             warning: {
               text: 'You must not start the project'
             },
-            extraMessageContent: `<p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
+            extraMessageContent: `
+            <p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
             <p>Before you start the project, you can:</p>
             <ul>
               <li>get quotes from suppliers</li>

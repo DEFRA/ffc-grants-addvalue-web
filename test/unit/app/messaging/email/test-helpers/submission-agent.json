@@ -1,0 +1,62 @@
+{
+    "applying": "Agent",
+    "otherItems": "None of the above",
+    "agentsDetails": {
+        "title": "Mr",
+        "firstName": "Geoff",
+        "lastName": "Hopkin",
+        "businessName": "My Farm Business",
+        "emailAddress": "me@me.com",
+        "landline": "",
+        "mobile": "08765 443322",
+        "address1": "88 The Street",
+        "address2": "",
+        "town": "Newcastle",
+        "county": "Tyne And Wear",
+        "postcode": "AB12 7YY"
+    },
+    "farmerDetails": {
+        "title": "Mrs",
+        "firstName": "Mary",
+        "lastName": "Jones",
+        "emailAddress": "test@test.com",
+        "landline": "01888 123665",
+        "mobile": "08870 554024",
+        "address1": "123 Road",
+        "address2": "Fulford",
+        "town": "York",
+        "county": "North Yorkshire",
+        "postcode": "YO33 4FF"
+    },
+    "confirmationId": "12345678",
+    "applicantType": [
+        "Dairy (including calf rearing)",
+        "Pigs",
+        "Sheep",
+        "Laying hens",
+        "Meat chickens",
+        "Aquaculture",
+        "Arable",
+        "Horticulture"
+    ],
+    "legalStatus": "Sole trader",
+    "inEngland": "Yes",
+    "planningPermission": "Should be in place by the time I make my full application",
+    "projectStart": "Yes, preparatory work",
+    "tenancy": "Yes",
+    "tenancyAgreement": null,
+    "businessDetails": {
+        "projectName": "Test Project",
+        "businessName": "Test Business"
+    },
+    "projectType": "",
+    "applicantBusiness": "",
+    "project": "Building new calf housing",
+    "projectCost": 100000,
+    "potentialFunding": "40000.00",
+    "remainingCost": "60000.00",
+    "environmentalImpact": "Collect and store rainwater",
+    "consentOptional": true,
+    "storage": "boop"
+
+}

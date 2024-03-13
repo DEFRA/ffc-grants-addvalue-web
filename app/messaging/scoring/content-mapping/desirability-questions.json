@@ -1,0 +1,74 @@
+{  
+  "productsProcessed": [
+    {
+    "key": "products-processed",
+    "title": "What type of produce is being processed?",  
+    "answers": {
+      "products-processed-A1": "Arable produce",
+      "products-processed-A2": "Horticultural produce",
+      "products-processed-A3": "Dairy or meat produce",
+      "products-processed-A5": "Fodder produce",
+      "products-processed-A6": "Non-edible produce",
+      "products-processed-A7": "Fibre produce"    
+    }
+  }
+  ],
+  "howAddingValue": [{
+    "key":"how-adding-value",
+    "title":"How will you add value to the produce?",  
+    "answers": {   
+      "how-adding-value-A1": "Creating a new product",
+      "how-adding-value-A2": "Grading or sorting produce",
+      "how-adding-value-A3": "Packing produce",
+      "how-adding-value-A4": "Controlled atmosphere or dynamic controlled atmosphere storage",
+      "how-adding-value-A5": "New retail facility to sell direct to consumers"
+    }
+  }],
+  "projectImpact": [{
+    "key": "project-impact",
+    "title": "What impact will the project have?",
+    "answers":
+    {
+      "project-impact-A1": "Creating added-value products for the first time",
+      "project-impact-A2": "Increasing volume of added-value products",
+      "project-impact-A3": "Increasing range of added-value products",
+      "project-impact-A4": "Allow selling direct to consumer"
+    }}
+  ],
+  "futureCustomers": [{
+    "key": "future-customers",
+    "title": "Who will your customers be after the project?",
+    "answers":
+    {
+      "future-customers-A1": "Producers or growers",
+      "future-customers-A2": "Processors",
+      "future-customers-A3": "Wholesalers",
+      "future-customers-A4": "Retailers",
+      "future-customers-A5": "Selling direct to consumers",
+      "future-customers-A6": "No change"
+    }}
+  ],
+  "collaboration": [{
+    "key": "collaboration",
+    "title": "Will you buy materials from other farmers?",
+    "answers":
+    {
+      "collaboration-A1": "Yes",
+      "collaboration-A2": "No"
+    }}
+  ],
+  "environmentalImpact": [{
+    "key": "environmental-impact",
+    "title": "How will the project improve the environment?",
+    "answers":
+    {
+      "environmental-impact-A1": "Renewable energy",
+      "environmental-impact-A2": "Energy efficiency",
+      "environmental-impact-A3": "Water efficiency",
+      "environmental-impact-A4": "Waste efficiency",
+      "environmental-impact-A5": "Sustainable packaging measures",
+      "environmental-impact-A6": "Reduce harmful emissions or pollutants",
+      "environmental-impact-A7": "My project will not improve the environment"
+    }}
+  ]
+}

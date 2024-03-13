@@ -1,6 +1,7 @@
 const Analytics = require('@defra/hapi-gapi/lib/analytics')
 const gapiService = require('../services/gapi-service')
-
+// const { getYarValue } = require('ffc-grants-common-functionality').session
+const { getYarValue } = require('./../helpers/session')
 exports.plugin = {
   name: 'Gapi',
   /**
@@ -18,21 +19,24 @@ exports.plugin = {
       try {
         const response = request.response
         const statusFamily = Math.floor(response.statusCode / 100)
-        if (statusFamily === 2 && response.variety === 'view' && !gapiService.isBlockDefaultPageView(request.url)) {
-          await gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.PRIMARY, value: true })
+        if (statusFamily === 2 && response.variety === 'view' && !gapiService.isBlockDefaultPageView(request.url.pathname)) {
+          await gapiService.sendGAEvent(request,
+            {
+              name: gapiService.eventTypes.PAGEVIEW,
+              params:
+                {
+                  page_path: request.route.path,
+                  scoreReached: getYarValue(request, 'onScorePage') ? '/laying-hens/score' : '0'
+                }
+            })
         }
         if (statusFamily === 5) {
           await request.ga.event({ category: 'Exception', action: request.route.path, label: response.statusCode })
         }
-      } catch {
-        // ignore any error
+      } catch (error) {
+        console.log(`[THIS IS GA ERROR: ${error}]`)
       }
       return h.continue
-    })
-
-    server.ext('onPostStop', async () => {
-      await analytics.shutdown()
-      server.log(['hapi-gapi'], 'All buffered events sent to the Google Analytics Measurement Protocol API.')
     })
   }
 }
