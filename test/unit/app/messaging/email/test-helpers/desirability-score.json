@@ -1,0 +1,166 @@
+{
+	"grantScheme": {
+		"key": "ADDVAL01",
+		"name": "Adding Value Grant"
+	},
+	"desirability": {
+		"questions": [
+			{
+				"title": "Products processed",
+				"url": "products-processed",
+				"fundingPriorities": "Do product stuff",
+				"backUrl": "products stuff",
+				"key": "products",
+				"answers": [
+					{
+						"key": "products-porcessed",
+						"title": "What type of produce is being processed?",
+						"input": [
+							{
+								"key": "products-processed-A1",
+								"value": "Arable-crops"
+							}
+						]
+					}
+				],
+				"rating": {
+					"score": 4,
+					"band": "Strong",
+					"importance": null
+				}
+			},
+			{
+				"title": "How adding value",
+				"url": "how-adding-value",
+				"backUrl": "how-adding-value",
+				"fundingPriorities": "How add val?",
+				"key": "how-adding-value",
+				"answers": [
+					{
+						"key": "how-adding-value",
+						"title": "How will you add value to the products?",
+						"input": [
+							{
+								"key": "how-adding-value-A1",
+								"value": "Processing or preparing primary product"
+							}
+						]
+					}
+				],
+				"rating": {
+					"score": 0.8,
+					"band": "Strong",
+					"importance": null
+				}
+			},
+			{
+				"title": "Project impact",
+				"url": "project-impact",
+				"backUrl": "project-impact",
+				"fundingPriorities": "Make an impact with project",
+				"key": "project-impact",
+				"answers": [
+					{
+						"key": "project-impact",
+						"title": "What impact will the project have?",
+						"input": [
+							{
+								"key": "nproject-impact-A1",
+								"value": "Diversifying into creating added-value products"
+							}
+						]
+					}
+				],
+				"rating": {
+					"score": 1.6,
+					"band": "Strong",
+					"importance": null
+				}
+			},
+			{
+				"title": "Future customers",
+				"url": "future-customers",
+				"backUrl": "future-customers",
+				"fundingPriorities": "Do futureeee",
+				"key": "future-customers",
+				"answers": [
+					{
+						"key": "future-customers",
+						"title": "Who are your current customers?",
+						"input": [
+							{
+								"key": "future-customers-A1",
+								"value": "Processors"
+							},
+                            {
+								"key": "future-customers-A2",
+								"value": "Wholesalers"
+							}
+						]
+					}
+				],
+				"rating": {
+					"score": 4,
+					"band": "Strong",
+					"importance": null
+				}
+			},
+            {
+				"title": "Collaboration",
+				"url": "collaboration",
+				"backUrl": "collaboration",
+				"fundingPriorities": "Collab time",
+				"key": "collaboration",
+				"answers": [
+					{
+						"key": "collaboration",
+						"title": "Who are your current customers?",
+						"input": [
+							{
+								"key": "collaboration-A1",
+								"value": "Yes"
+							}
+						]
+					}
+				],
+				"rating": {
+					"score": 4,
+					"band": "Strong",
+					"importance": null
+				}
+			},
+			{
+				"title": "Environmental impact",
+				"url": "environmental-impact",
+				"backUrl": "environmental-impact",
+				"fundingPriorities": "Improve health/welfare",
+				"key": "environmental-impact",
+				"answers": [
+					{
+						"key": "environmental-impact",
+						"title": "How will the project improve the environment?",
+						"input": [
+							{
+								"key": "environmental-impact-A1",
+								"value": "Energy efficiency"
+							},
+                            {
+								"key": "environmental-impact-A2",
+								"value": "Water efficiency"
+							}
+						]
+					}
+				],
+				"rating": {
+					"score": 0.8,
+					"band": "Strong",
+					"importance": null
+				}
+			}
+		],
+		"overallRating": {
+			"score": 19,
+			"band": "Strong"
+		}
+	}
+}

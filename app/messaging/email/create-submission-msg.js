@@ -199,7 +199,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       tenancyLength: submission.tenancyLength ?? ' ',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
       storageNeeded: submission.storage,
-      projectCost: getCurrencyFormat(submission.projectCost.replace(/,/g, '')),
+      projectCost: getCurrencyFormat(submission.projectCost),
       potentialFunding: getCurrencyFormat(submission.calculatedGrant),
       remainingCost: getCurrencyFormat(submission.remainingCost),
       projectName: submission.businessDetails.projectName,
@@ -233,11 +233,13 @@ function spreadsheet (submission, desirabilityScore) {
   return data
 }
 
-module.exports = function (submission, desirabilityScore) {
+module.exports = function (submission, desirabilityScore, rating = '') {
   return {
     applicantEmail: getEmailDetails(submission, desirabilityScore, false),
     agentEmail: submission.applying === 'Agent' ? getEmailDetails(submission, desirabilityScore, false, true) : null,
     rpaEmail: spreadsheetConfig.sendEmailToRpa ? getEmailDetails(submission, desirabilityScore, spreadsheetConfig.rpaEmail) : null,
-    spreadsheet: spreadsheet(submission, desirabilityScore)
+    spreadsheet: spreadsheet(submission, desirabilityScore),
+    getScoreChance: getScoreChance(rating)
+
   }
 }
