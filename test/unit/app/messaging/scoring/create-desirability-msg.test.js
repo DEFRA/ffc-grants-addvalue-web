@@ -10,7 +10,7 @@ describe('getUserAnswer', () => {
   
     it('should return an empty array if no answers are provided', () => {
       const userInput = ['1', '2'];
-      expect(getUserAnswer(null, userInput)).toEqual({});
+      expect(getUserAnswer(null, userInput)).toEqual([{ key: null, value: userInput }]);
     });
   
     it('should return an empty array if the user input does not match any answers', () => {

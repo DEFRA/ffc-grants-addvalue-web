@@ -12,7 +12,7 @@ const { notUniqueSelection, uniqueSelection } = require('../helpers/utils')
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
-const gapiService = require('../services/gapi-service')
+// const gapiService = require('../services/gapi-service')
 const { startPageUrl } = require('../config/server')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 
@@ -151,9 +151,9 @@ const getPage = async (question, request, h) => {
       request
     )
   }
-  if (question.ga) {
-    await gapiService.processGA(request, question.ga, confirmationId)
-  }
+  // if (question.ga) {
+  //   // await gapiService.processGA(request, question.ga, confirmationId)
+  // }
   if (url === 'check-details') {
     setYarValue(request, 'reachedCheckDetails', true)
 
@@ -272,14 +272,14 @@ const showPostPage = (currentQuestion, request, h) => {
 
   const errors = checkErrors(payload, currentQuestion, h, request)
   if (errors) {
-    gapiService.sendValidationDimension(request)
+    // gapiService.sendValidationDimension(request)
     return errors
   }
 
   if (thisAnswer?.notEligible ||
       (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
   ) {
-    gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
     if (thisAnswer?.alsoMaybeEligible) {
       const {
         dependentQuestionKey,

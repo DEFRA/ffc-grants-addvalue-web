@@ -1,15 +1,14 @@
 const { getDesirabilityAnswers } = require('../messaging/create-msg')
-const Wreck = require('@hapi/wreck')
+const { getUserScore } = require('../messaging/application')
 const { ALL_QUESTIONS } = require('../config/question-bank')
-const pollingConfig = require('../config/polling')
 const { setYarValue } = require('../helpers/session')
 const { addSummaryRow } = require('../helpers/score-helpers')
-const gapiService = require('../services/gapi-service')
-
-const { getUserScore } = require('../messaging/application')
+// const gapiService = require('../services/gapi-service')
 
 
-const createMsg = require('./../messaging/scoring/create-desirability-msg')
+const { desirability } = require('./../messaging/scoring/create-desirability-msg')
+
+const createMsg = require('../messaging/create-msg')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -25,36 +24,6 @@ function createModel (data, request) {
     formActionPage: currentPath,
     ...data
   }
-}
-
-async function getResult (correlationId) {
-  const url = `${pollingConfig.host}/desirability-score?correlationId=${correlationId}`
-  console.log('polling Url: ', url)
-  for (let i = 0; i < pollingConfig.retries; i++) {
-    await new Promise(resolve => setTimeout(resolve, pollingConfig.interval))
-    try {
-      const response = await Wreck.get(url, { json: true })
-
-      switch (response.res.statusCode) {
-        case 202:
-          console.log('202 received, backend didn\'t have result, continue polling')
-          break
-        case 200:
-          console.log('200 received, got result from backend, stop polling')
-          return response.payload
-        default:
-          console.log('Unhandled status code, stop polling')
-          return null
-      }
-    } catch (err) {
-      // 4xx and 5xx errors will be caught here along with failure to connect
-      console.log(`${err}`)
-      return null
-    }
-  }
-
-  console.log(`Tried getting score ${pollingConfig.retries} times, giving up`)
-  return null
 }
 
 module.exports = [{
@@ -75,10 +44,10 @@ module.exports = [{
       console.log('Sending scoring message .....', msgDataToSend)
       // Always re-calculate our score before rendering this page
 
-      const formatAnswersForScoring = createMsg(msgDataToSend)
+      const formatAnswersForScoring = desirability(msgDataToSend)
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
-      const msgData = await getuserScore(formatAnswersForScoring, request.yar.id)
+      const msgData = await getUserScore(formatAnswersForScoring, request.yar.id)
 
       setYarValue(request, 'overAllScore', msgData)
 
@@ -114,14 +83,14 @@ module.exports = [{
         }
 
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
-        await gapiService.sendDimensionOrMetrics(request, [{
-          dimensionOrMetric: gapiService.dimensions.SCORE,
-          value: msgData.desirability.overallRating.band
-        },
-        {
-          dimensionOrMetric: gapiService.metrics.SCORE,
-          value: 'TIME'
-        }])
+        // await gapiService.sendDimensionOrMetrics(request, [{
+        //   dimensionOrMetric: gapiService.dimensions.SCORE,
+        //   value: msgData.desirability.overallRating.band
+        // },
+        // {
+        //   dimensionOrMetric: gapiService.metrics.SCORE,
+        //   value: 'TIME'
+        // }])
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
