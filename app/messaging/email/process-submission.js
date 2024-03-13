@@ -1,6 +1,6 @@
-const { sendDesirabilitySubmitted } = require('./senders')
+const { sendDesirabilitySubmitted } = require('../senders')
 const createMsg = require('./create-submission-msg')
-const appInsights = require('../services/app-insights')
+const appInsights = require('../../services/app-insights')
 
 module.exports = async function (msg) {
   try {
