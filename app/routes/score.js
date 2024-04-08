@@ -1,4 +1,4 @@
-const { getDesirabilityAnswers } = require('../messaging/create-msg')
+const createMsg = require('../messaging/create-msg')
 const { getUserScore } = require('../messaging/application')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 const { setYarValue } = require('../helpers/session')
@@ -7,8 +7,6 @@ const { addSummaryRow } = require('../helpers/score-helpers')
 
 
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')
-
-const createMsg = require('../messaging/create-msg')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -37,7 +35,7 @@ module.exports = [{
   handler: async (request, h, err) => {
     try {
       console.log('Getting Desirability Answers .....')
-      const msgDataToSend = getDesirabilityAnswers(request)
+      const msgDataToSend = createMsg.getDesirabilityAnswers(request)
       if (!msgDataToSend) {
         throw new Error('no data available for score.')
       }

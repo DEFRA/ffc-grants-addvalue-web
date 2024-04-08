@@ -1,5 +1,5 @@
 module.exports = {
-  desirabilityQuestions: require('./desirability-questions'),
+  desirabilityQuestions: require('./desirability-questions.json'),
   desirabilityInputQuestionMapping: {
     productsProcessed: 'produce-processed',
     howAddingValue: 'how-adding-value',

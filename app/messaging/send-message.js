@@ -5,6 +5,7 @@ const sendMessage = async (body, type, config, options) => {
   const message = createMessage(body, type, options)
   const sender = new MessageSender(config)
   console.log('[MESSAGE MADE]', message)
+  console.log('[FULL MESSAGE]', message.body.desirability)
   try {
     await sender.sendMessage(message)
   } catch (err) {
@@ -15,4 +16,4 @@ const sendMessage = async (body, type, config, options) => {
   await sender.closeConnection()
 }
 
-module.exports = sendMessage
+module.exports = sendMessage 

@@ -2,16 +2,13 @@ const { MessageSender } = require('ffc-messaging')
 const msgCfg = require('../config/messaging')
 const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service-email')
 
-const projectDetailsSender = new MessageSender(msgCfg.projectDetailsQueue)
 const contactDetailsSender = new MessageSender(msgCfg.contactDetailsQueue)
 const desirabilitySubmittedSender = new MessageSender(msgCfg.desirabilitySubmittedTopic)
 
 
 async function stop () {
-  await projectDetailsSender.closeConnection()
   await contactDetailsSender.closeConnection()
   await desirabilitySubmittedSender.closeConnection()
-
 }
 
 process.on('SIGTERM', async () => {

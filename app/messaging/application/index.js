@@ -2,7 +2,7 @@ const { sendMessage, receiveMessage } = require('../')
 const { scoreRequestQueue, fetchScoreRequestMsgType, scoreResponseQueue } = require('../../config/messaging.js')
 
 async function getUserScore (desirabilityMsg, sessionId) {
-  console.log('[MADE IT TO MESSAGE]', sessionId)
+  console.log('[MADE IT TO MESSAGE pre]', sessionId)
   // Add formatMsg via process-desirability
   // where does body come from in process-desirability?
 
