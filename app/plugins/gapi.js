@@ -1,6 +1,5 @@
 const Analytics = require('@defra/hapi-gapi/lib/analytics')
 const gapiService = require('../services/gapi-service')
-// const { getYarValue } = require('ffc-grants-common-functionality').session
 const { getYarValue } = require('./../helpers/session')
 exports.plugin = {
   name: 'Gapi',

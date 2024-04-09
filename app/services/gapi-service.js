@@ -1,5 +1,4 @@
 const appInsights = require('./app-insights')
-// const { getYarValue } = require('ffc-grants-common-functionality').session
 const { getYarValue } = require('./../helpers/session')
 const blockDefaultPageViews = ['login', 'start', 'applying', 'session-timeout']
 

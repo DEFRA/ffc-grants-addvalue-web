@@ -3,8 +3,6 @@ const { getUserScore } = require('../messaging/application')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 const { setYarValue } = require('../helpers/session')
 const { addSummaryRow } = require('../helpers/score-helpers')
-// const gapiService = require('../services/gapi-service')
-
 
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')
 

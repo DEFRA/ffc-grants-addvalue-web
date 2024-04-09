@@ -12,7 +12,6 @@ const { notUniqueSelection, uniqueSelection } = require('../helpers/utils')
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
-// const gapiService = require('../services/gapi-service')
 const { startPageUrl } = require('../config/server')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 
@@ -151,9 +150,7 @@ const getPage = async (question, request, h) => {
       request
     )
   }
-  // if (question.ga) {
-  //   // await gapiService.processGA(request, question.ga, confirmationId)
-  // }
+
   if (url === 'check-details') {
     setYarValue(request, 'reachedCheckDetails', true)
 
