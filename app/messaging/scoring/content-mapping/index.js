@@ -1,11 +1,11 @@
 module.exports = {
   desirabilityQuestions: require('./desirability-questions.json'),
   desirabilityInputQuestionMapping: {
-    productsProcessed: 'produce-processed',
-    howAddingValue: 'how-adding-value',
-    projectImpact: 'project-impact',
-    futureCustomers: 'future-customers',
-    collaboration: 'collaboration',
-    environmentalImpact: 'renvironmental-impact'
+    'products-processed': 'productsProcessed',
+    'how-adding-value': 'howAddingValue',
+    'project-impact': 'projectImpact',
+    'future-customers': 'futureCustomers',
+    'collaboration': 'collaboration',
+    'environmental-impact': 'environmentalImpact'
   }
 }

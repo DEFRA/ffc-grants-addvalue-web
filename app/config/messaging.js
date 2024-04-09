@@ -69,7 +69,7 @@ const config = {
     ...sharedConfig
   },
   desirabilitySubmittedMsgType: `${msgTypePrefix}.addval.desirability.notification`,
-  fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.score.request`,
+  fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.addval.score.request`,
   eligibilityAnswersMsgType: `${msgTypePrefix}.av.eligibility.details`,
   projectDetailsMsgType: `${msgTypePrefix}.av.project.details`,
   contactDetailsMsgType: `${msgTypePrefix}.av.contact.details`,
