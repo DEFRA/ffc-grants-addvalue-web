@@ -11,7 +11,7 @@ const { setOptionsLabel } = require('../helpers/answer-options')
 const { notUniqueSelection, uniqueSelection } = require('../helpers/utils')
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
-const gapiService = require('../services/gapi-service')
+const emailFormatting = require('./../messaging/email/process-submission')
 const { startPageUrl } = require('../config/server')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 
@@ -60,20 +60,23 @@ const getPage = async (question, request, h) => {
       }
       confirmationId = getConfirmationId(request.yar.id)
       try {
-        await senders.sendContactDetails(createMsg.getAllDetails(request, confirmationId), request.yar.id)
-        await gapiService.sendDimensionOrMetrics(request, [{
-          dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
-          value: confirmationId
-        }, {
-          dimensionOrMetric: gapiService.dimensions.FINALSCORE,
-          value: getYarValue(request, 'current-score')
-        },
-        {
-          dimensionOrMetric: gapiService.metrics.CONFIRMATION,
-          value: 'TIME'
-        }
-        ])
-        console.log('Confirmation event sent')
+        const overAllScore = getYarValue(request, 'overAllScore')
+        const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
+        await senders.sendDesirabilitySubmitted(emailData, request.yar.id) 
+        
+        // gapi to be updated here?
+        // await gapiService.sendDimensionOrMetrics(request, [{
+        //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
+        //   value: confirmationId
+        // }, {
+        //   dimensionOrMetric: gapiService.dimensions.FINALSCORE,
+        //   value: getYarValue(request, 'current-score')
+        // },
+        // {
+        //   dimensionOrMetric: gapiService.metrics.CONFIRMATION,
+        //   value: 'TIME'
+        // }
+        // ])
       } catch (err) {
         console.log('ERROR: ', err)
       }
@@ -147,9 +150,7 @@ const getPage = async (question, request, h) => {
       request
     )
   }
-  if (question.ga) {
-    await gapiService.processGA(request, question.ga, confirmationId)
-  }
+
   if (url === 'check-details') {
     setYarValue(request, 'reachedCheckDetails', true)
 
@@ -268,14 +269,14 @@ const showPostPage = (currentQuestion, request, h) => {
 
   const errors = checkErrors(payload, currentQuestion, h, request)
   if (errors) {
-    gapiService.sendValidationDimension(request)
+    // gapiService.sendValidationDimension(request)
     return errors
   }
 
   if (thisAnswer?.notEligible ||
       (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
   ) {
-    gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
     if (thisAnswer?.alsoMaybeEligible) {
       const {
         dependentQuestionKey,

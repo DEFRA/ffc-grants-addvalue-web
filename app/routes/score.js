@@ -1,10 +1,10 @@
-const { senders, getDesirabilityAnswers } = require('../messaging')
-const Wreck = require('@hapi/wreck')
+const createMsg = require('../messaging/create-msg')
+const { getUserScore } = require('../messaging/application')
 const { ALL_QUESTIONS } = require('../config/question-bank')
-const pollingConfig = require('../config/polling')
 const { setYarValue } = require('../helpers/session')
 const { addSummaryRow } = require('../helpers/score-helpers')
-const gapiService = require('../services/gapi-service')
+
+const { desirability } = require('./../messaging/scoring/create-desirability-msg')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -22,36 +22,6 @@ function createModel (data, request) {
   }
 }
 
-async function getResult (correlationId) {
-  const url = `${pollingConfig.host}/desirability-score?correlationId=${correlationId}`
-  console.log('polling Url: ', url)
-  for (let i = 0; i < pollingConfig.retries; i++) {
-    await new Promise(resolve => setTimeout(resolve, pollingConfig.interval))
-    try {
-      const response = await Wreck.get(url, { json: true })
-
-      switch (response.res.statusCode) {
-        case 202:
-          console.log('202 received, backend didn\'t have result, continue polling')
-          break
-        case 200:
-          console.log('200 received, got result from backend, stop polling')
-          return response.payload
-        default:
-          console.log('Unhandled status code, stop polling')
-          return null
-      }
-    } catch (err) {
-      // 4xx and 5xx errors will be caught here along with failure to connect
-      console.log(`${err}`)
-      return null
-    }
-  }
-
-  console.log(`Tried getting score ${pollingConfig.retries} times, giving up`)
-  return null
-}
-
 module.exports = [{
   method: 'GET',
   path: currentPath,
@@ -63,17 +33,20 @@ module.exports = [{
   handler: async (request, h, err) => {
     try {
       console.log('Getting Desirability Answers .....')
-      const msgDataToSend = getDesirabilityAnswers(request)
+      const msgDataToSend = createMsg.getDesirabilityAnswers(request)
       if (!msgDataToSend) {
         throw new Error('no data available for score.')
       }
       console.log('Sending scoring message .....', msgDataToSend)
       // Always re-calculate our score before rendering this page
-      await senders.sendProjectDetails(msgDataToSend, request.yar.id)
-      console.log('[PROJECT DETAILS SENT]')
+
+      const formatAnswersForScoring = desirability(msgDataToSend)
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
-      const msgData = await getResult(request.yar.id)
+      const msgData = await getUserScore(formatAnswersForScoring, request.yar.id)
+
+      setYarValue(request, 'overAllScore', msgData)
+
       const howAddingValueQuestion = ALL_QUESTIONS.find(question => question.key === 'how-adding-value')
       const matrixQuestionRating = msgData.desirability.questions[0].rating
       const howAddingValueQuestionObj = addSummaryRow(howAddingValueQuestion, matrixQuestionRating, request)
@@ -106,14 +79,14 @@ module.exports = [{
         }
 
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
-        await gapiService.sendDimensionOrMetrics(request, [{
-          dimensionOrMetric: gapiService.dimensions.SCORE,
-          value: msgData.desirability.overallRating.band
-        },
-        {
-          dimensionOrMetric: gapiService.metrics.SCORE,
-          value: 'TIME'
-        }])
+        // await gapiService.sendDimensionOrMetrics(request, [{
+        //   dimensionOrMetric: gapiService.dimensions.SCORE,
+        //   value: msgData.desirability.overallRating.band
+        // },
+        // {
+        //   dimensionOrMetric: gapiService.metrics.SCORE,
+        //   value: 'TIME'
+        // }])
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
