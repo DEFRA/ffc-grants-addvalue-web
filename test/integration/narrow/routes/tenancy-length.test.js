@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /tenancy-length', () => {
   const varList = { tenancy: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -25,6 +22,10 @@ describe('Page: /tenancy-length', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.tenancyLength = {
+      error: 'Select yes if the land has a tenancy agreement in place until 2028 or after',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/tenancy-length`,
@@ -38,6 +39,7 @@ describe('Page: /tenancy-length', () => {
   })
 
   it('user selects conditional option: \'No\' -> display conditional page', async () => {
+    valList.tenancyLength = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/tenancy-length`,

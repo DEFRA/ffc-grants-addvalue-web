@@ -1,15 +1,11 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /collaboration', () => {
   const varList = { futureCustomers: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -25,6 +21,10 @@ describe('Page: /collaboration', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.collaboration = {
+      error: 'Select yes if you will be buying materials from other farmers',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/collaboration`,
@@ -38,6 +38,7 @@ describe('Page: /collaboration', () => {
   })
 
   it('user selects any option [Yes | No] -> store user response and redirect to /environmental-impact', async () => {
+    valList.collaboration = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/collaboration`,

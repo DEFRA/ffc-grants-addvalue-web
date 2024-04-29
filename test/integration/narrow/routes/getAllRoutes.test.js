@@ -1,4 +1,7 @@
 const { ALL_QUESTIONS } = require('../../../../app/config/question-bank')
+const { commonFunctionsMock } = require('../../../session-mock')
+
+
 let varList
 ALL_QUESTIONS.forEach(question => {
   if (question.preValidationKeys) {
@@ -7,13 +10,8 @@ ALL_QUESTIONS.forEach(question => {
     })
   }
 })
-jest.doMock('../../../../app/helpers/session', () => ({
-  setYarValue: (request, key, value) => null,
-  getYarValue: (request, key) => {
-    if (varList[key]) return varList[key]
-    else return 'Error'
-  }
-}))
+commonFunctionsMock(varList, 'Error')
+
 
 describe('All default GET routes', () => {
   ALL_QUESTIONS.forEach(question => {

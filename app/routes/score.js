@@ -1,7 +1,7 @@
 const createMsg = require('../messaging/create-msg')
 const { getUserScore } = require('../messaging/application')
 const { ALL_QUESTIONS } = require('../config/question-bank')
-const { setYarValue } = require('../helpers/session')
+const { setYarValue } = require('ffc-grants-common-functionality').session
 const { addSummaryRow } = require('../helpers/score-helpers')
 
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')

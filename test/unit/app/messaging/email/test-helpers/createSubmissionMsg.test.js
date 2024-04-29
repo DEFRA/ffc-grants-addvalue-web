@@ -1,21 +1,13 @@
 const agentSubmission = require('./submission-agent.json')
 const farmerSubmission = require('./submission-farmer.json')
 const desirabilityScore = require('./desirability-score.json')
-// const { commonFunctionsMock } = require('./../../../../../session-mock')
+const { commonFunctionsMock } = require('./../../../../../session-mock')
 
 describe('Create submission message', () => {
   const mockPassword = 'mock-pwd'
 
   const varList = {}
-//   commonFunctionsMock(varList, undefined)
-
-  jest.mock('./../../../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return undefined
-    }
-  }))
+  commonFunctionsMock(varList, undefined)
 
 
   jest.mock('../../../../../../app/messaging/email/config/email', () => ({

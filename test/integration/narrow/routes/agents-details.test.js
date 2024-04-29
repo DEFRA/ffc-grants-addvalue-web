@@ -1,15 +1,13 @@
 const { crumbToken } = require('./test-helper')
 
+const { commonFunctionsMock } = require('../../../session-mock')
+
 describe('Page: /agents-details', () => {
   const varList = { applying: 'Agent' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -37,6 +35,78 @@ describe('Page: /agents-details', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.firstName = {
+      error: 'Enter your first name',
+      
+      return: false
+    }
+
+    valList.lastName = {
+      error: 'Enter your last name',
+      
+      return: false
+    }
+
+    valList.businessName = {
+      error: 'Enter your business name',
+      
+      return: false
+    }
+
+    valList.emailAddress = {
+      error: 'Enter your email address',
+      
+      return: false
+    }
+
+    // valList.confirmEmailAddress = {
+    //   error: 'Confirm your email address',
+      
+    //   return: false
+    // }
+
+    // confirm not yet added
+
+    valList.mobileNumber = {
+      error: 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
+      
+      return: false
+    }
+
+    valList.landlineNumber = {
+      error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
+      
+      return: false
+    }
+
+    valList.address1 = {
+      error: 'Enter your building and street details',
+      
+      return: false
+    }
+
+    // valList.address2 = {
+    //   error: 'Enter your address line 2',
+      
+    //   return: false
+    // }
+
+    valList.town = {
+      error: 'Enter your town',
+      
+      return: false
+    }
+
+    valList.county = {
+      error: 'Select your county',
+      return: false
+    }
+
+    valList.postcode = {
+      error: 'Enter your postcode, like AA1 1AA',
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -70,6 +140,12 @@ describe('Page: /agents-details', () => {
   })
 
   it('validate first name - no digits', async () => {
+    valList.firstName = {
+      error: 'Name must only include letters, hyphens and apostrophes',
+      
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -86,6 +162,12 @@ describe('Page: /agents-details', () => {
   })
 
   it('validate last name - no digits', async () => {
+    valList.lastName = {
+      error: 'Name must only include letters, hyphens and apostrophes',
+      
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -102,6 +184,12 @@ describe('Page: /agents-details', () => {
   })
 
   it('validate email', async () => {
+    valList.emailAddress = {
+      error: 'Enter an email address in the correct format, like name@example.com',
+      
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -118,6 +206,12 @@ describe('Page: /agents-details', () => {
   })
 
   it('validate mobile (optional) - at least 10 characters', async () => {
+    valList.mobileNumber = {
+      error: 'Your mobile number must have at least 10 characters',
+      
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -134,6 +228,12 @@ describe('Page: /agents-details', () => {
   })
 
   it('validate mobile (optional) - correct format', async () => {
+    valList.mobileNumber = {
+      error: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
+      
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -150,6 +250,11 @@ describe('Page: /agents-details', () => {
   })
 
   it('validate landline (optional) - at least 10 characters', async () => {
+    valList.landlineNumber = {
+      error: 'Your landline number must have at least 10 characters',
+      
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -166,6 +271,12 @@ describe('Page: /agents-details', () => {
   })
 
   it('validate landline (optional) - correct format', async () => {
+    valList.landlineNumber = {
+      error: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
+      
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -182,6 +293,12 @@ describe('Page: /agents-details', () => {
   })
 
   it('if both mobile and landline are missing -> show error message', async () => {
+    valList.landlineNumber = {
+      error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
+      
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -206,6 +323,11 @@ describe('Page: /agents-details', () => {
   })
 
   it('validate postcode - valid format', async () => {
+    valList.postcode = {
+      error: 'Enter a postcode, like AA1 1AA',
+      
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,
@@ -222,6 +344,19 @@ describe('Page: /agents-details', () => {
   })
 
   it('store user response and redirect to /applicant-details', async () => {
+    valList.firstName = null
+    valList.lastName = null
+    valList.businessName = null
+    valList.emailAddress = null
+    // valList.confirmEmailAddress = null
+    valList.mobileNumber = null
+    valList.landlineNumber = null
+    valList.address1 = null
+    // valList.address2 = null
+    valList.town = null
+    valList.county = null
+    valList.postcode = null
+    
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agents-details`,

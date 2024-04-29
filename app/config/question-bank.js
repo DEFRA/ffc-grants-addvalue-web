@@ -9,9 +9,9 @@ const {
   NAME_ONLY_REGEX,
   PHONE_REGEX,
   EMAIL_REGEX
-} = require('../helpers/regex')
+} = require('ffc-grants-common-functionality').regex
 
-const { LIST_COUNTIES } = require('../helpers/all-counties')
+const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
 
 /**
  * ----------------------------------------------------------------

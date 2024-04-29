@@ -1,7 +1,7 @@
 const { getUrl } = require('../helpers/urls')
-const { getOptions } = require('../helpers/answer-options')
-const { getYarValue } = require('../helpers/session')
-const { getQuestionByKey, allAnswersSelected } = require('../helpers/utils')
+const { getOptions } = require('ffc-grants-common-functionality').answerOptions
+const { getYarValue } = require('ffc-grants-common-functionality').session
+const { getQuestionByKey, allAnswersSelected } = require('ffc-grants-common-functionality').utils
 
 const getDependentSideBar = (sidebar, request) => {
   // sidebar contains values of a previous page
@@ -102,6 +102,7 @@ const getModel = (data, question, request, conditionalHtml = '') => {
   } else if (warning) {
     warningDetails = warning
   }
+
   return {
     type,
     key,

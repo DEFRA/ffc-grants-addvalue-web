@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
 
+const { commonFunctionsMock } = require('./../../../session-mock')
+
 describe('Page: /environmental-impact', () => {
   const varList = { collaboration: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -30,6 +27,10 @@ describe('Page: /environmental-impact', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.environmentalImpact = {
+      error: 'Select all options that apply',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/environmental-impact`,
@@ -43,6 +44,8 @@ describe('Page: /environmental-impact', () => {
   })
 
   it('user selects OR option with others -> show error message', async () => {
+    valList.environmentalImpact.error = 'You cannot select that combination of options'
+    
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/environmental-impact`,
@@ -58,6 +61,7 @@ describe('Page: /environmental-impact', () => {
   })
 
   it('user selects options -> store user response and redirect to /score', async () => {
+    valList.environmentalImpact = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/environmental-impact`,

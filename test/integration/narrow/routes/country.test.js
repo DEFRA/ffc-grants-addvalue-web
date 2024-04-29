@@ -1,15 +1,13 @@
 const { crumbToken } = require('./test-helper')
 
+const { commonFunctionsMock } = require('./../../../session-mock')
+
 describe('Page: /country', () => {
   const varList = { legalStatus: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -25,6 +23,10 @@ describe('Page: /country', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.inEngland = {
+      error: 'Select yes if the project is in England',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/country`,
@@ -38,6 +40,8 @@ describe('Page: /country', () => {
   })
 
   it('user selects ineligible option: \'No\' -> display ineligible page', async () => {
+
+    valList.inEngland = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/country`,

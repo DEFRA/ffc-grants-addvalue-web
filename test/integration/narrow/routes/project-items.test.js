@@ -1,15 +1,13 @@
 const { crumbToken } = require('./test-helper')
 
+const { commonFunctionsMock } = require('./../../../session-mock')
+
 describe('Page: /project-items', () => {
   const varList = { projectStart: 'randomData1', tenancy: 'randomData2' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -26,6 +24,10 @@ describe('Page: /project-items', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.projectItems = {
+      error: 'Select all the items your project needs',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-items`,
@@ -39,6 +41,7 @@ describe('Page: /project-items', () => {
   })
 
   it('user selects any number of options -> store user response and redirect to /storage', async () => {
+    valList.projectItems = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-items`,
