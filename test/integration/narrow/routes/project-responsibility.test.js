@@ -42,11 +42,12 @@ describe('Page: /project-responsibility', () => {
   })
 
   it('user selects eligible option -> store user response and redirect to /smaller-abattoir', async () => {
+    valList.projectResponsibility = null
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/project-start`,
+      url: `${global.__URLPREFIX__}/project-responsibility`,
       headers: { cookie: 'crumb=' + crumbToken },
-      payload: { projectStart: 'Yes, preparatory work', crumb: crumbToken }
+      payload: { projectResponsibility: 'Yes, I plan to take full responsibility for my project', crumb: crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
