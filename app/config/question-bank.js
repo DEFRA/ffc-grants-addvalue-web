@@ -1563,7 +1563,7 @@ const questionBank = {
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
-          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          classes: 'govuk-radios govuk-fieldset__legend--l',
           minAnswerCount: 1,
           validate: [
             {
