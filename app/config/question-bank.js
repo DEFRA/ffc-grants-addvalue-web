@@ -1,3 +1,5 @@
+const { ADDRESS_REGEX } = require('ffc-grants-common-functionality/lib/regex')
+
 const {
   CURRENCY_FORMAT,
   CHARS_MAX_10,
@@ -8,7 +10,8 @@ const {
   SBI_REGEX,
   NAME_ONLY_REGEX,
   PHONE_REGEX,
-  EMAIL_REGEX
+  EMAIL_REGEX,
+  MIN_3_LETTERS,
 } = require('ffc-grants-common-functionality').regex
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
@@ -1610,10 +1613,6 @@ const questionBank = {
           ga: [{ dimension: 'cd3', value: { type: 'yar', key: 'applying' } }],
           allFields: [
             {
-              type: 'sub-heading',
-              text: 'Name'
-            },
-            {
               yarKey: 'firstName',
               type: 'text',
               classes: 'govuk-input--width-20',
@@ -1655,10 +1654,6 @@ const questionBank = {
               ]
             },
             {
-              type: 'sub-heading',
-              text: 'Contact details'
-            },
-            {
               yarKey: 'emailAddress',
               type: 'email',
               classes: 'govuk-input--width-20',
@@ -1682,9 +1677,29 @@ const questionBank = {
               ]
             },
             {
+              yarKey: 'confirmEmailAddress',
+              type: 'email',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Confirm email address',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Confirm your email address'
+                },
+                {
+                  type: 'CONFIRMATION_ANSWER',
+                  fieldsToCampare: ['emailAddress', 'confirmEmailAddress'],
+                  error: 'Enter an email address that matches'
+                }
+              ]
+            },
+            {
               yarKey: 'mobileNumber',
               type: 'tel',
-              classes: 'govuk-input--width-20',
+              classes: 'govuk-input--width-10',
               label: {
                 text: 'Mobile number',
                 classes: 'govuk-label'
@@ -1714,7 +1729,7 @@ const questionBank = {
               yarKey: 'landlineNumber',
               endFieldset: 'true',
               type: 'tel',
-              classes: 'govuk-input--width-20',
+              classes: 'govuk-input--width-10',
               label: {
                 text: 'Landline number',
                 classes: 'govuk-label'
@@ -1749,14 +1764,24 @@ const questionBank = {
               type: 'text',
               classes: 'govuk-input--width-20',
               label: {
-                html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>',
+                html: 'Address line 1',
                 classes: 'govuk-label'
               },
               validate: [
                 {
                   type: 'NOT_EMPTY',
-                  error: 'Enter your building and street details'
-                }
+                  error: 'Enter your address line 1'
+                },
+                {
+                  type: 'REGEX',
+                  regex: ADDRESS_REGEX,
+                  error: 'Address must only include letters, numbers, hyphens and apostrophes'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_3_LETTERS,
+                  error: 'Address must include at least 3 letters'
+                },
               ]
             },
             {
@@ -1764,9 +1789,21 @@ const questionBank = {
               type: 'text',
               classes: 'govuk-input--width-20',
               label: {
-                html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>',
+                html: 'Address line 2 (optional)',
                 classes: 'govuk-label'
-              }
+              },
+              validate: [
+                {
+                  type: 'REGEX',
+                  regex: ADDRESS_REGEX,
+                  error: 'Address must only include letters, numbers, hyphens and apostrophes'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_3_LETTERS,
+                  error: 'Address must include at least 3 letters'
+                },
+              ]
             },
             {
               yarKey: 'town',
@@ -1868,10 +1905,6 @@ const questionBank = {
           maxAnswerCount: '',
           allFields: [
             {
-              type: 'sub-heading',
-              text: 'Name'
-            },
-            {
               yarKey: 'firstName',
               type: 'text',
               classes: 'govuk-input--width-20',
@@ -1933,10 +1966,6 @@ const questionBank = {
               ]
             },
             {
-              type: 'sub-heading',
-              text: 'Contact details'
-            },
-            {
               yarKey: 'emailAddress',
               type: 'email',
               classes: 'govuk-input--width-20',
@@ -1960,9 +1989,29 @@ const questionBank = {
               ]
             },
             {
+              yarKey: 'confirmEmailAddress',
+              type: 'email',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Confirm email address',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Confirm your email address'
+                },
+                {
+                  type: 'CONFIRMATION_ANSWER',
+                  fieldsToCampare: ['emailAddress', 'confirmEmailAddress'],
+                  error: 'Enter an email address that matches'
+                }
+              ]
+            },
+            {
               yarKey: 'mobileNumber',
               type: 'tel',
-              classes: 'govuk-input--width-20',
+              classes: 'govuk-input--width-10',
               label: {
                 text: 'Mobile number',
                 classes: 'govuk-label'
@@ -1992,7 +2041,7 @@ const questionBank = {
               yarKey: 'landlineNumber',
               type: 'tel',
               endFieldset: 'true',
-              classes: 'govuk-input--width-20',
+              classes: 'govuk-input--width-10',
               label: {
                 text: 'Landline number',
                 classes: 'govuk-label'
@@ -2027,14 +2076,24 @@ const questionBank = {
               type: 'text',
               classes: 'govuk-input--width-20',
               label: {
-                html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>',
+                html: 'Address line 1',
                 classes: 'govuk-label'
               },
               validate: [
                 {
                   type: 'NOT_EMPTY',
-                  error: 'Enter your building and street details'
-                }
+                  error: 'Enter your address line 1'
+                },
+                {
+                  type: 'REGEX',
+                  regex: ADDRESS_REGEX,
+                  error: 'Address must only include letters, numbers, hyphens and apostrophes'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_3_LETTERS,
+                  error: 'Address must include at least 3 letters'
+                },
               ]
             },
             {
@@ -2042,9 +2101,21 @@ const questionBank = {
               type: 'text',
               classes: 'govuk-input--width-20',
               label: {
-                html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>',
+                html: 'Address line 2 (optional)',
                 classes: 'govuk-label'
-              }
+              },
+              validate: [
+                {
+                  type: 'REGEX',
+                  regex: ADDRESS_REGEX,
+                  error: 'Address must only include letters, numbers, hyphens and apostrophes'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_3_LETTERS,
+                  error: 'Address must include at least 3 letters'
+                },
+              ]
             },
             {
               yarKey: 'town',
