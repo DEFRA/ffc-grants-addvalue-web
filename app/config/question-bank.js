@@ -1508,7 +1508,7 @@ const questionBank = {
                 text: '£'
               },
               label: {
-                text: 'Business turnover (£)',
+                text: 'Annual Business turnover (£)',
                 classes: 'govuk-label'
               },
               validate: [
