@@ -1,89 +1,9 @@
 const { getModel } = require('../helpers/models')
 const { getHtml } = require('../helpers/conditionalHTML')
-const { getYarValue } = require('../helpers/session')
-const { getQuestionAnswer } = require('../helpers/utils')
+const { ALL_QUESTIONS } = require('../config/question-bank')
+const { getYarValue } = require('ffc-grants-common-functionality').session
 
-const validateAnswerField = (value, validationType, details, payload) => {
-  switch (validationType) {
-    case 'NOT_EMPTY': {
-      return (!!value)
-    }
-
-    case 'NOT_EMPTY_EXTRA': {
-      if (value) {
-        return true
-      }
-
-      const { extraFieldsToCheck } = details
-      return extraFieldsToCheck.some(extraField => (
-        !!payload[extraField]
-      ))
-    }
-
-    case 'STANDALONE_ANSWER': {
-      const selectedAnswer = [value].flat()
-      const {
-        standaloneObject: {
-          questionKey: standaloneQuestionKey,
-          answerKey: standaloneAnswerKey
-        }
-      } = details
-      const standAloneAnswer = getQuestionAnswer(standaloneQuestionKey, standaloneAnswerKey)
-
-      if (selectedAnswer.includes(standAloneAnswer)) {
-        return selectedAnswer.length == 1
-      }
-      return true
-    }
-
-    case 'COMBINATION_ANSWER': {
-      const selectedAnswer = [value].flat()
-      const {
-        combinationObject: {
-          questionKey: combinationQuestionKey,
-          combinationAnswerKeys: combinationAnswerKeys
-        }
-      } = details
-      const combinationanswers = combinationAnswerKeys.map(answerKey =>  getQuestionAnswer(combinationQuestionKey, answerKey))
-
-      if (selectedAnswer.includes(combinationanswers[0]) && selectedAnswer.length > 1) {
-        return selectedAnswer.every ((answer, index) => answer === combinationanswers[index])
-      }
-
-      return true
-    }
-
-    case 'REGEX': {
-      const { regex } = details
-      return (!value || regex.test(value))
-    }
-
-    case 'MIN_MAX_CHARS': {
-      const { min, max } = details
-      return (value.length >= min && value.length <= max)
-    }
-
-    case 'MIN_MAX': {
-      const { min, max } = details
-      return (value >= min && value <= max)
-    }
-
-    case 'MAX_SELECT': {
-      const { max } = details
-      return ([value].flat().length <= max)
-    }
-    default:
-      return false
-  }
-}
-
-const checkInputError = (validate, isconditionalAnswer, payload, yarKey) => {
-  return validate.find(
-    ({ type, dependentKey, ...details }) => (isconditionalAnswer && dependentKey)
-      ? (validateAnswerField(payload[dependentKey], type, details, payload) === false)
-      : !dependentKey && (validateAnswerField(payload[yarKey], type, details, payload) === false)
-  )
-}
+const { validateAnswerField, checkInputError } = require('ffc-grants-common-functionality').errorHelpers
 
 const customiseErrorText = (value, currentQuestion, errorList, h, request) => {
   const { yarKey, type, conditionalKey, conditionalLabelData } = currentQuestion
@@ -138,7 +58,7 @@ const checkErrors = (payload, currentQuestion, h, request) => {
         isconditionalAnswer = inputAnswers?.find(answer => answer.conditional)?.value === payload[inputYarKey]
 
         if (inputValidate) {
-          placeholderInputError = checkInputError(inputValidate, isconditionalAnswer, payload, inputYarKey)
+          placeholderInputError = checkInputError(inputValidate, isconditionalAnswer, payload, inputYarKey, ALL_QUESTIONS)
 
           if (placeholderInputError) {
             errorHrefList.push({
@@ -156,7 +76,7 @@ const checkErrors = (payload, currentQuestion, h, request) => {
   }
   if (Object.keys(payload).length === 0 && currentQuestion.type) {
     placeholderInputError = validate.find(
-      ({ type, dependentKey, ...details }) => (validateAnswerField(payload[yarKey], type, details, payload) === false))
+      ({ type, dependentKey, ...details }) => (validateAnswerField(payload[yarKey], type, details, payload, ALL_QUESTIONS) === false))
 
     errorHrefList.push({
       text: placeholderInputError.error,
@@ -168,7 +88,7 @@ const checkErrors = (payload, currentQuestion, h, request) => {
   const payloadValue = typeof payload[yarKey] === 'string' ? payload[yarKey].trim() : payload[yarKey]
   isconditionalAnswer = payload[yarKey]?.includes(conditionalAnswer?.value)
   if (validate) {
-    placeholderInputError = checkInputError(validate, isconditionalAnswer, payload, yarKey)
+    placeholderInputError = checkInputError(validate, isconditionalAnswer, payload, yarKey, ALL_QUESTIONS)
 
     if (placeholderInputError) {
       errorHrefList.push({

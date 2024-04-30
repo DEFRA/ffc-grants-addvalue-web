@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /project-cost', () => {
   const varList = { storage: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -23,6 +20,11 @@ describe('Page: /project-cost', () => {
   })
 
   it('no value is typed in -> show error message', async () => {
+    valList.projectCost = {
+      error: 'Enter the estimated cost for the items',
+      return: false
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,
@@ -36,6 +38,7 @@ describe('Page: /project-cost', () => {
   })
 
   it('user types in any amount less than £62500 -> display ineligible page', async () => {
+    valList.projectCost.error = 'You cannot apply for a grant from this scheme'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,
@@ -48,6 +51,7 @@ describe('Page: /project-cost', () => {
   })
 
   it('user types in an invalid value -> display error message', async () => {
+    valList.projectCost.error = 'Enter a whole number in correct format'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,
@@ -60,6 +64,9 @@ describe('Page: /project-cost', () => {
   })
 
   it('user types in a value with more than 10 digits -> display error message', async () => {
+
+    valList.projectCost.error = 'Enter a whole number with a maximum of 10 digits'
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,
@@ -72,6 +79,7 @@ describe('Page: /project-cost', () => {
   })
 
   it('user types in a valid value (eg £62500) -> store user response and redirect to /potential-amount', async () => {
+    valList.projectCost = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,

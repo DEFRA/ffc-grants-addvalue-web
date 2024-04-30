@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /business-details', () => {
   const varList = { 'current-score': 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', null, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -28,6 +25,25 @@ describe('Page: /business-details', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.projectName = {
+      error: 'Enter a project name',
+      return: false
+    }
+
+    valList.businessName = {
+      error: 'Enter a business name',
+      return: false
+    }
+
+    valList.numberEmployees = {
+      error: 'Enter the number of employees',
+      return: false
+    }
+
+    valList.businessTurnover = {
+      error: 'Enter the business turnover',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/business-details`,
@@ -56,6 +72,10 @@ describe('Page: /business-details', () => {
   })
 
   it('should validate number of employees - no spaces', async () => {
+    valList.numberEmployees = {
+      error: 'Number of employees must be a whole number, like 305',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/business-details`,
@@ -72,6 +92,10 @@ describe('Page: /business-details', () => {
   })
 
   it('should validate number of employees - maximum number of employees is 9999999', async () => {
+    valList.numberEmployees = {
+      error: 'Number must be between 1-9999999',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/business-details`,
@@ -88,6 +112,10 @@ describe('Page: /business-details', () => {
   })
 
   it('should validate business turnover - only digits', async () => {
+    valList.businessTurnover = {
+      error: 'Business turnover must be a whole number, like 100000',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/business-details`,
@@ -120,6 +148,10 @@ describe('Page: /business-details', () => {
   })
 
   it('should validate business turnover - maximum value is 999999999', async () => {
+    valList.businessTurnover = {
+      error: 'Number must be between 1-999999999',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/business-details`,
@@ -136,6 +168,10 @@ describe('Page: /business-details', () => {
   })
 
   it('should validate SBI, if entered - only digits', async () => {
+    valList.sbi = {
+      error: 'SBI number must have 9 characters, like 011115678',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/business-details`,
@@ -216,6 +252,12 @@ describe('Page: /business-details', () => {
   })
 
   it('store user response and redirect to applicant page: /applying, sbi is optional', async () => {
+    valList.projectName = null
+    valList.businessName = null
+    valList.numberEmployees = null
+    valList.businessTurnover = null
+    valList.sbi = null
+    
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/business-details`,

@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /applying', () => {
   const varList = { businessDetails: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -25,6 +22,10 @@ describe('Page: /applying', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.applying = {
+      error: 'Select who is applying for this grant',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/applying`,
@@ -38,6 +39,7 @@ describe('Page: /applying', () => {
   })
 
   it('user selects \'Applicant\' -> store user response and redirect to /applicant-details', async () => {
+    valList.applying = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/applying`,

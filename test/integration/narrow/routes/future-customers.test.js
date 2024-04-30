@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /future-customers', () => {
   const varList = { projectImpact: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -29,6 +26,10 @@ describe('Page: /future-customers', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.futureCustomers = {
+      error: 'Select all options that apply',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/future-customers`,
@@ -42,6 +43,8 @@ describe('Page: /future-customers', () => {
   })
 
   it('user selects a valid customer option together with option: \'No change\' -> display error page', async () => {
+    valList.futureCustomers.error = 'You cannot select ‘No change’ and another option'
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/future-customers`,
@@ -55,6 +58,7 @@ describe('Page: /future-customers', () => {
   })
 
   it('user selects eligible option -> store user response and redirect to /collaboration', async () => {
+    valList.futureCustomers = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/future-customers`,

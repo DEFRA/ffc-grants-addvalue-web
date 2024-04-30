@@ -1,15 +1,13 @@
 const { crumbToken } = require('./test-helper')
 
+const { commonFunctionsMock } = require('./../../../session-mock')
+
 describe('Page: /remaining-costs', () => {
   const varList = { projectCost: '12345678' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -25,6 +23,10 @@ describe('Page: /remaining-costs', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.canPayRemainingCost = {
+      error: 'Select yes if you can pay the remaining costs without using any other grant money',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/remaining-costs`,
@@ -38,6 +40,7 @@ describe('Page: /remaining-costs', () => {
   })
 
   it('user selects ineligible option: \'No\' -> display ineligible page', async () => {
+    valList.canPayRemainingCost.error = 'You cannot apply for a grant from this scheme'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/remaining-costs`,
@@ -50,6 +53,7 @@ describe('Page: /remaining-costs', () => {
   })
 
   it('user selects eligible option: \'Yes\' -> store user response and redirect to /produce-processed', async () => {
+    valList.canPayRemainingCost = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/remaining-costs`,

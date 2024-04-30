@@ -1,7 +1,8 @@
+const { ALL_QUESTIONS } = require('../config/question-bank')
 const { getUrl } = require('../helpers/urls')
-const { getOptions } = require('../helpers/answer-options')
-const { getYarValue } = require('../helpers/session')
-const { getQuestionByKey, allAnswersSelected } = require('../helpers/utils')
+const { getOptions } = require('ffc-grants-common-functionality').answerOptions
+const { getYarValue } = require('ffc-grants-common-functionality').session
+const { getQuestionByKey, allAnswersSelected } = require('ffc-grants-common-functionality').utils
 
 const getDependentSideBar = (sidebar, request) => {
   // sidebar contains values of a previous page
@@ -12,7 +13,7 @@ const getDependentSideBar = (sidebar, request) => {
   let addUpdatedValue
   let updatedContent
   dependentQuestionKeys.forEach((dependentQuestionKey, index) => {
-    const questionAnswers = getQuestionByKey(dependentQuestionKey).answers
+    const questionAnswers = getQuestionByKey(dependentQuestionKey, ALL_QUESTIONS).answers
     const yarValue = getYarValue(request, dependentYarKeys[index]) || []
 
     values.forEach((thisValue) => {
@@ -96,12 +97,13 @@ const getModel = (data, question, request, conditionalHtml = '') => {
   let warningDetails
   if (warningCondition) {
     const { dependentWarningQuestionKey, dependentWarningAnswerKeysArray } = warningCondition
-    if (allAnswersSelected(request, dependentWarningQuestionKey, dependentWarningAnswerKeysArray)) {
+    if (allAnswersSelected(request, dependentWarningQuestionKey, dependentWarningAnswerKeysArray, ALL_QUESTIONS)) {
       warningDetails = warningCondition.warning
     }
   } else if (warning) {
     warningDetails = warning
   }
+
   return {
     type,
     key,

@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /storage', () => {
   const varList = { projectItems: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -26,6 +23,10 @@ describe('Page: /storage', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.storage = {
+      error: 'Select yes if you will need storage facilities',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/storage`,
@@ -39,6 +40,7 @@ describe('Page: /storage', () => {
   })
 
   it('user selects first option -> store user response and redirect to /project-cost', async () => {
+    valList.storage = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/storage`,

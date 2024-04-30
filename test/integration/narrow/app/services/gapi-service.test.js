@@ -1,9 +1,9 @@
 const { sendGAEvent, isBlockDefaultPageView } = require('./../../../../../app/services/gapi-service')
 
-const appInsights = require('./../../../../../app/services/app-insights'); // replace with actual path
-// const { commonFunctionsMock } = require('../../../../session-mock');
+const appInsights = require('./../../../../../app/services/app-insights');
+const { commonFunctionsMock } = require('../../../../session-mock');
 
-jest.mock('./../../../../../app/services/app-insights'); // replace with actual path
+jest.mock('./../../../../../app/services/app-insights');
 
 const varList = {
   'current-score': 'Yes',
@@ -11,15 +11,7 @@ const varList = {
   'applying': 'Farmer'
 }
 
-// commonFunctionsMock(varList, undefined)
-
-jest.mock('./../../../../../app/helpers/session', () => ({
-  setYarValue: (request, key, value) => null,
-  getYarValue: (request, key) => {
-    if (varList[key]) return varList[key]
-    else return undefined
-  }
-}))
+commonFunctionsMock(varList, undefined)
 
 describe('isBlockDefaultPageView', () => {
     it('should return true for blocked URLs', () => {
