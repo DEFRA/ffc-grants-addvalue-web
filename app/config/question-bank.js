@@ -336,7 +336,7 @@ const questionBank = {
               content: [{
                 para: `You must have secured planning permission before you submit a full application.
                 
-                Any planning permission must be in place by 31 January 2024.`
+                Any planning permission must be in place by 31 May 2025.`
               }]
             }]
           },
@@ -357,12 +357,12 @@ const questionBank = {
             },
             {
               key: 'planning-permission-A3',
-              value: 'Should be in place by 31 January 2024',
+              value: 'Should be in place by the time I make my full application',
               redirectUrl: 'planning-required-condition'
             },
             {
               key: 'planning-permission-A4',
-              value: 'Will not be in place by 31 January 2024',
+              value: 'Will not be in place by the time I make my full application',
               notEligible: true
             }
           ],
@@ -517,7 +517,7 @@ const questionBank = {
           url: 'tenancy',
           baseUrl: 'tenancy',
           backUrl: 'project-start',
-          nextUrl: 'project-items',
+          nextUrl: 'smaller-abattoir',
           preValidationKeys: ['projectStart'],
           fundingPriorities: '',
           type: 'single-answer',
@@ -527,7 +527,7 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'You must own the land or have a tenancy in place until 2028 before starting the project.'
+                para: 'If you are a tenant farmer, you have the option to ask your landlord to underwrite your agreement.'
               }]
             }]
           },
@@ -545,7 +545,7 @@ const questionBank = {
             {
               key: 'tenancy-A2',
               value: 'No',
-              redirectUrl: 'tenancy-length'
+              redirectUrl: 'project-responsibility'
             }
           ],
           yarKey: 'tenancy'
