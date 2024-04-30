@@ -9,9 +9,9 @@ const {
   NAME_ONLY_REGEX,
   PHONE_REGEX,
   EMAIL_REGEX
-} = require('../helpers/regex')
+} = require('ffc-grants-common-functionality').regex
 
-const { LIST_COUNTIES } = require('../helpers/all-counties')
+const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
 
 /**
  * ----------------------------------------------------------------
@@ -1071,7 +1071,7 @@ const questionBank = {
             {
               type: 'NOT_EMPTY',
               error: 'Select the impact your project will have'
-            },
+            },            
             {
               type: 'COMBINATION_ANSWER',
               error: 'You cannot select that combination of options',
@@ -1640,7 +1640,7 @@ const questionBank = {
               },
               validate: [
                 {
-                  type: 'NOT_EMPTY_EXTRA',
+                  type: 'NOT_EMPTY',
                   error: 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
                   extraFieldsToCheck: ['landlineNumber']
                 },
@@ -1670,7 +1670,7 @@ const questionBank = {
               },
               validate: [
                 {
-                  type: 'NOT_EMPTY_EXTRA',
+                  type: 'NOT_EMPTY',
                   error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
                   extraFieldsToCheck: ['mobileNumber']
                 },

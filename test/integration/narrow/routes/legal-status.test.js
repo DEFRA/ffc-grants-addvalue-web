@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /legal-status', () => {
   const varList = { businessLocation: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -35,6 +32,10 @@ describe('Page: /legal-status', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.legalStatus = {
+      error: 'Select the legal status of the business',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/legal-status`,
@@ -48,6 +49,7 @@ describe('Page: /legal-status', () => {
   })
 
   it('user selects ineligible option: \'None of the above\' -> display ineligible page', async () => {
+    valList.legalStatus.error = 'You cannot apply for a grant from this scheme'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/legal-status`,
@@ -60,6 +62,7 @@ describe('Page: /legal-status', () => {
   })
 
   it('user selects eligible option -> store user response and redirect to /country', async () => {
+    valList.legalStatus = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/legal-status`,

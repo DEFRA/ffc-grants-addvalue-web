@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /project-impact', () => {
   const varList = { howAddingValue: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -27,6 +24,10 @@ describe('Page: /project-impact', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.projectImpact = {
+      error: 'Select the impact your project will have',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-impact`,
@@ -40,6 +41,7 @@ describe('Page: /project-impact', () => {
   })
 
   it('user selects option 1 together with option 2 -> show error message', async () => {
+    valList.projectImpact.error = 'You cannot select that combination of options'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-impact`,
@@ -70,6 +72,7 @@ describe('Page: /project-impact', () => {
   })
 
   it('user selects an acceptable combination of options -> store user response and redirect to /future-customers', async () => {
+    valList.projectImpact = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-impact`,

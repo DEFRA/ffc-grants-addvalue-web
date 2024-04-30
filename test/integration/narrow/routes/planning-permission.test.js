@@ -1,15 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /planning-permission', () => {
   const varList = { inEngland: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
+
+  commonFunctionsMock(varList, 'Error', {}, valList)
 
   it('page loads successfully, with all the options', async () => {
     const options = {
@@ -27,6 +24,10 @@ describe('Page: /planning-permission', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.planningPermission = {
+      error: 'Select when the project will have planning permission',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/planning-permission`,
@@ -40,6 +41,7 @@ describe('Page: /planning-permission', () => {
   })
 
   it('user selects ineligible option: \'Will not be in place by 31 January 2024\' -> display ineligible page', async () => {
+    valList.planningPermission.error = 'You cannot apply for a grant from this scheme'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/planning-permission`,
@@ -52,6 +54,7 @@ describe('Page: /planning-permission', () => {
   })
 
   it('user selects conditional option: \'Should be in place by 31 January 2024\' -> display conditional page', async () => {
+    valList.planningPermission = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/planning-permission`,

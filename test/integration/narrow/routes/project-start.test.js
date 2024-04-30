@@ -1,16 +1,12 @@
 const { crumbToken } = require('./test-helper')
+const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /project-start', () => {
   const varList = { planningPermission: 'randomData' }
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (varList[key]) return varList[key]
-      else return 'Error'
-    }
-  }))
+  let valList = {}
 
+  commonFunctionsMock(varList, 'Error', {}, valList)
   it('page loads successfully, with all the options', async () => {
     const options = {
       method: 'GET',
@@ -26,6 +22,10 @@ describe('Page: /project-start', () => {
   })
 
   it('no option selected -> show error message', async () => {
+    valList.projectStart = {
+      error: 'Select the option that applies to your project',
+      return: false
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-start`,
@@ -39,6 +39,7 @@ describe('Page: /project-start', () => {
   })
 
   it('user selects ineligible option: \'Yes, we have begun project work\' -> display ineligible page', async () => {
+    valList.projectStart.error = 'You cannot apply for a grant from this scheme'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-start`,
@@ -51,6 +52,7 @@ describe('Page: /project-start', () => {
   })
 
   it('user selects eligible option -> store user response and redirect to /tenancy', async () => {
+    valList.projectStart = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-start`,
