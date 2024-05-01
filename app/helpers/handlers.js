@@ -8,7 +8,8 @@ const { getHtml } = require('../helpers/conditionalHTML')
 const { getUrl } = require('../helpers/urls')
 const { guardPage } = require('ffc-grants-common-functionality').pageGuard
 const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOptions
-const { notUniqueSelection, uniqueSelection } = require('ffc-grants-common-functionality').utils
+const { notUniqueSelection, uniqueSelection, getQuestionAnswer } = require('ffc-grants-common-functionality').utils
+
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')

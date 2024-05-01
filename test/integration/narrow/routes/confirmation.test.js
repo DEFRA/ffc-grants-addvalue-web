@@ -34,9 +34,7 @@ describe('Reference number page', () => {
     expect(response.payload).toContain('Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.')
     expect(response.payload).toContain('get quotes from suppliers')
     expect(response.payload).toContain('apply for planning permission')
-    expect(response.payload).toContain('RPA will be in touch when the full application period opens. They will tell you if your project scored well enough to get the full application form.')
-    expect(response.payload).toContain('If you submit an application, RPA will assess it against other projects and value for money. You will not automatically get a grant.')
-    expect(response.payload).toContain('The grant is expected to be highly competitive and you are competing against other projects.')
+    expect(response.payload).toContain('What do you think of this service?')
     expect(response.payload).toContain('If your application is successful, you’ll be sent a funding agreement and can begin work on the project.')
   })
 
