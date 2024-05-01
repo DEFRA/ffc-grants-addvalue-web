@@ -40,15 +40,7 @@ const saveValuesToArray = (yarKey, fields) => {
 
   return result
 }
-
-const getPage = async (question, request, h) => {
-  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
-  const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
-  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
-  if (isRedirect) {
-    return h.redirect(startPageUrl)
-  }
-  let confirmationId = ''
+const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl, backUrl, h) => {
   if (question.maybeEligible) {
     let { maybeEligibleContent } = question
     maybeEligibleContent.title = question.title
@@ -123,8 +115,32 @@ const getPage = async (question, request, h) => {
       }
     }
 
+    if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+      maybeEligibleContent = {
+        ...maybeEligibleContent,
+        addText: true
+      }
+    }
+    
+
     const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
     return h.view('maybe-eligible', MAYBE_ELIGIBLE)
+  }
+
+}
+
+const getPage = async (question, request, h) => {
+  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
+  const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
+  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
+  if (isRedirect) {
+    return h.redirect(startPageUrl)
+  }
+
+  const confirmationId = ''
+
+  if (question.maybeEligible) {
+    return maybeEligibleGet(request, confirmationId, question, url, nextUrl, backUrl, h)
   }
 
   if (title) {

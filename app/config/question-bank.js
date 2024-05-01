@@ -2121,7 +2121,7 @@ const questionBank = {
               surveyLink: process.env.SURVEY_LINK
             },
             messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
-            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Transformation Fund scheme:<br/>
+            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme:
             <h1 class="govuk-heading-m">RPA helpline</h1>
             <h2 class="govuk-heading-s">Telephone</h2>
             Telephone: 03000 200 301<br/>
@@ -2131,10 +2131,14 @@ const questionBank = {
             <a class="govuk-link" title="Send email to RPA" target="_blank" rel="noopener noreferrer" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a><br/><br/>
             
             <h2 class="govuk-heading-m">What happens next</h2>
-            <p>1. RPA will be in touch when the full application period opens. They will tell you if your project scored well enough to get the full application form.</p>
-            <p>2. If you submit an application, RPA will assess it against other projects and value for money. You will not automatically get a grant.
-            The grant is expected to be highly competitive and you are competing against other projects.</p>
-            <p>3. If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</p>
+            <ul class="govuk-list--bullet">
+              <ol>The RPA will contact you when the full application period opens. They will tell you if your project scored well enough to get the full application form. </ol>
+              <ol>If you submit an application, the RPA will assess it against other 
+              projects and value for money. You will not automatically get a 
+              grant. The grant is expected to be highly competitive and you 
+              are competing against other projects.</ol>
+              <ol>If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</ol>
+            </ul>
             `,
             warning: {
               text: 'You must not start the project'
@@ -2142,17 +2146,17 @@ const questionBank = {
             extraMessageContent: `
             <p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
             <p>Before you start the project, you can:</p>
-            <ul>
+            <ul class="govuk-list--bullet">
               <li>get quotes from suppliers</li>
               <li>apply for planning permission</li>
             </ul>
             <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
             `
           },
-          fundingPriorities: '',
-          type: '',
-          minAnswerCount: 1,
-          answers: []
+          addText: false,
+          conditionalInsertText: { 
+            text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.` 
+          },
         }
       ]
     }

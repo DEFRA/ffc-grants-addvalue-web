@@ -4,11 +4,14 @@ const { commonFunctionsMock } = require('./../../../session-mock')
 const senders = require('../../../../app/messaging/senders')
 
 describe('Reference number page', () => {
-  const varList = {
-    consentMain: true
+  const varList = { farmerDetails: 'someValue', agentDetails: 'someValue', projectResponsibility: '' }
+  let valList = {}
+
+  const utilsList = {
+    'project-responsibility-A2': 'No, I plan to ask my landlord to take full responsibility for my project',
   }
     
-  commonFunctionsMock(varList, 'Error')
+  commonFunctionsMock(varList, 'Error', utilsList, valList)
   
   it('page loads successfully, with all the options', async () => {
     const options = {
