@@ -1362,7 +1362,7 @@ const questionBank = {
           baseUrl: 'business-details',
           backUrl: 'score',
           nextUrl: 'applying',
-          preValidationKeys: ['current-score'],
+          // preValidationKeys: ['current-score'],
           ga: [
             { dimension: 'cd2', value: { type: 'score' } },
             { dimension: 'cm1', value: { type: 'journey-time' } }
@@ -2083,15 +2083,14 @@ const questionBank = {
           maybeEligible: true,
           maybeEligibleContent: {
             messageHeader: 'Confirm and send',
-            messageContent: `<ul class="govuk-list"> 
-            <li>I confirm that, to the best of my knowledge, the details I have provided are correct.</li>
-            <li> I understand the score was based on the answers I provided.</li>
-            <li> I am aware the information I submit will be checked.</li>
-            <li> I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.</li>
-            </ul>
-            <br/>
-            So that we can continue to improve our services and schemes, we may wish to contact you in the future. 
-            Please confirm if you are happy for us, or a third-party working for us, to contact you.`
+            messageContent: `
+              I confirm that, to the best of my knowledge, the details I have provided are correct.<br/><br/>
+              I understand the score was based on the answers I provided.<br/><br/>
+              I am aware the information I submit will be checked.<br/><br/>
+              I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.
+              <h2 class="govuk-heading-m">Improving our schemes</h2>
+              As we develop new services we get feedback from farmers and agents.<br/><br/>
+              You may be contacted by us or a third party that we work with.`
           },
           answers: [
             {
