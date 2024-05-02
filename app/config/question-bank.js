@@ -1,3 +1,5 @@
+const { ADDRESS_REGEX } = require('ffc-grants-common-functionality/lib/regex')
+
 const {
   CURRENCY_FORMAT,
   CHARS_MAX_10,
@@ -8,7 +10,8 @@ const {
   SBI_REGEX,
   NAME_ONLY_REGEX,
   PHONE_REGEX,
-  EMAIL_REGEX
+  EMAIL_REGEX,
+  MIN_3_LETTERS,
 } = require('ffc-grants-common-functionality').regex
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
@@ -549,6 +552,60 @@ const questionBank = {
             }
           ],
           yarKey: 'tenancy'
+        },
+        {
+          key: 'project-responsibility',
+          order: 65,
+          title: 'Will you take full responsibility for your project?',
+          hint: {
+            html: `If you are on a short tenancy, you can ask your landlord to underwrite your agreement. This means they will take over your agreement if your tenancy ends. For example, your landlord could pass the agreed 
+            project to the new tenant.<br/><br/>
+            This approach is optional and we will only ask for details at full application.`
+          },
+          pageTitle: '',
+          url: 'project-responsibility',
+          baseUrl: 'project-responsibility',
+          backUrl: 'tenancy',
+          nextUrl: 'smaller-abattoir', 
+          // preValidationObject: {
+          //   preValidationKeys: ['tenancy'],
+          //   preValidationAnswer: ['tenancy-A2'],
+          //   preValidationRule: 'AND',
+          //   preValidationUrls: ['tenancy']
+          // },
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswercount: 1,
+          sidebar: {
+            values: [
+              {
+                heading: 'Eligibility',
+                content: [
+                  {
+                    para: 'You must complete your project and keep the grant-funded items fit for purpose for 5 years after the date you receive your final grant payment.',
+                    items: []
+                  }
+                ],
+              }
+            ]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you will take full responsibility for your project'
+            }
+          ],
+          answers: [
+            {
+              key: 'project-responsibility-A1',
+              value: 'Yes, I plan to take full responsibility for my project'
+            },
+            {
+              key: 'project-responsibility-A2',
+              value: 'No, I plan to ask my landlord to underwrite my agreement'
+            }
+          ],
+          yarKey: 'projectResponsibility'
         },
         {
           key: 'tenancy-length',
@@ -1451,7 +1508,7 @@ const questionBank = {
                 text: '£'
               },
               label: {
-                text: 'Business turnover (£)',
+                text: 'Annual Business turnover (£)',
                 classes: 'govuk-label'
               },
               validate: [
@@ -1509,7 +1566,7 @@ const questionBank = {
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
-          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          classes: 'govuk-radios govuk-fieldset__legend--l',
           minAnswerCount: 1,
           validate: [
             {
@@ -1556,10 +1613,6 @@ const questionBank = {
           ga: [{ dimension: 'cd3', value: { type: 'yar', key: 'applying' } }],
           allFields: [
             {
-              type: 'sub-heading',
-              text: 'Name'
-            },
-            {
               yarKey: 'firstName',
               type: 'text',
               classes: 'govuk-input--width-20',
@@ -1601,10 +1654,6 @@ const questionBank = {
               ]
             },
             {
-              type: 'sub-heading',
-              text: 'Contact details'
-            },
-            {
               yarKey: 'emailAddress',
               type: 'email',
               classes: 'govuk-input--width-20',
@@ -1628,9 +1677,29 @@ const questionBank = {
               ]
             },
             {
+              yarKey: 'confirmEmailAddress',
+              type: 'email',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Confirm email address',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Confirm your email address'
+                },
+                {
+                  type: 'CONFIRMATION_ANSWER',
+                  fieldsToCampare: ['emailAddress', 'confirmEmailAddress'],
+                  error: 'Enter an email address that matches'
+                }
+              ]
+            },
+            {
               yarKey: 'mobileNumber',
               type: 'tel',
-              classes: 'govuk-input--width-20',
+              classes: 'govuk-input--width-10',
               label: {
                 text: 'Mobile number',
                 classes: 'govuk-label'
@@ -1660,7 +1729,7 @@ const questionBank = {
               yarKey: 'landlineNumber',
               endFieldset: 'true',
               type: 'tel',
-              classes: 'govuk-input--width-20',
+              classes: 'govuk-input--width-10',
               label: {
                 text: 'Landline number',
                 classes: 'govuk-label'
@@ -1695,14 +1764,24 @@ const questionBank = {
               type: 'text',
               classes: 'govuk-input--width-20',
               label: {
-                html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>',
+                html: 'Address line 1',
                 classes: 'govuk-label'
               },
               validate: [
                 {
                   type: 'NOT_EMPTY',
-                  error: 'Enter your building and street details'
-                }
+                  error: 'Enter your address line 1'
+                },
+                {
+                  type: 'REGEX',
+                  regex: ADDRESS_REGEX,
+                  error: 'Address must only include letters, numbers, hyphens and apostrophes'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_3_LETTERS,
+                  error: 'Address must include at least 3 letters'
+                },
               ]
             },
             {
@@ -1710,9 +1789,21 @@ const questionBank = {
               type: 'text',
               classes: 'govuk-input--width-20',
               label: {
-                html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>',
+                html: 'Address line 2 (optional)',
                 classes: 'govuk-label'
-              }
+              },
+              validate: [
+                {
+                  type: 'REGEX',
+                  regex: ADDRESS_REGEX,
+                  error: 'Address must only include letters, numbers, hyphens and apostrophes'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_3_LETTERS,
+                  error: 'Address must include at least 3 letters'
+                },
+              ]
             },
             {
               yarKey: 'town',
@@ -1814,10 +1905,6 @@ const questionBank = {
           maxAnswerCount: '',
           allFields: [
             {
-              type: 'sub-heading',
-              text: 'Name'
-            },
-            {
               yarKey: 'firstName',
               type: 'text',
               classes: 'govuk-input--width-20',
@@ -1879,10 +1966,6 @@ const questionBank = {
               ]
             },
             {
-              type: 'sub-heading',
-              text: 'Contact details'
-            },
-            {
               yarKey: 'emailAddress',
               type: 'email',
               classes: 'govuk-input--width-20',
@@ -1906,9 +1989,29 @@ const questionBank = {
               ]
             },
             {
+              yarKey: 'confirmEmailAddress',
+              type: 'email',
+              classes: 'govuk-input--width-20',
+              label: {
+                text: 'Confirm email address',
+                classes: 'govuk-label'
+              },
+              validate: [
+                {
+                  type: 'NOT_EMPTY',
+                  error: 'Confirm your email address'
+                },
+                {
+                  type: 'CONFIRMATION_ANSWER',
+                  fieldsToCampare: ['emailAddress', 'confirmEmailAddress'],
+                  error: 'Enter an email address that matches'
+                }
+              ]
+            },
+            {
               yarKey: 'mobileNumber',
               type: 'tel',
-              classes: 'govuk-input--width-20',
+              classes: 'govuk-input--width-10',
               label: {
                 text: 'Mobile number',
                 classes: 'govuk-label'
@@ -1938,7 +2041,7 @@ const questionBank = {
               yarKey: 'landlineNumber',
               type: 'tel',
               endFieldset: 'true',
-              classes: 'govuk-input--width-20',
+              classes: 'govuk-input--width-10',
               label: {
                 text: 'Landline number',
                 classes: 'govuk-label'
@@ -1973,14 +2076,24 @@ const questionBank = {
               type: 'text',
               classes: 'govuk-input--width-20',
               label: {
-                html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>',
+                html: 'Address line 1',
                 classes: 'govuk-label'
               },
               validate: [
                 {
                   type: 'NOT_EMPTY',
-                  error: 'Enter your building and street details'
-                }
+                  error: 'Enter your address line 1'
+                },
+                {
+                  type: 'REGEX',
+                  regex: ADDRESS_REGEX,
+                  error: 'Address must only include letters, numbers, hyphens and apostrophes'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_3_LETTERS,
+                  error: 'Address must include at least 3 letters'
+                },
               ]
             },
             {
@@ -1988,9 +2101,21 @@ const questionBank = {
               type: 'text',
               classes: 'govuk-input--width-20',
               label: {
-                html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>',
+                html: 'Address line 2 (optional)',
                 classes: 'govuk-label'
-              }
+              },
+              validate: [
+                {
+                  type: 'REGEX',
+                  regex: ADDRESS_REGEX,
+                  error: 'Address must only include letters, numbers, hyphens and apostrophes'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_3_LETTERS,
+                  error: 'Address must include at least 3 letters'
+                },
+              ]
             },
             {
               yarKey: 'town',
