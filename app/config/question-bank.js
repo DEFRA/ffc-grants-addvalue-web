@@ -1419,7 +1419,7 @@ const questionBank = {
           baseUrl: 'business-details',
           backUrl: 'score',
           nextUrl: 'applying',
-          preValidationKeys: ['current-score'],
+          // preValidationKeys: ['current-score'],
           ga: [
             { dimension: 'cd2', value: { type: 'score' } },
             { dimension: 'cm1', value: { type: 'journey-time' } }
@@ -2208,15 +2208,14 @@ const questionBank = {
           maybeEligible: true,
           maybeEligibleContent: {
             messageHeader: 'Confirm and send',
-            messageContent: `<ul class="govuk-list"> 
-            <li>I confirm that, to the best of my knowledge, the details I have provided are correct.</li>
-            <li> I understand the score was based on the answers I provided.</li>
-            <li> I am aware the information I submit will be checked.</li>
-            <li> I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.</li>
-            </ul>
-            <br/>
-            So that we can continue to improve our services and schemes, we may wish to contact you in the future. 
-            Please confirm if you are happy for us, or a third-party working for us, to contact you.`
+            messageContent: `
+              I confirm that, to the best of my knowledge, the details I have provided are correct.<br/><br/>
+              I understand the score was based on the answers I provided.<br/><br/>
+              I am aware the information I submit will be checked.<br/><br/>
+              I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.
+              <h2 class="govuk-heading-m">Improving our schemes</h2>
+              As we develop new services we get feedback from farmers and agents.<br/><br/>
+              You may be contacted by us or a third party that we work with.`
           },
           answers: [
             {
@@ -2247,7 +2246,7 @@ const questionBank = {
               surveyLink: process.env.SURVEY_LINK
             },
             messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
-            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Transformation Fund scheme:<br/>
+            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme:
             <h1 class="govuk-heading-m">RPA helpline</h1>
             <h2 class="govuk-heading-s">Telephone</h2>
             Telephone: 03000 200 301<br/>
@@ -2255,12 +2254,12 @@ const questionBank = {
             <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges</a></p>
             <h2 class="govuk-heading-s">Email</h2>
             <a class="govuk-link" title="Send email to RPA" target="_blank" rel="noopener noreferrer" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a><br/><br/>
-            
             <h2 class="govuk-heading-m">What happens next</h2>
-            <p>1. RPA will be in touch when the full application period opens. They will tell you if your project scored well enough to get the full application form.</p>
-            <p>2. If you submit an application, RPA will assess it against other projects and value for money. You will not automatically get a grant.
-            The grant is expected to be highly competitive and you are competing against other projects.</p>
-            <p>3. If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</p>
+            <ol class="govuk-list govuk-list--number">
+              <li>The RPA will contact you when the full application period opens. They will tell you if your project scored well enough to get the full application form. </li>
+              <li>If you submit an application, the RPA will assess it against other projects and value for money. You will not automatically get a grant. The grant is expected to be highly competitive and you are competing against other projects.</li>
+              <li>If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</li>
+            </ol>
             `,
             warning: {
               text: 'You must not start the project'
@@ -2268,17 +2267,17 @@ const questionBank = {
             extraMessageContent: `
             <p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
             <p>Before you start the project, you can:</p>
-            <ul>
+            <ul class="govuk-list--bullet">
               <li>get quotes from suppliers</li>
               <li>apply for planning permission</li>
             </ul>
             <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
-            `
+            `,
+            addText: false,
+            conditionalInsertText: { 
+              text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.` 
+            },
           },
-          fundingPriorities: '',
-          type: '',
-          minAnswerCount: 1,
-          answers: []
         }
       ]
     }

@@ -8,7 +8,8 @@ const { getHtml } = require('../helpers/conditionalHTML')
 const { getUrl } = require('../helpers/urls')
 const { guardPage } = require('ffc-grants-common-functionality').pageGuard
 const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOptions
-const { notUniqueSelection, uniqueSelection } = require('ffc-grants-common-functionality').utils
+const { notUniqueSelection, uniqueSelection, getQuestionAnswer } = require('ffc-grants-common-functionality').utils
+
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
@@ -41,18 +42,47 @@ const saveValuesToArray = (yarKey, fields) => {
   return result
 }
 
-const getPage = async (question, request, h) => {
-  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
-  const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
-  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
-  if (isRedirect) {
-    return h.redirect(startPageUrl)
-  }
-  let confirmationId = ''
+const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl, backUrl, h) => {
   if (question.maybeEligible) {
     let { maybeEligibleContent } = question
     maybeEligibleContent.title = question.title
     let consentOptionalData
+
+    if (url === 'confirm') {
+      const consentOptional = getYarValue(request, 'consentOptional')
+      consentOptionalData = {
+        hiddenInput: {
+          id: 'consentMain',
+          name: 'consentMain',
+          value: 'true',
+          type: 'hidden'
+        },
+        idPrefix: 'consentOptional',
+        name: 'consentOptional',
+        items: setOptionsLabel(consentOptional,
+          [{
+            value: 'CONSENT_OPTIONAL',
+            text: '(Optional) I consent to being contacted by Defra or a third party about service improvements'
+          }]
+        )
+      }
+    }
+
+    if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+      maybeEligibleContent = {
+        ...maybeEligibleContent,
+        addText: true
+      }
+    }
+
+    maybeEligibleContent = {
+      ...maybeEligibleContent,
+      messageContent: maybeEligibleContent.messageContent.replace(
+        SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
+          formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+        )
+      )
+    }
 
     if (maybeEligibleContent.reference) {
       if (!getYarValue(request, 'consentMain')) {
@@ -94,37 +124,24 @@ const getPage = async (question, request, h) => {
       request.yar.reset()
     }
 
-    maybeEligibleContent = {
-      ...maybeEligibleContent,
-      messageContent: maybeEligibleContent.messageContent.replace(
-        SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-          formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
-        )
-      )
-    }
-
-    if (url === 'confirm') {
-      const consentOptional = getYarValue(request, 'consentOptional')
-      consentOptionalData = {
-        hiddenInput: {
-          id: 'consentMain',
-          name: 'consentMain',
-          value: 'true',
-          type: 'hidden'
-        },
-        idPrefix: 'consentOptional',
-        name: 'consentOptional',
-        items: setOptionsLabel(consentOptional,
-          [{
-            value: 'CONSENT_OPTIONAL',
-            text: '(Optional) I confirm'
-          }]
-        )
-      }
-    }
-
     const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
     return h.view('maybe-eligible', MAYBE_ELIGIBLE)
+  }
+
+}
+
+const getPage = async (question, request, h) => {
+  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
+  const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
+  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
+  if (isRedirect) {
+    return h.redirect(startPageUrl)
+  }
+
+  const confirmationId = ''
+
+  if (question.maybeEligible) {
+    return maybeEligibleGet(request, confirmationId, question, url, nextUrl, backUrl, h)
   }
 
   if (title) {

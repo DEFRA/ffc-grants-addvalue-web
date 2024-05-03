@@ -19,6 +19,13 @@ describe('confirm page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('Confirm and send')
+    expect(response.payload).toContain('I confirm that, to the best of my knowledge, the details I have provided are correct.')
+    expect(response.payload).toContain('I understand the score was based on the answers I provided.')
+    expect(response.payload).toContain('I am aware the information I submit will be checked.')
+    expect(response.payload).toContain('I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.')
+    expect(response.payload).toContain('Improving our schemes')
+    expect(response.payload).toContain('As we develop new services we get feedback from farmers and agents.')
+    expect(response.payload).toContain('You may be contacted by us or a third party that we work with.')
   })
 
   it('store user response and redirect to /confirmation', async () => {

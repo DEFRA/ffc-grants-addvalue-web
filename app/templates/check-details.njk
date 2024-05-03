@@ -29,51 +29,63 @@
           <hr/>
         </div>
       
-        {{ govukSummaryList({
+      {% set rowsWithoutSbi =
+          { 
             rows: [
-              {
-                key: {
-                  text: "Project name"
+                {
+                  key: {
+                    text: "Project name"
+                  },
+                  value: {
+                    text:  businessDetails.projectName
+                  }
                 },
-                value: {
-                  text:  businessDetails.projectName
+                {
+                  key: {
+                    text: "Business name"
+                  },
+                  value: {
+                    text: businessDetails.businessName
+                  }
+                },
+                {
+                  key: {
+                    text: "Number of employees"
+                  },
+                  value: {
+                    text: businessDetails.numberEmployees
+                  }
+                },
+                {
+                  key: {
+                    text: "Annual business turnover"
+                  },
+                  value: {
+                    text: businessDetails.businessTurnover
+                  }
                 }
+              ]
+            }
+        %}
+
+        {% if businessDetails.sbi %}
+          {% set rowsWithSbi = 
+          (rowsWithoutSbi.rows.push(
+            {
+              key: {
+                text: "Single Business Identifier (SBI)"
               },
-              {
-                key: {
-                  text: "Business name"
-                },
-                value: {
-                  text: businessDetails.businessName
-                }
-              },
-              {
-                key: {
-                  text: "Number of employees"
-                },
-                value: {
-                  text: businessDetails.numberEmployees
-                }
-              },
-              {
-                key: {
-                  text: "Business turnover"
-                },
-                value: {
-                  text: businessDetails.businessTurnover
-                }
-              },
-              {
-                key: {
-                  text: "Single Business Identifier (SBI)"
-                },
-                value: {
-                  text: businessDetails.sbi
-                }
+              value: {
+                text: businessDetails.sbi
               }
-            ]
-          })
-        }}
+            }
+            ), rowsWithoutSbi)
+            %}
+          {{ govukSummaryList(rowsWithSbi) }} 
+        {% else %}
+          {{ govukSummaryList(rowsWithoutSbi) }} 
+        {% endif %}
+
         
         {% if applying == 'Agent' %}
 
