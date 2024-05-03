@@ -158,9 +158,7 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
         ...maybeEligibleContent,
         addText: true
       }
-      console.log(maybeEligibleContent, 'maybeEligibleContent')
     }
-    
 
     const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
     return h.view('maybe-eligible', MAYBE_ELIGIBLE)
