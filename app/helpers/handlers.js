@@ -48,6 +48,42 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
     maybeEligibleContent.title = question.title
     let consentOptionalData
 
+    if (url === 'confirm') {
+      const consentOptional = getYarValue(request, 'consentOptional')
+      consentOptionalData = {
+        hiddenInput: {
+          id: 'consentMain',
+          name: 'consentMain',
+          value: 'true',
+          type: 'hidden'
+        },
+        idPrefix: 'consentOptional',
+        name: 'consentOptional',
+        items: setOptionsLabel(consentOptional,
+          [{
+            value: 'CONSENT_OPTIONAL',
+            text: '(Optional) I consent to being contacted by Defra or a third party about service improvements'
+          }]
+        )
+      }
+    }
+
+    if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+      maybeEligibleContent = {
+        ...maybeEligibleContent,
+        addText: true
+      }
+    }
+
+    maybeEligibleContent = {
+      ...maybeEligibleContent,
+      messageContent: maybeEligibleContent.messageContent.replace(
+        SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
+          formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+        )
+      )
+    }
+
     if (maybeEligibleContent.reference) {
       if (!getYarValue(request, 'consentMain')) {
         return h.redirect(startPageUrl)
@@ -87,43 +123,6 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
       }
       request.yar.reset()
     }
-
-    maybeEligibleContent = {
-      ...maybeEligibleContent,
-      messageContent: maybeEligibleContent.messageContent.replace(
-        SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-          formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
-        )
-      )
-    }
-
-    if (url === 'confirm') {
-      const consentOptional = getYarValue(request, 'consentOptional')
-      consentOptionalData = {
-        hiddenInput: {
-          id: 'consentMain',
-          name: 'consentMain',
-          value: 'true',
-          type: 'hidden'
-        },
-        idPrefix: 'consentOptional',
-        name: 'consentOptional',
-        items: setOptionsLabel(consentOptional,
-          [{
-            value: 'CONSENT_OPTIONAL',
-            text: '(Optional) I consent to being contacted by Defra or a third party about service improvements'
-          }]
-        )
-      }
-    }
-
-    if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
-      maybeEligibleContent = {
-        ...maybeEligibleContent,
-        addText: true
-      }
-    }
-    
 
     const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
     return h.view('maybe-eligible', MAYBE_ELIGIBLE)
