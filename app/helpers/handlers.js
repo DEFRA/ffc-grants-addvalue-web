@@ -153,10 +153,6 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
       }
     }
 
-    console.log(getYarValue(request, 'projectResponsibility'), 'projectResponsibility')
-    console.log(getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS), 'project-responsibility-A2')
-    console.log(url, 'url')
-
     if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
       console.log('HEEEEELLLLLLLLLOOOOOOOOOOO')
       maybeEligibleContent = {
