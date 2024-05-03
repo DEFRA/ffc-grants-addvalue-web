@@ -154,7 +154,6 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
     }
 
     if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
-      console.log('HEEEEELLLLLLLLLOOOOOOOOOOO')
       maybeEligibleContent = {
         ...maybeEligibleContent,
         addText: true
