@@ -41,6 +41,43 @@ const saveValuesToArray = (yarKey, fields) => {
 
   return result
 }
+
+const handleConfirmation = async (url, request, confirmationId, maybeEligibleContent, h) => {
+  if (maybeEligibleContent.reference) {
+    if (!getYarValue(request, 'consentMain')) {
+      return h.redirect(startPageUrl)
+    }
+
+    if ((url === 'confirmation' || url === 'veranda-confirmation' || url === 'veranda-waitlist-confirmation') && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+      maybeEligibleContent = {
+        ...maybeEligibleContent,
+        addText: true
+      }
+    }
+
+    confirmationId = getConfirmationId(request.yar.id, request)
+    try {
+      const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), scoring: getYarValue(request, 'overAllScore') }, request.yar.id)
+      await senders.sendDesirabilitySubmitted(emailData, request.yar.id)
+      console.log('[CONFIRMATION EVENT SENT]')
+    } catch (err) {
+      console.log('ERROR: ', err)
+    }
+    maybeEligibleContent = {
+      ...maybeEligibleContent,
+      reference: {
+        ...maybeEligibleContent.reference,
+        html: maybeEligibleContent.reference.html.replace(
+          SELECT_VARIABLE_TO_REPLACE, (_ignore, _confirmatnId) => (
+            confirmationId
+          )
+        )
+      }
+    }
+    request.yar.reset()
+  }
+  return maybeEligibleContent
+}
 const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl, backUrl, h) => {
   if (question.maybeEligible) {
     let { maybeEligibleContent } = question
@@ -116,11 +153,17 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
       }
     }
 
+    console.log(getYarValue(request, 'projectResponsibility'), 'projectResponsibility')
+    console.log(getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS), 'project-responsibility-A2')
+    console.log(url, 'url')
+
     if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+      console.log('HEEEEELLLLLLLLLOOOOOOOOOOO')
       maybeEligibleContent = {
         ...maybeEligibleContent,
         addText: true
       }
+      console.log(maybeEligibleContent, 'maybeEligibleContent')
     }
     
 

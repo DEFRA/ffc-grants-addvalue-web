@@ -2254,16 +2254,12 @@ const questionBank = {
             <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges</a></p>
             <h2 class="govuk-heading-s">Email</h2>
             <a class="govuk-link" title="Send email to RPA" target="_blank" rel="noopener noreferrer" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a><br/><br/>
-            
             <h2 class="govuk-heading-m">What happens next</h2>
-            <ul class="govuk-list--bullet">
-              <ol>The RPA will contact you when the full application period opens. They will tell you if your project scored well enough to get the full application form. </ol>
-              <ol>If you submit an application, the RPA will assess it against other 
-              projects and value for money. You will not automatically get a 
-              grant. The grant is expected to be highly competitive and you 
-              are competing against other projects.</ol>
-              <ol>If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</ol>
-            </ul>
+            <ol class="govuk-list govuk-list--number">
+              <li>The RPA will contact you when the full application period opens. They will tell you if your project scored well enough to get the full application form. </li>
+              <li>If you submit an application, the RPA will assess it against other projects and value for money. You will not automatically get a grant. The grant is expected to be highly competitive and you are competing against other projects.</li>
+              <li>If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</li>
+            </ol>
             `,
             warning: {
               text: 'You must not start the project'
@@ -2276,11 +2272,11 @@ const questionBank = {
               <li>apply for planning permission</li>
             </ul>
             <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
-            `
-          },
-          addText: false,
-          conditionalInsertText: { 
-            text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.` 
+            `,
+            addText: false,
+            conditionalInsertText: { 
+              text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.` 
+            },
           },
         }
       ]
