@@ -20,7 +20,7 @@ describe('Page: /business-details', () => {
     expect(response.payload).toContain('Project name')
     expect(response.payload).toContain('Business name')
     expect(response.payload).toContain('Number of employees')
-    expect(response.payload).toContain('Business turnover')
+    expect(response.payload).toContain('Annual Business turnover')
     expect(response.payload).toContain('Single Business Identifier')
   })
 
