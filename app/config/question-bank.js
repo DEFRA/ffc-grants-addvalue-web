@@ -93,6 +93,7 @@ const questionBank = {
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
               <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
+              <li>produce wild venison products as part of woodland management.</li>
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
@@ -134,10 +135,11 @@ const questionBank = {
               }
             },
             {
-              value: 'divider'
+              key: 'nature-of-business-A3',
+              value: 'A woodland manager processing wild venison products'
             },
             {
-              key: 'nature-of-business-A3',
+              key: 'nature-of-business-A4',
               value: 'None of the above',
               notEligible: true
             }
