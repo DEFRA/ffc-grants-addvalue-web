@@ -753,7 +753,7 @@ const questionBank = {
           url: 'storage',
           baseUrl: 'storage',
           backUrl: 'project-items',
-          nextUrl: 'project-cost',
+          nextUrl: 'solar-PV-system',
           preValidationKeys: ['projectItems'],
           hint: {
             text: 'For example, cold stores or controlled atmosphere storage'
