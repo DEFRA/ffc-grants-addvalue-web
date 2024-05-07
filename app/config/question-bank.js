@@ -785,6 +785,53 @@ const questionBank = {
           yarKey: 'storage'
         },
         {
+          key: 'solar-PV-system',
+          order: 250,
+          title: 'Will you buy a solar PV system with this grant?',
+          url: 'solar-PV-system',
+          baseUrl: 'solar-PV-system',
+          backUrl: 'storage',
+          nextUrl: 'project-cost',
+          // preValidationKeys: ['storage'],
+          hint: {
+            html: `You have the option to buy and install a solar PV system with this grant.</br></br>
+            The solar PV panels must be installed on the roof of an or new building related to your project.</br></br>
+            You cannot buy a solar PV system with this grant if:
+            <ul class="govuk-list govuk-list--bullet">
+              <li>the building’s roof only faces north or is heavily shaded</li>
+              <li>you are only buying portable items</li>
+            </ul>`,
+          },
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'You do not have to buy and install a solar PV system to be eligible for this grant.',
+              }]
+            }]
+          },
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you will buy a solar PV system for this building with this grant'
+            }
+          ],
+          answers: [
+            {
+              key: 'solar-PV-system-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'solar-PV-system-A2',
+              value: 'No'
+            }
+          ],
+          yarKey: 'solarPVSystem'
+        },
+        {
           key: 'project-cost',
           order: 90,
           pageTitle: '',
