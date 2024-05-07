@@ -673,13 +673,20 @@ const questionBank = {
           pageTitle: '',
           hint: {
             html: `
-            Storage facilities will only be funded as part of a bigger project and cannot be more than 50% of total grant funding.<br/><br/>
+            Storage facilities will only be funded as part of a bigger project and cannot be more than 50% of the total grant funding.<br/><br/>
             Select all the items your project needs
           `
           },
           url: 'project-items',
           baseUrl: 'project-items',
-          backUrl: 'tenancy',
+          backUrlObject: {
+            dependentQuestionYarKey: 'smallerAbattoir',
+            dependentAnswerKeysArray: ['smaller-abattoir-A1'],
+            urlOptions: {
+              thenUrl: 'other-farmers',
+              elseUrl: 'smaller-abattoir'
+            }
+          },
           nextUrl: 'storage',
           fundingPriorities: '',
           preValidationKeys: ['projectStart', 'tenancy'],
@@ -691,6 +698,20 @@ const questionBank = {
               error: 'Select all the items your project needs'
             }
           ],
+          ineligibleContent: {
+            messageContent: `
+            This grant is for:
+            <ul class="govuk-list govuk-list--bullet">
+              <li>constructing or improving buildings for processing</li>
+              <li>processing equipment or machinery</li>
+              <li>retail facilities.</li>
+            </ul>
+            `,
+            messageLink: {
+              url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+              title: 'See other grants you may be eligible for.'
+            }
+          },
           answers: [
             {
               key: 'project-items-A1',
@@ -712,6 +733,14 @@ const questionBank = {
               hint: {
                 text: 'For example, shops or display cabinets'
               }
+            },
+            {
+              value: 'divider'
+            },
+            {
+              key: 'project-items-A4',
+              value: 'None of the above',
+              notEligible: true
             }
           ],
           yarKey: 'projectItems'
