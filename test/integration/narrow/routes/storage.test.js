@@ -18,7 +18,7 @@ describe('Page: /storage', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('Does your project also need storage facilities?')
     expect(response.payload).toContain('Yes, we will need storage facilities')
-    expect(response.payload).toContain('No, we don’t need it')
+    expect(response.payload).toContain('No, we do not need storage facilities')
     expect(response.payload).toContain('Storage facilities cannot be more than 50% of the total grant funding.')
   })
 

@@ -779,7 +779,7 @@ const questionBank = {
             },
             {
               key: 'storage-A2',
-              value: 'No, we don’t need it'
+              value: 'No, we do not need storage facilities'
             }
           ],
           yarKey: 'storage'
