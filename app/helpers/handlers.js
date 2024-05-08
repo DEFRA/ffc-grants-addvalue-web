@@ -217,6 +217,13 @@ const getPage = async (question, request, h) => {
   }
 
   switch (url) {
+    case 'project-cost':
+        if (getYarValue(request, 'solarPVSystem') === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS)){
+          question.hint.html = question.hint.htmlSolar
+        } else {
+          question.hint.html = question.hint.htmlNoSolar
+        }
+      break;
     case 'score':
     case 'business-details':
     case 'agents-details':
@@ -339,6 +346,10 @@ const showPostPage = (currentQuestion, request, h) => {
 
     setYarValue(request, 'calculatedGrant', calculatedGrant)
     setYarValue(request, 'remainingCost', remainingCost)
+
+    if(calculatedGrant >= 500000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
+      return  h.redirect('/adding-value/potential-amount')
+    }
   }
 
   return h.redirect(getUrl(dependantNextUrl, nextUrl, request, payload.secBtn))

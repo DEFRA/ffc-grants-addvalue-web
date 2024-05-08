@@ -837,18 +837,26 @@ const questionBank = {
           pageTitle: '',
           url: 'project-cost',
           baseUrl: 'project-cost',
-          backUrl: 'storage',
-          nextUrl: 'potential-amount',
-          preValidationKeys: ['storage'],
+          backUrl: 'solar-PV-system',
+          dependantNextUrl: {
+            dependentQuestionYarKey: 'solarPVSystem',
+            dependentAnswerKeysArray: ['solar-PV-system-A1'],
+            urlOptions: {
+              thenUrl: 'solar-PV-cost',
+              elseUrl: 'potential-amount'
+            }
+          },
+          // nextUrl: 'potential-amount',
+          // preValidationKeys: ['storage'],
           classes: 'govuk-input--width-10',
           id: 'projectCost',
           name: 'projectCost',
           prefix: { text: '£' },
           type: 'input',
           grantInfo: {
-            minGrant: 25000,
-            maxGrant: 300000,
-            grantPercentage: 40,
+            minGrant: 20000,
+            maxGrant: 500000,
+            grantPercentage: 50,
             cappedGrant: true
           },
           label: {
@@ -857,17 +865,17 @@ const questionBank = {
             isPageHeading: true
           },
           hint: {
-            html: `
-              You can only apply for a grant of up to 40% of the estimated costs.
-              <br/>The minimum grant you can apply for this project is £25,000 (40% of £62,500).
-              <br/>The maximum grant is £300,000.
-              <br/><br/>Do not include VAT.
-              <br/><br/>Enter amount, for example 95,000`
+            htmlSolar: `
+            Do not include the solar PV system costs 
+            or VAT.<br/><br/>
+            Enter amount, for example 695,000`,
+            htmlNoSolar: `
+            Do not include VAT.<br/><br/>
+            Enter amount, for example 95,000`
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
-            messageContent: 'You can only apply for a grant of up to 40% of the estimated costs.',
-            insertText: { text: 'The minimum grant you can apply for is £25,000 (40% of £62,500). The maximum grant is £300,000.' },
+            messageContent: 'The minimum grant you can apply for is £20,000 (50% of £40,000).',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
@@ -891,7 +899,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter the estimated cost for the items'
+              error: 'Enter the estimated cost of the items'
             },
             {
               type: 'REGEX',
@@ -900,8 +908,8 @@ const questionBank = {
             },
             {
               type: 'REGEX',
-              regex: CHARS_MAX_10,
-              error: 'Enter a whole number with a maximum of 10 digits'
+              regex: /^.{1,7}$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
             }
           ],
           answers: [],
