@@ -47,7 +47,6 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
     return {
       ...maybeEligibleContent,
       messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
-      potentialAmountConditional : true,
       additionalSentence: 'The maximum grant you can apply for is £500,000.',
       insertText: { text: 'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for project items.' },
     }
