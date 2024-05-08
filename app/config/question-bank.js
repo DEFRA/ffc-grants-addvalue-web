@@ -846,7 +846,6 @@ const questionBank = {
               elseUrl: 'potential-amount'
             }
           },
-          // nextUrl: 'potential-amount',
           // preValidationKeys: ['storage'],
           classes: 'govuk-input--width-10',
           id: 'projectCost',

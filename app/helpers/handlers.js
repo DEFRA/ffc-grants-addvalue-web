@@ -42,11 +42,39 @@ const saveValuesToArray = (yarKey, fields) => {
   return result
 }
 
+const handlePotentialAmount = (request, maybeEligibleContent, url) => {
+  if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1000000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
+    return {
+      ...maybeEligibleContent,
+      messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
+      extraMessageContent: 'The maximum grant you can apply for is £500,000.',
+      addText: true,
+      conditionalInsertText: { text: 'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for project items.' },
+    }
+  } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
+    return {
+      ...maybeEligibleContent,
+      messageContent: 'You may be able to apply for grant funding of up to £500,000, based on the estimated project items cost of £{{_projectCost_}}.',
+      addText: true,
+      conditionalInsertText: { text: 'The maximum grant you can apply for is £500,000.' },
+    }
+  } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
+    return {
+      ...maybeEligibleContent,
+      messageContent: 'You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (50% of £{{_projectCost_}})',
+      addText: false
+    }
+  }
+  return maybeEligibleContent
+}
+
 const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl, backUrl, h) => {
   if (question.maybeEligible) {
     let { maybeEligibleContent } = question
     maybeEligibleContent.title = question.title
     let consentOptionalData
+
+    maybeEligibleContent = handlePotentialAmount(request, maybeEligibleContent, url)
 
     if (url === 'confirm') {
       const consentOptional = getYarValue(request, 'consentOptional')

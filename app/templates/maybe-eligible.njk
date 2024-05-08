@@ -49,10 +49,6 @@
       {% endif %}
       <p class="govuk-body">{{ messageContent | safe}}</p>
 
-      {% if warning %} 
-        {{ govukWarningText(warning) }}
-      {% endif %}
-
       {% if extraMessageContent %}
         <p class="govuk-body">{{ extraMessageContent | safe}}</p>
       {% endif %}
@@ -60,6 +56,11 @@
       {% if addText %} 
         {{ govukInsetText(conditionalInsertText) }}
       {% endif %}
+      
+      {% if warning %} 
+        {{ govukWarningText(warning) }}
+      {% endif %}
+
 
       {% if not consentOptionalData and not reference %}
             {{ govukButton({
