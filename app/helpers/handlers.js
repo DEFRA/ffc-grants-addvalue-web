@@ -49,21 +49,18 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
       messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
       potentialAmountConditional : true,
       additionalSentence: 'The maximum grant you can apply for is £500,000.',
-      insertText: true,
       insertText: { text: 'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for project items.' },
     }
   } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
       messageContent: 'You may be able to apply for grant funding of up to £500,000, based on the estimated project items cost of £{{_projectCost_}}.',
-      insertText: true,
       insertText: { text: 'The maximum grant you can apply for is £500,000.' },
     }
   } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
       messageContent: 'You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (50% of £{{_projectCost_}})',
-      insertText: false
     }
   }
   return maybeEligibleContent
