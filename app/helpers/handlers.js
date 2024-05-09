@@ -380,15 +380,15 @@ const showPostPage = (currentQuestion, request, h) => {
 
     setYarValue(request, 'calculatedSolarGrant', getYarValue(request, 'solarPVCost') / 4)
     const projectCost = getYarValue(request, 'projectCost')
-    const solarPVCost = getYarValue(request, 'solarPVCost')
+    // const solarPVCost = getYarValue(request, 'solarPVCost')
     const calculatedSolarGrant = getYarValue(request, 'calculatedSolarGrant')
     setYarValue(request, 'remainingCost', calculatedGrant + calculatedSolarGrant)
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
 
-    if(projectCost >= 40000 + solarPVSystem === 'Yes'){
+    if(projectCost >= 40000 + solarPVSystem == 'Yes'){
       return h.redirect('/adding-value/potential-amount-solar')
     }
-    // else if(solarPVCost < 100000 + solarPVSystem === 'Yes'){
+    // else if(solarPVCost < 100000 + solarPVSystem == 'Yes'){
     //   return h.redirect('/adding-value/potential-amount-solar-details')
     // }
   }
