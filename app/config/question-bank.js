@@ -120,7 +120,7 @@ const questionBank = {
                 para: 'This grant is for businesses who:',
                 items: [
                   'are agricultural or horticultural growers or producers',
-                  'are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers'
+                  `are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers`
                 ]
               }]
             }]
@@ -136,7 +136,7 @@ const questionBank = {
             },
             {
               key: 'nature-of-business-A2',
-              value: 'A business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers',
+              value: `A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers`,
               hint: {
                 text: 'For example, cheese processing business owned by a dairy farmer'
               }
@@ -766,7 +766,7 @@ const questionBank = {
             text: 'For example, cold stores or controlled atmosphere storage'
           },
           warning: {
-            text: 'Storage facilities cannot be more than ${GRANT_PERCENTAGE}% of the total grant funding.',
+            text: `Storage facilities cannot be more than ${GRANT_PERCENTAGE}% of the total grant funding.`,
             iconFallbackText: 'Warning'
           },
           fundingPriorities: '',
@@ -881,7 +881,7 @@ const questionBank = {
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
-            messageContent: 'The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).',
+            messageContent: `The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
@@ -956,7 +956,7 @@ const questionBank = {
           },
           grantInfo: {
             minGrant: 0,
-            maxGrant: MAX_GRANT,
+            maxGrant: 400000,
             grantPercentage: GRANT_PERCENTAGE_SOLAR,
             cappedGrant: true
           },

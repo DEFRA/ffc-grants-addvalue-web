@@ -2,7 +2,10 @@ const { commonFunctionsMock } = require('../../../session-mock')
 const { crumbToken } = require('./test-helper')
 
 describe('Page: /solar-PV-cost', () => {
-  let varList = {}
+  let varList = {
+    solarPVSystem: 'Yes',
+    projectCost: 100000
+  }
   let valList = {}
   
   commonFunctionsMock(varList, undefined, {}, valList)
@@ -67,6 +70,21 @@ describe('Page: /solar-PV-cost', () => {
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('potential-amount-solar')
   })
+
+  // it('user selects eligible option -> store user response and redirect to /potential-amount-solar', async () => {
+  //   valList.solarPVCost = false
+
+  //   const postOptions = {
+  //     method: 'POST',
+  //     url: `${global.__URLPREFIX__}/solar-PV-cost`,
+  //     headers: { cookie: 'crumb=' + crumbToken },
+  //     payload: { solarPVCost: '600',  crumb: crumbToken }
+  //   }
+
+  //   const postResponse = await global.__SERVER__.inject(postOptions)
+  //   expect(postResponse.statusCode).toBe(302)
+  //   expect(postResponse.headers.location).toBe('potential-amount-solar')
+  // })
 
   it('page loads with correct back link - /project-cost', async () => {
     const options = {
