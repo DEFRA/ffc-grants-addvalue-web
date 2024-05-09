@@ -16,6 +16,13 @@ const {
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
 
+const {
+  MIN_GRANT,
+  MAX_GRANT,
+  GRANT_PERCENTAGE, 
+  GRANT_PERCENTAGE_SOLAR
+} = require('../helpers/grant-details')
+
 /**
  * ----------------------------------------------------------------
  * list of yarKeys not bound to an answer, calculated separately
@@ -92,7 +99,7 @@ const questionBank = {
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
-              <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
+              <li>are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers</li>
               <li>produce wild venison products as part of woodland management.</li>
             </ul>`,
             messageLink: {
@@ -113,7 +120,7 @@ const questionBank = {
                 para: 'This grant is for businesses who:',
                 items: [
                   'are agricultural or horticultural growers or producers',
-                  'are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers'
+                  'are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers'
                 ]
               }]
             }]
@@ -129,7 +136,7 @@ const questionBank = {
             },
             {
               key: 'nature-of-business-A2',
-              value: 'A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers',
+              value: 'A business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers',
               hint: {
                 text: 'For example, cheese processing business owned by a dairy farmer'
               }
@@ -673,7 +680,7 @@ const questionBank = {
           pageTitle: '',
           hint: {
             html: `
-            Storage facilities will only be funded as part of a bigger project and cannot be more than 50% of the total grant funding.<br/><br/>
+            Storage facilities will only be funded as part of a bigger project and cannot be more than ${GRANT_PERCENTAGE}% of the total grant funding.<br/><br/>
             Select all the items your project needs
           `
           },
@@ -759,7 +766,7 @@ const questionBank = {
             text: 'For example, cold stores or controlled atmosphere storage'
           },
           warning: {
-            text: 'Storage facilities cannot be more than 50% of the total grant funding.',
+            text: 'Storage facilities cannot be more than ${GRANT_PERCENTAGE}% of the total grant funding.',
             iconFallbackText: 'Warning'
           },
           fundingPriorities: '',
@@ -853,9 +860,9 @@ const questionBank = {
           prefix: { text: '£' },
           type: 'input',
           grantInfo: {
-            minGrant: 20000,
-            maxGrant: 500000,
-            grantPercentage: 50,
+            minGrant: MIN_GRANT,
+            maxGrant: MAX_GRANT,
+            grantPercentage: GRANT_PERCENTAGE,
             cappedGrant: true
           },
           label: {
@@ -874,7 +881,7 @@ const questionBank = {
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
-            messageContent: 'The minimum grant you can apply for is £20,000 (50% of £40,000).',
+            messageContent: 'The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
@@ -916,7 +923,7 @@ const questionBank = {
         },
         {
           key: 'potential-amount',
-          order: 91,
+          order: 105,
           url: 'potential-amount',
           backUrl: 'project-cost',
           nextUrl: 'remaining-costs',
@@ -930,6 +937,63 @@ const questionBank = {
               iconFallbackText: 'Warning'
             }
           }
+        },
+        {
+          key: 'solar-PV-cost',
+          order: 110,
+          classes: 'govuk-input--width-10',
+          url: 'solar-PV-cost',
+          baseUrl: 'solar-PV-cost',
+          backUrl: 'project-cost',
+          nextUrl: 'potential-amount-solar',
+          // preValidationKeys: ['projectCost'],
+          grantInfo: {
+            grantPercentage: GRANT_PERCENTAGE_SOLAR,
+          },
+          type: 'input',
+          prefix: {
+            text: '£'
+          },
+          grantInfo: {
+            minGrant: 0,
+            maxGrant: MAX_GRANT,
+            grantPercentage: GRANT_PERCENTAGE_SOLAR,
+            cappedGrant: true
+          },
+          id: 'solarPVCost',
+          label: {
+            text: 'What is the estimated cost of buying and installing the solar PV system?',
+            classes: 'govuk-label--l',
+            isPageHeading: true,
+            for: 'solarPVCost'
+          },
+          hint: {
+            html: `
+                  <p>Enter solar PV system costs, for example 135,000</p>`
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter the estimated cost of buying and installing the solar PV system'
+            },
+            {
+              type: 'REGEX',
+              regex: /^[0-9,]+$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            },
+            {
+              type: 'REGEX',
+              regex: /^(0*[1-9][0-9]*(,\d{3})*)$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            },
+            {
+              type: 'MIN_MAX',
+              min: 1,
+              max: 9999999,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            }
+          ],
+          yarKey: 'solarPVCost'
         },
         {
           key: 'remaining-costs',
