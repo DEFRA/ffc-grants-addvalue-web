@@ -138,7 +138,7 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
     }
 
     maybeEligibleContent = replaceVariablesInContent(request, maybeEligibleContent)
-    
+
     if (maybeEligibleContent.reference) {
       if (!getYarValue(request, 'consentMain')) {
         return h.redirect(startPageUrl)
@@ -278,6 +278,19 @@ const getPage = async (question, request, h) => {
         } else {
           question.hint.html = question.hint.htmlNoSolar
         }
+      break;
+    case 'remaining-costs':
+      if(getYarValue(request, 'solarPVSystem') === 'Yes'){
+        if(getYarValue(request, 'projectCost') >= 1000000){
+          question.backUrl = 'potential-amount'
+        }else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')){
+          question.backUrl = 'potential-amount-solar-details'
+        }else {
+          question.backUrl = 'potential-amount-solar'
+        }
+      }else{
+        question.backUrl = 'potential-amount'
+      }
       break;
     case 'score':
     case 'business-details':
@@ -425,11 +438,14 @@ const showPostPage = (currentQuestion, request, h) => {
     setYarValue(request, 'cappedCalculatedSolarGrant', calculatedSolarGrant > calculatedGrant ? calculatedGrant  : calculatedSolarGrant)
     const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || calculatedGrant > 400000
     const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
-    setYarValue(request, 'remainingCost', calculatedGrant + calculatedSolarGrant)
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
+
+    setYarValue(request, 'isSolarCapped', isSolarCapped)
+    setYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant', isSolarCappedGreaterThanCalculatedGrant)
 
     setYarValue(request, 'totalProjectCost', Number(getYarValue(request, 'solarPVCost')) + Number(getYarValue(request, 'projectCost')))
     setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'cappedCalculatedSolarGrant') + calculatedGrant)
+    setYarValue(request, 'remainingCost', getYarValue(request, 'totalProjectCost') - getYarValue(request, 'totalCalculatedGrant'))
 
     if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
       return h.redirect('/adding-value/potential-amount-solar-details')

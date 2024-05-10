@@ -1153,7 +1153,7 @@ const questionBank = {
           pageTitle: '',
           url: 'remaining-costs',
           baseUrl: 'remaining-costs',
-          backUrl: 'project-cost',
+          backUrl: 'potential-amount',
           nextUrl: 'produce-processed',
           eliminationAnswerKeys: '',
           ineligibleContent: {
@@ -1161,11 +1161,10 @@ const questionBank = {
             <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
             insertText: {
               html: `You can use:
-              <ul>
-              <li>loans</li>
-              <li>overdrafts</li>
-              <li>the Basic Payment Scheme</li>
-              <li> agri-environment schemes such as the Countryside Stewardship Scheme</li>
+              <ul class="govuk-list--bullet">
+                <li>loans</li>
+                <li>overdrafts</li>
+                <li>delinked payments</li>
               </ul>`
             },
             messageLink: {
@@ -1190,8 +1189,7 @@ const questionBank = {
                   items: [
                     'loans',
                     'overdrafts',
-                    'the Basic Payment Scheme',
-                    'agri-environment schemes such as the Countryside Stewardship Scheme'
+                    'delinked payments'
                   ]
                 }]
               }
