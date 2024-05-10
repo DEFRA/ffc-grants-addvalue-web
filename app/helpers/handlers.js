@@ -192,7 +192,7 @@ const getPage = async (question, request, h) => {
 
       return h.view('page', MODEL)
     }
-    
+
     case 'check-details': {
       setYarValue(request, 'reachedCheckDetails', true)
 
@@ -249,6 +249,27 @@ const getPage = async (question, request, h) => {
   return h.view('page', PAGE_MODEL)
 }
 
+const multiInputPostHandler = (currentQuestion, request, dataObject, payload, yarKey) => {
+  const allFields = currentQuestion.allFields
+  allFields.forEach(field => {
+    const payloadYarVal = payload[field.yarKey]
+      ? payload[field.yarKey].replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase()
+      : ''
+    dataObject = {
+      ...dataObject,
+      [field.yarKey]: (
+        (field.yarKey === 'postcode' || field.yarKey === 'projectPostcode')
+          ? payloadYarVal
+          : payload[field.yarKey] || ''
+      ),
+      ...field.conditionalKey ? { [field.conditionalKey]: payload[field.conditionalKey] } : {}
+    }
+  })
+  setYarValue(request, yarKey, dataObject)
+}
+
+
+
 const showPostPage = (currentQuestion, request, h) => {
   const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, dependantNextUrl, title, type, allFields } = currentQuestion
   const NOT_ELIGIBLE = { ...ineligibleContent, backUrl: baseUrl }
@@ -266,31 +287,10 @@ const showPostPage = (currentQuestion, request, h) => {
     }
   }
   if (type === 'multi-input') {
-    allFields.forEach(field => {
-      const payloadYarVal = payload[field.yarKey]
-        ? payload[field.yarKey].replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase()
-        : ''
-      dataObject = {
-        ...dataObject,
-        [field.yarKey]: (
-          (field.yarKey === 'postcode' || field.yarKey === 'projectPostcode')
-            ? payloadYarVal
-            : payload[field.yarKey] || ''
-        ),
-        ...field.conditionalKey ? { [field.conditionalKey]: payload[field.conditionalKey] } : {}
-      }
-    })
-    setYarValue(request, yarKey, dataObject)
+    multiInputPostHandler(currentQuestion, request, dataObject, payload, yarKey)
   }
 
-  if (title) {
-    currentQuestion = {
-      ...currentQuestion,
-      title: title.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-        formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
-      ))
-    }
-  }
+  currentQuestion = titleCheck(currentQuestion, title, baseUrl, request)
 
   const errors = checkErrors(payload, currentQuestion, h, request)
   if (errors) {
@@ -302,40 +302,6 @@ const showPostPage = (currentQuestion, request, h) => {
       (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
   ) {
     // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
-    if (thisAnswer?.alsoMaybeEligible) {
-      const {
-        dependentQuestionKey,
-        dependentQuestionYarKey,
-        uniqueAnswer,
-        notUniqueAnswer,
-        maybeEligibleContent
-      } = thisAnswer.alsoMaybeEligible
-
-      const prevAnswer = getYarValue(request, dependentQuestionYarKey)
-
-      const dependentQuestion = ALL_QUESTIONS.find(thisQuestion => (
-        thisQuestion.key === dependentQuestionKey &&
-        thisQuestion.yarKey === dependentQuestionYarKey
-      ))
-
-      let dependentAnswer
-      let openMaybeEligible
-
-      if (notUniqueAnswer) {
-        dependentAnswer = dependentQuestion.answers.find(({ key }) => (key === notUniqueAnswer)).value
-        openMaybeEligible = notUniqueSelection(prevAnswer, dependentAnswer)
-      } else if (uniqueAnswer) {
-        dependentAnswer = dependentQuestion.answers.find(({ key }) => (key === uniqueAnswer)).value
-        openMaybeEligible = uniqueSelection(prevAnswer, dependentAnswer)
-      }
-
-      if (openMaybeEligible) {
-        maybeEligibleContent.title = currentQuestion.title
-        const { url } = currentQuestion
-        const MAYBE_ELIGIBLE = { ...maybeEligibleContent, url, backUrl: baseUrl }
-        return h.view('maybe-eligible', MAYBE_ELIGIBLE)
-      }
-    }
 
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
