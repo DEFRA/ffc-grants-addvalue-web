@@ -83,6 +83,25 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
   return maybeEligibleContent
 }
 
+function replaceVariablesInContent(request, maybeEligibleContent) {
+  return {
+    ...maybeEligibleContent,
+    messageContent: maybeEligibleContent.messageContent.replace(
+      SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
+        formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+      )
+    ),
+    detailsText: maybeEligibleContent?.detailsText?.html ?  { 
+      ...maybeEligibleContent.detailsText,
+      html: maybeEligibleContent.detailsText.html.replace(
+        SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
+          formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+        )
+      )
+    } : '',
+  }
+}
+
 const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl, backUrl, h) => {
   if (question.maybeEligible) {
     let { maybeEligibleContent } = question
@@ -118,22 +137,8 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
       }
     }
 
-    maybeEligibleContent = {
-      ...maybeEligibleContent,
-      messageContent: maybeEligibleContent.messageContent.replace(
-        SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-          formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
-        )
-      ),
-      detailsText: maybeEligibleContent?.detailsText?.html ?  { 
-        ...maybeEligibleContent.detailsText,
-        html: maybeEligibleContent.detailsText.html.replace(
-      SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-        formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
-      )
-    )} : '',
-    }
-
+    maybeEligibleContent = replaceVariablesInContent(request, maybeEligibleContent)
+    
     if (maybeEligibleContent.reference) {
       if (!getYarValue(request, 'consentMain')) {
         return h.redirect(startPageUrl)
