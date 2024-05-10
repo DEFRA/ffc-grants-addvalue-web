@@ -73,7 +73,7 @@ function getProjectItems (projectItems, storage) {
   return projectItems.join('|')
 }
 
-function generateDoraRows (submission, subScheme, todayStr, desirabilityScore) {
+function generateDoraRows (submission, subScheme, todayStr, today, desirabilityScore) {
   return [
     generateRow(1, 'Field Name', 'Field Value', true),
     generateRow(2, 'FA or OA', 'Outline Application'),
@@ -159,7 +159,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
         ...(spreadsheetConfig.protectEnabled ? { protectPassword: spreadsheetConfig.protectPassword } : {}),
         hideEmptyRows: spreadsheetConfig.hideEmptyRows,
         defaultColumnWidth: 30,
-        rows: generateDoraRows(submission, subScheme, todayStr, desirabilityScore)
+        rows: generateDoraRows(submission, subScheme, todayStr, today, desirabilityScore)
         
       }
     ]
