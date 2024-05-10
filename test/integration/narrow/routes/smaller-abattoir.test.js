@@ -17,6 +17,9 @@ describe('Page: /smaller-abattoir', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('Do you want to build a new smaller abattoir?')
+    expect(response.payload).toContain('A smaller abattoir is a:')
+    expect(response.payload).toContain('red meat abattoir that processes up to 10,000 farmed livestock units each year')
+    expect(response.payload).toContain('poultry abattoir that slaughters up to 500,000 birds each year')
     expect(response.payload).toContain('Yes')
     expect(response.payload).toContain('No')
   })
@@ -26,6 +29,7 @@ describe('Page: /smaller-abattoir', () => {
       error: 'Select yes if you want to build a new smaller abattoir',
       return: false
     }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/smaller-abattoir`,
@@ -66,19 +70,6 @@ describe('Page: /smaller-abattoir', () => {
     expect(postResponse.headers.location).toBe('project-items')
   })
 
-//   it('user selects \'No\' -> store user response and redirect to /project-responsibility', async () => {
-//     const postOptions = {
-//       method: 'POST',
-//       url: `${global.__URLPREFIX__}/tenancy`,
-//       headers: { cookie: 'crumb=' + crumbToken },
-//       payload: { tenancy: 'No', crumb: crumbToken }
-//     }
-
-//     const postResponse = await global.__SERVER__.inject(postOptions)
-//     expect(postResponse.statusCode).toBe(302)
-//     expect(postResponse.headers.location).toBe('project-responsibility')
-//   })
-
   it('page loads with correct back link - /tenancy - if user selected \'Yes\' on /tenancy', async () => {
     varList.tenancy = "Yes"
     
@@ -86,6 +77,7 @@ describe('Page: /smaller-abattoir', () => {
       method: 'GET',
       url: `${global.__URLPREFIX__}/smaller-abattoir`
     }
+
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('<a href=\"tenancy\" class=\"govuk-back-link\">Back</a>')
@@ -98,6 +90,7 @@ describe('Page: /smaller-abattoir', () => {
       method: 'GET',
       url: `${global.__URLPREFIX__}/smaller-abattoir`
     }
+    
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('<a href=\"project-responsibility\" class=\"govuk-back-link\">Back</a>')

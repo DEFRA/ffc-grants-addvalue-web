@@ -607,7 +607,7 @@ const questionBank = {
           ],
           yarKey: 'projectResponsibility'
         },
-       {
+        {
           key: 'smaller-abattoir',
           order: 67,
           title: 'Do you want to build a new smaller abattoir?',
@@ -630,8 +630,13 @@ const questionBank = {
               elseUrl: 'project-responsibility'
             }
           },
-          // preValidationKeys: ['tenancy'],
           nextUrl: 'other-farmers',
+          // preValidationObject: {
+          //   preValidationKeys: ['tenancy', 'projectResponsibility'],
+          //   preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1'],
+          //   preValidationRule: 'OR',
+          //   preValidationUrls: ['tenancy', 'project-responsibility']
+          // },
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
@@ -655,6 +660,64 @@ const questionBank = {
             }
           ],
           yarKey: 'smallerAbattoir'
+        },
+        {
+          key: 'other-farmers',
+          order: 68,
+          title: 'Will this abattoir provide services to other farmers?',
+          pageTitle: '',
+          hint: {
+            text: `For example, farmers pay you to slaughter their livestock`
+          },
+          url: 'other-farmers',
+          baseUrl: 'other-farmers',
+          backUrl: 'smaller-abattoir',
+          nextUrl: 'project-items',
+          // preValidationObject: {
+          //   preValidationKeys: ['smallerAbattoir'],
+          //   preValidationAnswer: ['smaller-abattoir-A1'],
+          //   preValidationRule: 'AND',
+          //   preValidationUrls: ['smaller-abattoir']
+          // },
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          ineligibleContent: {
+            messageContent: 'You must provide some abattoir services to other farmers if you are building a new smaller abattoir with this grant.',
+            messageLink: {
+              url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+              title: 'See other grants you may be eligible for.'
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'You must provide some abattoir services to other farmers.',
+                items: []
+              }]
+            }]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if this abattoir will provide services to other farmers'
+            }
+          ],
+          answers: [
+            {
+              key: 'other-farmers-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'other-farmers-A2',
+              value: 'No',
+              notEligible: true
+            }
+          ],
+          yarKey: 'otherFarmers'
         },
         {
           key: 'tenancy-length',
