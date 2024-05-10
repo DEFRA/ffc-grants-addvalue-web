@@ -375,7 +375,7 @@ const showPostPage = (currentQuestion, request, h) => {
     if(calculatedGrant >= 500000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
       return  h.redirect('/adding-value/potential-amount')
     }
-    } else if (yarKey === 'solarPVCost') {
+  } else if (yarKey === 'solarPVCost') {
     const calculatedGrant = getYarValue(request, 'calculatedGrant')
     setYarValue(request, 'calculatedSolarGrant', getYarValue(request, 'solarPVCost') / 4)
 
