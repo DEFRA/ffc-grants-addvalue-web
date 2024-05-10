@@ -106,7 +106,15 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
         SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
           formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
         )
+      ),
+      detailsText: maybeEligibleContent?.detailsText?.html ?  { 
+        ...maybeEligibleContent.detailsText,
+        html: maybeEligibleContent.detailsText.html.replace(
+      SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
+        formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
       )
+    )} : '',
+
     }
 
     if (maybeEligibleContent.reference) {
@@ -379,7 +387,7 @@ const showPostPage = (currentQuestion, request, h) => {
     const calculatedGrant = getYarValue(request, 'calculatedGrant')
     setYarValue(request, 'calculatedSolarGrant', getYarValue(request, 'solarPVCost') / 4)
 
-    let calculatedSolarGrant;
+    let calculatedSolarGrant
 
     if (calculatedGrant > 400000) {
       calculatedSolarGrant = 500000 - calculatedGrant;
@@ -392,13 +400,14 @@ const showPostPage = (currentQuestion, request, h) => {
       }
     }
 
+    setYarValue(request, 'cappedCalculatedSolarGrant', calculatedSolarGrant > calculatedGrant ? calculatedGrant  : calculatedSolarGrant)
     const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || calculatedGrant > 400000
     const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
     setYarValue(request, 'remainingCost', calculatedGrant + calculatedSolarGrant)
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
 
     setYarValue(request, 'totalProjectCost', Number(getYarValue(request, 'solarPVCost')) + Number(getYarValue(request, 'projectCost')))
-    setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'calculatedSolarGrant') + calculatedGrant)
+    setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'cappedCalculatedSolarGrant') + calculatedGrant)
 
     if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
       return h.redirect('/adding-value/potential-amount-solar-details')

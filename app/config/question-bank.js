@@ -1004,6 +1004,37 @@ const questionBank = {
           }
         },
         {
+          key: 'potential-amount-solar-details',
+          order: 105,
+          url: 'potential-amount-solar-details',
+          backUrl: 'solar-PV-cost',
+          nextUrl: 'remaining-costs',
+          preValidationKeys: ['solarPVCost'],
+          maybeEligible: true,
+          maybeEligibleContent: {
+            messageHeader: 'Potential grant funding',
+            messageContent: `You may be able to apply for a grant of up to £{{_totalCalculatedGrant_}}, based on the total estimated cost of £{{_totalProjectCost_}}.
+            <div class="govuk-list">
+              <p class="govuk-body">This grant amount combines:</p>
+              <ul class="govuk-list--bullet">
+                <li>£{{_calculatedGrant_}} for project costs (${GRANT_PERCENTAGE}% of £{{_projectCost_}})</li>
+                <li>£{{_cappedCalculatedSolarGrant_}} for solar PV system costs</li>
+              </ul>
+            </div>
+          `,
+          detailsText: {
+            summaryText: 'How is the solar PV system grant funding calculated?',
+            html: `The grant funding for a solar PV system cannot be more 
+            than the grant funding for your project costs.<br/><br/>
+            As your project grant funding is £{{_calculatedGrant_}}, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
+          },
+            warning: {
+              text: 'There’s no guarantee the project will receive a grant.',
+              iconFallbackText: 'Warning'
+            }
+          }
+        },
+        {
           key: 'remaining-costs',
           order: 110,
           title: 'Can you pay the remaining costs of £{{_remainingCost_}}?',
