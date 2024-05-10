@@ -5,7 +5,7 @@ const { getYarValue } = require('ffc-grants-common-functionality').session
 const { getQuestionByKey, allAnswersSelected } = require('ffc-grants-common-functionality').utils
 
 
-const getValuesForSidebar = (values, questionAnswers, yarValue) => {
+const getValuesForSidebar = (values, questionAnswers, yarValue, updatedValues) => {
   let addUpdatedValue
   let updatedContent
 
@@ -77,7 +77,7 @@ const getDependentSideBar = (sidebar, request) => {
     const questionAnswers = getQuestionByKey(dependentQuestionKey, ALL_QUESTIONS).answers
     const yarValue = getYarValue(request, dependentYarKeys[index]) || []
 
-    values = getValuesForSidebar(values, questionAnswers, yarValue)
+    values = getValuesForSidebar(values, questionAnswers, yarValue, updatedValues)
   })
 
   return {
