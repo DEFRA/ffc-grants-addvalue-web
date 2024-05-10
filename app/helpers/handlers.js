@@ -61,7 +61,25 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
       ...maybeEligibleContent,
       messageContent: 'You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (50% of £{{_projectCost_}})',
     }
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000){
+    return {
+      ...maybeEligibleContent,
+      detailsText: {
+        summaryText: 'How is the solar PV system grant funding calculated?',
+        html: 'You can apply for a maximum of £100,000 for solar PV system costs.'
+      },
+    }
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') < 100000 && getYarValue(request, 'calculatedGrant') > 400000){
+    return {
+      ...maybeEligibleContent,
+      detailsText: {
+        summaryText: 'How is the solar PV system grant funding calculated?',
+        html: `The maximum grant you can apply for is £500,000.</br></br>
+        As project item costs take priority, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
+      },
+    }
   }
+  
   return maybeEligibleContent
 }
 
@@ -114,7 +132,6 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
         formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
       )
     )} : '',
-
     }
 
     if (maybeEligibleContent.reference) {
