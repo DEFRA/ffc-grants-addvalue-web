@@ -375,12 +375,25 @@ const showPostPage = (currentQuestion, request, h) => {
     if(calculatedGrant >= 500000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
       return  h.redirect('/adding-value/potential-amount')
     }
-  } else if (yarKey === 'solarPVCost') {
+    } else if (yarKey === 'solarPVCost') {
     const calculatedGrant = getYarValue(request, 'calculatedGrant')
     setYarValue(request, 'calculatedSolarGrant', getYarValue(request, 'solarPVCost') / 4)
-    const calculatedSolarGrant = calculatedGrant > 400000 ? 500000 - calculatedGrant : getYarValue(request, 'calculatedSolarGrant') >= 100000 ? 100000 : getYarValue(request, 'calculatedSolarGrant')
+
+    let calculatedSolarGrant;
+
+    if (calculatedGrant > 400000) {
+      calculatedSolarGrant = 500000 - calculatedGrant;
+    } else {
+      const halfCalculatedSolarGrant = getYarValue(request, 'calculatedSolarGrant')
+      if (halfCalculatedSolarGrant >= 100000) {
+        calculatedSolarGrant = 100000
+      } else {
+        calculatedSolarGrant = halfCalculatedSolarGrant
+      }
+    }
+
     const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || calculatedGrant > 400000
-    const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant >= calculatedGrant
+    const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
     setYarValue(request, 'remainingCost', calculatedGrant + calculatedSolarGrant)
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
     if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
