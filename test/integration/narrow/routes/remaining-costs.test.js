@@ -37,7 +37,7 @@ describe('Page: /remaining-costs', () => {
 
   it('no option selected -> show error message', async () => {
     valList.canPayRemainingCost = {
-      error: 'Select yes if you can pay the remaining costs without using any other grant money',
+      error: 'Select yes if you can pay the remaining costs',
       return: false
     }
     const postOptions = {
@@ -49,7 +49,7 @@ describe('Page: /remaining-costs', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you can pay the remaining costs without using any other grant money')
+    expect(postResponse.payload).toContain('Select yes if you can pay the remaining costs')
   })
 
   it('user selects ineligible option: \'No\' -> display ineligible page', async () => {

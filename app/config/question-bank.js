@@ -1198,7 +1198,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if you can pay the remaining costs without using any other grant money'
+              error: 'Select yes if you can pay the remaining costs'
             }
           ],
           answers: [
