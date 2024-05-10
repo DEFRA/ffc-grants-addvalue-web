@@ -376,21 +376,18 @@ const showPostPage = (currentQuestion, request, h) => {
       return  h.redirect('/adding-value/potential-amount')
     }
   } else if (yarKey === 'solarPVCost') {
-    const { calculatedGrant } = getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo)
-
+    const calculatedGrant = getYarValue(request, 'calculatedGrant')
     setYarValue(request, 'calculatedSolarGrant', getYarValue(request, 'solarPVCost') / 4)
-    const projectCost = getYarValue(request, 'projectCost')
-    // const solarPVCost = getYarValue(request, 'solarPVCost')
-    const calculatedSolarGrant = getYarValue(request, 'calculatedSolarGrant')
+    const calculatedSolarGrant = calculatedGrant > 400000 ? 500000 - calculatedGrant : getYarValue(request, 'calculatedSolarGrant') >= 100000 ? 100000 : getYarValue(request, 'calculatedSolarGrant')
+    const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || calculatedGrant > 400000
+    const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant >= calculatedGrant
     setYarValue(request, 'remainingCost', calculatedGrant + calculatedSolarGrant)
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
-
-    if(projectCost >= 40000 + solarPVSystem == 'Yes'){
+    if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
+      return h.redirect('/adding-value/potential-amount-solar-details')
+    }else{
       return h.redirect('/adding-value/potential-amount-solar')
     }
-    // else if(solarPVCost < 100000 + solarPVSystem == 'Yes'){
-    //   return h.redirect('/adding-value/potential-amount-solar-details')
-    // }
   }
 
   return h.redirect(getUrl(dependantNextUrl, nextUrl, request, payload.secBtn))

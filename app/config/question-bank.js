@@ -860,6 +860,7 @@ const questionBank = {
           prefix: { text: '£' },
           type: 'input',
           grantInfo: {
+            info: 'projectCost',
             minGrant: MIN_GRANT,
             maxGrant: MAX_GRANT,
             grantPercentage: GRANT_PERCENTAGE,
@@ -886,21 +887,6 @@ const questionBank = {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
             }
-          },
-          sidebar: {
-            values: [
-              {
-                heading: 'Selected items',
-                content: [{
-                  para: '',
-                  items: [],
-                  dependentAnswerExceptThese: ['storage-A2']
-                }]
-              }
-            ],
-            dependentYarKeys: ['projectItems', 'storage'],
-            dependentQuestionKeys: ['project-items', 'storage']
-
           },
           validate: [
             {
@@ -947,16 +933,13 @@ const questionBank = {
           backUrl: 'project-cost',
           nextUrl: 'potential-amount-solar',
           // preValidationKeys: ['projectCost'],
-          grantInfo: {
-            grantPercentage: GRANT_PERCENTAGE_SOLAR,
-          },
           type: 'input',
           prefix: {
             text: '£'
           },
           grantInfo: {
             minGrant: 0,
-            maxGrant: 400000,
+            maxGrant: 100000,
             grantPercentage: GRANT_PERCENTAGE_SOLAR,
             cappedGrant: true
           },
