@@ -396,6 +396,10 @@ const showPostPage = (currentQuestion, request, h) => {
     const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
     setYarValue(request, 'remainingCost', calculatedGrant + calculatedSolarGrant)
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
+
+    setYarValue(request, 'totalProjectCost', Number(getYarValue(request, 'solarPVCost')) + Number(getYarValue(request, 'projectCost')))
+    setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'calculatedSolarGrant') + calculatedGrant)
+
     if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
       return h.redirect('/adding-value/potential-amount-solar-details')
     }else{
