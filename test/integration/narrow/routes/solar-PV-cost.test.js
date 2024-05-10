@@ -56,11 +56,9 @@ describe('Page: /solar-PV-cost', () => {
     expect(postResponse.payload).toContain('Enter a whole number with a maximum of 7 digits')
   })
 
-
-
   it('user selects eligible option -> store user response and redirect to /potential-amount-solar', async () => {
     valList.solarPVCost = false
-    varList.projectCost =50000
+    varList.projectCost = 50000
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/solar-PV-cost`,
@@ -107,7 +105,7 @@ describe('Page: /solar-PV-cost', () => {
 
   it('user selects eligible option -> store user response and redirect to /potential-amount-solar-details', async () => {
     varList.calculatedGrant = 450000
-    varList.calculatedSolarGrant = 50000
+    varList.calculatedSolarGrant = 50001
 
     const postOptions = {
       method: 'POST',

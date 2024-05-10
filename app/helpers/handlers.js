@@ -424,7 +424,7 @@ const showPostPage = (currentQuestion, request, h) => {
 
     let calculatedSolarGrant
 
-    if (calculatedGrant > 400000) {
+    if (calculatedGrant > 400000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 500000){
       calculatedSolarGrant = 500000 - calculatedGrant;
     } else {
       const halfCalculatedSolarGrant = getYarValue(request, 'calculatedSolarGrant')
@@ -436,7 +436,7 @@ const showPostPage = (currentQuestion, request, h) => {
     }
 
     setYarValue(request, 'cappedCalculatedSolarGrant', calculatedSolarGrant > calculatedGrant ? calculatedGrant  : calculatedSolarGrant)
-    const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || calculatedGrant > 400000
+    const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || (calculatedGrant > 400000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 500000)
     const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
 
