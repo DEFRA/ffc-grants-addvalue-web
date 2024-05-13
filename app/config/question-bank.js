@@ -608,6 +608,118 @@ const questionBank = {
           yarKey: 'projectResponsibility'
         },
         {
+          key: 'smaller-abattoir',
+          order: 67,
+          title: 'Do you want to build a new smaller abattoir?',
+          pageTitle: '',
+          hint: {
+            html: `
+              <p>A smaller abattoir is a:</p>
+              <ul class="govuk-list--bullet">
+                <li>red meat abattoir that processes up to 10,000 farmed livestock units each year</li>
+                <li>poultry abattoir that slaughters up to 500,000 birds each year</li>
+              </ul>`
+          },
+          url: 'smaller-abattoir',
+          baseUrl: 'smaller-abattoir',
+          backUrlObject: {
+            dependentQuestionYarKey: 'tenancy',
+            dependentAnswerKeysArray: ['tenancy-A1'],
+            urlOptions: {
+              thenUrl: 'tenancy',
+              elseUrl: 'project-responsibility'
+            }
+          },
+          nextUrl: 'other-farmers',
+          // preValidationObject: {
+          //   preValidationKeys: ['tenancy', 'projectResponsibility'],
+          //   preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1'],
+          //   preValidationRule: 'OR',
+          //   preValidationUrls: ['tenancy', 'project-responsibility']
+          // },
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you want to build a new smaller abattoir'
+            }
+          ],
+          answers: [
+            {
+              key: 'smaller-abattoir-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'smaller-abattoir-A2',
+              value: 'No',
+              redirectUrl: 'project-items'
+            }
+          ],
+          yarKey: 'smallerAbattoir'
+        },
+        {
+          key: 'other-farmers',
+          order: 68,
+          title: 'Will this abattoir provide services to other farmers?',
+          pageTitle: '',
+          hint: {
+            text: `For example, farmers pay you to slaughter their livestock`
+          },
+          url: 'other-farmers',
+          baseUrl: 'other-farmers',
+          backUrl: 'smaller-abattoir',
+          nextUrl: 'project-items',
+          // preValidationObject: {
+          //   preValidationKeys: ['smallerAbattoir'],
+          //   preValidationAnswer: ['smaller-abattoir-A1'],
+          //   preValidationRule: 'AND',
+          //   preValidationUrls: ['smaller-abattoir']
+          // }, 
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          ineligibleContent: {
+            messageContent: 'You must provide some abattoir services to other farmers if you are building a new smaller abattoir with this grant.',
+            messageLink: {
+              url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+              title: 'See other grants you may be eligible for.'
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'You must provide some abattoir services to other farmers.',
+                items: []
+              }]
+            }]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if this abattoir will provide services to other farmers'
+            }
+          ],
+          answers: [
+            {
+              key: 'other-farmers-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'other-farmers-A2',
+              value: 'No',
+              notEligible: true
+            }
+          ],
+          yarKey: 'otherFarmers'
+        },
+        {
           key: 'tenancy-length',
           order: 70,
           title: 'Do you have a tenancy agreement until 2028 or after?',
