@@ -9,6 +9,7 @@ const { getUrl } = require('../helpers/urls')
 const { guardPage } = require('ffc-grants-common-functionality').pageGuard
 const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOptions
 const { notUniqueSelection, uniqueSelection, getQuestionAnswer } = require('ffc-grants-common-functionality').utils
+const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
@@ -42,11 +43,73 @@ const saveValuesToArray = (yarKey, fields) => {
   return result
 }
 
+const handlePotentialAmount = (request, maybeEligibleContent, url) => {
+  if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1000000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
+    return {
+      ...maybeEligibleContent,
+      messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
+      additionalSentence: 'The maximum grant you can apply for is £500,000.',
+      insertText: { text: 'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for project items.' },
+    }
+  } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
+    return {
+      ...maybeEligibleContent,
+      messageContent: 'You may be able to apply for grant funding of up to £500,000, based on the estimated project items cost of £{{_projectCost_}}.',
+      insertText: { text: 'The maximum grant you can apply for is £500,000.' },
+    }
+  } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
+    return {
+      ...maybeEligibleContent,
+      messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}})`,
+    }
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000){
+    return {
+      ...maybeEligibleContent,
+      detailsText: {
+        summaryText: 'How is the solar PV system grant funding calculated?',
+        html: 'You can apply for a maximum of £100,000 for solar PV system costs.'
+      },
+    }
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') < 100000 && getYarValue(request, 'calculatedGrant') > 400000){
+    return {
+      ...maybeEligibleContent,
+      detailsText: {
+        summaryText: 'How is the solar PV system grant funding calculated?',
+        html: `The maximum grant you can apply for is £500,000.</br></br>
+        As project item costs take priority, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
+      },
+    }
+  }
+  
+  return maybeEligibleContent
+}
+
+function replaceVariablesInContent(request, maybeEligibleContent) {
+  return {
+    ...maybeEligibleContent,
+    messageContent: maybeEligibleContent.messageContent.replace(
+      SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
+        formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+      )
+    ),
+    detailsText: maybeEligibleContent?.detailsText?.html ?  { 
+      ...maybeEligibleContent.detailsText,
+      html: maybeEligibleContent.detailsText.html.replace(
+        SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
+          formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+        )
+      )
+    } : '',
+  }
+}
+
 const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl, backUrl, h) => {
   if (question.maybeEligible) {
     let { maybeEligibleContent } = question
     maybeEligibleContent.title = question.title
     let consentOptionalData
+
+    maybeEligibleContent = handlePotentialAmount(request, maybeEligibleContent, url)
 
     if (url === 'confirm') {
       const consentOptional = getYarValue(request, 'consentOptional')
@@ -75,14 +138,7 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
       }
     }
 
-    maybeEligibleContent = {
-      ...maybeEligibleContent,
-      messageContent: maybeEligibleContent.messageContent.replace(
-        SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-          formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
-        )
-      )
-    }
+    maybeEligibleContent = replaceVariablesInContent(request, maybeEligibleContent)
 
     if (maybeEligibleContent.reference) {
       if (!getYarValue(request, 'consentMain')) {
@@ -217,6 +273,26 @@ const getPage = async (question, request, h) => {
   }
 
   switch (url) {
+    case 'project-cost':
+        if (getYarValue(request, 'solarPVSystem') === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS)){
+          question.hint.html = question.hint.htmlSolar
+        } else {
+          question.hint.html = question.hint.htmlNoSolar
+        }
+      break;
+    case 'remaining-costs':
+      if(getYarValue(request, 'solarPVSystem') === 'Yes'){
+        if(getYarValue(request, 'projectCost') >= 1000000){
+          question.backUrl = 'potential-amount'
+        }else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')){
+          question.backUrl = 'potential-amount-solar-details'
+        }else {
+          question.backUrl = 'potential-amount-solar'
+        }
+      }else{
+        question.backUrl = 'potential-amount'
+      }
+      break;
     case 'score':
     case 'business-details':
     case 'agents-details':
@@ -339,6 +415,44 @@ const showPostPage = (currentQuestion, request, h) => {
 
     setYarValue(request, 'calculatedGrant', calculatedGrant)
     setYarValue(request, 'remainingCost', remainingCost)
+
+    if(calculatedGrant >= 500000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
+      return  h.redirect('/adding-value/potential-amount')
+    }
+  } else if (yarKey === 'solarPVCost') {
+    const calculatedGrant = getYarValue(request, 'calculatedGrant')
+    setYarValue(request, 'calculatedSolarGrant', getYarValue(request, 'solarPVCost') / 4)
+
+    let calculatedSolarGrant
+
+    if (calculatedGrant > 400000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 500000){
+      calculatedSolarGrant = 500000 - calculatedGrant;
+    } else {
+      const halfCalculatedSolarGrant = getYarValue(request, 'calculatedSolarGrant')
+      if (halfCalculatedSolarGrant >= 100000) {
+        calculatedSolarGrant = 100000
+      } else {
+        calculatedSolarGrant = halfCalculatedSolarGrant
+      }
+    }
+
+    setYarValue(request, 'cappedCalculatedSolarGrant', calculatedSolarGrant > calculatedGrant ? calculatedGrant  : calculatedSolarGrant)
+    const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || (calculatedGrant > 400000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 500000)
+    const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
+    const solarPVSystem = getYarValue(request, 'solarPVSystem')
+
+    setYarValue(request, 'isSolarCapped', isSolarCapped)
+    setYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant', isSolarCappedGreaterThanCalculatedGrant)
+
+    setYarValue(request, 'totalProjectCost', Number(getYarValue(request, 'solarPVCost')) + Number(getYarValue(request, 'projectCost')))
+    setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'cappedCalculatedSolarGrant') + calculatedGrant)
+    setYarValue(request, 'remainingCost', getYarValue(request, 'totalProjectCost') - getYarValue(request, 'totalCalculatedGrant'))
+
+    if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
+      return h.redirect('/adding-value/potential-amount-solar-details')
+    }else{
+      return h.redirect('/adding-value/potential-amount-solar')
+    }
   }
 
   return h.redirect(getUrl(dependantNextUrl, nextUrl, request, payload.secBtn))

@@ -16,6 +16,13 @@ const {
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
 
+const {
+  MIN_GRANT,
+  MAX_GRANT,
+  GRANT_PERCENTAGE, 
+  GRANT_PERCENTAGE_SOLAR
+} = require('../helpers/grant-details')
+
 /**
  * ----------------------------------------------------------------
  * list of yarKeys not bound to an answer, calculated separately
@@ -92,7 +99,8 @@ const questionBank = {
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
-              <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
+              <li>are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers</li>
+              <li>produce wild venison products as part of woodland management.</li>
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
@@ -112,7 +120,7 @@ const questionBank = {
                 para: 'This grant is for businesses who:',
                 items: [
                   'are agricultural or horticultural growers or producers',
-                  'are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers'
+                  `are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers`
                 ]
               }]
             }]
@@ -128,16 +136,17 @@ const questionBank = {
             },
             {
               key: 'nature-of-business-A2',
-              value: 'A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers',
+              value: `A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers`,
               hint: {
                 text: 'For example, cheese processing business owned by a dairy farmer'
               }
             },
             {
-              value: 'divider'
+              key: 'nature-of-business-A3',
+              value: 'A woodland manager processing wild venison products'
             },
             {
-              key: 'nature-of-business-A3',
+              key: 'nature-of-business-A4',
               value: 'None of the above',
               notEligible: true
             }
@@ -608,6 +617,118 @@ const questionBank = {
           yarKey: 'projectResponsibility'
         },
         {
+          key: 'smaller-abattoir',
+          order: 67,
+          title: 'Do you want to build a new smaller abattoir?',
+          pageTitle: '',
+          hint: {
+            html: `
+              <p>A smaller abattoir is a:</p>
+              <ul class="govuk-list--bullet">
+                <li>red meat abattoir that processes up to 10,000 farmed livestock units each year</li>
+                <li>poultry abattoir that slaughters up to 500,000 birds each year</li>
+              </ul>`
+          },
+          url: 'smaller-abattoir',
+          baseUrl: 'smaller-abattoir',
+          backUrlObject: {
+            dependentQuestionYarKey: 'tenancy',
+            dependentAnswerKeysArray: ['tenancy-A1'],
+            urlOptions: {
+              thenUrl: 'tenancy',
+              elseUrl: 'project-responsibility'
+            }
+          },
+          nextUrl: 'other-farmers',
+          // preValidationObject: {
+          //   preValidationKeys: ['tenancy', 'projectResponsibility'],
+          //   preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1'],
+          //   preValidationRule: 'OR',
+          //   preValidationUrls: ['tenancy', 'project-responsibility']
+          // },
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you want to build a new smaller abattoir'
+            }
+          ],
+          answers: [
+            {
+              key: 'smaller-abattoir-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'smaller-abattoir-A2',
+              value: 'No',
+              redirectUrl: 'project-items'
+            }
+          ],
+          yarKey: 'smallerAbattoir'
+        },
+        {
+          key: 'other-farmers',
+          order: 68,
+          title: 'Will this abattoir provide services to other farmers?',
+          pageTitle: '',
+          hint: {
+            text: `For example, farmers pay you to slaughter their livestock`
+          },
+          url: 'other-farmers',
+          baseUrl: 'other-farmers',
+          backUrl: 'smaller-abattoir',
+          nextUrl: 'project-items',
+          // preValidationObject: {
+          //   preValidationKeys: ['smallerAbattoir'],
+          //   preValidationAnswer: ['smaller-abattoir-A1'],
+          //   preValidationRule: 'AND',
+          //   preValidationUrls: ['smaller-abattoir']
+          // }, 
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          ineligibleContent: {
+            messageContent: 'You must provide some abattoir services to other farmers if you are building a new smaller abattoir with this grant.',
+            messageLink: {
+              url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+              title: 'See other grants you may be eligible for.'
+            }
+          },
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'You must provide some abattoir services to other farmers.',
+                items: []
+              }]
+            }]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if this abattoir will provide services to other farmers'
+            }
+          ],
+          answers: [
+            {
+              key: 'other-farmers-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'other-farmers-A2',
+              value: 'No',
+              notEligible: true
+            }
+          ],
+          yarKey: 'otherFarmers'
+        },
+        {
           key: 'tenancy-length',
           order: 70,
           title: 'Do you have a tenancy agreement until 2028 or after?',
@@ -671,13 +792,20 @@ const questionBank = {
           pageTitle: '',
           hint: {
             html: `
-            Storage facilities will only be funded as part of a bigger project and cannot be more than 50% of total grant funding.<br/><br/>
+            Storage facilities will only be funded as part of a bigger project and cannot be more than ${GRANT_PERCENTAGE}% of the total grant funding.<br/><br/>
             Select all the items your project needs
           `
           },
           url: 'project-items',
           baseUrl: 'project-items',
-          backUrl: 'tenancy',
+          backUrlObject: {
+            dependentQuestionYarKey: 'smallerAbattoir',
+            dependentAnswerKeysArray: ['smaller-abattoir-A1'],
+            urlOptions: {
+              thenUrl: 'other-farmers',
+              elseUrl: 'smaller-abattoir'
+            }
+          },
           nextUrl: 'storage',
           fundingPriorities: '',
           preValidationKeys: ['projectStart', 'tenancy'],
@@ -689,6 +817,20 @@ const questionBank = {
               error: 'Select all the items your project needs'
             }
           ],
+          ineligibleContent: {
+            messageContent: `
+            This grant is for:
+            <ul class="govuk-list govuk-list--bullet">
+              <li>constructing or improving buildings for processing</li>
+              <li>processing equipment or machinery</li>
+              <li>retail facilities.</li>
+            </ul>
+            `,
+            messageLink: {
+              url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+              title: 'See other grants you may be eligible for.'
+            }
+          },
           answers: [
             {
               key: 'project-items-A1',
@@ -710,6 +852,14 @@ const questionBank = {
               hint: {
                 text: 'For example, shops or display cabinets'
               }
+            },
+            {
+              value: 'divider'
+            },
+            {
+              key: 'project-items-A4',
+              value: 'None of the above',
+              notEligible: true
             }
           ],
           yarKey: 'projectItems'
@@ -722,13 +872,13 @@ const questionBank = {
           url: 'storage',
           baseUrl: 'storage',
           backUrl: 'project-items',
-          nextUrl: 'project-cost',
+          nextUrl: 'solar-PV-system',
           preValidationKeys: ['projectItems'],
           hint: {
             text: 'For example, cold stores or controlled atmosphere storage'
           },
           warning: {
-            text: 'Storage facilities cannot be more than 50% of the total grant funding.',
+            text: `Storage facilities cannot be more than ${GRANT_PERCENTAGE}% of the total grant funding.`,
             iconFallbackText: 'Warning'
           },
           fundingPriorities: '',
@@ -748,10 +898,57 @@ const questionBank = {
             },
             {
               key: 'storage-A2',
-              value: 'No, we don’t need it'
+              value: 'No, we do not need storage facilities'
             }
           ],
           yarKey: 'storage'
+        },
+        {
+          key: 'solar-PV-system',
+          order: 250,
+          title: 'Will you buy a solar PV system with this grant?',
+          url: 'solar-PV-system',
+          baseUrl: 'solar-PV-system',
+          backUrl: 'storage',
+          nextUrl: 'project-cost',
+          // preValidationKeys: ['storage'],
+          hint: {
+            html: `You have the option to buy and install a solar PV system with this grant.</br></br>
+            The solar PV panels must be installed on the roof of an or new building related to your project.</br></br>
+            You cannot buy a solar PV system with this grant if:
+            <ul class="govuk-list govuk-list--bullet">
+              <li>the building’s roof only faces north or is heavily shaded</li>
+              <li>you are only buying portable items</li>
+            </ul>`,
+          },
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'You do not have to buy and install a solar PV system to be eligible for this grant.',
+              }]
+            }]
+          },
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you will buy a solar PV system for this building with this grant'
+            }
+          ],
+          answers: [
+            {
+              key: 'solar-PV-system-A1',
+              value: 'Yes'
+            },
+            {
+              key: 'solar-PV-system-A2',
+              value: 'No'
+            }
+          ],
+          yarKey: 'solarPVSystem'
         },
         {
           key: 'project-cost',
@@ -759,18 +956,26 @@ const questionBank = {
           pageTitle: '',
           url: 'project-cost',
           baseUrl: 'project-cost',
-          backUrl: 'storage',
-          nextUrl: 'potential-amount',
-          preValidationKeys: ['storage'],
+          backUrl: 'solar-PV-system',
+          dependantNextUrl: {
+            dependentQuestionYarKey: 'solarPVSystem',
+            dependentAnswerKeysArray: ['solar-PV-system-A1'],
+            urlOptions: {
+              thenUrl: 'solar-PV-cost',
+              elseUrl: 'potential-amount'
+            }
+          },
+          // preValidationKeys: ['storage'],
           classes: 'govuk-input--width-10',
           id: 'projectCost',
           name: 'projectCost',
           prefix: { text: '£' },
           type: 'input',
           grantInfo: {
-            minGrant: 25000,
-            maxGrant: 300000,
-            grantPercentage: 40,
+            info: 'projectCost',
+            minGrant: MIN_GRANT,
+            maxGrant: MAX_GRANT,
+            grantPercentage: GRANT_PERCENTAGE,
             cappedGrant: true
           },
           label: {
@@ -779,41 +984,26 @@ const questionBank = {
             isPageHeading: true
           },
           hint: {
-            html: `
-              You can only apply for a grant of up to 40% of the estimated costs.
-              <br/>The minimum grant you can apply for this project is £25,000 (40% of £62,500).
-              <br/>The maximum grant is £300,000.
-              <br/><br/>Do not include VAT.
-              <br/><br/>Enter amount, for example 95,000`
+            htmlSolar: `
+            Do not include the solar PV system costs 
+            or VAT.<br/><br/>
+            Enter amount, for example 695,000`,
+            htmlNoSolar: `
+            Do not include VAT.<br/><br/>
+            Enter amount, for example 95,000`
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
-            messageContent: 'You can only apply for a grant of up to 40% of the estimated costs.',
-            insertText: { text: 'The minimum grant you can apply for is £25,000 (40% of £62,500). The maximum grant is £300,000.' },
+            messageContent: `The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for.'
             }
           },
-          sidebar: {
-            values: [
-              {
-                heading: 'Selected items',
-                content: [{
-                  para: '',
-                  items: [],
-                  dependentAnswerExceptThese: ['storage-A2']
-                }]
-              }
-            ],
-            dependentYarKeys: ['projectItems', 'storage'],
-            dependentQuestionKeys: ['project-items', 'storage']
-
-          },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter the estimated cost for the items'
+              error: 'Enter the estimated cost of the items'
             },
             {
               type: 'REGEX',
@@ -822,8 +1012,8 @@ const questionBank = {
             },
             {
               type: 'REGEX',
-              regex: CHARS_MAX_10,
-              error: 'Enter a whole number with a maximum of 10 digits'
+              regex: /^.{1,7}$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
             }
           ],
           answers: [],
@@ -831,7 +1021,7 @@ const questionBank = {
         },
         {
           key: 'potential-amount',
-          order: 91,
+          order: 105,
           url: 'potential-amount',
           backUrl: 'project-cost',
           nextUrl: 'remaining-costs',
@@ -847,13 +1037,123 @@ const questionBank = {
           }
         },
         {
+          key: 'solar-PV-cost',
+          order: 110,
+          classes: 'govuk-input--width-10',
+          url: 'solar-PV-cost',
+          baseUrl: 'solar-PV-cost',
+          backUrl: 'project-cost',
+          nextUrl: 'potential-amount-solar',
+          // preValidationKeys: ['projectCost'],
+          type: 'input',
+          prefix: {
+            text: '£'
+          },
+          grantInfo: {
+            minGrant: 0,
+            maxGrant: 100000,
+            grantPercentage: GRANT_PERCENTAGE_SOLAR,
+            cappedGrant: true
+          },
+          id: 'solarPVCost',
+          label: {
+            text: 'What is the estimated cost of buying and installing the solar PV system?',
+            classes: 'govuk-label--l',
+            isPageHeading: true,
+            for: 'solarPVCost'
+          },
+          hint: {
+            html: `
+                  <p>Enter solar PV system costs, for example 135,000</p>`
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter the estimated cost of buying and installing the solar PV system'
+            },
+            {
+              type: 'REGEX',
+              regex: /^[0-9,]+$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            },
+            {
+              type: 'REGEX',
+              regex: /^(0*[1-9][0-9]*(,\d{3})*)$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            },
+            {
+              type: 'MIN_MAX',
+              min: 1,
+              max: 9999999,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            }
+          ],
+          yarKey: 'solarPVCost'
+        },
+        {
+          key: 'potential-amount-solar',
+          order: 105,
+          url: 'potential-amount-solar',
+          backUrl: 'solar-PV-cost',
+          nextUrl: 'remaining-costs',
+          preValidationKeys: ['solarPVCost'],
+          maybeEligible: true,
+          maybeEligibleContent: {
+            messageHeader: 'Potential grant funding',
+            messageContent: `You may be able to apply for a grant of up to £{{_totalCalculatedGrant_}}, based on the total estimated cost of £{{_totalProjectCost_}}.
+            <div class="govuk-list">
+              <p class="govuk-body">This grant amount combines:</p>
+              <ul class="govuk-list--bullet">
+                <li>£{{_calculatedGrant_}} for building costs (${GRANT_PERCENTAGE}% of £{{_projectCost_}})</li>
+                <li>£{{_calculatedSolarGrant_}} for solar PV system costs (${GRANT_PERCENTAGE_SOLAR}% of £{{_solarPVCost_}})</li>
+              </ul>
+            </div>
+          `,
+            warning: {
+              text: 'There’s no guarantee the project will receive a grant.',
+              iconFallbackText: 'Warning'
+            }
+          }
+        },
+        {
+          key: 'potential-amount-solar-details',
+          order: 105,
+          url: 'potential-amount-solar-details',
+          backUrl: 'solar-PV-cost',
+          nextUrl: 'remaining-costs',
+          preValidationKeys: ['solarPVCost'],
+          maybeEligible: true,
+          maybeEligibleContent: {
+            messageHeader: 'Potential grant funding',
+            messageContent: `You may be able to apply for a grant of up to £{{_totalCalculatedGrant_}}, based on the total estimated cost of £{{_totalProjectCost_}}.
+            <div class="govuk-list">
+              <p class="govuk-body">This grant amount combines:</p>
+              <ul class="govuk-list--bullet">
+                <li>£{{_calculatedGrant_}} for project costs (${GRANT_PERCENTAGE}% of £{{_projectCost_}})</li>
+                <li>£{{_cappedCalculatedSolarGrant_}} for solar PV system costs</li>
+              </ul>
+            </div>
+          `,
+          detailsText: {
+            summaryText: 'How is the solar PV system grant funding calculated?',
+            html: `The grant funding for a solar PV system cannot be more 
+            than the grant funding for your project costs.<br/><br/>
+            As your project grant funding is £{{_calculatedGrant_}}, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
+          },
+            warning: {
+              text: 'There’s no guarantee the project will receive a grant.',
+              iconFallbackText: 'Warning'
+            }
+          }
+        },
+        {
           key: 'remaining-costs',
           order: 110,
           title: 'Can you pay the remaining costs of £{{_remainingCost_}}?',
           pageTitle: '',
           url: 'remaining-costs',
           baseUrl: 'remaining-costs',
-          backUrl: 'project-cost',
+          backUrl: 'potential-amount',
           nextUrl: 'produce-processed',
           eliminationAnswerKeys: '',
           ineligibleContent: {
@@ -861,11 +1161,10 @@ const questionBank = {
             <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
             insertText: {
               html: `You can use:
-              <ul>
-              <li>loans</li>
-              <li>overdrafts</li>
-              <li>the Basic Payment Scheme</li>
-              <li> agri-environment schemes such as the Countryside Stewardship Scheme</li>
+              <ul class="govuk-list--bullet">
+                <li>loans</li>
+                <li>overdrafts</li>
+                <li>delinked payments</li>
               </ul>`
             },
             messageLink: {
@@ -890,8 +1189,7 @@ const questionBank = {
                   items: [
                     'loans',
                     'overdrafts',
-                    'the Basic Payment Scheme',
-                    'agri-environment schemes such as the Countryside Stewardship Scheme'
+                    'delinked payments'
                   ]
                 }]
               }
@@ -900,7 +1198,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if you can pay the remaining costs without using any other grant money'
+              error: 'Select yes if you can pay the remaining costs'
             }
           ],
           answers: [
@@ -2024,7 +2322,7 @@ const questionBank = {
               },
               validate: [
                 {
-                  type: 'NOT_EMPTY_EXTRA',
+                  type: 'NOT_EMPTY',
                   error: 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
                   extraFieldsToCheck: ['landlineNumber']
                 },
@@ -2054,7 +2352,7 @@ const questionBank = {
               },
               validate: [
                 {
-                  type: 'NOT_EMPTY_EXTRA',
+                  type: 'NOT_EMPTY',
                   error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
                   extraFieldsToCheck: ['mobileNumber']
                 },
