@@ -678,7 +678,7 @@ const questionBank = {
           //   preValidationAnswer: ['smaller-abattoir-A1'],
           //   preValidationRule: 'AND',
           //   preValidationUrls: ['smaller-abattoir']
-          // },
+          // }, 
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
