@@ -2319,7 +2319,7 @@ const questionBank = {
               },
               validate: [
                 {
-                  type: 'NOT_EMPTY_EXTRA',
+                  type: 'NOT_EMPTY',
                   error: 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
                   extraFieldsToCheck: ['landlineNumber']
                 },
@@ -2349,7 +2349,7 @@ const questionBank = {
               },
               validate: [
                 {
-                  type: 'NOT_EMPTY_EXTRA',
+                  type: 'NOT_EMPTY',
                   error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
                   extraFieldsToCheck: ['mobileNumber']
                 },
