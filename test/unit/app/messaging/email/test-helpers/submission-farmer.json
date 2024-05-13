@@ -33,15 +33,16 @@
     },
     "applicantType": "Beef (including calf rearing)",
     "projectType": "",
-    "applicantBusiness": "Heyo",
+    "applicantBusiness": "processing",
     "project":"Building new calf housing",
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
-    "storage": "Yes",
+    "storage": "Yes, maybe",
     "projectImpact": ["Yes", "Hi"],
     "futureCustomers": ["Yes", "Hi"],
     "environmentalImpact": ["Yes", "Hi"],
     "productsProcessed": ["Yes", "Hi"],
-    "collaboration": "boop"
+    "collaboration": "boop",
+    "projectItems": ["None of the above"]
 
 }

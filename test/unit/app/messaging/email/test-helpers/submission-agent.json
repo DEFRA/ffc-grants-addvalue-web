@@ -51,13 +51,12 @@
         "businessName": "Test Business"
     },
     "projectType": "",
-    "applicantBusiness": "processing",
     "project": "Building new calf housing",
     "projectCost": 100000,
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
-    "environmentalImpact": "Collect and store rainwater",
     "consentOptional": true,
-    "storage": "boop"
+    "storage": "boop",
+    "applicantBusiness": "why"
 
 }
