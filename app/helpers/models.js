@@ -9,7 +9,7 @@ const getValuesForSidebar = (values, questionAnswers, yarValue, updatedValues) =
   let addUpdatedValue
   let updatedContent
 
-  return values.forEach((thisValue) => {
+  values.forEach((thisValue) => {
     addUpdatedValue = false
     updatedContent = thisValue.content.map(thisContent => {
       let formattedSidebarValues = []
@@ -64,6 +64,8 @@ const getValuesForSidebar = (values, questionAnswers, yarValue, updatedValues) =
       })
     }
   })
+
+  return updatedValues
 }
 
 const getDependentSideBar = (sidebar, request) => {
@@ -71,13 +73,13 @@ const getDependentSideBar = (sidebar, request) => {
 
   const { values, dependentYarKeys, dependentQuestionKeys } = sidebar
   // for each dependentQuestionKeys
-  const updatedValues = []
+  let updatedValues = []
   
   dependentQuestionKeys.forEach((dependentQuestionKey, index) => {
     const questionAnswers = getQuestionByKey(dependentQuestionKey, ALL_QUESTIONS).answers
     const yarValue = getYarValue(request, dependentYarKeys[index]) || []
 
-    values = getValuesForSidebar(values, questionAnswers, yarValue, updatedValues)
+    updatedValues = getValuesForSidebar(values, questionAnswers, yarValue, updatedValues)
   })
 
   return {
