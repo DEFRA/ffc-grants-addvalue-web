@@ -1161,11 +1161,18 @@ const questionBank = {
         {
           key: 'future-customers',
           order: 160,
-          title: 'Who will your new customers be after the project?',
+          title: 'Who will your new customers be after this project?',
           pageTitle: '',
           url: 'future-customers',
           baseUrl: 'future-customers',
-          backUrl: 'project-impact',
+          backUrlObject: {
+            dependentQuestionYarKey: 'mechanisation',
+            dependentAnswerKeysArray: ['mechanisation-A1'],
+            urlOptions: {
+              thenUrl: 'manual-labour-amount',
+              elseUrl: 'mechanisation'
+            }
+          },
           nextUrl: 'collaboration',
           preValidationKeys: ['projectImpact'],
           eliminationAnswerKeys: '',
@@ -1202,43 +1209,39 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select all options that apply'
+              error: 'Select who your new customers will be after this project'
             },
             {
               type: 'STANDALONE_ANSWER',
-              error: 'You cannot select ‘No change’ and another option',
+              error: 'You cannot select that combination of options',
               standaloneObject: {
                 questionKey: 'future-customers',
-                answerKey: 'future-customers-A6'
+                answerKey: 'future-customers-A5'
               }
             }
           ],
           answers: [
             {
               key: 'future-customers-A1',
-              value: 'Producers or growers'
-            },
-            {
-              key: 'future-customers-A2',
               value: 'Processors'
             },
             {
-              key: 'future-customers-A3',
+              key: 'future-customers-A2',
               value: 'Wholesalers'
             },
             {
-              key: 'future-customers-A4',
+              key: 'future-customers-A3',
               value: 'Retailers'
             },
             {
-              key: 'future-customers-A5',
+              key: 'future-customers-A4',
               value: 'Selling direct to consumers'
             },
             {
               value: 'divider'
             },
             {
-              key: 'future-customers-A6',
+              key: 'future-customers-A5',
               value: 'No change'
             }
           ],
@@ -1305,7 +1308,7 @@ const questionBank = {
         {
           key: 'environmental-impact',
           order: 200,
-          title: 'How will the project improve the environment?',
+          title: 'How will this project improve the environment?',
           pageTitle: '',
           url: 'environmental-impact',
           baseUrl: 'environmental-impact',
@@ -1333,8 +1336,8 @@ const questionBank = {
             values: [{
               heading: 'Funding priorities',
               content: [{
-                para: 'RPA wants to fund projects that:',
-                items: ['improve the environment']
+                para: 'RPA wants to fund projects that improve the environment.',
+                items: []
               }]
             }]
           },
@@ -1344,7 +1347,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select all options that apply'
+              error: 'Select how this project will improve the environment'
             },
             {
               type: 'STANDALONE_ANSWER',
@@ -1374,14 +1377,14 @@ const questionBank = {
               key: 'environmental-impact-A3',
               value: 'Water efficiency',
               hint: {
-                text: 'For example, majority of water for the project is harvested or recycled on site'
+                text: 'For example, majority of water for theproject is harvested or recycled on site'
               }
             },
             {
               key: 'environmental-impact-A4',
               value: 'Waste efficiency',
               hint: {
-                text: 'For example, majority of project waste is recycled or reused instead of going to landfill'
+                text: 'For example, majority of the project waste is recycled or reused instead of going to landfill'
               }
             },
             {
