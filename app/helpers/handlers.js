@@ -9,6 +9,7 @@ const { getUrl } = require('../helpers/urls')
 const { guardPage } = require('ffc-grants-common-functionality').pageGuard
 const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOptions
 const { notUniqueSelection, uniqueSelection, getQuestionAnswer } = require('ffc-grants-common-functionality').utils
+const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
@@ -59,7 +60,7 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
   } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
-      messageContent: 'You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (50% of £{{_projectCost_}})',
+      messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}})`,
     }
   } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000){
     return {
