@@ -63,7 +63,7 @@
     "otherFarmers": null,
     "solarPVSystem": "No",
     "isSolarPVSystemYes": false,
-    "solarGrantRate": "",
+    "solarGrantRate": null,
     "grantRate": "up to 40%"
 
 
