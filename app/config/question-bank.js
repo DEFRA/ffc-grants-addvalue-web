@@ -393,59 +393,6 @@ const questionBank = {
             messageContent: 'Any planning permission must be in place by 31 January 2024.'
           }
         },
-        // {
-        //   key: 'project-location-owned-rented',
-        //   order: 40,
-        //   title: 'Is the project location site owned or rented by applicant?',
-        //   pageTitle: '',
-        //   url: 'project-location-owned-rented',
-        //   baseUrl: 'project-location-owned-rented',
-        //   backUrl: 'planning-permission',
-        //   nextUrl: 'project-start',
-        //   preValidationKeys: ['planningPermission'],
-        //   ineligibleContent: {
-        //     messageContent: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
-        //     messageLink: {
-        //       url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-        //       title: 'See other grants you may be eligible for.'
-        //     }
-        //   },
-        //   fundingPriorities: 'Improving Adding Value',
-        //   type: 'single-answer',
-        //   minAnswerCount: 1,
-        //   sidebar: {
-        //     values: [
-        //       {
-        //         heading: 'Eligibility',
-        //         content: [{
-        //           para: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
-        //           items: []
-        //         }]
-        //       }]
-        //   },
-        //   validate: [
-        //     {
-        //       type: 'NOT_EMPTY',
-        //       error: 'Select when the project will have planning permission'
-        //     }
-        //   ],
-        //   answers: [
-        //     {
-        //       key: 'project-location-owned-rented-A1',
-        //       value: 'Owned'
-        //     },
-        //     {
-        //       key: 'project-location-owned-rented-A2',
-        //       value: 'A Long term lease (to at least 2026) is, or will be, in place before the project starts'
-        //     },
-        //     {
-        //       key: 'project-location-owned-rented-A4',
-        //       value: 'A long-term lease will not be in place before project start',
-        //       notEligible: true
-        //     }
-        //   ],
-        //   yarKey: 'projectLocationOwnedRented'
-        // },
         {
           key: 'project-start',
           order: 50,

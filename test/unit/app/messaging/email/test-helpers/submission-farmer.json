@@ -28,6 +28,7 @@
     "solarPVSystem": "Yes",
     "grantRate": "up to 40%",
     "solarPVCost" : "100000.00",
+    "projectCost": "150000.00",
     "projectItems" : ["Building new calf housing", "Installing a solar PV system"],
     "solarGrantRate": "up to 25%",
     "isSolarPVSystemYes": true,
