@@ -57,6 +57,13 @@
     "environmentalImpact": "Collect and store rainwater",
     "consentOptional": true,
     "storage": "boop",
-    "solarPVCost": null
+    "solarPVCost": null,
+    "smallerAbattoir": "No",
+    "IsSmallerAbattoir": false,
+    "otherFarmers": null,
+    "solarPVSystem": "No",
+    "isSolarPVSystemYes": false,
+    "solarGrantRate": null
+
 
 }

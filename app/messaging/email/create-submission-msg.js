@@ -231,7 +231,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       businessType: submission.applicantBusiness,
       smallerAbattoir: submission.smallerAbattoir,
       otherFarmers: submission.otherFarmers ?? '',
-      IsSmallerAbattoir: submission.smallerAbattoir === getQuestionAnswer('smallerAbattoir', 'smaller-abattoir-A1', ALL_QUESTIONS),
+      IsSmallerAbattoir: submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS),
       isSolarPVSystemYes: isSolarPVSystemYes,
       solarPVSystem: submission.solarPVSystem,
       solarGrantRate: isSolarPVSystemYes ? `Up to ${GRANT_PERCENTAGE_SOLAR}%` : '',

@@ -23,6 +23,7 @@
     "tenancy": "No",
     "projectResponsibility" : "Yes",
     "smallerAbattoir": "Yes",
+    "IsSmallerAbattoir": true,
     "otherFarmers": "Yes",
     "solarPVSystem": "Yes",
     "grantRate": "up to 40%",
@@ -45,6 +46,10 @@
     "project":"Building new calf housing",
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
-    "storage": "boop"
+    "storage": "boop",
+    "businessType": "A grower or producer of agricultural or horticultural produce",
+    "location": "Yes",
+    "isNotTenancy": true
+
 
 }
