@@ -1,6 +1,7 @@
 const emailConfig = require('./config/email')
 const spreadsheetConfig = require('./config/spreadsheet')
 const { microTurnover, smallTurnover, mediumTurnover, microEmployeesNum, smallEmployeesNum, mediumEmployeesNum } = require('./business-size-constants')
+const { ALL_QUESTIONS } = require('../../config/question-bank')
 const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { GRANT_PERCENTAGE, GRANT_PERCENTAGE_SOLAR } = require('../../helpers/grant-details')
 
