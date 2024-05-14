@@ -21,7 +21,12 @@
     "planningPermission": "Not needed",
     "projectStart": "Yes, preparatory work",
     "tenancy": "No",
-    "tenancyAgreement":"Yes",
+    "projectResponsibility" : "Yes",
+    "smallerAbattoir": "Yes",
+    "otherFarmers": "Yes",
+    "solarPVSystem": "Yes",
+    "grantRate": "up to 40%",
+    "solarPVCost" : "100000",
     "businessDetails": {
         "projectName": "Farm reservoir",
         "businessName": "My Farm",
