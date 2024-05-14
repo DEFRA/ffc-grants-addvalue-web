@@ -1,6 +1,8 @@
 const emailConfig = require('./config/email')
 const spreadsheetConfig = require('./config/spreadsheet')
 const { microTurnover, smallTurnover, mediumTurnover, microEmployeesNum, smallEmployeesNum, mediumEmployeesNum } = require('./business-size-constants')
+const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
+const { GRANT_PERCENTAGE, GRANT_PERCENTAGE_SOLAR } = require('../../helpers/grant-details')
 
 
 function getQuestionScoreBand (questions, questionKey) {
@@ -179,6 +181,7 @@ function getScoreChance (rating) {
 // same here
 function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail = false) {
   const email = isAgentEmail ? submission.agentsDetails.emailAddress : submission.farmerDetails.emailAddress
+  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
@@ -195,6 +198,8 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       planningPermission: submission.planningPermission,
       projectStart: submission.projectStart,
       tenancy: submission.tenancy,
+      isNotTenancy: submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS),
+      projectResponsibility: submission.projectResponsibility ?? '',
       isTenancyLength: submission.tenancyLength ? 'Yes' : 'No',
       tenancyLength: submission.tenancyLength ?? ' ',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
@@ -207,10 +212,10 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       farmerName: submission.farmerDetails.firstName,
       farmerSurname: submission.farmerDetails.lastName,
       farmerEmail: submission.farmerDetails.emailAddress,
-      isAgent: submission.agentsDetails ? 'Yes' : 'No',
-      agentName: submission.agentsDetails?.firstName ?? ' ',
+      agentName: submission.agentsDetails?.firstName ?? 'N/A',
       agentSurname: submission.agentsDetails?.lastName ?? ' ',
-      agentEmail: submission.agentsDetails?.emailAddress ?? ' ',
+      agentBusinessName: submission.agentsDetails?.businessName ?? 'N/A',
+      agentEmail: submission.agentsDetails?.emailAddress ?? 'N/A',
       contactConsent: submission.consentOptional ? 'Yes' : 'No',
       scoreDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
       productsProcessed: submission.productsProcessed ?? ' ',
@@ -224,7 +229,15 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       collaborationScore: submission.collaboration ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'collaboration') : ' ',
       environmentalImpact: submission.environmentalImpact ? [submission.environmentalImpact].flat().join(', ') : ' ',
       environmentalImpactScore: submission.environmentalImpact ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact') : ' ',
-      businessType: submission.applicantBusiness
+      businessType: submission.applicantBusiness,
+      smallerAbattoir: submission.smallerAbattoir,
+      otherFarmers: submission.otherFarmers ?? '',
+      IsSmallerAbattoir: submission.smallerAbattoir === getQuestionAnswer('smallerAbattoir', 'smaller-abattoir-A1', ALL_QUESTIONS),
+      isSolarPVSystemYes: isSolarPVSystemYes,
+      solarPVSystem: submission.solarPVSystem,
+      solarGrantRate: isSolarPVSystemYes ? `Up to ${GRANT_PERCENTAGE_SOLAR}%` : '',
+      grantRate: `Up to ${GRANT_PERCENTAGE}%`,
+      solarPVCost: isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, ''))) : '',
     }
   }
 }
