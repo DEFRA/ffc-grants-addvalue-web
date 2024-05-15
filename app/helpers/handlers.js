@@ -200,58 +200,39 @@ const titleCheck = (question, title, url, request) => {
   return question
 }
 
-const getPage = async (question, request, h) => {
-  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
-  const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
-  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
-  if (isRedirect) {
-    return h.redirect(startPageUrl)
-  }
+const pageModelFormat = (data, question, request, conditionalHtml) => {
+  return getModel(data, question, request, conditionalHtml)
+}
 
-  const confirmationId = ''
+const handleUrlCases = (url, data, question, request, conditionalHtml, h, backUrl, nextUrl) => {
 
-  if (question.maybeEligible) {
-    return maybeEligibleGet(request, confirmationId, question, url, nextUrl, backUrl, h)
-  }
-
-  question = titleCheck(question, title, url, request)
-
-  let data = getYarValue(request, yarKey) || null
-  if (type === 'multi-answer' && !!data) {
-    data = [data].flat()
-  }
-  let conditionalHtml
-  if (question?.conditionalKey && question?.conditionalLabelData) {
-    const conditional = yarKey === 'businessDetails' ? yarKey : question.conditionalKey
-    conditionalHtml = handleConditinalHtmlData(
-      type,
-      question.conditionalLabelData,
-      conditional,
-      request
-    )
-  }
+  let PAGE_MODEL
 
   switch (url) {
     case 'project-cost':
-        if (getYarValue(request, 'solarPVSystem') === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS)){
+        if (getYarValue(request, 'solarPVSystem') === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS)) {
           question.hint.html = question.hint.htmlSolar
         } else {
           question.hint.html = question.hint.htmlNoSolar
         }
-      break;
+        PAGE_MODEL = pageModelFormat(data, question, request, conditionalHtml)
+        break
+
     case 'remaining-costs':
-      if(getYarValue(request, 'solarPVSystem') === 'Yes'){
-        if(getYarValue(request, 'projectCost') >= 1000000){
+      if (getYarValue(request, 'solarPVSystem') === 'Yes'){
+        if (getYarValue(request, 'projectCost') >= 1000000){
           question.backUrl = 'potential-amount'
-        }else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')){
+        } else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')){
           question.backUrl = 'potential-amount-solar-details'
-        }else {
+        } else {
           question.backUrl = 'potential-amount-solar'
         }
-      }else{
+      } else {
         question.backUrl = 'potential-amount'
       }
-      break;
+
+      PAGE_MODEL = pageModelFormat(data, question, request, conditionalHtml)
+      break
     case 'score':
     case 'business-details':
     case 'agents-details':
@@ -318,11 +299,47 @@ const getPage = async (question, request, h) => {
     }
 
     default:
+      PAGE_MODEL = pageModelFormat(data, question, request, conditionalHtml)
       break
   }
 
-  const PAGE_MODEL = getModel(data, question, request, conditionalHtml)
   return h.view('page', PAGE_MODEL)
+
+}
+
+const getPage = async (question, request, h) => {
+  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
+  const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
+  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
+  if (isRedirect) {
+    return h.redirect(startPageUrl)
+  }
+
+  const confirmationId = ''
+
+  if (question.maybeEligible) {
+    return maybeEligibleGet(request, confirmationId, question, url, nextUrl, backUrl, h)
+  }
+
+  question = titleCheck(question, title, url, request)
+
+  let data = getYarValue(request, yarKey) || null
+  if (type === 'multi-answer' && !!data) {
+    data = [data].flat()
+  }
+  let conditionalHtml
+  if (question?.conditionalKey && question?.conditionalLabelData) {
+    const conditional = yarKey === 'businessDetails' ? yarKey : question.conditionalKey
+    conditionalHtml = handleConditinalHtmlData(
+      type,
+      question.conditionalLabelData,
+      conditional,
+      request
+    )
+  }
+
+  return handleUrlCases(url, data, question, request, conditionalHtml, h, backUrl, nextUrl)
+
 }
 
 const multiInputPostHandler = (currentQuestion, request, dataObject, payload, yarKey) => {
