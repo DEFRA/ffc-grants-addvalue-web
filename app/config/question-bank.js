@@ -394,59 +394,6 @@ const questionBank = {
           }
         },
         {
-          key: 'project-location-owned-rented',
-          order: 40,
-          title: 'Is the project location site owned or rented by applicant?',
-          pageTitle: '',
-          url: 'project-location-owned-rented',
-          baseUrl: 'project-location-owned-rented',
-          backUrl: 'planning-permission',
-          nextUrl: 'project-start',
-          preValidationKeys: ['planningPermission'],
-          ineligibleContent: {
-            messageContent: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
-            messageLink: {
-              url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
-            }
-          },
-          fundingPriorities: 'Improving Adding Value',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          sidebar: {
-            values: [
-              {
-                heading: 'Eligibility',
-                content: [{
-                  para: 'The land must be owned by the applicant, or there must be a tenancy in place to at least 2026, before the project starts.',
-                  items: []
-                }]
-              }]
-          },
-          validate: [
-            {
-              type: 'NOT_EMPTY',
-              error: 'Select when the project will have planning permission'
-            }
-          ],
-          answers: [
-            {
-              key: 'project-location-owned-rented-A1',
-              value: 'Owned'
-            },
-            {
-              key: 'project-location-owned-rented-A2',
-              value: 'A Long term lease (to at least 2026) is, or will be, in place before the project starts'
-            },
-            {
-              key: 'project-location-owned-rented-A4',
-              value: 'A long-term lease will not be in place before project start',
-              notEligible: true
-            }
-          ],
-          yarKey: 'projectLocationOwnedRented'
-        },
-        {
           key: 'project-start',
           order: 50,
           title: 'Have you already started work on the project?',
@@ -727,63 +674,6 @@ const questionBank = {
             }
           ],
           yarKey: 'otherFarmers'
-        },
-        {
-          key: 'tenancy-length',
-          order: 70,
-          title: 'Do you have a tenancy agreement until 2028 or after?',
-          pageTitle: '',
-          url: 'tenancy-length',
-          baseUrl: 'tenancy-length',
-          backUrl: 'tenancy',
-          preValidationKeys: ['tenancy'],
-          nextUrl: 'project-items',
-          eliminationAnswerKeys: '',
-          fundingPriorities: '',
-          type: 'single-answer',
-          minAnswerCount: 1,
-          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
-          sidebar: {
-            values: [{
-              heading: 'Eligibility',
-              content: [{
-                para: 'You must own the land or have a tenancy in place until 2028 before starting the project.',
-                items: []
-              }]
-            }]
-          },
-          validate: [
-            {
-              type: 'NOT_EMPTY',
-              error: 'Select yes if the land has a tenancy agreement in place until 2028 or after'
-            }
-          ],
-          answers: [
-            {
-              key: 'tenancy-length-A1',
-              value: 'Yes'
-            },
-            {
-              key: 'tenancy-length-A2',
-              value: 'No',
-              redirectUrl: 'tenancy-length-condition'
-            }
-          ],
-          yarKey: 'tenancyLength'
-        },
-        {
-          key: 'tenancy-length-condition',
-          title: 'You may be able to apply for a grant from this scheme',
-          order: 75,
-          url: 'tenancy-length-condition',
-          backUrl: 'tenancy',
-          preValidationKeys: ['tenancy'],
-          nextUrl: 'project-items',
-          maybeEligible: true,
-          maybeEligibleContent: {
-            messageHeader: 'You may be able to apply for a grant from this scheme',
-            messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
-          }
         },
         {
           key: 'project-items',
