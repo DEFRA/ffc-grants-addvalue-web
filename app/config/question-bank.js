@@ -100,7 +100,7 @@ const questionBank = {
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
               <li>are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers</li>
-              <li>produce wild venison products as part of woodland management.</li>
+              <li>produce wild venison products as part of woodland management</li>
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
@@ -823,7 +823,7 @@ const questionBank = {
             <ul class="govuk-list govuk-list--bullet">
               <li>constructing or improving buildings for processing</li>
               <li>processing equipment or machinery</li>
-              <li>retail facilities.</li>
+              <li>retail facilities</li>
             </ul>
             `,
             messageLink: {
@@ -986,10 +986,10 @@ const questionBank = {
           hint: {
             htmlSolar: `
             Do not include the solar PV system costs 
-            or VAT.<br/><br/>
+            or VAT<br/><br/>
             Enter amount, for example 695,000`,
             htmlNoSolar: `
-            Do not include VAT.<br/><br/>
+            Do not include VAT<br/><br/>
             Enter amount, for example 95,000`
           },
           eliminationAnswerKeys: '',
