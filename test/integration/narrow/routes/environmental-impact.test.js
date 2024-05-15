@@ -16,7 +16,7 @@ describe('Page: /environmental-impact', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('How will the project improve the environment?')
+    expect(response.payload).toContain('How will this project improve the environment?')
     expect(response.payload).toContain('Renewable energy')
     expect(response.payload).toContain('Energy efficiency')
     expect(response.payload).toContain('Water efficiency')

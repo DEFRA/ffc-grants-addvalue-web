@@ -17,8 +17,7 @@ const getUrl = (urlObject, url, request, secBtn) => {
 
   const selectThenUrl = ALL_QUESTIONS.find(thisQuestion => (
     thisQuestion.yarKey === dependentQuestionYarKey &&
-    thisQuestion.answers &&
-    thisQuestion.answers.some(answer => (
+    thisQuestion?.answers.some(answer => (
       !!dependentAnswer &&
       dependentAnswerKeysArray.includes(answer.key) &&
       dependentAnswer.includes(answer.value)
