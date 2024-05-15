@@ -40,7 +40,7 @@ describe('Page: /project-cost', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('What is the total estimated cost of the items?')
-    expect(response.payload).toContain('Do not include VAT.')
+    expect(response.payload).toContain('Do not include VAT')
     expect(response.payload).toContain('Enter amount, for example 95,000')
   })
 
