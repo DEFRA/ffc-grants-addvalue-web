@@ -16,15 +16,6 @@ describe('Models', () => {
       hint: 'hint',
       text: 'answer_text'
     }],
-    backUrlObject: {
-      dependentQuestionYarKey: 'tenancyLength',
-      dependentAnswerKeysArray: ['tenancy-length-A1'],
-      urlOptions: {
-        thenUrl: 'tenancy-length',
-        elseUrl: 'tenancy-length-condition',
-        nonDependentUrl: 'tenancy'
-      }
-    },
     sidebar: {
       values: [{
         heading: 'Eligibility',
@@ -137,15 +128,6 @@ describe('Models', () => {
         hint: 'hint',
         text: 'answer_text'
       }],
-      backUrlObject: {
-        dependentQuestionYarKey: 'tenancyLength',
-        dependentAnswerKeysArray: ['tenancy-length-A1'],
-        urlOptions: {
-          thenUrl: 'tenancy-length',
-          elseUrl: 'tenancy-length-condition',
-          nonDependentUrl: 'tenancy'
-        }
-      },
       sidebar: {
         mainHeading: 'Your project items',
         values: [
