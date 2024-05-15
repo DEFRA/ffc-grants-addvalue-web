@@ -1,6 +1,9 @@
 const emailConfig = require('./config/email')
 const spreadsheetConfig = require('./config/spreadsheet')
 const { microTurnover, smallTurnover, mediumTurnover, microEmployeesNum, smallEmployeesNum, mediumEmployeesNum } = require('./business-size-constants')
+const { ALL_QUESTIONS } = require('../../config/question-bank')
+const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
+const { GRANT_PERCENTAGE, GRANT_PERCENTAGE_SOLAR } = require('../../helpers/grant-details')
 
 
 function getQuestionScoreBand (questions, questionKey) {
@@ -184,23 +187,24 @@ function getScoreChance (rating) {
 function scoreQuestions(submission, desirabilityScore) {
   return {
     scoreDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
-    productsProcessed: submission.productsProcessed ?? ' ',
-    productsProcessedScore: submission.productsProcessed ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'products-processed') : ' ',
-    howAddingValue: submission.howAddingValue ?? ' ',
-    projectImpact: submission.projectImpact ? [submission.projectImpact].join(', ') : ' ',
-    projectImpactScore: submission.projectImpact ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'project-impact') : ' ',
-    futureCustomers: submission.futureCustomers ? [submission.futureCustomers].flat().join(', ') : ' ',
-    futureCustomersScore: submission.futureCustomers ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'future-customers') : ' ',
-    collaboration: submission.collaboration ?? ' ',
-    collaborationScore: submission.collaboration ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'collaboration') : ' ',
-    environmentalImpact: submission.environmentalImpact ? [submission.environmentalImpact].flat().join(', ') : ' ',
-    environmentalImpactScore: submission.environmentalImpact ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact') : ' ',
+    productsProcessed: submission.productsProcessed,
+    productsProcessedScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'products-processed'),
+    howAddingValue: submission.howAddingValue,
+    projectImpact: [submission.projectImpact].join(', '),
+    projectImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'project-impact'),
+    futureCustomers: [submission.futureCustomers].flat().join(', '),
+    futureCustomersScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'future-customers'),
+    collaboration: submission.collaboration,
+    collaborationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'collaboration'),
+    environmentalImpact: [submission.environmentalImpact].flat().join(', '),
+    environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
   }
 }
 
 // same here
 function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail = false) {
   const email = isAgentEmail ? submission.agentsDetails.emailAddress : submission.farmerDetails.emailAddress
+  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
@@ -217,8 +221,8 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       planningPermission: submission.planningPermission,
       projectStart: submission.projectStart,
       tenancy: submission.tenancy,
-      isTenancyLength: submission.tenancyLength ? 'Yes' : 'No',
-      tenancyLength: submission.tenancyLength ?? ' ',
+      isNotTenancy: submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS),
+      projectResponsibility: submission.projectResponsibility ?? '',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
       storageNeeded: submission.storage,
       projectCost: getCurrencyFormat(submission.projectCost),
@@ -229,15 +233,21 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       farmerName: submission.farmerDetails.firstName,
       farmerSurname: submission.farmerDetails.lastName,
       farmerEmail: submission.farmerDetails.emailAddress,
-      isAgent: submission.agentsDetails ? 'Yes' : 'No',
-      agentName: submission.agentsDetails?.firstName ?? ' ',
+      agentName: submission.agentsDetails?.firstName ?? 'N/A',
       agentSurname: submission.agentsDetails?.lastName ?? ' ',
-      agentEmail: submission.agentsDetails?.emailAddress ?? ' ',
+      agentBusinessName: submission.agentsDetails?.businessName ?? 'N/A',
+      agentEmail: submission.agentsDetails?.emailAddress ?? 'N/A',
       contactConsent: submission.consentOptional ? 'Yes' : 'No',
-
-      ...scoreQuestions(submission, desirabilityScore),
-
-      businessType: submission.applicantBusiness
+      businessType: submission.applicantBusiness,
+      smallerAbattoir: submission.smallerAbattoir,
+      otherFarmers: submission.otherFarmers ?? '',
+      IsSmallerAbattoir: submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS),
+      isSolarPVSystemYes: isSolarPVSystemYes,
+      solarPVSystem: submission.solarPVSystem,
+      solarGrantRate: isSolarPVSystemYes ? `Up to ${GRANT_PERCENTAGE_SOLAR}%` : '',
+      grantRate: `Up to ${GRANT_PERCENTAGE}%`,
+      solarPVCost: isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, ''))) : '',
+      ...scoreQuestions(submission, desirabilityScore)
     }
   }
 }
