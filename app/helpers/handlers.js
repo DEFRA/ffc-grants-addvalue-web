@@ -6,7 +6,7 @@ const { formatUKCurrency } = require('../helpers/data-formats')
 const { SELECT_VARIABLE_TO_REPLACE, DELETE_POSTCODE_CHARS_REGEX } = require('ffc-grants-common-functionality').regex
 const { getHtml } = require('../helpers/conditionalHTML')
 const { getUrl } = require('../helpers/urls')
-// const { guardPage } = require('ffc-grants-common-functionality').pageGuard
+const { guardPage } = require('ffc-grants-common-functionality').pageGuard
 const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOptions
 const { notUniqueSelection, uniqueSelection, getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
@@ -203,10 +203,10 @@ const titleCheck = (question, title, url, request) => {
 const getPage = async (question, request, h) => {
   const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
   const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
-  // const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
-  // if (isRedirect) {
-  //   return h.redirect(startPageUrl)
-  // }
+  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
+  if (isRedirect) {
+    return h.redirect(startPageUrl)
+  }
 
   const confirmationId = ''
 
