@@ -75,6 +75,71 @@ function getProjectItems (projectItems, storage) {
   }
   return projectItems.join('|')
 }
+
+function generateDoraRows (submission, subScheme, todayStr, today, desirabilityScore) {
+  return [
+    generateRow(1, 'Field Name', 'Field Value', true),
+    generateRow(2, 'FA or OA', 'Outline Application'),
+    generateRow(40, 'Scheme', 'Farming Transformation Fund'),
+    generateRow(39, 'Sub scheme', subScheme),
+    generateRow(43, 'Theme', 'Adding Value'),
+    generateRow(90, 'Project type', 'Adding Value'),
+    generateRow(41, 'Owner', 'RD'),
+    generateRow(341, 'Grant Launch Date', ''),
+    generateRow(23, 'Status of applicant', submission.legalStatus),
+    generateRow(44, 'Adding Value Project Items', submission.projectItems ? getProjectItems([submission.projectItems].flat(), submission.storage) : ''),
+    generateRow(45, 'Location of project (postcode)', submission.farmerDetails.projectPostcode),
+    generateRow(376, 'Project Started', submission.projectStart),
+    generateRow(342, 'Land owned by Farm', submission.tenancy),
+    generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
+    generateRow(53, 'Business type', getBusinessTypeC53(submission.applicantBusiness)),
+    generateRow(55, 'Total project expenditure', String(submission.projectCost).replace(/,/g, '')),
+    generateRow(57, 'Grant rate', '40'),
+    generateRow(56, 'Grant amount requested', submission.calculatedGrant),
+    generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
+    generateRow(346, 'Planning Permission Status', submission.planningPermission),
+    generateRow(386, 'Products To Be Processed', submission.productsProcessed ?? ''),
+    generateRow(387, 'How add value to products', submission.howAddingValue ?? ''),
+    generateRow(388, 'AV Project Impact', submission.projectImpact ? [submission.projectImpact].flat().join('|') : ''),
+    generateRow(389, 'AV Target Customers', [submission.futureCustomers].flat().join('|') ?? ''),
+    generateRow(390, 'AV Farmer Collaborate', submission.collaboration ?? ''),
+    generateRow(393, 'AV Improve Environment', [submission.environmentalImpact].flat().join('|') ?? ''),
+    generateRow(394, 'AV Business Type', submission.applicantBusiness ?? ' '),
+    generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI ?? ''),
+    generateRow(365, 'OA score', desirabilityScore.desirability.overallRating.band),
+    generateRow(366, 'Date of OA decision', ''),
+    generateRow(395, 'Storage Facilities', submission.storage.split(',')[0]),
+    generateRow(42, 'Project name', submission.businessDetails.projectName),
+    generateRow(4, 'Single business identifier (SBI)', submission.businessDetails.sbi || '000000000'), // sbi is '' if not set so use || instead of ??
+    generateRow(7, 'Business name', submission.businessDetails.businessName),
+    generateRow(367, 'Annual Turnover', submission.businessDetails.businessTurnover),
+    generateRow(22, 'Employees', submission.businessDetails.numberEmployees),
+    generateRow(20, 'Business size', calculateBusinessSize(submission.businessDetails.numberEmployees, submission.businessDetails.businessTurnover)),
+    generateRow(91, 'Are you an AGENT applying on behalf of your customer', submission.applying === 'Agent' ? 'Yes' : 'No'),
+    generateRow(5, 'Surname', submission.farmerDetails.lastName),
+    generateRow(6, 'Forename', submission.farmerDetails.firstName),
+    generateRow(8, 'Address line 1', submission.farmerDetails.address1),
+    generateRow(9, 'Address line 2', submission.farmerDetails.address2),
+    generateRow(10, 'Address line 3', ''),
+    generateRow(11, 'Address line 4 (town)', submission.farmerDetails.town),
+    generateRow(12, 'Address line 5 (county)', submission.farmerDetails.county),
+    generateRow(13, 'Postcode (use capitals)', submission.farmerDetails.postcode),
+    generateRow(16, 'Landline number', submission.farmerDetails.landlineNumber ?? ''),
+    generateRow(17, 'Mobile number', submission.farmerDetails.mobileNumber ?? ''),
+    generateRow(18, 'Email', submission.farmerDetails.emailAddress),
+    generateRow(89, 'Customer Marketing Indicator', submission.consentOptional ? 'Yes' : 'No'),
+    generateRow(368, 'Date ready for QC or decision', todayStr),
+    generateRow(369, 'Eligibility Reference No.', submission.confirmationId),
+    generateRow(94, 'Current location of file', 'NA Automated'),
+    generateRow(92, 'RAG rating', 'Green'),
+    generateRow(93, 'RAG date reviewed ', todayStr),
+    generateRow(54, 'Electronic OA received date ', todayStr),
+    generateRow(370, 'Status', 'Pending RPA review'),
+    generateRow(85, 'Full Application Submission Date', (new Date(today.setMonth(today.getMonth() + 6))).toLocaleDateString('en-GB')),
+    generateRow(375, 'OA percent', String(desirabilityScore.desirability.overallRating.score)),
+    ...addAgentDetails(submission.agentsDetails)
+  ]
+}
 // refactor alongside laying hens version for sonar complexity reduction
 function getSpreadsheetDetails (submission, desirabilityScore) {
   const today = new Date()
@@ -97,68 +162,8 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
         ...(spreadsheetConfig.protectEnabled ? { protectPassword: spreadsheetConfig.protectPassword } : {}),
         hideEmptyRows: spreadsheetConfig.hideEmptyRows,
         defaultColumnWidth: 30,
-        rows: [
-          generateRow(1, 'Field Name', 'Field Value', true),
-          generateRow(2, 'FA or OA', 'Outline Application'),
-          generateRow(40, 'Scheme', 'Farming Transformation Fund'),
-          generateRow(39, 'Sub scheme', subScheme),
-          generateRow(43, 'Theme', 'Adding Value'),
-          generateRow(90, 'Project type', 'Adding Value'),
-          generateRow(41, 'Owner', 'RD'),
-          generateRow(341, 'Grant Launch Date', ''),
-          generateRow(23, 'Status of applicant', submission.legalStatus),
-          generateRow(44, 'Adding Value Project Items', submission.projectItems ? getProjectItems([submission.projectItems].flat(), submission.storage) : ''),
-          generateRow(45, 'Location of project (postcode)', submission.farmerDetails.projectPostcode),
-          generateRow(376, 'Project Started', submission.projectStart),
-          generateRow(342, 'Land owned by Farm', submission.tenancy),
-          generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
-          generateRow(53, 'Business type', getBusinessTypeC53(submission.applicantBusiness)),
-          generateRow(55, 'Total project expenditure', String(submission.projectCost).replace(/,/g, '')),
-          generateRow(57, 'Grant rate', '40'),
-          generateRow(56, 'Grant amount requested', submission.calculatedGrant),
-          generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
-          generateRow(346, 'Planning Permission Status', submission.planningPermission),
-          generateRow(386, 'Products To Be Processed', submission.productsProcessed ?? ''),
-          generateRow(387, 'How add value to products', submission.howAddingValue ?? ''),
-          generateRow(388, 'AV Project Impact', submission.projectImpact ? [submission.projectImpact].flat().join('|') : ''),
-          generateRow(389, 'AV Target Customers', [submission.futureCustomers].flat().join('|') ?? ''),
-          generateRow(390, 'AV Farmer Collaborate', submission.collaboration ?? ''),
-          generateRow(393, 'AV Improve Environment', [submission.environmentalImpact].flat().join('|') ?? ''),
-          generateRow(394, 'AV Business Type', submission.applicantBusiness ?? ' '),
-          generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI ?? ''),
-          generateRow(365, 'OA score', desirabilityScore.desirability.overallRating.band),
-          generateRow(366, 'Date of OA decision', ''),
-          generateRow(395, 'Storage Facilities', submission.storage.split(',')[0]),
-          generateRow(42, 'Project name', submission.businessDetails.projectName),
-          generateRow(4, 'Single business identifier (SBI)', submission.businessDetails.sbi || '000000000'), // sbi is '' if not set so use || instead of ??
-          generateRow(7, 'Business name', submission.businessDetails.businessName),
-          generateRow(367, 'Annual Turnover', submission.businessDetails.businessTurnover),
-          generateRow(22, 'Employees', submission.businessDetails.numberEmployees),
-          generateRow(20, 'Business size', calculateBusinessSize(submission.businessDetails.numberEmployees, submission.businessDetails.businessTurnover)),
-          generateRow(91, 'Are you an AGENT applying on behalf of your customer', submission.applying === 'Agent' ? 'Yes' : 'No'),
-          generateRow(5, 'Surname', submission.farmerDetails.lastName),
-          generateRow(6, 'Forename', submission.farmerDetails.firstName),
-          generateRow(8, 'Address line 1', submission.farmerDetails.address1),
-          generateRow(9, 'Address line 2', submission.farmerDetails.address2),
-          generateRow(10, 'Address line 3', ''),
-          generateRow(11, 'Address line 4 (town)', submission.farmerDetails.town),
-          generateRow(12, 'Address line 5 (county)', submission.farmerDetails.county),
-          generateRow(13, 'Postcode (use capitals)', submission.farmerDetails.postcode),
-          generateRow(16, 'Landline number', submission.farmerDetails.landlineNumber ?? ''),
-          generateRow(17, 'Mobile number', submission.farmerDetails.mobileNumber ?? ''),
-          generateRow(18, 'Email', submission.farmerDetails.emailAddress),
-          generateRow(89, 'Customer Marketing Indicator', submission.consentOptional ? 'Yes' : 'No'),
-          generateRow(368, 'Date ready for QC or decision', todayStr),
-          generateRow(369, 'Eligibility Reference No.', submission.confirmationId),
-          generateRow(94, 'Current location of file', 'NA Automated'),
-          generateRow(92, 'RAG rating', 'Green'),
-          generateRow(93, 'RAG date reviewed ', todayStr),
-          generateRow(54, 'Electronic OA received date ', todayStr),
-          generateRow(370, 'Status', 'Pending RPA review'),
-          generateRow(85, 'Full Application Submission Date', (new Date(today.setMonth(today.getMonth() + 6))).toLocaleDateString('en-GB')),
-          generateRow(375, 'OA percent', String(desirabilityScore.desirability.overallRating.score)),
-          ...addAgentDetails(submission.agentsDetails)
-        ]
+        rows: generateDoraRows(submission, subScheme, todayStr, today, desirabilityScore)
+        
       }
     ]
   }
@@ -176,6 +181,23 @@ function getScoreChance (rating) {
       return 'might'
     default:
       return 'seems unlikely to'
+  }
+}
+
+function scoreQuestions(submission, desirabilityScore) {
+  return {
+    scoreDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
+    productsProcessed: submission.productsProcessed,
+    productsProcessedScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'products-processed'),
+    howAddingValue: submission.howAddingValue,
+    projectImpact: [submission.projectImpact].join(', '),
+    projectImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'project-impact'),
+    futureCustomers: [submission.futureCustomers].flat().join(', '),
+    futureCustomersScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'future-customers'),
+    collaboration: submission.collaboration,
+    collaborationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'collaboration'),
+    environmentalImpact: [submission.environmentalImpact].flat().join(', '),
+    environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
   }
 }
 
@@ -216,18 +238,6 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       agentBusinessName: submission.agentsDetails?.businessName ?? 'N/A',
       agentEmail: submission.agentsDetails?.emailAddress ?? 'N/A',
       contactConsent: submission.consentOptional ? 'Yes' : 'No',
-      scoreDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
-      productsProcessed: submission.productsProcessed,
-      productsProcessedScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'products-processed'),
-      howAddingValue: submission.howAddingValue,
-      projectImpact: [submission.projectImpact].join(', '),
-      projectImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'project-impact'),
-      futureCustomers: [submission.futureCustomers].flat().join(', '),
-      futureCustomersScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'future-customers'),
-      collaboration: submission.collaboration,
-      collaborationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'collaboration'),
-      environmentalImpact: [submission.environmentalImpact].flat().join(', '),
-      environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
       businessType: submission.applicantBusiness,
       smallerAbattoir: submission.smallerAbattoir,
       otherFarmers: submission.otherFarmers ?? '',
@@ -237,6 +247,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       solarGrantRate: isSolarPVSystemYes ? `Up to ${GRANT_PERCENTAGE_SOLAR}%` : '',
       grantRate: `Up to ${GRANT_PERCENTAGE}%`,
       solarPVCost: isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, ''))) : '',
+      ...scoreQuestions(submission, desirabilityScore)
     }
   }
 }

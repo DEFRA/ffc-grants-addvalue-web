@@ -49,12 +49,10 @@
         "businessName": "Test Business"
     },
     "projectType": "",
-    "applicantBusiness": "",
     "project": "Building new calf housing",
     "projectCost": "2000000",
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
-    "environmentalImpact": "Collect and store rainwater",
     "consentOptional": true,
     "storage": "boop",
     "solarPVCost": null,
@@ -64,7 +62,7 @@
     "solarPVSystem": "No",
     "isSolarPVSystemYes": false,
     "solarGrantRate": null,
-    "grantRate": "up to 40%"
-
+    "grantRate": "up to 40%",
+    "applicantBusiness": "why"
 
 }

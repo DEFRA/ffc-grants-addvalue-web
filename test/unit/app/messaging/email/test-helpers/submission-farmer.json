@@ -29,7 +29,6 @@
     "grantRate": "up to 40%",
     "solarPVCost" : "100000.00",
     "projectCost": "150000.00",
-    "projectItems" : ["Building new calf housing", "Installing a solar PV system"],
     "solarGrantRate": "up to 25%",
     "isSolarPVSystemYes": true,
     "businessDetails": {
@@ -43,14 +42,19 @@
     },
     "applicantType": "Beef (including calf rearing)",
     "projectType": "",
-    "applicantBusiness": "",
+    "applicantBusiness": "processing",
     "project":"Building new calf housing",
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
-    "storage": "boop",
     "businessType": "A grower or producer of agricultural or horticultural produce",
     "location": "Yes",
-    "isNotTenancy": true
-
+    "isNotTenancy": true,
+    "storage": "Yes, maybe",
+    "projectImpact": ["Yes", "Hi"],
+    "futureCustomers": ["Yes", "Hi"],
+    "environmentalImpact": ["Yes", "Hi"],
+    "productsProcessed": ["Yes", "Hi"],
+    "collaboration": "boop",
+    "projectItems": ["None of the above"]
 
 }
