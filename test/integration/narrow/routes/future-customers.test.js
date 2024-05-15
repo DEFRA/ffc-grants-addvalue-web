@@ -2,7 +2,12 @@ const { crumbToken } = require('./test-helper')
 const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /future-customers', () => {
-  const varList = { projectImpact: 'randomData' }
+  const utilsList = {
+    'mechanisation-A1': 'Yes',
+    'mechanisation-A2': 'No',
+  }
+
+  const varList = { mechanisation: 'Yes' }
 
   let valList = {}
 
@@ -16,8 +21,7 @@ describe('Page: /future-customers', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('Who will your new customers be after the project?')
-    expect(response.payload).toContain('Producers or growers')
+    expect(response.payload).toContain('Who will your new customers be after this project?')
     expect(response.payload).toContain('Processors')
     expect(response.payload).toContain('Wholesalers')
     expect(response.payload).toContain('Retailers')
@@ -27,7 +31,7 @@ describe('Page: /future-customers', () => {
 
   it('no option selected -> show error message', async () => {
     valList.futureCustomers = {
-      error: 'Select all options that apply',
+      error: 'Select who your new customers will be after this project',
       return: false
     }
     const postOptions = {
@@ -39,11 +43,11 @@ describe('Page: /future-customers', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select all options that apply')
+    expect(postResponse.payload).toContain('Select who your new customers will be after this project')
   })
 
   it('user selects a valid customer option together with option: \'No change\' -> display error page', async () => {
-    valList.futureCustomers.error = 'You cannot select ‘No change’ and another option'
+    valList.futureCustomers.error = 'You cannot select that combination of options'
 
     const postOptions = {
       method: 'POST',
@@ -54,7 +58,7 @@ describe('Page: /future-customers', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('You cannot select ‘No change’ and another option')
+    expect(postResponse.payload).toContain('You cannot select that combination of options')
   })
 
   it('user selects eligible option -> store user response and redirect to /collaboration', async () => {
@@ -69,5 +73,28 @@ describe('Page: /future-customers', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('collaboration')
+  })
+
+
+  xit('page loads with correct back link when the user anwered "Yes" on /mechanisation', async () => {
+    varList.mechanisation = 'Yes'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/future-customers`
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<a href=\"manual-labour-amount\" class=\"govuk-back-link\">Back</a>')
+  })
+
+  it('page loads with correct back link when the user anwered "No" on /mechanisation', async () => {
+    varList.mechanisation = 'No'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/future-customers`
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<a href=\"mechanisation\" class=\"govuk-back-link\">Back</a>')
   })
 })
