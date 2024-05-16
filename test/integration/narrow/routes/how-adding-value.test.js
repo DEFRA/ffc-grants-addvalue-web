@@ -16,8 +16,8 @@ describe('Page: /how-adding-value', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('How will your project add value to the produce?')
-    expect(response.payload).toContain('Creating a new product')
+    expect(response.payload).toContain('How will this project add value to the produce?')
+    expect(response.payload).toContain('Introducing a new product to your farm')
     expect(response.payload).toContain('Grading or sorting produce')
     expect(response.payload).toContain('Packing produce')
     expect(response.payload).toContain('New retail facility to sell direct to consumers')
@@ -25,7 +25,7 @@ describe('Page: /how-adding-value', () => {
 
   it('no option selected -> show error message', async () => {
     valList.howAddingValue = {
-      error: 'Select how you will add value to the produce',
+      error: 'Select how this project will add value to the produce',
       return: false
     }
     const postOptions = {
@@ -37,7 +37,7 @@ describe('Page: /how-adding-value', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select how you will add value to the produce')
+    expect(postResponse.payload).toContain('Select how this project will add value to the produce')
   })
 
   it('user selects an option -> store user response and redirect to /project-impact', async () => {
