@@ -1136,10 +1136,8 @@ const questionBank = {
             values: [{
               heading: 'Funding priorities',
               content: [{
-                para: 'RPA wants to fund projects that:',
-                items: [
-                  'create and expand processing capacity to provide more English-grown food for consumers to buy'
-                ]
+                para: 'RPA wants to fund projects that create and expand processing capacity to provide more English-grown food and products for consumers to buy.',
+                items: []
               }]
             }]
           },
@@ -1163,9 +1161,9 @@ const questionBank = {
             },
             {
               key: 'products-processed-A2',
-              value: 'Horticultural produce',
+              value: 'Wild venison meat produce',
               hint: {
-                text: 'For example, grading and packing of soft fruit, washing and packing vegetables, packing salad crops'
+                text: 'For example, culling, processing and packing wild venison meat'
               }
             },
             {
@@ -1173,6 +1171,13 @@ const questionBank = {
               value: 'Dairy or meat produce',
               hint: {
                 text: 'For example, processing and bottling milk or slaughtering, cutting, processing and packing meat'
+              }
+            },
+            {
+              key: 'products-processed-A4',
+              value: 'Fibre produce',
+              hint: {
+                text: 'For example, processing animal hides and leather, processing fibres such as flax and hemp'
               }
             },
             {
@@ -1184,16 +1189,16 @@ const questionBank = {
             },
             {
               key: 'products-processed-A6',
-              value: 'Non-edible produce',
+              value: 'Horticultural produce',
               hint: {
-                text: 'For example, processing and packing ornamental flowers and bulbs after harvesting'
+                text: 'For example, grading and packing of soft fruit, washing and packing vegetables, packing salad crops'
               }
             },
             {
               key: 'products-processed-A7',
-              value: 'Fibre produce',
+              value: 'Non-edible produce',
               hint: {
-                text: 'For example, processing animal hides and leather, processing fibres such as flax and hemp'
+                text: 'For example, processing and packing ornamental flowers and bulbs after harvesting'
               }
             }
           ],
@@ -1202,7 +1207,7 @@ const questionBank = {
         {
           key: 'how-adding-value',
           order: 130,
-          title: 'How will your project add value to the produce?',
+          title: 'How will this project add value to the produce?',
           pageTitle: '',
           url: 'how-adding-value',
           baseUrl: 'how-adding-value',
@@ -1244,13 +1249,13 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select how you will add value to the produce'
+              error: 'Select how this project will add value to the produce'
             }
           ],
           answers: [
             {
               key: 'how-adding-value-A1',
-              value: 'Creating a new product',
+              value: 'Introducing a new product to your farm',
               hint: {
                 text: 'For example, slaughtering, cut and packed meat, yogurt to cheese, brewing or distilling'
               }
@@ -1279,19 +1284,21 @@ const questionBank = {
         {
           key: 'project-impact',
           order: 140,
-          title: 'What impact will the project have?',
+          title: 'What impact will this project have?',
           pageTitle: '',
           url: 'project-impact',
           baseUrl: 'project-impact',
           backUrl: 'how-adding-value',
-          nextUrl: 'future-customers',
+          nextUrl: 'mechanisation',
           score: {
             isScore: true,
             isDisplay: true,
             title: 'Project impact'
           },
           hint: {
-            text: 'Select all that apply'
+            html: `
+            <p>If you are creating added-value products for the first time, you cannot also increase the volume or range of those products.</p>
+            <p>Select all that apply</p>`
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['howAddingValue'],
@@ -1315,11 +1322,14 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select the impact your project will have'
+              error: 'Select what impact this project will have'
             },            
             {
               type: 'COMBINATION_ANSWER',
-              error: 'You cannot select that combination of options',
+              error: '',
+              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'], 
+              ['project-impact-A1', 'project-impact-A2', 'project-impact-A3'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A4'],
+              ['project-impact-A1', 'project-impact-A3', 'project-impact-A4'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4']],
               combinationObject: {
                 questionKey: 'project-impact',
                 combinationAnswerKeys: ['project-impact-A1', 'project-impact-A4']
@@ -1341,7 +1351,10 @@ const questionBank = {
             },
             {
               key: 'project-impact-A4',
-              value: 'Allow selling direct to consumer'
+              value: 'Allow selling direct to consumer',
+              hint: {
+                text: 'For example, retail and internet sales'
+              }
             }
           ],
           yarKey: 'projectImpact'
