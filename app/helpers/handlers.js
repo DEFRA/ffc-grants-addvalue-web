@@ -60,7 +60,7 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
   } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
-      messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}})`,
+      messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}}).`,
     }
   } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000){
     return {
