@@ -104,7 +104,7 @@ const questionBank = {
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           validate: [
@@ -183,7 +183,7 @@ const questionBank = {
             },
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             },
             warning: {
               text: 'Other types of business may be supported in future schemes',
@@ -336,7 +336,7 @@ const questionBank = {
             messageContent: 'Any planning permission must be in place by 31 January 2024.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           fundingPriorities: 'Improving Adding Value',
@@ -415,7 +415,7 @@ const questionBank = {
             insertText: { text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.' },
             messageLink: {
               url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           fundingPriorities: '',
@@ -644,7 +644,7 @@ const questionBank = {
             messageContent: 'You must provide some abattoir services to other farmers if you are building a new smaller abattoir with this grant.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           sidebar: {
@@ -718,7 +718,7 @@ const questionBank = {
             `,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           answers: [
@@ -887,7 +887,7 @@ const questionBank = {
             messageContent: `The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           validate: [
@@ -1059,7 +1059,7 @@ const questionBank = {
             },
             messageLink: {
               url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           fundingPriorities: '',
