@@ -12,6 +12,8 @@ const {
   PHONE_REGEX,
   EMAIL_REGEX,
   MIN_3_LETTERS,
+  MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+  ONLY_TEXT_REGEX 
 } = require('ffc-grants-common-functionality').regex
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
@@ -2172,10 +2174,21 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your first name'
                 },
+                // {
+                //   type: 'REGEX',
+                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                //   error: 'First name must include letters'
+                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
-                  error: 'Name must only include letters, hyphens and apostrophes'
+                  error: 'First name must only include letters, hyphens and apostrophes'
+                },
+                {
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'First name must be 30 characters or fewer'
                 }
               ]
             },
@@ -2192,10 +2205,21 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your last name'
                 },
+                // {
+                //   type: 'REGEX',
+                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                //   error: 'First name must include letters'
+                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
-                  error: 'Name must only include letters, hyphens and apostrophes'
+                  error: 'First name must only include letters, hyphens and apostrophes'
+                },
+                {
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'First name must be 30 characters or fewer'
                 }
               ]
             },
@@ -2214,9 +2238,10 @@ const questionBank = {
                   error: 'Enter your business name'
                 },
                 {
-                  type: 'REGEX',
-                  regex: CHARS_MAX_100,
-                  error: 'Name must be 100 characters or fewer'
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'Business name must be 30 characters or fewer'
                 }
               ]
             },
@@ -2384,6 +2409,16 @@ const questionBank = {
                 {
                   type: 'NOT_EMPTY',
                   error: 'Enter your town'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                  error: 'Town must include letters'
+                },
+                {
+                  type: 'REGEX',
+                  regex: ONLY_TEXT_REGEX,
+                  error: 'Town must only include letters, hyphens and spaces'
                 }
               ]
             },
