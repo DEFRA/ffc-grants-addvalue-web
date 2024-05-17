@@ -1639,6 +1639,7 @@ const questionBank = {
             {
               yarKey: 'projectName',
               type: 'text',
+              classes: 'govuk-input--width-20',
               label: {
                 text: 'Project name',
                 classes: 'govuk-label'
@@ -1650,12 +1651,24 @@ const questionBank = {
                 {
                   type: 'NOT_EMPTY',
                   error: 'Enter a project name'
+                },
+                {
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'Project name must be 30 characters or fewer'
+                },
+                {
+                  type: 'REGEX',
+                  regex: NAME_ONLY_REGEX,
+                  error: 'Project name must only include letters, hyphens, spaces and apostrophes'
                 }
               ]
             },
             {
               yarKey: 'businessName',
               type: 'text',
+              classes: 'govuk-input--width-20',
               label: {
                 text: 'Business name',
                 classes: 'govuk-label'
@@ -1671,8 +1684,13 @@ const questionBank = {
                 {
                   type: 'MIN_MAX_CHARS',
                   min: 0,
-                  max: 100,
-                  error: 'Name must be 100 characters or fewer'
+                  max: 30,
+                  error: 'Business name must be 30 characters or fewer'
+                },
+                {
+                  type: 'REGEX',
+                  regex: NAME_ONLY_REGEX,
+                  error: 'Business name must only include letters, hyphens, spaces and apostrophes'
                 }
               ]
             },
