@@ -99,7 +99,7 @@ const questionBank = {
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
-              <li>are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers</li>
+              <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
               <li>produce wild venison products as part of woodland management</li>
             </ul>`,
             messageLink: {
@@ -120,7 +120,8 @@ const questionBank = {
                 para: 'This grant is for businesses who:',
                 items: [
                   'are agricultural or horticultural growers or producers',
-                  `are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers`
+                  `are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers`,
+                  'produce wild venison products as part of woodland management'
                 ]
               }]
             }]
