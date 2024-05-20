@@ -900,12 +900,18 @@ const questionBank = {
             },
             {
               type: 'REGEX',
-              regex: CURRENCY_FORMAT,
-              error: 'Enter a whole number in correct format'
+              regex: /^[0-9,]+$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
             },
             {
               type: 'REGEX',
-              regex: /^.{1,7}$/,
+              regex: /^(0*[1-9][0-9]*(,\d{3})*)$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            },
+            {
+              type: 'MIN_MAX',
+              min: 1,
+              max: 9999999,
               error: 'Enter a whole number with a maximum of 7 digits'
             }
           ],
