@@ -1363,6 +1363,52 @@ const questionBank = {
           yarKey: 'projectImpact'
         },
         {
+          key: 'mechanisation',
+          order: 132,
+          title: 'Will this project use any mechanisation instead of manual labour?',
+          pageTitle: '',
+          url: 'mechanisation',
+          baseUrl: 'mechanisation',
+          backUrl: 'potential-amount',
+          nextUrl: 'produce-processed',
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          minAnswerCount: 1,
+          sidebar: {
+            values: [
+              {
+                heading: 'Funding priorities',
+                content: [{
+                  para: 'RPA wants to fund projects that use mechanisation instead of manual labour due to the shortage of workers.',
+                  items: []
+                }]
+              }
+            ]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if this project will use any mechanisation instead of manual labour'
+            }
+          ],
+          answers: [
+            {
+              key: 'mechanisation-A1',
+              value: 'Yes'
+
+            },
+            {
+              key: 'mechanisation-A2',
+              value: 'No',
+              notEligible: true
+            }
+          ],
+          yarKey: 'mechanisation'
+
+        },
+        {
           key: 'future-customers',
           order: 160,
           title: 'Who will your new customers be after this project?',
