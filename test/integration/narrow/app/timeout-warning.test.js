@@ -344,4 +344,16 @@ describe('Timeout Warning', () => {
 
 
   })
+
+  // this test isn't nice :(
+  xit('test TimeoutWarning.redirect', () => {
+    const replaceMock = jest.fn();
+    delete window.location;
+
+    window.location = { replace: replaceMock };
+    
+    new TimeoutWarning(mockModule).redirect()
+    expect(replaceMock).toHaveBeenCalled()
+  })
+
 })
