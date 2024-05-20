@@ -1151,7 +1151,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select the type of produce being processed'
+              error: 'Select what type of produce is being processed'
             }
           ],
           answers: [
