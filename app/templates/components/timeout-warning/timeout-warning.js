@@ -47,6 +47,8 @@ class TimeoutWarning {
 
   // Check if browser supports native dialog element or can use polyfill
   dialogSupported() {
+    console.log('WORK GOD DAMMIT')
+
     if (typeof HTMLDialogElement === 'function') {
       // Native dialog is supported by browser
       return true
