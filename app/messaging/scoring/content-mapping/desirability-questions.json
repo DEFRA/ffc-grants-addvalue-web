@@ -5,11 +5,12 @@
     "title": "What type of produce is being processed?",  
     "answers": {
       "products-processed-A1": "Arable produce",
-      "products-processed-A2": "Horticultural produce",
+      "products-processed-A2": "Wild venison meat produce",
       "products-processed-A3": "Dairy or meat produce",
+      "products-processed-A4": "Fibre produce",
       "products-processed-A5": "Fodder produce",
-      "products-processed-A6": "Non-edible produce",
-      "products-processed-A7": "Fibre produce"    
+      "products-processed-A6": "Horticultural produce",
+      "products-processed-A7": "Non-edible produce"    
     }
   }
   ],
@@ -17,7 +18,7 @@
     "key":"how-adding-value",
     "title":"How will you add value to the produce?",  
     "answers": {   
-      "how-adding-value-A1": "Creating a new product",
+      "how-adding-value-A1": "Introducing a new product to your farm",
       "how-adding-value-A2": "Grading or sorting produce",
       "how-adding-value-A3": "Packing produce",
       "how-adding-value-A4": "Controlled atmosphere or dynamic controlled atmosphere storage",
@@ -40,12 +41,11 @@
     "title": "Who will your customers be after the project?",
     "answers":
     {
-      "future-customers-A1": "Producers or growers",
-      "future-customers-A2": "Processors",
-      "future-customers-A3": "Wholesalers",
-      "future-customers-A4": "Retailers",
-      "future-customers-A5": "Selling direct to consumers",
-      "future-customers-A6": "No change"
+      "future-customers-A1": "Processors",
+      "future-customers-A2": "Wholesalers",
+      "future-customers-A3": "Retailers",
+      "future-customers-A4": "Selling direct to consumers",
+      "future-customers-A5": "No change"
     }}
   ],
   "collaboration": [{
