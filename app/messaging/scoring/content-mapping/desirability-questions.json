@@ -1,4 +1,14 @@
 {  
+  "otherFarmers": [
+    {
+      "key": "other-farmers",
+      "title": "Will this abattoir provide services to other farmers?",
+      "answers": {
+        "other-farmers-A1": "Yes"
+      }
+    }
+
+  ],
   "productsProcessed": [
     {
     "key": "products-processed",

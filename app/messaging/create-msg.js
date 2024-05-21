@@ -13,6 +13,7 @@ function getAllDetails (request, confirmationId) {
 }
 
 const desirabilityAnswersSchema = Joi.object({
+  otherFarmers: Joi.string().allow(null),
   productsProcessed: Joi.string(),
   howAddingValue: Joi.string(),
   projectImpact: Joi.array().items(Joi.string()),
@@ -27,6 +28,7 @@ function getDesirabilityAnswers (request) {
     let envImpactVal = getYarValue(request, 'environmentalImpact')
     envImpactVal = Array.isArray(envImpactVal) ? envImpactVal : [envImpactVal]
     const val = {
+      otherFarmers: getYarValue(request, 'otherFarmers'),
       productsProcessed: getYarValue(request, 'productsProcessed'),
       howAddingValue: getYarValue(request, 'howAddingValue'),
       projectImpact: [getYarValue(request, 'projectImpact')].flat(),
