@@ -141,7 +141,7 @@ const questionBank = {
               key: 'nature-of-business-A2',
               value: `A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers`,
               hint: {
-                text: 'For example, cheese processing business owned by a dairy farmer'
+                text: 'For example, a cheese production business owned by a group of farmers'
               }
             },
             {
@@ -489,7 +489,7 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'If you are a tenant farmer, you have the option to ask your landlord to underwrite your agreement.'
+                para: 'If you are a tenant, you have the option to ask your landlord to underwrite your agreement.'
               }]
             }]
           },
@@ -575,7 +575,7 @@ const questionBank = {
             html: `
               <p>A smaller abattoir is a:</p>
               <ul class="govuk-list--bullet">
-                <li>red meat abattoir that processes up to 10,000 farmed livestock units each year</li>
+                <li>red meat abattoir that processes up to 10,000 livestock units each year</li>
                 <li>poultry abattoir that slaughters up to 500,000 birds each year</li>
               </ul>`
           },
@@ -880,10 +880,10 @@ const questionBank = {
             htmlSolar: `
             Do not include the solar PV system costs 
             or VAT<br/><br/>
-            Enter amount, for example 695,000`,
+            Enter cost of the items, for example 695,000`,
             htmlNoSolar: `
             Do not include VAT<br/><br/>
-            Enter amount, for example 95,000`
+            Enter cost of the items, for example 695,000`
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
