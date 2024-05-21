@@ -214,11 +214,11 @@ const projectCostPageModel = (data, question, request, conditionalHtml) => {
   return pageModelFormat(data, question, request, conditionalHtml)
 }
 
-const handleUrlCases = (url, data, question, request, conditionalHtml, h, backUrl, nextUrl) => {
+const handleUrlCases = (data, question, request, conditionalHtml, h, backUrl, nextUrl) => {
 
   let PAGE_MODEL
 
-  switch (url) {
+  switch (question.url) {
     case 'project-cost':
       PAGE_MODEL = projectCostPageModel(data, question, request, conditionalHtml)
       break
@@ -343,7 +343,7 @@ const getPage = async (question, request, h) => {
     )
   }
 
-  return handleUrlCases(url, data, question, request, conditionalHtml, h, backUrl, nextUrl)
+  return handleUrlCases(data, question, request, conditionalHtml, h, backUrl, nextUrl)
 
 }
 
