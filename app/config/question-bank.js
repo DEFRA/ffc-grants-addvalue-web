@@ -1396,17 +1396,71 @@ const questionBank = {
           answers: [
             {
               key: 'mechanisation-A1',
-              value: 'Yes'
+              value: 'Yes',
+              redirectUrl: 'manual-labour-amount'
 
             },
             {
               key: 'mechanisation-A2',
-              value: 'No',
-              notEligible: true
+              value: 'No'
             }
           ],
           yarKey: 'mechanisation'
 
+        },
+        {
+          key: 'manual-labour-amount',
+          order: 136,
+          title: 'How much manual labour will the mechanisation be equal to?',
+          pageTitle: '',
+          url: 'manual-labour-amount',
+          baseUrl: 'manual-labour-amount',
+          backUrl: 'mechanisation',
+          nextUrl: 'future-customers',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'manual Labour Amount'
+          },
+          eliminationAnswerKeys: '',
+          preValidationKeys: ['mechanisation'],
+          ineligibleContent: {},
+          ga: [
+            { dimension: 'cm2', value: { type: 'journey-time' } }
+          ],
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that use mechanisation of manual labour due to the shortage of workers.',
+                items: []
+              }]
+            }]
+          },
+          fundingPriorities: 'RPA wants to fund projects that use mechanisation of manual labour due to the shortage of workers.',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select how much manual labour the mechanisation will be equal to'
+            }
+          ],
+          answers: [
+            {
+              key: 'manual-labour-amount-A1',
+              value: 'Up to 5% of workforce'
+            },
+            {
+              key: 'manual-labour-amount-A2',
+              value: 'Between 5% and 10%'
+            },
+            {
+              key: 'manual-labour-amount-A3',
+              value: 'More than 10%'
+            }
+          ],
+          yarKey: 'manualLabour'
         },
         {
           key: 'future-customers',
@@ -1424,7 +1478,7 @@ const questionBank = {
             }
           },
           nextUrl: 'collaboration',
-          preValidationKeys: ['projectImpact'],
+          preValidationKeys: ['mechanisation'],
           eliminationAnswerKeys: '',
           score: {
             isScore: true,
