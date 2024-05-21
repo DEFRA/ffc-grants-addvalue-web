@@ -30,7 +30,7 @@ function getDesirabilityAnswers (request) {
       productsProcessed: getYarValue(request, 'productsProcessed'),
       howAddingValue: getYarValue(request, 'howAddingValue'),
       projectImpact: [getYarValue(request, 'projectImpact')].flat(),
-      manualLabour: getYarValue(request, 'manualLabour') ?? 'None of the above',
+      manualLabour: getYarValue(request, 'manualLabour') ?? 'Not Applicable',
       futureCustomers: [getYarValue(request, 'futureCustomers')].flat(),
       collaboration: getYarValue(request, 'collaboration'),
       environmentalImpact: envImpactVal
