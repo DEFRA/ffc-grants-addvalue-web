@@ -96,6 +96,9 @@ const questionBank = {
           fundingPriorities: '',
           minAnswerCount: 1,
           ga: [{ journeyStart: true }],
+          hint: {
+            text: 'Select one option'
+          },
           ineligibleContent: {
             messageContent: `
             <span>This grant is for businesses who:</span>
@@ -141,12 +144,15 @@ const questionBank = {
               key: 'nature-of-business-A2',
               value: `A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers`,
               hint: {
-                text: 'For example, cheese processing business owned by a dairy farmer'
+                text: 'For example, a cheese production business owned by a group of farmers'
               }
             },
             {
               key: 'nature-of-business-A3',
               value: 'A woodland manager processing wild venison products'
+            },
+            {
+              value: 'divider'
             },
             {
               key: 'nature-of-business-A4',
@@ -489,7 +495,7 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'If you are a tenant farmer, you have the option to ask your landlord to underwrite your agreement.'
+                para: 'If you are a tenant, you have the option to ask your landlord to underwrite your agreement.'
               }]
             }]
           },
@@ -575,7 +581,7 @@ const questionBank = {
             html: `
               <p>A smaller abattoir is a:</p>
               <ul class="govuk-list--bullet">
-                <li>red meat abattoir that processes up to 10,000 farmed livestock units each year</li>
+                <li>red meat abattoir that processes up to 10,000 livestock units each year</li>
                 <li>poultry abattoir that slaughters up to 500,000 birds each year</li>
               </ul>`
           },
@@ -808,7 +814,7 @@ const questionBank = {
           // preValidationKeys: ['storage'],
           hint: {
             html: `You have the option to buy and install a solar PV system with this grant.</br></br>
-            The solar PV panels must be installed on the roof of an or new building related to your project.</br></br>
+            The solar PV panels must be installed on the roof of an existing or new building related to your project.</br></br>
             You cannot buy a solar PV system with this grant if:
             <ul class="govuk-list govuk-list--bullet">
               <li>the building’s roof only faces north or is heavily shaded</li>
@@ -829,7 +835,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if you will buy a solar PV system for this building with this grant'
+              error: 'Select yes if you will buy a solar PV system with this grant'
             }
           ],
           answers: [
@@ -881,10 +887,10 @@ const questionBank = {
             htmlSolar: `
             Do not include the solar PV system costs 
             or VAT<br/><br/>
-            Enter amount, for example 695,000`,
+            Enter cost of the items, for example 695,000`,
             htmlNoSolar: `
             Do not include VAT<br/><br/>
-            Enter amount, for example 95,000`
+            Enter cost of the items, for example 695,000`
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
@@ -901,12 +907,18 @@ const questionBank = {
             },
             {
               type: 'REGEX',
-              regex: CURRENCY_FORMAT,
-              error: 'Enter a whole number in correct format'
+              regex: /^[0-9,]+$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
             },
             {
               type: 'REGEX',
-              regex: /^.{1,7}$/,
+              regex: /^(0*[1-9][0-9]*(,\d{3})*)$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            },
+            {
+              type: 'MIN_MAX',
+              min: 1,
+              max: 9999999,
               error: 'Enter a whole number with a maximum of 7 digits'
             }
           ],
@@ -1054,7 +1066,7 @@ const questionBank = {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
             <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
             insertText: {
-              html: `You can use:
+              html: `For example, you can use:
               <ul class="govuk-list--bullet">
                 <li>loans</li>
                 <li>overdrafts</li>
@@ -1079,7 +1091,7 @@ const questionBank = {
                   
                   You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.
                   
-                  You can use:`,
+                  For example, you can use:`,
                   items: [
                     'loans',
                     'overdrafts',
@@ -1152,7 +1164,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select the type of produce being processed'
+              error: 'Select what type of produce is being processed'
             }
           ],
           answers: [

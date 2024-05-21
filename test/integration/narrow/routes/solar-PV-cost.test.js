@@ -8,7 +8,7 @@ describe('Page: /solar-PV-cost', () => {
   }
   let valList = {}
   
-  commonFunctionsMock(varList, undefined, {}, valList)
+  commonFunctionsMock(varList, null, {}, valList)
 
   it('page loads successfully, with all the options - ', async () => {
     const options = {
@@ -59,6 +59,7 @@ describe('Page: /solar-PV-cost', () => {
   it('user selects eligible option -> store user response and redirect to /potential-amount-solar', async () => {
     valList.solarPVCost = false
     varList.projectCost = 50000
+    varList.solarPVCost = 40000
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/solar-PV-cost`,

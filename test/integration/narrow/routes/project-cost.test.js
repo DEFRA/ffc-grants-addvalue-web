@@ -27,7 +27,7 @@ describe('Page: /project-cost', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('What is the total estimated cost of the items?')
     expect(response.payload).toContain('Do not include the solar PV')
-    expect(response.payload).toContain('Enter amount, for example 695,000')
+    expect(response.payload).toContain('Enter cost of the items, for example 695,000')
   })
 
   it('page loads successfully, with all the options', async () => {
@@ -41,7 +41,7 @@ describe('Page: /project-cost', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('What is the total estimated cost of the items?')
     expect(response.payload).toContain('Do not include VAT')
-    expect(response.payload).toContain('Enter amount, for example 95,000')
+    expect(response.payload).toContain('Enter cost of the items, for example 695,000')
   })
 
   it('no value is typed in -> show error message', async () => {
