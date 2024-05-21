@@ -1420,7 +1420,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'manual Labour Amount'
+            title: 'Manual Labour Amount'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
