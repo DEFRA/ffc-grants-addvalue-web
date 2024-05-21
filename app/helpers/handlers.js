@@ -214,6 +214,23 @@ const projectCostPageModel = (data, question, request, conditionalHtml) => {
   return pageModelFormat(data, question, request, conditionalHtml)
 }
 
+const remainingCostsPageModel = (data, question, request, conditionalHtml) => {
+  if (getYarValue(request, 'solarPVSystem') === 'Yes') {
+    if (Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000) {
+      question.backUrl = 'potential-amount'
+    } else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')) {
+      question.backUrl = 'potential-amount-solar-details'
+    } else {
+      question.backUrl = 'potential-amount-solar'
+    }
+  } else {
+    question.backUrl = 'potential-amount'
+  }
+
+  return pageModelFormat(data, question, request, conditionalHtml)
+  
+}
+
 const handleUrlCases = (data, question, request, conditionalHtml, h, backUrl, nextUrl) => {
 
   let PAGE_MODEL
@@ -224,19 +241,7 @@ const handleUrlCases = (data, question, request, conditionalHtml, h, backUrl, ne
       break
 
     case 'remaining-costs':
-      if(getYarValue(request, 'solarPVSystem') === 'Yes'){
-        if(Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000){
-          question.backUrl = 'potential-amount'
-        } else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')){
-          question.backUrl = 'potential-amount-solar-details'
-        } else {
-          question.backUrl = 'potential-amount-solar'
-        }
-      } else {
-        question.backUrl = 'potential-amount'
-      }
-
-      PAGE_MODEL = pageModelFormat(data, question, request, conditionalHtml)
+      PAGE_MODEL = remainingCostsPageModel(data, question, request, conditionalHtml)
       break
     case 'score':
     case 'business-details':
