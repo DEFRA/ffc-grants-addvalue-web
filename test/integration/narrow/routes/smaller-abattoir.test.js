@@ -18,7 +18,7 @@ describe('Page: /smaller-abattoir', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('Do you want to build a new smaller abattoir?')
     expect(response.payload).toContain('A smaller abattoir is a:')
-    expect(response.payload).toContain('red meat abattoir that processes up to 10,000 farmed livestock units each year')
+    expect(response.payload).toContain('red meat abattoir that processes up to 10,000 livestock units each year')
     expect(response.payload).toContain('poultry abattoir that slaughters up to 500,000 birds each year')
     expect(response.payload).toContain('Yes')
     expect(response.payload).toContain('No')
