@@ -204,19 +204,24 @@ const pageModelFormat = (data, question, request, conditionalHtml) => {
   return getModel(data, question, request, conditionalHtml)
 }
 
+const projectCostPageModel = (data, question, request, conditionalHtml) => {
+  if (getYarValue(request, 'solarPVSystem') === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS)) {
+    question.hint.html = question.hint.htmlSolar
+  } else {
+    question.hint.html = question.hint.htmlNoSolar
+  }
+  
+  return pageModelFormat(data, question, request, conditionalHtml)
+}
+
 const handleUrlCases = (url, data, question, request, conditionalHtml, h, backUrl, nextUrl) => {
 
   let PAGE_MODEL
 
   switch (url) {
     case 'project-cost':
-        if (getYarValue(request, 'solarPVSystem') === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS)) {
-          question.hint.html = question.hint.htmlSolar
-        } else {
-          question.hint.html = question.hint.htmlNoSolar
-        }
-        PAGE_MODEL = pageModelFormat(data, question, request, conditionalHtml)
-        break
+      PAGE_MODEL = projectCostPageModel(data, question, request, conditionalHtml)
+      break
 
     case 'remaining-costs':
       if(getYarValue(request, 'solarPVSystem') === 'Yes'){
