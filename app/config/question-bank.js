@@ -807,7 +807,7 @@ const questionBank = {
           // preValidationKeys: ['storage'],
           hint: {
             html: `You have the option to buy and install a solar PV system with this grant.</br></br>
-            The solar PV panels must be installed on the roof of an or new building related to your project.</br></br>
+            The solar PV panels must be installed on the roof of an existing or new building related to your project.</br></br>
             You cannot buy a solar PV system with this grant if:
             <ul class="govuk-list govuk-list--bullet">
               <li>the building’s roof only faces north or is heavily shaded</li>
@@ -828,7 +828,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if you will buy a solar PV system for this building with this grant'
+              error: 'Select yes if you will buy a solar PV system with this grant'
             }
           ],
           answers: [
@@ -900,12 +900,18 @@ const questionBank = {
             },
             {
               type: 'REGEX',
-              regex: CURRENCY_FORMAT,
-              error: 'Enter a whole number in correct format'
+              regex: /^[0-9,]+$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
             },
             {
               type: 'REGEX',
-              regex: /^.{1,7}$/,
+              regex: /^(0*[1-9][0-9]*(,\d{3})*)$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            },
+            {
+              type: 'MIN_MAX',
+              min: 1,
+              max: 9999999,
               error: 'Enter a whole number with a maximum of 7 digits'
             }
           ],
@@ -1053,7 +1059,7 @@ const questionBank = {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
             <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
             insertText: {
-              html: `You can use:
+              html: `For example, you can use:
               <ul class="govuk-list--bullet">
                 <li>loans</li>
                 <li>overdrafts</li>
@@ -1078,7 +1084,7 @@ const questionBank = {
                   
                   You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.
                   
-                  You can use:`,
+                  For example, you can use:`,
                   items: [
                     'loans',
                     'overdrafts',
@@ -1151,7 +1157,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select the type of produce being processed'
+              error: 'Select what type of produce is being processed'
             }
           ],
           answers: [
