@@ -55,19 +55,19 @@ module.exports = [{
         msgData.desirability.questions.push(howAddingValueQuestionObj)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
 
-          if (desirabilityQuestion.url === 'manual-labour-amount' && getYarValue(request, 'manualLabour') === null) {
-            console.log(`Don't show manual labour if it is skipped`)
-          } else {
-            const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
-            desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
-            desirabilityQuestion.desc = bankQuestion.desc ?? ''
-            desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
-            desirabilityQuestion.order = bankQuestion.order
-            desirabilityQuestion.unit = bankQuestion?.unit
-            desirabilityQuestion.pageTitle = bankQuestion.pageTitle
-            desirabilityQuestion.fundingPriorities = bankQuestion.fundingPriorities
-            return desirabilityQuestion
-          }
+          // if (desirabilityQuestion.url === 'manual-labour-amount' && getYarValue(request, 'manualLabour') === null) {
+          //   console.log(`Don't show manual labour if it is skipped`)
+          // } else {
+          const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
+          desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
+          desirabilityQuestion.desc = bankQuestion.desc ?? ''
+          desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
+          desirabilityQuestion.order = bankQuestion.order
+          desirabilityQuestion.unit = bankQuestion?.unit
+          desirabilityQuestion.pageTitle = bankQuestion.pageTitle
+          desirabilityQuestion.fundingPriorities = bankQuestion.fundingPriorities
+          return desirabilityQuestion
+          // }
         })
 
         let scoreChance
