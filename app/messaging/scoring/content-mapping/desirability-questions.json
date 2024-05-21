@@ -36,6 +36,16 @@
       "project-impact-A4": "Allow selling direct to consumer"
     }}
   ],
+  "manualLabour": [{
+    "key": "manual-labour-amount",
+    "title": "How much manual labour will the mechanisation be equal to?",
+    "answers":
+    {
+      "manual-labour-A1": "Up to 5% of workforce",
+      "manual-labour-A2": "Between 5% and 10%",
+      "manual-labour-A3": "More than 10%"
+    }}
+  ],
   "futureCustomers": [{
     "key": "future-customers",
     "title": "Who will your customers be after the project?",
