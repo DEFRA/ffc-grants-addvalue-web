@@ -360,9 +360,6 @@ const showPostPage = (currentQuestion, request, h) => {
     setYarValue(request, yarKey, '')
   }
 
-  checkYarKeyReset(thisAnswer, request)
-
-
   for (const [key, value] of Object.entries(payload)) {
     thisAnswer = answers?.find(answer => (answer.value === value))
 
@@ -370,6 +367,9 @@ const showPostPage = (currentQuestion, request, h) => {
       setYarValue(request, key, key === 'projectPostcode' ? value.replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase() : value)
     }
   }
+
+  checkYarKeyReset(thisAnswer, request)
+
   if (type === 'multi-input') {
     multiInputPostHandler(currentQuestion, request, dataObject, payload, yarKey)
   }
