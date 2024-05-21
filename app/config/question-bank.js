@@ -96,6 +96,9 @@ const questionBank = {
           fundingPriorities: '',
           minAnswerCount: 1,
           ga: [{ journeyStart: true }],
+          hint: {
+            text: 'Select one option'
+          },
           ineligibleContent: {
             messageContent: `
             <span>This grant is for businesses who:</span>
@@ -147,6 +150,9 @@ const questionBank = {
             {
               key: 'nature-of-business-A3',
               value: 'A woodland manager processing wild venison products'
+            },
+            {
+              value: 'divider'
             },
             {
               key: 'nature-of-business-A4',
