@@ -12,6 +12,8 @@ const {
   PHONE_REGEX,
   EMAIL_REGEX,
   MIN_3_LETTERS,
+  MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+  ONLY_TEXT_REGEX 
 } = require('ffc-grants-common-functionality').regex
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
@@ -94,17 +96,20 @@ const questionBank = {
           fundingPriorities: '',
           minAnswerCount: 1,
           ga: [{ journeyStart: true }],
+          hint: {
+            text: 'Select one option'
+          },
           ineligibleContent: {
             messageContent: `
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
-              <li>are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers</li>
-              <li>produce wild venison products as part of woodland management.</li>
+              <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
+              <li>produce wild venison products as part of woodland management</li>
             </ul>`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           validate: [
@@ -120,7 +125,8 @@ const questionBank = {
                 para: 'This grant is for businesses who:',
                 items: [
                   'are agricultural or horticultural growers or producers',
-                  `are a business processing agricultural or horticultural products that is at least ${GRANT_PERCENTAGE}% owned by agricultural or horticultural producers`
+                  `are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers`,
+                  'produce wild venison products as part of woodland management'
                 ]
               }]
             }]
@@ -138,12 +144,15 @@ const questionBank = {
               key: 'nature-of-business-A2',
               value: `A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers`,
               hint: {
-                text: 'For example, cheese processing business owned by a dairy farmer'
+                text: 'For example, a cheese production business owned by a group of farmers'
               }
             },
             {
               key: 'nature-of-business-A3',
               value: 'A woodland manager processing wild venison products'
+            },
+            {
+              value: 'divider'
             },
             {
               key: 'nature-of-business-A4',
@@ -183,7 +192,7 @@ const questionBank = {
             },
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             },
             warning: {
               text: 'Other types of business may be supported in future schemes',
@@ -336,7 +345,7 @@ const questionBank = {
             messageContent: 'Any planning permission must be in place by 31 January 2024.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           fundingPriorities: 'Improving Adding Value',
@@ -415,7 +424,7 @@ const questionBank = {
             insertText: { text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.' },
             messageLink: {
               url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           fundingPriorities: '',
@@ -486,7 +495,7 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'If you are a tenant farmer, you have the option to ask your landlord to underwrite your agreement.'
+                para: 'If you are a tenant, you have the option to ask your landlord to underwrite your agreement.'
               }]
             }]
           },
@@ -572,7 +581,7 @@ const questionBank = {
             html: `
               <p>A smaller abattoir is a:</p>
               <ul class="govuk-list--bullet">
-                <li>red meat abattoir that processes up to 10,000 farmed livestock units each year</li>
+                <li>red meat abattoir that processes up to 10,000 livestock units each year</li>
                 <li>poultry abattoir that slaughters up to 500,000 birds each year</li>
               </ul>`
           },
@@ -644,7 +653,7 @@ const questionBank = {
             messageContent: 'You must provide some abattoir services to other farmers if you are building a new smaller abattoir with this grant.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           sidebar: {
@@ -713,12 +722,12 @@ const questionBank = {
             <ul class="govuk-list govuk-list--bullet">
               <li>constructing or improving buildings for processing</li>
               <li>processing equipment or machinery</li>
-              <li>retail facilities.</li>
+              <li>retail facilities</li>
             </ul>
             `,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           answers: [
@@ -804,7 +813,7 @@ const questionBank = {
           // preValidationKeys: ['storage'],
           hint: {
             html: `You have the option to buy and install a solar PV system with this grant.</br></br>
-            The solar PV panels must be installed on the roof of an or new building related to your project.</br></br>
+            The solar PV panels must be installed on the roof of an existing or new building related to your project.</br></br>
             You cannot buy a solar PV system with this grant if:
             <ul class="govuk-list govuk-list--bullet">
               <li>the building’s roof only faces north or is heavily shaded</li>
@@ -825,7 +834,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if you will buy a solar PV system for this building with this grant'
+              error: 'Select yes if you will buy a solar PV system with this grant'
             }
           ],
           answers: [
@@ -876,18 +885,18 @@ const questionBank = {
           hint: {
             htmlSolar: `
             Do not include the solar PV system costs 
-            or VAT.<br/><br/>
-            Enter amount, for example 695,000`,
+            or VAT<br/><br/>
+            Enter cost of the items, for example 695,000`,
             htmlNoSolar: `
-            Do not include VAT.<br/><br/>
-            Enter amount, for example 95,000`
+            Do not include VAT<br/><br/>
+            Enter cost of the items, for example 695,000`
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           validate: [
@@ -897,12 +906,18 @@ const questionBank = {
             },
             {
               type: 'REGEX',
-              regex: CURRENCY_FORMAT,
-              error: 'Enter a whole number in correct format'
+              regex: /^[0-9,]+$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
             },
             {
               type: 'REGEX',
-              regex: /^.{1,7}$/,
+              regex: /^(0*[1-9][0-9]*(,\d{3})*)$/,
+              error: 'Enter a whole number with a maximum of 7 digits'
+            },
+            {
+              type: 'MIN_MAX',
+              min: 1,
+              max: 9999999,
               error: 'Enter a whole number with a maximum of 7 digits'
             }
           ],
@@ -1050,7 +1065,7 @@ const questionBank = {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
             <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
             insertText: {
-              html: `You can use:
+              html: `For example, you can use:
               <ul class="govuk-list--bullet">
                 <li>loans</li>
                 <li>overdrafts</li>
@@ -1059,7 +1074,7 @@ const questionBank = {
             },
             messageLink: {
               url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-              title: 'See other grants you may be eligible for.'
+              title: 'See other grants you may be eligible for'
             }
           },
           fundingPriorities: '',
@@ -1075,7 +1090,7 @@ const questionBank = {
                   
                   You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.
                   
-                  You can use:`,
+                  For example, you can use:`,
                   items: [
                     'loans',
                     'overdrafts',
@@ -1136,10 +1151,8 @@ const questionBank = {
             values: [{
               heading: 'Funding priorities',
               content: [{
-                para: 'RPA wants to fund projects that:',
-                items: [
-                  'create and expand processing capacity to provide more English-grown food for consumers to buy'
-                ]
+                para: 'RPA wants to fund projects that create and expand processing capacity to provide more English-grown food and products for consumers to buy.',
+                items: []
               }]
             }]
           },
@@ -1150,7 +1163,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select the type of produce being processed'
+              error: 'Select what type of produce is being processed'
             }
           ],
           answers: [
@@ -1163,9 +1176,9 @@ const questionBank = {
             },
             {
               key: 'products-processed-A2',
-              value: 'Horticultural produce',
+              value: 'Wild venison meat produce',
               hint: {
-                text: 'For example, grading and packing of soft fruit, washing and packing vegetables, packing salad crops'
+                text: 'For example, culling, processing and packing wild venison meat'
               }
             },
             {
@@ -1173,6 +1186,13 @@ const questionBank = {
               value: 'Dairy or meat produce',
               hint: {
                 text: 'For example, processing and bottling milk or slaughtering, cutting, processing and packing meat'
+              }
+            },
+            {
+              key: 'products-processed-A4',
+              value: 'Fibre produce',
+              hint: {
+                text: 'For example, processing animal hides and leather, processing fibres such as flax and hemp'
               }
             },
             {
@@ -1184,16 +1204,16 @@ const questionBank = {
             },
             {
               key: 'products-processed-A6',
-              value: 'Non-edible produce',
+              value: 'Horticultural produce',
               hint: {
-                text: 'For example, processing and packing ornamental flowers and bulbs after harvesting'
+                text: 'For example, grading and packing of soft fruit, washing and packing vegetables, packing salad crops'
               }
             },
             {
               key: 'products-processed-A7',
-              value: 'Fibre produce',
+              value: 'Non-edible produce',
               hint: {
-                text: 'For example, processing animal hides and leather, processing fibres such as flax and hemp'
+                text: 'For example, processing and packing ornamental flowers and bulbs after harvesting'
               }
             }
           ],
@@ -1202,7 +1222,7 @@ const questionBank = {
         {
           key: 'how-adding-value',
           order: 130,
-          title: 'How will your project add value to the produce?',
+          title: 'How will this project add value to the produce?',
           pageTitle: '',
           url: 'how-adding-value',
           baseUrl: 'how-adding-value',
@@ -1244,13 +1264,13 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select how you will add value to the produce'
+              error: 'Select how this project will add value to the produce'
             }
           ],
           answers: [
             {
               key: 'how-adding-value-A1',
-              value: 'Creating a new product',
+              value: 'Introducing a new product to your farm',
               hint: {
                 text: 'For example, slaughtering, cut and packed meat, yogurt to cheese, brewing or distilling'
               }
@@ -1279,19 +1299,21 @@ const questionBank = {
         {
           key: 'project-impact',
           order: 140,
-          title: 'What impact will the project have?',
+          title: 'What impact will this project have?',
           pageTitle: '',
           url: 'project-impact',
           baseUrl: 'project-impact',
           backUrl: 'how-adding-value',
-          nextUrl: 'future-customers',
+          nextUrl: 'mechanisation',
           score: {
             isScore: true,
             isDisplay: true,
             title: 'Project impact'
           },
           hint: {
-            text: 'Select all that apply'
+            html: `
+            <p>If you are creating added-value products for the first time, you cannot also increase the volume or range of those products.</p>
+            <p>Select all that apply</p>`
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['howAddingValue'],
@@ -1315,11 +1337,14 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select the impact your project will have'
+              error: 'Select what impact this project will have'
             },            
             {
               type: 'COMBINATION_ANSWER',
-              error: 'You cannot select that combination of options',
+              error: '',
+              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'], 
+              ['project-impact-A1', 'project-impact-A2', 'project-impact-A3'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A4'],
+              ['project-impact-A1', 'project-impact-A3', 'project-impact-A4'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4']],
               combinationObject: {
                 questionKey: 'project-impact',
                 combinationAnswerKeys: ['project-impact-A1', 'project-impact-A4']
@@ -1341,7 +1366,10 @@ const questionBank = {
             },
             {
               key: 'project-impact-A4',
-              value: 'Allow selling direct to consumer'
+              value: 'Allow selling direct to consumer',
+              hint: {
+                text: 'For example, retail and internet sales'
+              }
             }
           ],
           yarKey: 'projectImpact'
@@ -1625,6 +1653,7 @@ const questionBank = {
             {
               yarKey: 'projectName',
               type: 'text',
+              classes: 'govuk-input--width-20',
               label: {
                 text: 'Project name',
                 classes: 'govuk-label'
@@ -1636,12 +1665,24 @@ const questionBank = {
                 {
                   type: 'NOT_EMPTY',
                   error: 'Enter a project name'
+                },
+                {
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'Project name must be 30 characters or fewer'
+                },
+                {
+                  type: 'REGEX',
+                  regex: NAME_ONLY_REGEX,
+                  error: 'Project name must only include letters, hyphens, spaces and apostrophes'
                 }
               ]
             },
             {
               yarKey: 'businessName',
               type: 'text',
+              classes: 'govuk-input--width-20',
               label: {
                 text: 'Business name',
                 classes: 'govuk-label'
@@ -1657,8 +1698,13 @@ const questionBank = {
                 {
                   type: 'MIN_MAX_CHARS',
                   min: 0,
-                  max: 100,
-                  error: 'Name must be 100 characters or fewer'
+                  max: 30,
+                  error: 'Business name must be 30 characters or fewer'
+                },
+                {
+                  type: 'REGEX',
+                  regex: NAME_ONLY_REGEX,
+                  error: 'Business name must only include letters, hyphens, spaces and apostrophes'
                 }
               ]
             },
@@ -1816,10 +1862,21 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your first name'
                 },
+                // {
+                //   type: 'REGEX',
+                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                //   error: 'First name must include letters'
+                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
-                  error: 'Name must only include letters, hyphens and apostrophes'
+                  error: 'First name must only include letters, hyphens and apostrophes'
+                },
+                {
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'First name must be 30 characters or fewer'
                 }
               ]
             },
@@ -1837,10 +1894,21 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your last name'
                 },
+                // {
+                //   type: 'REGEX',
+                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                //   error: 'Last name must include letters'
+                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
-                  error: 'Name must only include letters, hyphens and apostrophes'
+                  error: 'Last name must only include letters, hyphens and apostrophes'
+                },
+                {
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'Last name must be 30 characters or fewer'
                 }
               ]
             },
@@ -2008,7 +2076,17 @@ const questionBank = {
                 {
                   type: 'NOT_EMPTY',
                   error: 'Enter your town'
-                }
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                  error: 'Town must include letters'
+                },
+                {
+                  type: 'REGEX',
+                  regex: ONLY_TEXT_REGEX,
+                  error: 'Town must only include letters, hyphens and spaces'
+                },
               ]
             },
             {
@@ -2108,10 +2186,21 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your first name'
                 },
+                // {
+                //   type: 'REGEX',
+                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                //   error: 'First name must include letters'
+                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
-                  error: 'Name must only include letters, hyphens and apostrophes'
+                  error: 'First name must only include letters, hyphens and apostrophes'
+                },
+                {
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'First name must be 30 characters or fewer'
                 }
               ]
             },
@@ -2128,10 +2217,21 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your last name'
                 },
+                // {
+                //   type: 'REGEX',
+                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                //   error: 'First name must include letters'
+                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
-                  error: 'Name must only include letters, hyphens and apostrophes'
+                  error: 'First name must only include letters, hyphens and apostrophes'
+                },
+                {
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'First name must be 30 characters or fewer'
                 }
               ]
             },
@@ -2150,9 +2250,10 @@ const questionBank = {
                   error: 'Enter your business name'
                 },
                 {
-                  type: 'REGEX',
-                  regex: CHARS_MAX_100,
-                  error: 'Name must be 100 characters or fewer'
+                  type: 'MIN_MAX_CHARS',
+                  min: 0,
+                  max: 30,
+                  error: 'Business name must be 30 characters or fewer'
                 }
               ]
             },
@@ -2320,6 +2421,16 @@ const questionBank = {
                 {
                   type: 'NOT_EMPTY',
                   error: 'Enter your town'
+                },
+                {
+                  type: 'REGEX',
+                  regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
+                  error: 'Town must include letters'
+                },
+                {
+                  type: 'REGEX',
+                  regex: ONLY_TEXT_REGEX,
+                  error: 'Town must only include letters, hyphens and spaces'
                 }
               ]
             },

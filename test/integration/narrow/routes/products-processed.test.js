@@ -19,16 +19,17 @@ describe('Page: /produce-processed', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('What type of produce is being processed?')
     expect(response.payload).toContain('Arable produce')
-    expect(response.payload).toContain('Horticultural produce')
+    expect(response.payload).toContain('Wild venison meat produce')
     expect(response.payload).toContain('Dairy or meat produce')
-    expect(response.payload).toContain('Fodder produce')
-    expect(response.payload).toContain('Non-edible produce')
     expect(response.payload).toContain('Fibre produce')
+    expect(response.payload).toContain('Fodder produce')
+    expect(response.payload).toContain('Horticultural produce')
+    expect(response.payload).toContain('Non-edible produce')
   })
 
   it('no option selected -> show error message', async () => {
     valList.productsProcessed = {
-      error: 'Select the type of produce being processed',
+      error: 'Select what type of produce is being processed',
       return: false
     }
 
@@ -41,7 +42,7 @@ describe('Page: /produce-processed', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select the type of produce being processed')
+    expect(postResponse.payload).toContain('Select what type of produce is being processed')
   })
 
   it('user selects an option -> store user response and redirect to /how-adding-value', async () => {

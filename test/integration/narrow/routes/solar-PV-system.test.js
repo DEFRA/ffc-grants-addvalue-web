@@ -22,7 +22,7 @@ describe('Page: /solar-PV-system', () => {
 
   it('no option selected -> show error message', async () => {
     valList['NOT_EMPTY'] = {
-      error: 'Select yes if you will buy a solar PV system for this building with this grant',
+      error: 'Select yes if you will buy a solar PV system with this grant',
       return: false
     }
     
@@ -35,7 +35,7 @@ describe('Page: /solar-PV-system', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you will buy a solar PV system for this building with this grant')
+    expect(postResponse.payload).toContain('Select yes if you will buy a solar PV system with this grant')
   })
 
   it('user selects eligible option -> store user response and redirect to /project-cost', async () => {

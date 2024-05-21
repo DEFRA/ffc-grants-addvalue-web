@@ -44,23 +44,23 @@ const saveValuesToArray = (yarKey, fields) => {
 }
 
 const handlePotentialAmount = (request, maybeEligibleContent, url) => {
-  if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1000000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
+  if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
     return {
       ...maybeEligibleContent,
       messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
       additionalSentence: 'The maximum grant you can apply for is £500,000.',
       insertText: { text: 'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for project items.' },
     }
-  } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
+  } else if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
       messageContent: 'You may be able to apply for grant funding of up to £500,000, based on the estimated project items cost of £{{_projectCost_}}.',
       insertText: { text: 'The maximum grant you can apply for is £500,000.' },
     }
-  } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
+  } else if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
-      messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}})`,
+      messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}}).`,
     }
   } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000){
     return {
@@ -219,8 +219,8 @@ const handleUrlCases = (url, data, question, request, conditionalHtml, h, backUr
         break
 
     case 'remaining-costs':
-      if (getYarValue(request, 'solarPVSystem') === 'Yes'){
-        if (getYarValue(request, 'projectCost') >= 1000000){
+      if(getYarValue(request, 'solarPVSystem') === 'Yes'){
+        if(Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000){
           question.backUrl = 'potential-amount'
         } else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')){
           question.backUrl = 'potential-amount-solar-details'
@@ -412,7 +412,7 @@ const showPostPage = (currentQuestion, request, h) => {
     }
   } else if (yarKey === 'solarPVCost') {
     const calculatedGrant = getYarValue(request, 'calculatedGrant')
-    setYarValue(request, 'calculatedSolarGrant', getYarValue(request, 'solarPVCost') / 4)
+    setYarValue(request, 'calculatedSolarGrant', Number(getYarValue(request, 'solarPVCost').toString().replace(/,/g, '')) / 4)
 
     let calculatedSolarGrant
 
@@ -435,7 +435,7 @@ const showPostPage = (currentQuestion, request, h) => {
     setYarValue(request, 'isSolarCapped', isSolarCapped)
     setYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant', isSolarCappedGreaterThanCalculatedGrant)
 
-    setYarValue(request, 'totalProjectCost', Number(getYarValue(request, 'solarPVCost')) + Number(getYarValue(request, 'projectCost')))
+    setYarValue(request, 'totalProjectCost', Number(getYarValue(request, 'solarPVCost').toString().replace(/,/g, '')) + Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')))
     setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'cappedCalculatedSolarGrant') + calculatedGrant)
     setYarValue(request, 'remainingCost', getYarValue(request, 'totalProjectCost') - getYarValue(request, 'totalCalculatedGrant'))
 

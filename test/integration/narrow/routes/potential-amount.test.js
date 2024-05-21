@@ -12,7 +12,7 @@ describe('Page: /potential-amount', () => {
     calculatedGrant: 50000,
     solarPVSystem: 'No',
   }
-  let eligiblePageText = 'You may be able to apply for grant funding of up to £50,000 (50% of £100,000)'
+  let eligiblePageText = 'You may be able to apply for grant funding of up to £50,000 (50% of £100,000).'
 
   commonFunctionsMock(varList, undefined, utilsList, {})
   
