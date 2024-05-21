@@ -1402,7 +1402,8 @@ const questionBank = {
             },
             {
               key: 'mechanisation-A2',
-              value: 'No'
+              value: 'No',
+              yarKeysReset: ['manualLabour']
             }
           ],
           yarKey: 'mechanisation'
