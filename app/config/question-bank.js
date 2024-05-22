@@ -1370,7 +1370,10 @@ const questionBank = {
             },
             {
               key: 'project-impact-A1',
-              value: 'Starting to make added-value products for the first time'
+              value: 'Starting to make added-value products for the first time',
+              hint: {
+                text: 'This only applies if you do not currently make added-value products'
+              }
             }
           ],
           yarKey: 'projectImpact'
