@@ -13,7 +13,7 @@ const {
   EMAIL_REGEX,
   MIN_3_LETTERS,
   MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-  ONLY_TEXT_REGEX 
+  ONLY_TEXT_REGEX
 } = require('ffc-grants-common-functionality').regex
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
@@ -21,7 +21,7 @@ const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
 const {
   MIN_GRANT,
   MAX_GRANT,
-  GRANT_PERCENTAGE, 
+  GRANT_PERCENTAGE,
   GRANT_PERCENTAGE_SOLAR
 } = require('../helpers/grant-details')
 
@@ -531,7 +531,7 @@ const questionBank = {
           url: 'project-responsibility',
           baseUrl: 'project-responsibility',
           backUrl: 'tenancy',
-          nextUrl: 'smaller-abattoir', 
+          nextUrl: 'smaller-abattoir',
           // preValidationObject: {
           //   preValidationKeys: ['tenancy'],
           //   preValidationAnswer: ['tenancy-A2'],
@@ -1040,12 +1040,12 @@ const questionBank = {
               </ul>
             </div>
           `,
-          detailsText: {
-            summaryText: 'How is the solar PV system grant funding calculated?',
-            html: `The grant funding for a solar PV system cannot be more 
+            detailsText: {
+              summaryText: 'How is the solar PV system grant funding calculated?',
+              html: `The grant funding for a solar PV system cannot be more 
             than the grant funding for your project costs.<br/><br/>
             As your project grant funding is £{{_calculatedGrant_}}, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
-          },
+            },
             warning: {
               text: 'There’s no guarantee the project will receive a grant.',
               iconFallbackText: 'Warning'
@@ -1313,7 +1313,7 @@ const questionBank = {
           },
           hint: {
             html: `
-            <p>If you are creating added-value products for the first time, you cannot also increase the volume or range of those products.</p>
+            <p>If you are starting to make added-value products for the first time, you cannot also increase the volume or range of those products.</p>
             <p>Select all that apply</p>`
           },
           eliminationAnswerKeys: '',
@@ -1339,11 +1339,11 @@ const questionBank = {
             {
               type: 'NOT_EMPTY',
               error: 'Select what impact this project will have'
-            },            
+            },
             {
               type: 'COMBINATION_ANSWER',
               error: '',
-              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'], 
+              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'],
               ['project-impact-A1', 'project-impact-A2', 'project-impact-A3'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A4'],
               ['project-impact-A1', 'project-impact-A3', 'project-impact-A4'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4']],
               combinationObject: {
@@ -1354,16 +1354,12 @@ const questionBank = {
           ],
           answers: [
             {
-              key: 'project-impact-A1',
-              value: 'Creating added-value products for the first time'
+              key: 'project-impact-A3',
+              value: 'Increasing range of added-value products'
             },
             {
               key: 'project-impact-A2',
               value: 'Increasing volume of added-value products'
-            },
-            {
-              key: 'project-impact-A3',
-              value: 'Increasing range of added-value products'
             },
             {
               key: 'project-impact-A4',
@@ -1371,6 +1367,10 @@ const questionBank = {
               hint: {
                 text: 'For example, retail and internet sales'
               }
+            },
+            {
+              key: 'project-impact-A1',
+              value: 'Starting to make added-value products for the first time'
             }
           ],
           yarKey: 'projectImpact'
@@ -2678,8 +2678,8 @@ const questionBank = {
             <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
             `,
             addText: false,
-            conditionalInsertText: { 
-              text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.` 
+            conditionalInsertText: {
+              text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.`
             },
           },
         }

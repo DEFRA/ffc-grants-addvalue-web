@@ -1,4 +1,4 @@
-{  
+{
   "otherFarmers": [
     {
       "key": "other-farmers",
@@ -7,88 +7,94 @@
         "other-farmers-A1": "Yes"
       }
     }
-
   ],
   "productsProcessed": [
     {
-    "key": "products-processed",
-    "title": "What type of produce is being processed?",  
-    "answers": {
-      "products-processed-A1": "Arable produce",
-      "products-processed-A2": "Wild venison meat produce",
-      "products-processed-A3": "Dairy or meat produce",
-      "products-processed-A4": "Fibre produce",
-      "products-processed-A5": "Fodder produce",
-      "products-processed-A6": "Horticultural produce",
-      "products-processed-A7": "Non-edible produce"    
+      "key": "products-processed",
+      "title": "What type of produce is being processed?",
+      "answers": {
+        "products-processed-A1": "Arable produce",
+        "products-processed-A2": "Wild venison meat produce",
+        "products-processed-A3": "Dairy or meat produce",
+        "products-processed-A4": "Fibre produce",
+        "products-processed-A5": "Fodder produce",
+        "products-processed-A6": "Horticultural produce",
+        "products-processed-A7": "Non-edible produce"
+      }
     }
-  }
   ],
-  "howAddingValue": [{
-    "key":"how-adding-value",
-    "title":"How will you add value to the produce?",  
-    "answers": {   
-      "how-adding-value-A1": "Introducing a new product to your farm",
-      "how-adding-value-A2": "Grading or sorting produce",
-      "how-adding-value-A3": "Packing produce",
-      "how-adding-value-A4": "Controlled atmosphere or dynamic controlled atmosphere storage",
-      "how-adding-value-A5": "New retail facility to sell direct to consumers"
+  "howAddingValue": [
+    {
+      "key": "how-adding-value",
+      "title": "How will you add value to the produce?",
+      "answers": {
+        "how-adding-value-A1": "Introducing a new product to your farm",
+        "how-adding-value-A2": "Grading or sorting produce",
+        "how-adding-value-A3": "Packing produce",
+        "how-adding-value-A4": "Controlled atmosphere or dynamic controlled atmosphere storage",
+        "how-adding-value-A5": "New retail facility to sell direct to consumers"
+      }
     }
-  }],
-  "projectImpact": [{
-    "key": "project-impact",
-    "title": "What impact will the project have?",
-    "answers":
-    {
-      "project-impact-A1": "Creating added-value products for the first time",
-      "project-impact-A2": "Increasing volume of added-value products",
-      "project-impact-A3": "Increasing range of added-value products",
-      "project-impact-A4": "Allow selling direct to consumer"
-    }}
   ],
-  "manualLabour": [{
-    "key": "manual-labour-amount",
-    "title": "How much manual labour will the mechanisation be equal to?",
-    "answers":
+  "projectImpact": [
     {
-      "manual-labour-amount-A1": "Up to 5% of workforce",
-      "manual-labour-amount-A2": "Between 5% and 10%",
-      "manual-labour-amount-A3": "More than 10%"
-    }}
+      "key": "project-impact",
+      "title": "What impact will the project have?",
+      "answers": {
+        "project-impact-A1": "Starting to make added-value products for the first time",
+        "project-impact-A2": "Increasing volume of added-value products",
+        "project-impact-A3": "Increasing range of added-value products",
+        "project-impact-A4": "Allow selling direct to consumer"
+      }
+    }
   ],
-  "futureCustomers": [{
-    "key": "future-customers",
-    "title": "Who will your customers be after the project?",
-    "answers":
+  "manualLabour": [
     {
-      "future-customers-A1": "Processors",
-      "future-customers-A2": "Wholesalers",
-      "future-customers-A3": "Retailers",
-      "future-customers-A4": "Selling direct to consumers",
-      "future-customers-A5": "No change"
-    }}
+      "key": "manual-labour-amount",
+      "title": "How much manual labour will the mechanisation be equal to?",
+      "answers": {
+        "manual-labour-amount-A1": "Up to 5% of workforce",
+        "manual-labour-amount-A2": "Between 5% and 10%",
+        "manual-labour-amount-A3": "More than 10%"
+      }
+    }
   ],
-  "collaboration": [{
-    "key": "collaboration",
-    "title": "Will you buy materials from other farmers?",
-    "answers":
+  "futureCustomers": [
     {
-      "collaboration-A1": "Yes",
-      "collaboration-A2": "No"
-    }}
+      "key": "future-customers",
+      "title": "Who will your customers be after the project?",
+      "answers": {
+        "future-customers-A1": "Processors",
+        "future-customers-A2": "Wholesalers",
+        "future-customers-A3": "Retailers",
+        "future-customers-A4": "Selling direct to consumers",
+        "future-customers-A5": "No change"
+      }
+    }
   ],
-  "environmentalImpact": [{
-    "key": "environmental-impact",
-    "title": "How will the project improve the environment?",
-    "answers":
+  "collaboration": [
     {
-      "environmental-impact-A1": "Renewable energy",
-      "environmental-impact-A2": "Energy efficiency",
-      "environmental-impact-A3": "Water efficiency",
-      "environmental-impact-A4": "Waste efficiency",
-      "environmental-impact-A5": "Sustainable packaging measures",
-      "environmental-impact-A6": "Reduce harmful emissions or pollutants",
-      "environmental-impact-A7": "My project will not improve the environment"
-    }}
+      "key": "collaboration",
+      "title": "Will you buy materials from other farmers?",
+      "answers": {
+        "collaboration-A1": "Yes",
+        "collaboration-A2": "No"
+      }
+    }
+  ],
+  "environmentalImpact": [
+    {
+      "key": "environmental-impact",
+      "title": "How will the project improve the environment?",
+      "answers": {
+        "environmental-impact-A1": "Renewable energy",
+        "environmental-impact-A2": "Energy efficiency",
+        "environmental-impact-A3": "Water efficiency",
+        "environmental-impact-A4": "Waste efficiency",
+        "environmental-impact-A5": "Sustainable packaging measures",
+        "environmental-impact-A6": "Reduce harmful emissions or pollutants",
+        "environmental-impact-A7": "My project will not improve the environment"
+      }
+    }
   ]
 }
