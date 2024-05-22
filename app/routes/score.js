@@ -48,9 +48,9 @@ module.exports = [{
       setYarValue(request, 'overAllScore', msgData)
 
       const howAddingValueQuestion = ALL_QUESTIONS.find(question => question.key === 'how-adding-value')
-      const matrixQuestionRating = msgData.desirability.questions[0].rating
+      const matrixQuestionRating = msgData.desirability.questions[1].rating
       const howAddingValueQuestionObj = addSummaryRow(howAddingValueQuestion, matrixQuestionRating, request)
-      console.log('msgData', msgData)
+      
       if (msgData) {
         msgData.desirability.questions.push(howAddingValueQuestionObj)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
@@ -67,6 +67,11 @@ module.exports = [{
             return desirabilityQuestion
           }
         })
+
+        if (getYarValue(request, 'otherFarmers')) {
+          questions.shift() // first item is non-scoring q so undefined. Thus removing here
+
+        }
 
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {
