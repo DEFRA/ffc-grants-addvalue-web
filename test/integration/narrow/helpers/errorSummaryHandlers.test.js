@@ -7,8 +7,7 @@ describe('Get & Post Handlers', () => {
           getYarValue: jest.fn()
         },
         errorHelpers: {
-          checkInputError: jest.fn(),
-          validateAnswerField: jest.fn()
+          checkInputError: jest.fn()
         },
         utils: {
           getQuestionAnswer: jest.fn()
