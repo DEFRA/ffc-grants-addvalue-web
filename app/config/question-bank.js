@@ -13,7 +13,7 @@ const {
   EMAIL_REGEX,
   MIN_3_LETTERS,
   MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-  ONLY_TEXT_REGEX 
+  ONLY_TEXT_REGEX
 } = require('ffc-grants-common-functionality').regex
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
@@ -21,7 +21,7 @@ const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
 const {
   MIN_GRANT,
   MAX_GRANT,
-  GRANT_PERCENTAGE, 
+  GRANT_PERCENTAGE,
   GRANT_PERCENTAGE_SOLAR
 } = require('../helpers/grant-details')
 
@@ -531,7 +531,7 @@ const questionBank = {
           url: 'project-responsibility',
           baseUrl: 'project-responsibility',
           backUrl: 'tenancy',
-          nextUrl: 'smaller-abattoir', 
+          nextUrl: 'smaller-abattoir',
           // preValidationObject: {
           //   preValidationKeys: ['tenancy'],
           //   preValidationAnswer: ['tenancy-A2'],
@@ -621,7 +621,8 @@ const questionBank = {
             {
               key: 'smaller-abattoir-A2',
               value: 'No',
-              redirectUrl: 'project-items'
+              redirectUrl: 'project-items',
+              yarKeysReset: ['otherFarmers']
             }
           ],
           yarKey: 'smallerAbattoir'
@@ -1039,12 +1040,12 @@ const questionBank = {
               </ul>
             </div>
           `,
-          detailsText: {
-            summaryText: 'How is the solar PV system grant funding calculated?',
-            html: `The grant funding for a solar PV system cannot be more 
+            detailsText: {
+              summaryText: 'How is the solar PV system grant funding calculated?',
+              html: `The grant funding for a solar PV system cannot be more 
             than the grant funding for your project costs.<br/><br/>
             As your project grant funding is £{{_calculatedGrant_}}, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
-          },
+            },
             warning: {
               text: 'There’s no guarantee the project will receive a grant.',
               iconFallbackText: 'Warning'
@@ -1312,7 +1313,6 @@ const questionBank = {
           },
           hint: {
             html: `
-            <p>If you are creating added-value products for the first time, you cannot also increase the volume or range of those products.</p>
             <p>Select all that apply</p>`
           },
           eliminationAnswerKeys: '',
@@ -1338,11 +1338,11 @@ const questionBank = {
             {
               type: 'NOT_EMPTY',
               error: 'Select what impact this project will have'
-            },            
+            },
             {
               type: 'COMBINATION_ANSWER',
               error: '',
-              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'], 
+              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'],
               ['project-impact-A1', 'project-impact-A2', 'project-impact-A3'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A4'],
               ['project-impact-A1', 'project-impact-A3', 'project-impact-A4'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4']],
               combinationObject: {
@@ -1353,16 +1353,12 @@ const questionBank = {
           ],
           answers: [
             {
-              key: 'project-impact-A1',
-              value: 'Creating added-value products for the first time'
+              key: 'project-impact-A3',
+              value: 'Increasing range of added-value products'
             },
             {
               key: 'project-impact-A2',
               value: 'Increasing volume of added-value products'
-            },
-            {
-              key: 'project-impact-A3',
-              value: 'Increasing range of added-value products'
             },
             {
               key: 'project-impact-A4',
@@ -1370,9 +1366,117 @@ const questionBank = {
               hint: {
                 text: 'For example, retail and internet sales'
               }
+            },
+            {
+              key: 'project-impact-A1',
+              value: 'Starting to make added-value products for the first time',
+              hint: {
+                text: 'This only applies if you do not currently make added-value products'
+              }
             }
           ],
           yarKey: 'projectImpact'
+        },
+        {
+          key: 'mechanisation',
+          order: 132,
+          title: 'Will this project use any mechanisation instead of manual labour?',
+          pageTitle: '',
+          url: 'mechanisation',
+          baseUrl: 'mechanisation',
+          backUrl: 'project-impact',
+          nextUrl: 'future-customers',
+          eliminationAnswerKeys: '',
+          fundingPriorities: '',
+          type: 'single-answer',
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          minAnswerCount: 1,
+          sidebar: {
+            values: [
+              {
+                heading: 'Funding priorities',
+                content: [{
+                  para: 'RPA wants to fund projects that use mechanisation instead of manual labour due to the shortage of workers.',
+                  items: []
+                }]
+              }
+            ]
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if this project will use any mechanisation instead of manual labour'
+            }
+          ],
+          answers: [
+            {
+              key: 'mechanisation-A1',
+              value: 'Yes',
+              redirectUrl: 'manual-labour-amount'
+
+            },
+            {
+              key: 'mechanisation-A2',
+              value: 'No',
+              yarKeysReset: ['manualLabour']
+            }
+          ],
+          yarKey: 'mechanisation'
+
+        },
+        {
+          key: 'manual-labour-amount',
+          order: 136,
+          title: 'How much manual labour will the mechanisation be equal to?',
+          pageTitle: '',
+          url: 'manual-labour-amount',
+          baseUrl: 'manual-labour-amount',
+          backUrl: 'mechanisation',
+          nextUrl: 'future-customers',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Manual Labour Amount'
+          },
+          eliminationAnswerKeys: '',
+          preValidationKeys: ['mechanisation'],
+          ineligibleContent: {},
+          ga: [
+            { dimension: 'cm2', value: { type: 'journey-time' } }
+          ],
+          sidebar: {
+            values: [{
+              heading: 'Funding priorities',
+              content: [{
+                para: 'RPA wants to fund projects that use mechanisation of manual labour due to the shortage of workers.',
+                items: []
+              }]
+            }]
+          },
+          fundingPriorities: 'RPA wants to fund projects that use mechanisation of manual labour due to the shortage of workers.',
+          type: 'single-answer',
+          minAnswerCount: 1,
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select how much manual labour the mechanisation will be equal to'
+            }
+          ],
+          answers: [
+            {
+              key: 'manual-labour-amount-A1',
+              value: 'Up to 5% of workforce'
+            },
+            {
+              key: 'manual-labour-amount-A2',
+              value: 'Between 5% and 10%'
+            },
+            {
+              key: 'manual-labour-amount-A3',
+              value: 'More than 10%'
+            }
+          ],
+          yarKey: 'manualLabour'
         },
         {
           key: 'future-customers',
@@ -1390,7 +1494,7 @@ const questionBank = {
             }
           },
           nextUrl: 'collaboration',
-          preValidationKeys: ['projectImpact'],
+          preValidationKeys: ['mechanisation'],
           eliminationAnswerKeys: '',
           score: {
             isScore: true,
@@ -2576,8 +2680,8 @@ const questionBank = {
             <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
             `,
             addText: false,
-            conditionalInsertText: { 
-              text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.` 
+            conditionalInsertText: {
+              text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.`
             },
           },
         }

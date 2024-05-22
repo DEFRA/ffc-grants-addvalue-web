@@ -344,7 +344,11 @@ const multiInputPostHandler = (currentQuestion, request, dataObject, payload, ya
   setYarValue(request, yarKey, dataObject)
 }
 
-
+const checkYarKeyReset = (thisAnswer, request) => {
+  if (thisAnswer?.yarKeysReset) {
+    thisAnswer.yarKeysReset.forEach(yarKey => setYarValue(request, yarKey, null))
+  }
+}
 
 const showPostPage = (currentQuestion, request, h) => {
   const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, dependantNextUrl, title, type, allFields } = currentQuestion
@@ -355,6 +359,7 @@ const showPostPage = (currentQuestion, request, h) => {
   if (yarKey === 'consentOptional' && !Object.keys(payload).includes(yarKey)) {
     setYarValue(request, yarKey, '')
   }
+
   for (const [key, value] of Object.entries(payload)) {
     thisAnswer = answers?.find(answer => (answer.value === value))
 
@@ -362,6 +367,9 @@ const showPostPage = (currentQuestion, request, h) => {
       setYarValue(request, key, key === 'projectPostcode' ? value.replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase() : value)
     }
   }
+
+  checkYarKeyReset(thisAnswer, request)
+
   if (type === 'multi-input') {
     multiInputPostHandler(currentQuestion, request, dataObject, payload, yarKey)
   }
