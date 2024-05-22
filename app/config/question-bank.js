@@ -1313,7 +1313,6 @@ const questionBank = {
           },
           hint: {
             html: `
-            <p>If you are starting to make added-value products for the first time, you cannot also increase the volume or range of those products.</p>
             <p>Select all that apply</p>`
           },
           eliminationAnswerKeys: '',
