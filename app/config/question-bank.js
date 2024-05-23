@@ -1382,6 +1382,9 @@ const questionBank = {
           order: 132,
           title: 'Will this project use any mechanisation instead of manual labour?',
           pageTitle: '',
+          hint: {
+            text: 'For example, a fruit grading and sorting machine that does the work of 2 farm labourers'
+          },
           url: 'mechanisation',
           baseUrl: 'mechanisation',
           backUrl: 'project-impact',
@@ -1429,6 +1432,9 @@ const questionBank = {
           order: 136,
           title: 'How much manual labour will the mechanisation be equal to?',
           pageTitle: '',
+          hint: {
+            text: 'Based on your current staff numbers'
+          },
           url: 'manual-labour-amount',
           baseUrl: 'manual-labour-amount',
           backUrl: 'mechanisation',
@@ -1499,7 +1505,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Future customers'
+            title: 'New customers'
           },
           hint: {
             html: `For example, you will now sell directly to retailers 
