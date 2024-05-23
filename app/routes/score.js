@@ -63,11 +63,15 @@ module.exports = [{
 
         msgData.desirability.questions.push(manualLabourObj)
         
-      }
+      } 
       
       if (msgData) {
         msgData.desirability.questions.push(howAddingValueQuestionObj)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
+
+          if (desirabilityQuestion.key === 'manual-labour-amount' && getYarValue(request, 'mechanisation') === getQuestionAnswer('mechanisation', 'mechanisation-A1', ALL_QUESTIONS)) {
+            desirabilityQuestion.answers[0].input[0].value = 'Yes, ' + desirabilityQuestion.answers[0].input[0].value.toLowerCase()
+          }
 
           if (desirabilityQuestion.key != 'other-farmers') {
             const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
