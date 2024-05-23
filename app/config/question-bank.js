@@ -1389,11 +1389,6 @@ const questionBank = {
           baseUrl: 'mechanisation',
           backUrl: 'project-impact',
           nextUrl: 'future-customers',
-          score: {
-            isScore: true,
-            isDisplay: true,
-            title: 'Mechanisation'
-          },
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
@@ -1434,7 +1429,7 @@ const questionBank = {
         },
         {
           key: 'manual-labour-amount',
-          order: 136,
+          order: 150,
           title: 'How much manual labour will the mechanisation be equal to?',
           pageTitle: '',
           hint: {
@@ -1444,6 +1439,11 @@ const questionBank = {
           baseUrl: 'manual-labour-amount',
           backUrl: 'mechanisation',
           nextUrl: 'future-customers',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Mechanisation'
+          },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
           ineligibleContent: {},

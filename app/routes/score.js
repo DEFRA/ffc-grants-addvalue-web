@@ -2,6 +2,7 @@ const createMsg = require('../messaging/create-msg')
 const { getUserScore } = require('../messaging/application')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 const { getYarValue, setYarValue } = require('ffc-grants-common-functionality').session
+const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { addSummaryRow } = require('../helpers/score-helpers')
 
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')
@@ -50,6 +51,19 @@ module.exports = [{
       const howAddingValueQuestion = ALL_QUESTIONS.find(question => question.key === 'how-adding-value')
       const matrixQuestionRating = msgData.desirability.questions[1].rating
       const howAddingValueQuestionObj = addSummaryRow(howAddingValueQuestion, matrixQuestionRating, request)
+
+      // add manual-labour-amount to pick up 'No' if mechanisation = No
+      // splice into 4
+      if (getYarValue(request, 'mechanisation') === getQuestionAnswer('mechanisation', 'mechanisation-A2', ALL_QUESTIONS)) {
+        const manualLabourQuestion = ALL_QUESTIONS.find(question => question.key === 'manual-labour-amount')
+
+        let manualLabourObj = addSummaryRow(manualLabourQuestion, { score: 0, band: 'Weak' }, request)
+
+        manualLabourObj.answers[0].input[0].value = 'No'
+
+        msgData.desirability.questions.push(manualLabourObj)
+        
+      }
       
       if (msgData) {
         msgData.desirability.questions.push(howAddingValueQuestionObj)
@@ -59,7 +73,7 @@ module.exports = [{
             const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
             desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
             desirabilityQuestion.desc = bankQuestion.desc ?? ''
-            desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
+            desirabilityQuestion.url = desirabilityQuestion.key === 'manual-labour-amount' ? `${urlPrefix}/mechanisation` :  `${urlPrefix}/${bankQuestion.url}`
             desirabilityQuestion.order = bankQuestion.order
             desirabilityQuestion.unit = bankQuestion?.unit
             desirabilityQuestion.pageTitle = bankQuestion.pageTitle
