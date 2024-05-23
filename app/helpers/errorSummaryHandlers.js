@@ -87,8 +87,10 @@ const checkErrors = (payload, currentQuestion, h, request) => {
 
   const payloadValue = typeof payload[yarKey] === 'string' ? payload[yarKey].trim() : payload[yarKey]
   isconditionalAnswer = payload[yarKey]?.includes(conditionalAnswer?.value)
+  console.log('combi answer', payloadValue, validate, 'hang on')
   if (validate) {
     placeholderInputError = checkInputError(validate, isconditionalAnswer, payload, yarKey, ALL_QUESTIONS)
+    console.log(placeholderInputError, 'here')
 
     if (placeholderInputError?.type === 'COMBINATION_ANSWER' && placeholderInputError?.combinationErrorsList?.length > 0) {
       const selectedAnswer = payload[yarKey]

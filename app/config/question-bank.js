@@ -1342,9 +1342,9 @@ const questionBank = {
             {
               type: 'COMBINATION_ANSWER',
               error: '',
-              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'],
-              ['project-impact-A1', 'project-impact-A2', 'project-impact-A3'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A4'],
-              ['project-impact-A1', 'project-impact-A3', 'project-impact-A4'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4']],
+              combinationErrorsList: [['project-impact-A2', 'project-impact-A1'], ['project-impact-A3', 'project-impact-A1'],
+              ['project-impact-A3', 'project-impact-A2', 'project-impact-A1'], ['project-impact-A2', 'project-impact-A4', 'project-impact-A1'],
+              ['project-impact-A3', 'project-impact-A4', 'project-impact-A1'], ['project-impact-A3', 'project-impact-A2', 'project-impact-A4', 'project-impact-A1']],
               combinationObject: {
                 questionKey: 'project-impact',
                 combinationAnswerKeys: ['project-impact-A1', 'project-impact-A4']
@@ -1389,6 +1389,11 @@ const questionBank = {
           baseUrl: 'mechanisation',
           backUrl: 'project-impact',
           nextUrl: 'future-customers',
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Mechanisation'
+          },
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
@@ -1439,11 +1444,6 @@ const questionBank = {
           baseUrl: 'manual-labour-amount',
           backUrl: 'mechanisation',
           nextUrl: 'future-customers',
-          score: {
-            isScore: true,
-            isDisplay: true,
-            title: 'Manual Labour Amount'
-          },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
           ineligibleContent: {},
