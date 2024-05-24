@@ -1342,9 +1342,9 @@ const questionBank = {
             {
               type: 'COMBINATION_ANSWER',
               error: '',
-              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'],
-              ['project-impact-A1', 'project-impact-A2', 'project-impact-A3'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A4'],
-              ['project-impact-A1', 'project-impact-A3', 'project-impact-A4'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4']],
+              combinationErrorsList: [['project-impact-A2', 'project-impact-A1'], ['project-impact-A3', 'project-impact-A1'],
+              ['project-impact-A3', 'project-impact-A2', 'project-impact-A1'], ['project-impact-A2', 'project-impact-A4', 'project-impact-A1'],
+              ['project-impact-A3', 'project-impact-A4', 'project-impact-A1'], ['project-impact-A3', 'project-impact-A2', 'project-impact-A4', 'project-impact-A1']],
               combinationObject: {
                 questionKey: 'project-impact',
                 combinationAnswerKeys: ['project-impact-A1', 'project-impact-A4']
@@ -1382,6 +1382,9 @@ const questionBank = {
           order: 132,
           title: 'Will this project use any mechanisation instead of manual labour?',
           pageTitle: '',
+          hint: {
+            text: 'For example, a fruit grading and sorting machine that does the work of 2 farm labourers'
+          },
           url: 'mechanisation',
           baseUrl: 'mechanisation',
           backUrl: 'project-impact',
@@ -1426,9 +1429,12 @@ const questionBank = {
         },
         {
           key: 'manual-labour-amount',
-          order: 136,
+          order: 150,
           title: 'How much manual labour will the mechanisation be equal to?',
           pageTitle: '',
+          hint: {
+            text: 'Based on your current staff numbers'
+          },
           url: 'manual-labour-amount',
           baseUrl: 'manual-labour-amount',
           backUrl: 'mechanisation',
@@ -1436,7 +1442,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Manual Labour Amount'
+            title: 'Mechanisation'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
@@ -1499,7 +1505,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Future customers'
+            title: 'New customers'
           },
           hint: {
             html: `For example, you will now sell directly to retailers 

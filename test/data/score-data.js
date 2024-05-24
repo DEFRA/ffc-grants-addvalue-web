@@ -7,6 +7,26 @@ const msgData = {
   desirability: {
     questions: [
       {
+        key: 'other-farmers',
+        answers: [
+          {
+            key: 'other-farmers',
+            title: 'Who are these farmers? where do they come from?',
+            input: [
+              {
+                key: 'other-farmers-A1',
+                value: 'Here'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 4,
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
         key: 'products-processed',
         answers: [
           {
@@ -62,6 +82,26 @@ const msgData = {
         ],
         rating: {
           score: 1.6,
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
+        key: 'manual-labour-amount',
+        answers: [
+          {
+            key: 'manual-albour-amount',
+            title: 'What be the manual labour?',
+            input: [
+              {
+                key: 'manual-labour-amount-A1',
+                value: 'Up to 5'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 4,
           band: 'Strong',
           importance: null
         }
