@@ -3,11 +3,21 @@ const { commonFunctionsMock } = require('../../../session-mock')
 
 const varList = {
 	'current-score': 'wer',
-  environmentalImpact: 'wer'
+  environmentalImpact: 'wer',
+  mechanisation: 'No',
+  otherFarmers: null
+}
+
+const utilsList = {
+	'mechanisation-A1': 'Yes',
+	'mechanisation-A2': 'No',
+	'manual-labour-amount-A1': 'Up to 5',
+	'manual-labour-amount-A2': '5 to 10',
+	'manual-labour-amount-A3': '!0 and up'
 }
 
 
-commonFunctionsMock(varList, 'Error')
+commonFunctionsMock(varList, 'Error', utilsList, {})
 
 describe('Score page', () => {
 	let crumCookie
@@ -126,6 +136,8 @@ describe('Score page', () => {
 		expect(getUserScoreSpy).toHaveBeenCalledTimes(1)
 	})
 	it('should load page with success Average', async () => {
+		varList.mechanisation = 'Yes'
+		varList.otherFarmers = 'hi'
 		const options = {
 			method: 'GET',
 			url: `${global.__URLPREFIX__}/score`
