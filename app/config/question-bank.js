@@ -621,7 +621,7 @@ const questionBank = {
               key: 'smaller-abattoir-A2',
               value: 'No',
               redirectUrl: 'fruit-storage',
-              // yarKeysReset: ['otherFarmers']
+              yarKeysReset: ['otherFarmers']
             }
           ],
           yarKey: 'smallerAbattoir'
@@ -651,6 +651,7 @@ const questionBank = {
             {
               key: 'fruit-storage-A1',
               value: 'Yes',
+              yarKeysReset: ['projectItems']
             },
             {
               key: 'fruit-storage-A2',
