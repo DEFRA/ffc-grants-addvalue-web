@@ -602,8 +602,6 @@ const questionBank = {
           //   preValidationRule: 'OR',
           //   preValidationUrls: ['tenancy', 'project-responsibility']
           // },
-          eliminationAnswerKeys: '',
-          fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
@@ -616,17 +614,53 @@ const questionBank = {
           answers: [
             {
               key: 'smaller-abattoir-A1',
-              value: 'Yes'
+              value: 'Yes',
+              yarKeysReset: ['fruitStorage']
             },
             {
               key: 'smaller-abattoir-A2',
               value: 'No',
-              redirectUrl: 'project-items',
-              yarKeysReset: ['otherFarmers']
+              redirectUrl: 'fruit-storage',
+              // yarKeysReset: ['otherFarmers']
             }
           ],
           yarKey: 'smallerAbattoir'
         },
+        {
+          key: 'fruit-storage',
+          order: 70,
+          title: 'Do you want to build new controlled atmosphere storage for top fruit?',
+          hint: {
+            text: 'Fruit that grows on trees, for example apples, pears, quinces, medlars, plums, peaches, apricots and cherries'
+          },
+          url: 'fruit-storage',
+          baseUrl: 'fruit-storage',
+          backUrl: 'smaller-abattoir',
+          nextUrl: 'solar-PV-system',
+          preValidationKeys: [],
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you want to build new controlled atmosphere storage for top fruit'
+            }
+          ],
+          answers: [
+            {
+              key: 'fruit-storage-A1',
+              value: 'Yes',
+            },
+            {
+              key: 'fruit-storage-A2',
+              value: 'No',
+              redirectUrl: 'project-items'
+            }
+          ],
+          yarKey: 'fruitStorage'
+        },
+        
         {
           key: 'other-farmers',
           order: 68,
@@ -703,12 +737,12 @@ const questionBank = {
             dependentAnswerKeysArray: ['smaller-abattoir-A1'],
             urlOptions: {
               thenUrl: 'other-farmers',
-              elseUrl: 'smaller-abattoir'
+              elseUrl: 'fruit-storage'
             }
           },
           nextUrl: 'storage',
           fundingPriorities: '',
-          preValidationKeys: ['projectStart', 'tenancy'],
+          // preValidationKeys: ['projectStart', 'tenancy', 'fruitStorage', 'otherFarmers'],
           type: 'multi-answer',
           minAnswerCount: 1,
           validate: [
@@ -809,7 +843,15 @@ const questionBank = {
           title: 'Will you buy a solar PV system with this grant?',
           url: 'solar-PV-system',
           baseUrl: 'solar-PV-system',
-          backUrl: 'storage',
+          backUrlObject: {
+            dependentQuestionYarKey: 'fruitStorage',
+            dependentAnswerKeysArray: ['fruit-storage-A1'],
+            urlOptions: {
+              thenUrl: 'fruit-storage',
+              elseUrl: 'storage',
+              nonDependentUrl: 'storage'
+            }
+          },
           nextUrl: 'project-cost',
           // preValidationKeys: ['storage'],
           hint: {
