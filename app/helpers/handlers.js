@@ -362,48 +362,7 @@ const checkYarKeyReset = (thisAnswer, request) => {
   }
 }
 
-const showPostPage = (currentQuestion, request, h) => {
-  const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, dependantNextUrl, title, type } = currentQuestion
-  const NOT_ELIGIBLE = { ...ineligibleContent, backUrl: baseUrl }
-  const payload = request.payload
-  let thisAnswer
-  let dataObject
-  if (yarKey === 'consentOptional' && !Object.keys(payload).includes(yarKey)) {
-    setYarValue(request, yarKey, '')
-  }
-
-  for (const [key, value] of Object.entries(payload)) {
-    thisAnswer = answers?.find(answer => (answer.value === value))
-
-    if (type !== 'multi-input' && key !== 'secBtn') {
-      setYarValue(request, key, key === 'projectPostcode' ? value.replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase() : value)
-    }
-  }
-
-  checkYarKeyReset(thisAnswer, request)
-
-  if (type === 'multi-input') {
-    multiInputPostHandler(currentQuestion, request, dataObject, payload, yarKey)
-  }
-
-  currentQuestion = titleCheck(currentQuestion, title, baseUrl, request)
-
-  const errors = checkErrors(payload, currentQuestion, h, request)
-  if (errors) {
-    // gapiService.sendValidationDimension(request)
-    return errors
-  }
-
-  if (thisAnswer?.notEligible ||
-      (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
-  ) {
-    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
-
-    return h.view('not-eligible', NOT_ELIGIBLE)
-  } else if (thisAnswer?.redirectUrl) {
-    return h.redirect(thisAnswer?.redirectUrl)
-  }
-
+const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dependantNextUrl, nextUrl, h) => {
   if (yarKey === 'projectCost') {
     const { calculatedGrant, remainingCost } = getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo)
 
@@ -450,6 +409,53 @@ const showPostPage = (currentQuestion, request, h) => {
   }
 
   return h.redirect(getUrl(dependantNextUrl, nextUrl, request, payload.secBtn))
+
+}
+
+const showPostPage = (currentQuestion, request, h) => {
+  const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, dependantNextUrl, title, type } = currentQuestion
+  const NOT_ELIGIBLE = { ...ineligibleContent, backUrl: baseUrl }
+  const payload = request.payload
+  let thisAnswer
+  let dataObject
+  if (yarKey === 'consentOptional' && !Object.keys(payload).includes(yarKey)) {
+    setYarValue(request, yarKey, '')
+  }
+
+  for (const [key, value] of Object.entries(payload)) {
+    thisAnswer = answers?.find(answer => (answer.value === value))
+
+    if (type !== 'multi-input' && key !== 'secBtn') {
+      setYarValue(request, key, key === 'projectPostcode' ? value.replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase() : value)
+    }
+  }
+
+  checkYarKeyReset(thisAnswer, request)
+
+  if (type === 'multi-input') {
+    multiInputPostHandler(currentQuestion, request, dataObject, payload, yarKey)
+  }
+
+  currentQuestion = titleCheck(currentQuestion, title, baseUrl, request)
+
+  const errors = checkErrors(payload, currentQuestion, h, request)
+  if (errors) {
+    // gapiService.sendValidationDimension(request)
+    return errors
+  }
+
+  if (thisAnswer?.notEligible ||
+      (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
+  ) {
+    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+
+    return h.view('not-eligible', NOT_ELIGIBLE)
+  } else if (thisAnswer?.redirectUrl) {
+    return h.redirect(thisAnswer?.redirectUrl)
+  }
+
+  return handleSolarCostRedirects(request, currentQuestion, payload, yarKey, dependantNextUrl, nextUrl, h)
+
 }
 
 const getHandler = (question) => {
