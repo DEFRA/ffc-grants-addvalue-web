@@ -22,13 +22,6 @@ const getConfirmationId = (guid) => {
   return `${prefix}-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
 }
 
-const handleConditinalHtmlData = (type, labelData, yarKey, request) => {
-  const isMultiInput = type === 'multi-input'
-  const label = isMultiInput ? 'sbi' : yarKey
-  const fieldValue = isMultiInput ? getYarValue(request, yarKey)?.sbi : getYarValue(request, yarKey)
-  return getHtml(label, labelData, fieldValue)
-}
-
 const saveValuesToArray = (yarKey, fields) => {
   const result = []
 
@@ -338,15 +331,7 @@ const getPage = async (question, request, h) => {
     data = [data].flat()
   }
   let conditionalHtml
-  if (question?.conditionalKey && question?.conditionalLabelData) {
-    const conditional = yarKey === 'businessDetails' ? yarKey : question.conditionalKey
-    conditionalHtml = handleConditinalHtmlData(
-      type,
-      question.conditionalLabelData,
-      conditional,
-      request
-    )
-  }
+
 
   return handleUrlCases(data, question, request, conditionalHtml, h, backUrl, nextUrl)
 
