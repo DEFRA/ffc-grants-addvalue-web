@@ -89,36 +89,35 @@ const checkErrors = (payload, currentQuestion, h, request) => {
   isconditionalAnswer = payload[yarKey]?.includes(conditionalAnswer?.value)
   if (validate) {
     placeholderInputError = checkInputError(validate, isconditionalAnswer, payload, yarKey, ALL_QUESTIONS)
-    
+
     if (placeholderInputError?.type === 'COMBINATION_ANSWER' && placeholderInputError?.combinationErrorsList?.length > 0) {
       const selectedAnswer = payload[yarKey]
-      let errorText;
-      let {
+      let errorText
+      const {
         combinationErrorsList,
         combinationObject: {
-          questionKey,
-        },
+          questionKey
+        }
       } = placeholderInputError
 
       combinationErrorsList.forEach((error, index) => {
         if (selectedAnswer.length === error.length) {
           if (selectedAnswer.every((answer, idx) => answer === getQuestionAnswer(questionKey, error[idx], ALL_QUESTIONS))) {
             if (index === 0 || index === 3) {
-                errorText = "Select either 'Creating added-value products for the first time' or 'Increasing volume'";
+              errorText = "Select either 'Starting to make added-value products for the first time' or 'Increasing volume'"
             } else if (index === 1 || index === 4) {
-                errorText = "Select either 'Creating added-value products for the first time' or 'Increasing range'";
+              errorText = "Select either 'Starting to make added-value products for the first time' or 'Increasing range'"
             } else if (index === 2 || index === 5) {
-                errorText = "Select either 'Creating added-value products for the first time' or 'Increasing volume' and 'Increasing range'";
+              errorText = "Select either 'Starting to make added-value products for the first time' or 'Increasing volume' and 'Increasing range'"
             }
           }
         }
-      });
+      })
 
       errorHrefList.push({
         text: errorText,
         href: `#${placeholderInputError.dependentKey ?? yarKey}`
       })
-
     } else if (placeholderInputError) {
       errorHrefList.push({
         text: placeholderInputError.error,
