@@ -57,7 +57,7 @@ describe('Page: /smaller-abattoir', () => {
     expect(postResponse.headers.location).toBe('other-farmers')
   })
 
-  it('user selects \'No\' -> store user response and redirect to /project-items', async () => {    
+  it('user selects \'No\' -> store user response and redirect to /fruit-storage', async () => {    
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/smaller-abattoir`,
@@ -67,7 +67,7 @@ describe('Page: /smaller-abattoir', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('project-items')
+    expect(postResponse.headers.location).toBe('fruit-storage')
   })
 
   it('page loads with correct back link - /tenancy - if user selected \'Yes\' on /tenancy', async () => {

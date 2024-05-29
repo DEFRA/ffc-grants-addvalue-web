@@ -58,18 +58,18 @@ describe('Page: /project-items', () => {
     expect(postResponse.headers.location).toBe('storage')
   })
 
-  // it('page loads with correct back link when solarPVSystem is Yes - /other-farmers', async () => {
-  //   varList.smallerAbattoir = 'Yes'
-  //   const options = {
-  //     method: 'GET',
-  //     url: `${global.__URLPREFIX__}/project-items`
-  //   }
-  //   const response = await global.__SERVER__.inject(options)
-  //   expect(response.statusCode).toBe(200)
-  //   expect(response.payload).toContain('<a href=\"other-farmers\" class=\"govuk-back-link\">Back</a>')
-  // })
+  it('page loads with correct back link when solarPVSystem is Yes - /other-farmers', async () => {
+    varList.smallerAbattoir = 'Yes'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-items`
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<a href=\"other-farmers\" class=\"govuk-back-link\">Back</a>')
+  })
 
-  it('page loads with correct back link when smaller-abattoir is No - /smaller-abattoir', async () => {
+  it('page loads with correct back link when smaller-abattoir is No - /fruit-storage', async () => {
     varList.smallerAbattoir = 'No'
     const options = {
       method: 'GET',
@@ -77,7 +77,7 @@ describe('Page: /project-items', () => {
     }
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<a href=\"smaller-abattoir" class=\"govuk-back-link\">Back</a>')
+    expect(response.payload).toContain('<a href=\"fruit-storage" class=\"govuk-back-link\">Back</a>')
   })
 
 
