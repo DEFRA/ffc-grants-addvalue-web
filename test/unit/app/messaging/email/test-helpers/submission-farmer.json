@@ -41,7 +41,7 @@
         "calvingSystem":"Year round",
         "calvesNumber":30
     },
-    "fruitStorage": null,
+    "fruitStorage": "",
     "applicantType": "Beef (including calf rearing)",
     "projectType": "",
     "applicantBusiness": "processing",
