@@ -185,6 +185,7 @@ function getScoreChance (rating) {
 }
 
 function scoreQuestions(submission, desirabilityScore) {
+  const isMechanisationYes = submission.mechanisation === getQuestionAnswer('mechanisation', 'mechanisation-A1', ALL_QUESTIONS)
   return {
     scoreDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
     productsProcessed: submission.productsProcessed,
@@ -200,6 +201,9 @@ function scoreQuestions(submission, desirabilityScore) {
     environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
     mechanisation: submission.mechanisation,
     mechanisationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'mechanisation'),
+    manualLabour: isMechanisationYes ? submission.manualLabour : '',
+    manualLabourScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manualLabour') : '',
+    isMechanisationYes: isMechanisationYes
   }
 }
 

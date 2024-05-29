@@ -57,6 +57,8 @@
     "environmentalImpact": ["Yes", "Hi"],
     "productsProcessed": ["Yes", "Hi"],
     "collaboration": "boop",
-    "projectItems": ["None of the above"]
+    "projectItems": ["None of the above"],
+    "mechanisation": "No",
+    "manualLabour": ""
 
 }
