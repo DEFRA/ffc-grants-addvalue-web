@@ -1,7 +1,7 @@
 const { crumbToken } = require('./test-helper')
 const { commonFunctionsMock } = require('../../../session-mock')
 describe('Page: /applicant-details', () => {
-  const varList = { applying: 'Applicant' }
+  const varList = { applying: 'Applicant', reachedCheckDetails: false }
 
   let valList = {}
 

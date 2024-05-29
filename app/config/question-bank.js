@@ -602,8 +602,6 @@ const questionBank = {
           //   preValidationRule: 'OR',
           //   preValidationUrls: ['tenancy', 'project-responsibility']
           // },
-          eliminationAnswerKeys: '',
-          fundingPriorities: '',
           type: 'single-answer',
           minAnswerCount: 1,
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
@@ -616,17 +614,54 @@ const questionBank = {
           answers: [
             {
               key: 'smaller-abattoir-A1',
-              value: 'Yes'
+              value: 'Yes',
+              yarKeysReset: ['fruitStorage']
             },
             {
               key: 'smaller-abattoir-A2',
               value: 'No',
-              redirectUrl: 'project-items',
+              redirectUrl: 'fruit-storage',
               yarKeysReset: ['otherFarmers']
             }
           ],
           yarKey: 'smallerAbattoir'
         },
+        {
+          key: 'fruit-storage',
+          order: 70,
+          title: 'Do you want to build new controlled atmosphere storage for top fruit?',
+          hint: {
+            text: 'Fruit that grows on trees, for example apples, pears, quinces, medlars, plums, peaches, apricots and cherries'
+          },
+          url: 'fruit-storage',
+          baseUrl: 'fruit-storage',
+          backUrl: 'smaller-abattoir',
+          nextUrl: 'solar-PV-system',
+          preValidationKeys: [],
+          type: 'single-answer',
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select yes if you want to build new controlled atmosphere storage for top fruit'
+            }
+          ],
+          answers: [
+            {
+              key: 'fruit-storage-A1',
+              value: 'Yes',
+              yarKeysReset: ['projectItems']
+            },
+            {
+              key: 'fruit-storage-A2',
+              value: 'No',
+              redirectUrl: 'project-items'
+            }
+          ],
+          yarKey: 'fruitStorage'
+        },
+        
         {
           key: 'other-farmers',
           order: 68,
@@ -703,12 +738,12 @@ const questionBank = {
             dependentAnswerKeysArray: ['smaller-abattoir-A1'],
             urlOptions: {
               thenUrl: 'other-farmers',
-              elseUrl: 'smaller-abattoir'
+              elseUrl: 'fruit-storage'
             }
           },
           nextUrl: 'storage',
           fundingPriorities: '',
-          preValidationKeys: ['projectStart', 'tenancy'],
+          // preValidationKeys: ['projectStart', 'tenancy', 'fruitStorage', 'otherFarmers'],
           type: 'multi-answer',
           minAnswerCount: 1,
           validate: [
@@ -809,7 +844,15 @@ const questionBank = {
           title: 'Will you buy a solar PV system with this grant?',
           url: 'solar-PV-system',
           baseUrl: 'solar-PV-system',
-          backUrl: 'storage',
+          backUrlObject: {
+            dependentQuestionYarKey: 'fruitStorage',
+            dependentAnswerKeysArray: ['fruit-storage-A1'],
+            urlOptions: {
+              thenUrl: 'fruit-storage',
+              elseUrl: 'storage',
+              nonDependentUrl: 'storage'
+            }
+          },
           nextUrl: 'project-cost',
           // preValidationKeys: ['storage'],
           hint: {
@@ -1342,9 +1385,9 @@ const questionBank = {
             {
               type: 'COMBINATION_ANSWER',
               error: '',
-              combinationErrorsList: [['project-impact-A1', 'project-impact-A2'], ['project-impact-A1', 'project-impact-A3'],
-              ['project-impact-A1', 'project-impact-A2', 'project-impact-A3'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A4'],
-              ['project-impact-A1', 'project-impact-A3', 'project-impact-A4'], ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4']],
+              combinationErrorsList: [['project-impact-A2', 'project-impact-A1'], ['project-impact-A3', 'project-impact-A1'],
+              ['project-impact-A3', 'project-impact-A2', 'project-impact-A1'], ['project-impact-A2', 'project-impact-A4', 'project-impact-A1'],
+              ['project-impact-A3', 'project-impact-A4', 'project-impact-A1'], ['project-impact-A3', 'project-impact-A2', 'project-impact-A4', 'project-impact-A1']],
               combinationObject: {
                 questionKey: 'project-impact',
                 combinationAnswerKeys: ['project-impact-A1', 'project-impact-A4']
@@ -1382,6 +1425,9 @@ const questionBank = {
           order: 132,
           title: 'Will this project use any mechanisation instead of manual labour?',
           pageTitle: '',
+          hint: {
+            text: 'For example, a fruit grading and sorting machine that does the work of 2 farm labourers'
+          },
           url: 'mechanisation',
           baseUrl: 'mechanisation',
           backUrl: 'project-impact',
@@ -1426,9 +1472,12 @@ const questionBank = {
         },
         {
           key: 'manual-labour-amount',
-          order: 136,
+          order: 150,
           title: 'How much manual labour will the mechanisation be equal to?',
           pageTitle: '',
+          hint: {
+            text: 'Based on your current staff numbers'
+          },
           url: 'manual-labour-amount',
           baseUrl: 'manual-labour-amount',
           backUrl: 'mechanisation',
@@ -1436,7 +1485,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Manual Labour Amount'
+            title: 'Mechanisation'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
@@ -1499,7 +1548,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Future customers'
+            title: 'New customers'
           },
           hint: {
             html: `For example, you will now sell directly to retailers 

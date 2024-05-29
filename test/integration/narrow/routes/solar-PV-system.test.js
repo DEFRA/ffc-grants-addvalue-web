@@ -2,7 +2,10 @@ const { commonFunctionsMock } = require('../../../session-mock')
 const { crumbToken } = require('./test-helper')
 
 describe('Page: /solar-PV-system', () => {
-  let varList = {}
+  let varList = {
+    smallerAbattoir: 'No',
+    fruitStorage: null
+  }
   let valList = {}
   
   commonFunctionsMock(varList, undefined, {}, valList)
@@ -52,6 +55,19 @@ describe('Page: /solar-PV-system', () => {
   })
 
   it('page loads with correct back link - /storage', async () => {
+    varList.smallerAbattoir = 'Yes'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/solar-PV-system`
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<a href=\"storage" class=\"govuk-back-link\">Back</a>')
+  })
+
+  it('page loads with correct back link - /storage', async () => {
+    varList.smallerAbattoir = 'No',
+    varList.fruitStorage = 'No'
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/solar-PV-system`
@@ -59,5 +75,17 @@ describe('Page: /solar-PV-system', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('<a href=\"storage\" class=\"govuk-back-link\">Back</a>')
+  })
+
+  it('page loads with correct back link - /fruit-storage', async () => {
+    varList.smallerAbattoir = 'No',
+    varList.fruitStorage = 'Yes'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/solar-PV-system`
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<a href=\"fruit-storage\" class=\"govuk-back-link\">Back</a>')
   })
 })
