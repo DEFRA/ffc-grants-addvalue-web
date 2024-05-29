@@ -198,6 +198,8 @@ function scoreQuestions(submission, desirabilityScore) {
     collaborationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'collaboration'),
     environmentalImpact: [submission.environmentalImpact].flat().join(', '),
     environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
+    mechanisation: submission.mechanisation,
+    mechanisationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'mechanisation'),
   }
 }
 
@@ -205,6 +207,7 @@ function scoreQuestions(submission, desirabilityScore) {
 function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail = false) {
   const email = isAgentEmail ? submission.agentsDetails.emailAddress : submission.farmerDetails.emailAddress
   const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
+  const isFruitStorageTrue = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A2', ALL_QUESTIONS)
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
@@ -224,6 +227,8 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       isNotTenancy: submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS),
       projectResponsibility: submission.projectResponsibility ?? '',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
+      isFruitStorageTrue: isFruitStorageTrue,
+      fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
       storageNeeded: submission.storage,
       projectCost: getCurrencyFormat(submission.projectCost),
       potentialFunding: getCurrencyFormat(submission.calculatedGrant),

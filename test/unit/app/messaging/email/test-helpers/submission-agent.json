@@ -58,6 +58,8 @@
     "solarPVCost": null,
     "smallerAbattoir": "No",
     "IsSmallerAbattoir": false,
+    "isFruitStorageTrue": true,
+    "fruitStorage": "Yes",
     "otherFarmers": null,
     "solarPVSystem": "No",
     "isSolarPVSystemYes": false,
