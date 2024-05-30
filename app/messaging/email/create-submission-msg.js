@@ -200,7 +200,7 @@ function scoreQuestions(submission, desirabilityScore) {
     environmentalImpact: [submission.environmentalImpact].flat().join(', '),
     environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
     mechanisation: submission.mechanisation,
-    mechanisationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'mechanisation'),
+    mechanisationScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manualLabour') : 'Weak',
     manualLabour: isMechanisationYes ? submission.manualLabour : '',
     manualLabourScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manualLabour') : '',
     isMechanisationYes: isMechanisationYes
