@@ -59,6 +59,8 @@
     "collaboration": "boop",
     "projectItems": ["None of the above"],
     "mechanisation": "No",
-    "manualLabour": ""
+    "manualLabour": "",
+    "mechanisationScore": "Weak",
+    "isMechanisationYes": false
 
 }
