@@ -202,7 +202,6 @@ function scoreQuestions(submission, desirabilityScore) {
     mechanisation: submission.mechanisation,
     mechanisationScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manualLabour') : 'Weak',
     manualLabour: isMechanisationYes ? submission.manualLabour : '',
-    manualLabourScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manualLabour') : '',
     isMechanisationYes: isMechanisationYes
   }
 }
