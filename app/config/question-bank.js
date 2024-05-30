@@ -1782,7 +1782,7 @@ const questionBank = {
               key: 'environmental-impact-A3',
               value: 'Water efficiency',
               hint: {
-                text: 'For example, majority of water for thep roject is harvested or recycled on site'
+                text: 'For example, majority of water for the project is harvested or recycled on site'
               }
             },
             {
