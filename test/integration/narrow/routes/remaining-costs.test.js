@@ -4,7 +4,8 @@ const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /remaining-costs', () => {
   const varList = {
-    smallerAbattoir: 'Yes',
+    smallerAbattoir: 'No',
+    fruitStorage: 'Yes',
     totalCalculatedGrant: 66000,
     totalProjectCost: 240000,
     calculatedGrant: 16000,
@@ -16,7 +17,6 @@ describe('Page: /remaining-costs', () => {
     isSolarCappedGreaterThanCalculatedGrant: false,
     isSolarCapped: false,
     solarPVSystem: 'No'
-
   }
 
   let valList = {}
@@ -66,8 +66,22 @@ describe('Page: /remaining-costs', () => {
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
-  it('user selects eligible option: \'Yes\' -> store user response and redirect to /produce-processed when the user answered "Yes" on /smaller-abattoir', async () => {
+  it('user selects eligible option: \'Yes\' -> store user response and redirect to /mechanisation when the user answered "No" on /smaller-abattoir & "Yes" on /fruit-storage', async () => {
     valList.canPayRemainingCost = null
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/remaining-costs`,
+      headers: { cookie: 'crumb=' + crumbToken },
+      payload: { canPayRemainingCost: 'Yes', crumb: crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe('mechanisation')
+  })
+
+  it('user selects eligible option: \'Yes\' -> store user response and redirect to /produce-processed when the user answered "No" on /smaller-abattoir & "No" on /fruit-storage', async () => {
+    varList.fruitStorage = 'No'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/remaining-costs`,
@@ -80,8 +94,10 @@ describe('Page: /remaining-costs', () => {
     expect(postResponse.headers.location).toBe('produce-processed')
   })
 
-  it('user selects eligible option: \'Yes\' -> store user response and redirect to /mechanisation when the user answered "No" on /smaller-abattoir', async () => {
-    varList.smallerAbattoir = 'No'
+   it('user selects eligible option: \'Yes\' -> store user response and redirect to /produce-processed when the user answered "Yes" on /smaller-abattoir', async () => {
+    varList.smallerAbattoir= 'Yes'
+    varList.fruitStorage = null
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/remaining-costs`,
@@ -91,7 +107,7 @@ describe('Page: /remaining-costs', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('mechanisation')
+    expect(postResponse.headers.location).toBe('produce-processed')
   })
 
   it('page loads with correct back link when solar-pv-system is /No', async () => {

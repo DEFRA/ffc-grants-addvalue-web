@@ -1105,11 +1105,12 @@ const questionBank = {
           baseUrl: 'remaining-costs',
           backUrl: 'potential-amount',
           dependantNextUrl: {
-            dependentQuestionYarKey: 'smallerAbattoir', 
-            dependentAnswerKeysArray: ['smaller-abattoir-A1'],
+            dependentQuestionYarKey: 'fruitStorage', 
+            dependentAnswerKeysArray: ['fruit-storage-A1'],
             urlOptions: {
-              thenUrl: 'produce-processed',
-              elseUrl: 'mechanisation'
+              thenUrl: 'mechanisation',
+              elseUrl: 'produce-processed',
+              nonDependentUrl: 'produce-processed'
             }   
           },
           eliminationAnswerKeys: '',
@@ -1438,11 +1439,12 @@ const questionBank = {
           url: 'mechanisation',
           baseUrl: 'mechanisation',
           backUrlObject: {
-            dependentQuestionYarKey: 'smallerAbattoir',
-            dependentAnswerKeysArray: ['smaller-abattoir-A1'],
+            dependentQuestionYarKey: 'fruitStorage',
+            dependentAnswerKeysArray: ['fruit-storage-A1'],
             urlOptions: {
-              thenUrl: 'project-impact',
-              elseUrl: 'remaining-costs'
+              thenUrl: 'remaining-costs',
+              elseUrl: 'project-impact',
+              nonDependentUrl: 'project-impact'
             }
           },
           nextUrl: 'future-customers',

@@ -2,7 +2,22 @@ const { crumbToken } = require('./test-helper')
 const { commonFunctionsMock } = require('./../../../session-mock')
 
 describe('Page: /mechanisation', () => {
-  const varList = {}
+    const varList = {
+    smallerAbattoir: 'No',
+    fruitStorage: 'Yes',
+    totalCalculatedGrant: 66000,
+    totalProjectCost: 240000,
+    calculatedGrant: 16000,
+    projectCost: 40000,
+    calculatedSolarGrant: 50000,
+    solarProjectCost: 200000,
+    solarPVCost: 200000,
+    remainingCost:174000,
+    isSolarCappedGreaterThanCalculatedGrant: false,
+    isSolarCapped: false,
+    solarPVSystem: 'No'
+  }
+
   let valList = {}
 
   commonFunctionsMock(varList, 'Error', {}, valList)
@@ -67,27 +82,30 @@ describe('Page: /mechanisation', () => {
     expect(postResponse.headers.location).toBe('future-customers')
   })
 
-  it('page loads with correct back link when the user answered "Yes" on /smaller-abattoir', async () => {
-    varList.smallerAbattoir = 'Yes'
+  it('page loads with correct back link when the user answered "No" on /smaller-abattoir & "No" on /fruit-storage', async () => {
+    varList.fruitStorage = 'No'
     
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/mechanisation`
     }
+
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('<a href=\"project-impact\" class=\"govuk-back-link\">Back</a>')
   })
 
-  xit('page loads with correct back link when the user answered "No" on /smaller-abattoir', async () => {
-    varList.smallerAbattoir = 'No'
-        
+  it('page loads with correct back link when the user answered "No" on /smaller-abattoir', async () => {
+    varList.smallerAbattoir= 'No'
+    varList.fruitStorage = null  
+
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/mechanisation`
     }
+
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<a href=\"remaining-costs\" class=\"govuk-back-link\">Back</a>')
+    expect(response.payload).toContain('<a href=\"project-impact\" class=\"govuk-back-link\">Back</a>')
   })
 })
