@@ -22,7 +22,7 @@ describe('Page: /collaboration', () => {
 
   it('no option selected -> show error message', async () => {
     valList.collaboration = {
-      error: 'Select yes if you will be buying materials from other farmers',
+      error: 'Select yes if you will work in partnership or collaborate with other farmers or producers',
       return: false
     }
     const postOptions = {
@@ -34,7 +34,7 @@ describe('Page: /collaboration', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you will be buying materials from other farmers')
+    expect(postResponse.payload).toContain('Select yes if you will work in partnership or collaborate with other farmers or producers')
   })
 
   it('user selects any option [Yes | No] -> store user response and redirect to /environmental-impact', async () => {

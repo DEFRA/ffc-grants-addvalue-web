@@ -1659,7 +1659,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if you will be buying materials from other farmers'
+              error: 'Select yes if you will work in partnership or collaborate with other farmers or producers'
             }
           ],
           answers: [
