@@ -58,11 +58,16 @@
     "solarPVCost": null,
     "smallerAbattoir": "No",
     "IsSmallerAbattoir": false,
+    "isMechanisationYes": true,
+    "isFruitStorageTrue": true,
+    "fruitStorage": "Yes",
     "otherFarmers": null,
     "solarPVSystem": "No",
     "isSolarPVSystemYes": false,
     "solarGrantRate": null,
     "grantRate": "up to 40%",
-    "applicantBusiness": "why"
+    "applicantBusiness": "why",
+    "mechanisation": "Yes",
+    "manualLabour": "Up to 5% of workforce"
 
 }
