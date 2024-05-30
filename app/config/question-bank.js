@@ -935,6 +935,15 @@ const questionBank = {
             Do not include VAT<br/><br/>
             Enter cost of the items, for example 695,000`
           },
+          sidebar: {
+            values: [{
+              heading: 'Selected items',
+              content: [{
+                items: []
+              }]
+            }],
+            dependentQuestionKeys: ['projectItems', 'fruitStorage', 'storage']
+          },
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).`,
@@ -1986,7 +1995,7 @@ const questionBank = {
           url: 'applicant-details',
           baseUrl: 'applicant-details',
           nextUrl: 'check-details',
-          preValidationKeys: ['applying'],
+          // preValidationKeys: ['applying'],
           eliminationAnswerKeys: '',
           backUrlObject: {
             dependentQuestionYarKey: 'applying',
@@ -2658,7 +2667,7 @@ const questionBank = {
           url: 'confirm',
           backUrl: 'check-details',
           nextUrl: 'confirmation',
-          preValidationKeys: ['farmerDetails'],
+          // preValidationKeys: ['farmerDetails'],
           preValidationKeysRule: { condition: 'ANY' },
           maybeEligible: true,
           maybeEligibleContent: {
@@ -2687,7 +2696,7 @@ const questionBank = {
           pageTitle: '',
           url: 'confirmation',
           baseUrl: 'confirmation',
-          preValidationKeys: ['consentOptional'],
+          // preValidationKeys: ['consentOptional'],
           ga: [
             { dimension: 'cd2', value: { type: 'score' } },
             { dimension: 'cd5', value: { type: 'confirmationId' } },
@@ -2701,7 +2710,8 @@ const questionBank = {
               surveyLink: process.env.SURVEY_LINK
             },
             messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
-            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme:
+            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme.<br></br>
+            {{_extraLink_}}
             <h1 class="govuk-heading-m">RPA helpline</h1>
             <h2 class="govuk-heading-s">Telephone</h2>
             Telephone: 03000 200 301<br/>
