@@ -342,7 +342,7 @@ const questionBank = {
           nextUrl: 'project-start',
           preValidationKeys: ['inEngland'],
           ineligibleContent: {
-            messageContent: 'Any planning permission must be in place by 31 January 2024.',
+            messageContent: 'Any planning permission must be in place by 31 May 2025.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for'
@@ -598,7 +598,7 @@ const questionBank = {
           nextUrl: 'other-farmers',
           // preValidationObject: {
           //   preValidationKeys: ['tenancy', 'projectResponsibility'],
-          //   preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1'],
+          //   preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1', 'project-responsibility-A2'],
           //   preValidationRule: 'OR',
           //   preValidationUrls: ['tenancy', 'project-responsibility']
           // },
@@ -743,7 +743,8 @@ const questionBank = {
           },
           nextUrl: 'storage',
           fundingPriorities: '',
-          // preValidationKeys: ['projectStart', 'tenancy', 'fruitStorage', 'otherFarmers'],
+          //To add otherFarmers later as well 
+          preValidationKeys: ['projectStart', 'tenancy', 'smallerAbattoir'],
           type: 'multi-answer',
           minAnswerCount: 1,
           validate: [
@@ -1112,7 +1113,15 @@ const questionBank = {
           url: 'remaining-costs',
           baseUrl: 'remaining-costs',
           backUrl: 'potential-amount',
-          nextUrl: 'produce-processed',
+          dependantNextUrl: {
+            dependentQuestionYarKey: 'fruitStorage', 
+            dependentAnswerKeysArray: ['fruit-storage-A1'],
+            urlOptions: {
+              thenUrl: 'mechanisation',
+              elseUrl: 'produce-processed',
+              nonDependentUrl: 'produce-processed'
+            }   
+          },
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
@@ -1172,7 +1181,6 @@ const questionBank = {
             }
           ],
           yarKey: 'canPayRemainingCost'
-
         },
         {
           key: 'products-processed',
@@ -1439,8 +1447,28 @@ const questionBank = {
           },
           url: 'mechanisation',
           baseUrl: 'mechanisation',
-          backUrl: 'project-impact',
+          backUrlObject: {
+            dependentQuestionYarKey: 'fruitStorage',
+            dependentAnswerKeysArray: ['fruit-storage-A1'],
+            urlOptions: {
+              thenUrl: 'remaining-costs',
+              elseUrl: 'project-impact',
+              nonDependentUrl: 'project-impact'
+            }
+          },
           nextUrl: 'future-customers',
+          // preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
+          // preValidationObject: {
+          //   preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
+          //   preValidationAnswer: ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4', 'remaining-costs-A1'],
+          //   preValidationRule: 'OR',
+          //   preValidationUrls: ['project-impact', 'remaining-costs']
+          // },
+          score: {
+            isScore: true,
+            isDisplay: true,
+            title: 'Mechanisation'
+          },
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
@@ -1477,7 +1505,6 @@ const questionBank = {
             }
           ],
           yarKey: 'mechanisation'
-
         },
         {
           key: 'manual-labour-amount',
@@ -1494,7 +1521,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Mechanisation'
+            title: 'Manual Labour'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
@@ -1668,7 +1695,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if you will be buying materials from other farmers'
+              error: 'Select yes if you will work in partnership or collaborate with other farmers or producers'
             }
           ],
           answers: [
@@ -1800,7 +1827,7 @@ const questionBank = {
           baseUrl: 'business-details',
           backUrl: 'score',
           nextUrl: 'applying',
-          // preValidationKeys: ['current-score'],
+          preValidationKeys: ['current-score'],
           ga: [
             { dimension: 'cd2', value: { type: 'score' } },
             { dimension: 'cm1', value: { type: 'journey-time' } }
@@ -1918,11 +1945,11 @@ const questionBank = {
                 {
                   type: 'REGEX',
                   regex: WHOLE_NUMBER_REGEX,
-                  error: 'Business turnover must be a whole number, like 100000'
+                  error: 'Enter your annual business turnover, in pounds'
                 },
                 {
                   type: 'MIN_MAX',
-                  min: 1,
+                  min: 0,
                   max: 999999999,
                   error: 'Number must be between 1-999999999'
                 }

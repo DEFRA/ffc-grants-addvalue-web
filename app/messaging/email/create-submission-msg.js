@@ -185,6 +185,7 @@ function getScoreChance (rating) {
 }
 
 function scoreQuestions(submission, desirabilityScore) {
+  const isMechanisationYes = submission.mechanisation === getQuestionAnswer('mechanisation', 'mechanisation-A1', ALL_QUESTIONS)
   return {
     scoreDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
     productsProcessed: submission.productsProcessed,
@@ -198,19 +199,43 @@ function scoreQuestions(submission, desirabilityScore) {
     collaborationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'collaboration'),
     environmentalImpact: [submission.environmentalImpact].flat().join(', '),
     environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
+    mechanisation: submission.mechanisation,
+    mechanisationScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manualLabour') : 'Weak',
+    manualLabour: isMechanisationYes ? submission.manualLabour : '',
+    isMechanisationYes: isMechanisationYes
   }
+}
+
+const businesQuestion = (submission, isAgentEmail) => {
+
+  return {
+    firstName: isAgentEmail ? submission.agentsDetails.firstName : submission.farmerDetails.firstName,
+    lastName: isAgentEmail ? submission.agentsDetails.lastName : submission.farmerDetails.lastName,
+    projectName: submission.businessDetails.projectName,
+    businessName: submission.businessDetails.businessName,
+    farmerName: submission.farmerDetails.firstName,
+    farmerSurname: submission.farmerDetails.lastName,
+    farmerEmail: submission.farmerDetails.emailAddress,
+    agentName: submission.agentsDetails?.firstName ?? 'N/A',
+    agentSurname: submission.agentsDetails?.lastName ?? ' ',
+    agentBusinessName: submission.agentsDetails?.businessName ?? 'N/A',
+    agentEmail: submission.agentsDetails?.emailAddress ?? 'N/A',
+    contactConsent: submission.consentOptional ? 'Yes' : 'No',
+    businessType: submission.applicantBusiness
+  }
+  
 }
 
 // same here
 function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail = false) {
   const email = isAgentEmail ? submission.agentsDetails.emailAddress : submission.farmerDetails.emailAddress
   const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
+  const isFruitStorageTrue = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A2', ALL_QUESTIONS)
+  const IsSmallerAbattoir = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
     details: {
-      firstName: isAgentEmail ? submission.agentsDetails.firstName : submission.farmerDetails.firstName,
-      lastName: isAgentEmail ? submission.agentsDetails.lastName : submission.farmerDetails.lastName,
       referenceNumber: submission.confirmationId,
       overallRating: desirabilityScore.desirability.overallRating.band,
       scoreChance: getScoreChance(desirabilityScore.desirability.overallRating.band),
@@ -224,29 +249,21 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       isNotTenancy: submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS),
       projectResponsibility: submission.projectResponsibility ?? '',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
+      isFruitStorageTrue: isFruitStorageTrue,
+      fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
       storageNeeded: submission.storage,
       projectCost: getCurrencyFormat(submission.projectCost),
       potentialFunding: getCurrencyFormat(submission.calculatedGrant),
       remainingCost: getCurrencyFormat(submission.remainingCost),
-      projectName: submission.businessDetails.projectName,
-      businessName: submission.businessDetails.businessName,
-      farmerName: submission.farmerDetails.firstName,
-      farmerSurname: submission.farmerDetails.lastName,
-      farmerEmail: submission.farmerDetails.emailAddress,
-      agentName: submission.agentsDetails?.firstName ?? 'N/A',
-      agentSurname: submission.agentsDetails?.lastName ?? ' ',
-      agentBusinessName: submission.agentsDetails?.businessName ?? 'N/A',
-      agentEmail: submission.agentsDetails?.emailAddress ?? 'N/A',
-      contactConsent: submission.consentOptional ? 'Yes' : 'No',
-      businessType: submission.applicantBusiness,
       smallerAbattoir: submission.smallerAbattoir,
       otherFarmers: submission.otherFarmers ?? '',
-      IsSmallerAbattoir: submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS),
+      IsSmallerAbattoir: IsSmallerAbattoir,
       isSolarPVSystemYes: isSolarPVSystemYes,
       solarPVSystem: submission.solarPVSystem,
       solarGrantRate: isSolarPVSystemYes ? `Up to ${GRANT_PERCENTAGE_SOLAR}%` : '',
       grantRate: `Up to ${GRANT_PERCENTAGE}%`,
       solarPVCost: isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, ''))) : '',
+      ...businesQuestion(submission, isAgentEmail),
       ...scoreQuestions(submission, desirabilityScore)
     }
   }

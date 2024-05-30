@@ -24,6 +24,7 @@
     "projectResponsibility" : "Yes",
     "smallerAbattoir": "Yes",
     "IsSmallerAbattoir": true,
+    "isFruitStorageTrue": false,
     "otherFarmers": "Yes",
     "solarPVSystem": "Yes",
     "grantRate": "up to 40%",
@@ -40,6 +41,7 @@
         "calvingSystem":"Year round",
         "calvesNumber":30
     },
+    "fruitStorage": "",
     "applicantType": "Beef (including calf rearing)",
     "projectType": "",
     "applicantBusiness": "processing",
@@ -55,6 +57,10 @@
     "environmentalImpact": ["Yes", "Hi"],
     "productsProcessed": ["Yes", "Hi"],
     "collaboration": "boop",
-    "projectItems": ["None of the above"]
+    "projectItems": ["None of the above"],
+    "mechanisation": "No",
+    "manualLabour": "",
+    "mechanisationScore": "Weak",
+    "isMechanisationYes": false
 
 }
