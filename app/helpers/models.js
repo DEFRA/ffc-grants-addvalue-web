@@ -57,7 +57,6 @@ const getModel = (data, question, request, conditionalHtml = '') => {
     ? getDependentSideBar(sidebar, request)
     : sidebar
 
-    console.log("SIDE", sideBarText)
     const showSidebar = sidebar?.showSidebar
 
   let warningDetails
