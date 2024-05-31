@@ -138,7 +138,7 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
             messageContent: maybeEligibleContent.messageContent.replace(
               SELECT_VARIABLE_TO_REPLACE,
               (_ignore, additionalYarKeyName) =>
-                '<br></br>You can check if you can apply for another Adding Value project in addition to top fruit storage.'
+                '<br></br>You can <a class="govuk-link" href="start">check if you can apply for another Adding Value project</a> in addition to top fruit storage.'
             )
         }
       } else {
