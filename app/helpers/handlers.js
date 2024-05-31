@@ -97,88 +97,100 @@ function replaceVariablesInContent(request, maybeEligibleContent) {
 }
 
 const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl, backUrl, h) => {
-  if (question.maybeEligible) {
-    let { maybeEligibleContent } = question
-    maybeEligibleContent.title = question.title
-    let consentOptionalData
+  if (!question.maybeEligible) {
+    return
+  }
 
-    maybeEligibleContent = handlePotentialAmount(request, maybeEligibleContent, url)
+  let { maybeEligibleContent } = question
+  maybeEligibleContent.title = question.title
+  let consentOptionalData
 
-    if (url === 'confirm') {
-      const consentOptional = getYarValue(request, 'consentOptional')
-      consentOptionalData = {
-        hiddenInput: {
-          id: 'consentMain',
-          name: 'consentMain',
-          value: 'true',
-          type: 'hidden'
-        },
-        idPrefix: 'consentOptional',
-        name: 'consentOptional',
-        items: setOptionsLabel(consentOptional,
-          [{
-            value: 'CONSENT_OPTIONAL',
-            text: '(Optional) I consent to being contacted by Defra or a third party about service improvements'
-          }]
-        )
-      }
+  maybeEligibleContent = handlePotentialAmount(request, maybeEligibleContent, url)
+
+  if (url === 'confirm') {
+    const consentOptional = getYarValue(request, 'consentOptional')
+    consentOptionalData = {
+      hiddenInput: {
+        id: 'consentMain',
+        name: 'consentMain',
+        value: 'true',
+        type: 'hidden'
+      },
+      idPrefix: 'consentOptional',
+      name: 'consentOptional',
+      items: setOptionsLabel(consentOptional,
+        [{
+          value: 'CONSENT_OPTIONAL',
+          text: '(Optional) I consent to being contacted by Defra or a third party about service improvements'
+        }]
+      )
     }
+  }
 
-    if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+  if (url === 'confirmation') {  
+    if (getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
       maybeEligibleContent = {
         ...maybeEligibleContent,
         addText: true
       }
     }
 
-    maybeEligibleContent = replaceVariablesInContent(request, maybeEligibleContent)
-
-    if (maybeEligibleContent.reference) {
-      if (!getYarValue(request, 'consentMain')) {
-        return h.redirect(startPageUrl)
-      }
-      confirmationId = getConfirmationId(request.yar.id)
-      try {
-        const overAllScore = getYarValue(request, 'overAllScore')
-        const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
-        await senders.sendDesirabilitySubmitted(emailData, request.yar.id) 
-        
-        // gapi to be updated here?
-        // await gapiService.sendDimensionOrMetrics(request, [{
-        //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
-        //   value: confirmationId
-        // }, {
-        //   dimensionOrMetric: gapiService.dimensions.FINALSCORE,
-        //   value: getYarValue(request, 'current-score')
-        // },
-        // {
-        //   dimensionOrMetric: gapiService.metrics.CONFIRMATION,
-        //   value: 'TIME'
-        // }
-        // ])
-      } catch (err) {
-        console.log('ERROR: ', err)
-      }
-      maybeEligibleContent = {
-        ...maybeEligibleContent,
-        reference: {
-          ...maybeEligibleContent.reference,
-          html: maybeEligibleContent.reference.html.replace(
-            SELECT_VARIABLE_TO_REPLACE, (_ignore, confirmatnId) => (
-              confirmationId
-            )
-          )
-        }
-      }
-      request.yar.reset()
+    const extraTextForConfirmation = getYarValue(request, 'fruitStorage') === getQuestionAnswer('fruit-storage', 'fruit-storage-A1', ALL_QUESTIONS) ? '<br></br>You can <a class="govuk-link" href="start">check if you can apply for another Adding Value project</a> in addition to top fruit storage.' : ''
+    maybeEligibleContent = {
+      ...maybeEligibleContent,
+        messageContent: maybeEligibleContent.messageContent.replace(
+          SELECT_VARIABLE_TO_REPLACE,
+          (_ignore, additionalYarKeyName) =>
+            extraTextForConfirmation
+        )
     }
-
-    const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
-    return h.view('maybe-eligible', MAYBE_ELIGIBLE)
   }
 
-}
+  maybeEligibleContent = replaceVariablesInContent(request, maybeEligibleContent)
 
+  if (maybeEligibleContent.reference) {
+    if (!getYarValue(request, 'consentMain')) {
+      return h.redirect(startPageUrl)
+    }
+    confirmationId = getConfirmationId(request.yar.id)
+    try {
+      const overAllScore = getYarValue(request, 'overAllScore')
+      const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
+      await senders.sendDesirabilitySubmitted(emailData, request.yar.id) 
+      
+      // gapi to be updated here?
+      // await gapiService.sendDimensionOrMetrics(request, [{
+      //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
+      //   value: confirmationId
+      // }, {
+      //   dimensionOrMetric: gapiService.dimensions.FINALSCORE,
+      //   value: getYarValue(request, 'current-score')
+      // },
+      // {
+      //   dimensionOrMetric: gapiService.metrics.CONFIRMATION,
+      //   value: 'TIME'
+      // }
+      // ])
+    } catch (err) {
+      console.log('ERROR: ', err)
+    }
+    maybeEligibleContent = {
+      ...maybeEligibleContent,
+      reference: {
+        ...maybeEligibleContent.reference,
+        html: maybeEligibleContent.reference.html.replace(
+          SELECT_VARIABLE_TO_REPLACE, (_ignore, confirmatnId) => (
+            confirmationId
+          )
+        )
+      }
+    }
+    request.yar.reset()
+  }
+
+  const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
+  return h.view('maybe-eligible', MAYBE_ELIGIBLE)
+}
 
 const titleCheck = (question, title, url, request) => {
   if (title?.includes('{{_')) {

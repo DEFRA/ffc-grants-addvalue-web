@@ -171,6 +171,7 @@ describe('Models', () => {
       key: 'mock_key',
       title: undefined,
       backUrl: undefined,
+      showSidebar: undefined,
     //   hint: undefined,
       items: undefined,
       sideBarText: {
@@ -189,7 +190,7 @@ describe('Models', () => {
           {
             content: [{
               dependentAnswerExceptThese: [],
-              items: [],
+              items: ["mock-value", "mock-value"],
               para: ''
             }],
             heading: 'Store'

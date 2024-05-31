@@ -936,6 +936,15 @@ const questionBank = {
             Do not include VAT<br/><br/>
             Enter cost of the items, for example 695,000`
           },
+          sidebar: {
+            values: [{
+              heading: 'Selected items',
+              content: [{
+                items: []
+              }]
+            }],
+            dependentQuestionKeys: ['projectItems', 'fruitStorage', 'storage']
+          },
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).`,
@@ -1773,7 +1782,7 @@ const questionBank = {
               key: 'environmental-impact-A3',
               value: 'Water efficiency',
               hint: {
-                text: 'For example, majority of water for theproject is harvested or recycled on site'
+                text: 'For example, majority of water for the project is harvested or recycled on site'
               }
             },
             {
@@ -2728,10 +2737,11 @@ const questionBank = {
               surveyLink: process.env.SURVEY_LINK
             },
             messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
-            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme:
+            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme.
+            {{_extraText_}}
             <h1 class="govuk-heading-m">RPA helpline</h1>
             <h2 class="govuk-heading-s">Telephone</h2>
-            Telephone: 03000 200 301<br/>
+            Telephone: 0300 0200 301<br/>
             Monday to Friday, 9am to 5pm (except public holidays)<br/>
             <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges</a></p>
             <h2 class="govuk-heading-s">Email</h2>
