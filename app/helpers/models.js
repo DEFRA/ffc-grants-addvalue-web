@@ -7,25 +7,29 @@ const { getQuestionByKey, allAnswersSelected } = require('ffc-grants-common-func
 
 const getDependentSideBar = (sidebar, request) => {
   const { values, dependentQuestionKeys } = sidebar;
-  let items = []
+  let items = [];
+
+  const handleDefaultCase = (dependentQuestionKey) => {
+    const selectedAnswers = getYarValue(request, dependentQuestionKey)
+    if (selectedAnswers) {
+      items = items.concat(Array.isArray(selectedAnswers) ? selectedAnswers : [selectedAnswers])
+    }
+  }
 
   dependentQuestionKeys.forEach((dependentQuestionKey) => {
     switch (dependentQuestionKey) {
       case 'fruitStorage':
-       if(getYarValue(request, 'fruitStorage') === getQuestionAnswer('fruit-storage', 'fruit-storage-A1', ALL_QUESTIONS)) {
+        if(getYarValue(request, 'fruitStorage') === getQuestionAnswer('fruit-storage', 'fruit-storage-A1', ALL_QUESTIONS)) {
           items.push('Controlled atmosphere storage for top fruit')
-       }
+        }
         break;
       case 'storage':
-          if(getYarValue(request, 'storage') === getQuestionAnswer('storage', 'storage-A1', ALL_QUESTIONS)) {
-             items.push('Storage facilities')
-          }
-           break;
-      default:
-        const selectedAnswers = getYarValue(request, dependentQuestionKey);
-        if (selectedAnswers) {
-          items = items.concat(Array.isArray(selectedAnswers) ? selectedAnswers : [selectedAnswers]);
+        if(getYarValue(request, 'storage') === getQuestionAnswer('storage', 'storage-A1', ALL_QUESTIONS)) {
+          items.push('Storage facilities')
         }
+        break;
+      default:
+        handleDefaultCase(dependentQuestionKey)
         break;
     }
   });
