@@ -2022,7 +2022,7 @@ const questionBank = {
           url: 'applicant-details',
           baseUrl: 'applicant-details',
           nextUrl: 'check-details',
-          // preValidationKeys: ['applying'],
+          preValidationKeys: ['applying'],
           eliminationAnswerKeys: '',
           backUrlObject: {
             dependentQuestionYarKey: 'applying',
@@ -2694,7 +2694,7 @@ const questionBank = {
           url: 'confirm',
           backUrl: 'check-details',
           nextUrl: 'confirmation',
-          // preValidationKeys: ['farmerDetails'],
+          preValidationKeys: ['farmerDetails'],
           preValidationKeysRule: { condition: 'ANY' },
           maybeEligible: true,
           maybeEligibleContent: {
@@ -2723,7 +2723,7 @@ const questionBank = {
           pageTitle: '',
           url: 'confirmation',
           baseUrl: 'confirmation',
-          // preValidationKeys: ['consentOptional'],
+          preValidationKeys: ['consentOptional'],
           ga: [
             { dimension: 'cd2', value: { type: 'score' } },
             { dimension: 'cd5', value: { type: 'confirmationId' } },
