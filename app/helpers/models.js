@@ -16,7 +16,7 @@ const getDependentSideBar = (sidebar, request) => {
           items.push('Controlled atmosphere storage for top fruit')
        }
         break;
-        case 'storage':
+      case 'storage':
           if(getYarValue(request, 'storage') === getQuestionAnswer('storage', 'storage-A1', ALL_QUESTIONS)) {
              items.push('Storage facilities')
           }

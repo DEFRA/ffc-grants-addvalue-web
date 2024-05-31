@@ -124,11 +124,33 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
       }
     }
 
-    if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
-      maybeEligibleContent = {
-        ...maybeEligibleContent,
-        addText: true
+    if (url === 'confirmation') {  
+      if (getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+        maybeEligibleContent = {
+          ...maybeEligibleContent,
+          addText: true
+        }
       }
+
+      if (getYarValue(request, 'fruitStorage') === getQuestionAnswer('fruit-storage', 'fruit-storage-A1', ALL_QUESTIONS)) {
+        maybeEligibleContent = {
+          ...maybeEligibleContent,
+            messageContent: maybeEligibleContent.messageContent.replace(
+              SELECT_VARIABLE_TO_REPLACE,
+              (_ignore, additionalYarKeyName) =>
+                '<br></br>You can check if you can apply for another Adding Value project in addition to top fruit storage.'
+            )
+        }
+      } else {
+        maybeEligibleContent = {
+          ...maybeEligibleContent,
+            messageContent: maybeEligibleContent.messageContent.replace(
+              SELECT_VARIABLE_TO_REPLACE,
+              (_ignore, additionalYarKeyName) =>
+                ''
+            )
+        }
+      } 
     }
 
     maybeEligibleContent = replaceVariablesInContent(request, maybeEligibleContent)
