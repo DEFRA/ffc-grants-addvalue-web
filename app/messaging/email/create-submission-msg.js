@@ -239,7 +239,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
   const isFruitStorageTrue = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A2', ALL_QUESTIONS)
   const isFruitStarageNo = submission.fruitStorage === getQuestionAnswer('fruit-storage', 'fruit-storage-A2', ALL_QUESTIONS)
   const IsSmallerAbattoirYes = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
-  const skipThreeScoringQuestionYes = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS) || (isFruitStorageTrue && isFruitStarageNo)
+  const skipThreeScoringQuestionYes = IsSmallerAbattoirYes || (isFruitStorageTrue && isFruitStarageNo)
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,

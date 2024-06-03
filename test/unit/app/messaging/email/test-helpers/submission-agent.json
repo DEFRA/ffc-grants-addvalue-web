@@ -54,13 +54,14 @@
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
     "consentOptional": true,
-    "storage": "",
+    "storageNeeded": "",
     "solarPVCost": "",
     "smallerAbattoir": "No",
     "IsSmallerAbattoirYes": false,
     "isMechanisationYes": true,
     "isFruitStorageTrue": true,
     "fruitStorage": "Yes",
+    "fruitStorage": "No",
     "otherFarmers": "",
     "solarPVSystem": "No",
     "isSolarPVSystemYes": false,
@@ -73,7 +74,8 @@
     "productsProcessed" : "",
     "projectImpact" : "",
     "projectItems": "",
-    "skipThreeScoringQuestionYes": false
+    "skipThreeScoringQuestionYes": false,
+    "mechanisationScore": ""
 
 
 }

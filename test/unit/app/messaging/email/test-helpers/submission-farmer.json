@@ -52,7 +52,7 @@
     "businessType": "A grower or producer of agricultural or horticultural produce",
     "location": "Yes",
     "isNotTenancy": true,
-    "storage": "Yes, we will need storage facilities",
+    "storageNeeded": "Yes, we will need storage facilities",
     "projectImpact": ["Yes", "Hi"],
     "futureCustomers": ["Yes", "Hi"],
     "environmentalImpact": ["Yes", "Hi"],
