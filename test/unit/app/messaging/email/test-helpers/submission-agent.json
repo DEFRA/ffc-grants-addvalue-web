@@ -59,6 +59,7 @@
     "IsSmallerAbattoirYes": false,
     "isMechanisationYes": true,
     "isFruitStorageTrue": true,
+    "isFruitStorageTrue": false,
     "fruitStorage": "Yes",
     "fruitStorage": "No",
     "fruitStorage": "",

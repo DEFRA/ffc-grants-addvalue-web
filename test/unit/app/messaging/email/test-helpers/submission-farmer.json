@@ -26,6 +26,7 @@
     "skipThreeScoringQuestionYes": true,
     "IsSmallerAbattoirYes": true,
     "isFruitStorageTrue": false,
+    "isFruitStorageTrue": true,
     "otherFarmers": "Yes",
     "solarPVSystem": "Yes",
     "grantRate": "up to 40%",
