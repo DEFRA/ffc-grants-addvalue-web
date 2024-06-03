@@ -73,7 +73,7 @@ module.exports = [{
             desirabilityQuestion.answers[0].input[0].value = 'Yes, ' + desirabilityQuestion.answers[0].input[0].value.toLowerCase()
           }
 
-          if (desirabilityQuestion.key != 'other-farmers') {
+          if (desirabilityQuestion.key != 'other-farmers' && desirabilityQuestion.key != 'fruit-storage') {
             const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
             desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
             desirabilityQuestion.desc = bankQuestion.desc ?? ''
@@ -88,8 +88,11 @@ module.exports = [{
 
         if (getYarValue(request, 'otherFarmers')) {
           questions.shift() // first item is non-scoring q so undefined. Thus removing here
+        } 
 
-        }
+        if (getYarValue(request, 'fruitStorage')) {
+          questions.shift()
+        } 
 
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {

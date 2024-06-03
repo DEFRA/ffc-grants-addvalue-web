@@ -14,9 +14,10 @@ function getAllDetails (request, confirmationId) {
 
 const desirabilityAnswersSchema = Joi.object({
   otherFarmers: Joi.string().allow(null),
-  productsProcessed: Joi.string(),
-  howAddingValue: Joi.string(),
-  projectImpact: Joi.array().items(Joi.string()),
+  fruitStorage: Joi.string().allow(null),
+  productsProcessed: Joi.string().allow(null),
+  howAddingValue: Joi.string().allow(null),
+  projectImpact: Joi.array().items(Joi.string()).allow(null),
   manualLabour: Joi.string().allow(null),
   futureCustomers: Joi.array().items(Joi.string()),
   collaboration: Joi.string(),
@@ -29,6 +30,7 @@ function getDesirabilityAnswers (request) {
     envImpactVal = Array.isArray(envImpactVal) ? envImpactVal : [envImpactVal]
     const val = {
       otherFarmers: getYarValue(request, 'otherFarmers'),
+      fruitStorage: getYarValue(request, 'fruitStorage'),
       productsProcessed: getYarValue(request, 'productsProcessed'),
       howAddingValue: getYarValue(request, 'howAddingValue'),
       projectImpact: [getYarValue(request, 'projectImpact')].flat(),
@@ -37,6 +39,7 @@ function getDesirabilityAnswers (request) {
       collaboration: getYarValue(request, 'collaboration'),
       environmentalImpact: envImpactVal
     }
+
     const result = desirabilityAnswersSchema.validate(val, {
       abortEarly: false
     })
