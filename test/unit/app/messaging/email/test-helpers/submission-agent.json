@@ -54,7 +54,6 @@
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
     "consentOptional": true,
-    "storageNeeded": "",
     "solarPVCost": "",
     "smallerAbattoir": "No",
     "IsSmallerAbattoirYes": false,
