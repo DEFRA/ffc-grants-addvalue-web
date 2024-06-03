@@ -143,7 +143,7 @@ const doraScoringQuestions = (submission) => {
     generateRow(388, 'AV Project Impact', submission.projectImpact ? [submission.projectImpact].flat().join('|') : ''),
     generateRow(389, 'AV Target Customers', [submission.futureCustomers].flat().join('|') ?? ''),
     generateRow(390, 'AV Farmer Collaborate', submission.collaboration ?? ''),
-    generateRow(393, 'AV Improve Environment', [submission.environmentalImpact].flat().join('|') ?? ''),
+    generateRow(393, 'AV Improve Environment', [submission.environmentalImpact].flat().join('|') ?? '')
   ]
 }
 // refactor alongside laying hens version for sonar complexity reduction
