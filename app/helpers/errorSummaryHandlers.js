@@ -114,10 +114,13 @@ const checkErrors = (payload, currentQuestion, h, request) => {
         }
       })
 
-      errorHrefList.push({
-        text: errorText,
-        href: `#${placeholderInputError.dependentKey ?? yarKey}`
-      })
+      if (errorText) {
+        errorHrefList.push({
+          text: errorText,
+          href: `#${placeholderInputError.dependentKey ?? yarKey}`
+        })
+      }
+
     } else if (placeholderInputError) {
       errorHrefList.push({
         text: placeholderInputError.error,
