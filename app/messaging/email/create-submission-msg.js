@@ -98,12 +98,6 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(56, 'Grant amount requested', submission.calculatedGrant),
     generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
     generateRow(346, 'Planning Permission Status', submission.planningPermission),
-    generateRow(386, 'Products To Be Processed', submission.productsProcessed ?? ''),
-    generateRow(387, 'How add value to products', submission.howAddingValue ?? ''),
-    generateRow(388, 'AV Project Impact', submission.projectImpact ? [submission.projectImpact].flat().join('|') : ''),
-    generateRow(389, 'AV Target Customers', [submission.futureCustomers].flat().join('|') ?? ''),
-    generateRow(390, 'AV Farmer Collaborate', submission.collaboration ?? ''),
-    generateRow(393, 'AV Improve Environment', [submission.environmentalImpact].flat().join('|') ?? ''),
     generateRow(394, 'AV Business Type', submission.applicantBusiness ?? ' '),
     generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI ?? ''),
     generateRow(365, 'OA score', desirabilityScore.desirability.overallRating.band),
@@ -137,7 +131,19 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(370, 'Status', 'Pending RPA review'),
     generateRow(85, 'Full Application Submission Date', (new Date(today.setMonth(today.getMonth() + 6))).toLocaleDateString('en-GB')),
     generateRow(375, 'OA percent', String(desirabilityScore.desirability.overallRating.score)),
-    ...addAgentDetails(submission.agentsDetails)
+    ...addAgentDetails(submission.agentsDetails),
+    ...doraScoringQuestions(submission)
+  ]
+}
+
+const doraScoringQuestions = (submission) => {
+  return [
+    generateRow(386, 'Products To Be Processed', submission.productsProcessed ?? ''),
+    generateRow(387, 'How add value to products', submission.howAddingValue ?? ''),
+    generateRow(388, 'AV Project Impact', submission.projectImpact ? [submission.projectImpact].flat().join('|') : ''),
+    generateRow(389, 'AV Target Customers', [submission.futureCustomers].flat().join('|') ?? ''),
+    generateRow(390, 'AV Farmer Collaborate', submission.collaboration ?? ''),
+    generateRow(393, 'AV Improve Environment', [submission.environmentalImpact].flat().join('|') ?? ''),
   ]
 }
 // refactor alongside laying hens version for sonar complexity reduction

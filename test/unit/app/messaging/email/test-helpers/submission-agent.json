@@ -54,20 +54,26 @@
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
     "consentOptional": true,
-    "storage": "boop",
-    "solarPVCost": null,
+    "storage": "",
+    "solarPVCost": "",
     "smallerAbattoir": "No",
-    "IsSmallerAbattoir": false,
+    "IsSmallerAbattoirYes": false,
     "isMechanisationYes": true,
     "isFruitStorageTrue": true,
     "fruitStorage": "Yes",
-    "otherFarmers": null,
+    "otherFarmers": "",
     "solarPVSystem": "No",
     "isSolarPVSystemYes": false,
-    "solarGrantRate": null,
+    "solarGrantRate": "",
     "grantRate": "up to 40%",
     "applicantBusiness": "why",
     "mechanisation": "Yes",
-    "manualLabour": "Up to 5% of workforce"
+    "manualLabour": "Up to 5% of workforce",
+    "howAddingValue" : "",
+    "productsProcessed" : "",
+    "projectImpact" : "",
+    "projectItems": "",
+    "skipThreeScoringQuestionYes": false
+
 
 }

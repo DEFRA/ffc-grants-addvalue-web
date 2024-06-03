@@ -23,7 +23,8 @@
     "tenancy": "No",
     "projectResponsibility" : "Yes",
     "smallerAbattoir": "Yes",
-    "IsSmallerAbattoir": true,
+    "skipThreeScoringQuestionYes": true,
+    "IsSmallerAbattoirYes": true,
     "isFruitStorageTrue": false,
     "otherFarmers": "Yes",
     "solarPVSystem": "Yes",
@@ -51,16 +52,17 @@
     "businessType": "A grower or producer of agricultural or horticultural produce",
     "location": "Yes",
     "isNotTenancy": true,
-    "storage": "Yes, maybe",
+    "storage": "Yes, we will need storage facilities",
     "projectImpact": ["Yes", "Hi"],
     "futureCustomers": ["Yes", "Hi"],
     "environmentalImpact": ["Yes", "Hi"],
     "productsProcessed": ["Yes", "Hi"],
     "collaboration": "boop",
-    "projectItems": ["None of the above"],
+    "projectItems": ["Retail facilities"],
     "mechanisation": "No",
     "manualLabour": "",
     "mechanisationScore": "Weak",
-    "isMechanisationYes": false
+    "isMechanisationYes": false,
+    "howAddingValue": "Introducing a new product to your farm"
 
 }
