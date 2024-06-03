@@ -43,6 +43,8 @@
         "calvesNumber":30
     },
     "fruitStorage": "",
+    "fruitStorage": "Yes",
+    "fruitStorage": "No",
     "applicantType": "Beef (including calf rearing)",
     "projectType": "",
     "applicantBusiness": "processing",
