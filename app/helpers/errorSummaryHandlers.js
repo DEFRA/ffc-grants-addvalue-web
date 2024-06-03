@@ -109,15 +109,15 @@ const checkErrors = (payload, currentQuestion, h, request) => {
               errorText = "Select either 'Starting to make added-value products for the first time' or 'Increasing range'"
             } else if (index === 2 || index === 5) {
               errorText = "Select either 'Starting to make added-value products for the first time' or 'Increasing volume' and 'Increasing range'"
-            }
+            } 
+            errorHrefList.push({
+              text: errorText,
+              href: `#${placeholderInputError.dependentKey ?? yarKey}`
+            })
           }
         }
       })
 
-      errorHrefList.push({
-        text: errorText,
-        href: `#${placeholderInputError.dependentKey ?? yarKey}`
-      })
     } else if (placeholderInputError) {
       errorHrefList.push({
         text: placeholderInputError.error,
