@@ -92,6 +92,11 @@ module.exports = [{
 
         if (getYarValue(request, 'fruitStorage')) {
           questions.shift()
+          if (getYarValue(request, 'fruitStorage') === 'Yes'){
+            questions.sort((a, b) => a.order - b.order)
+            questions.shift()
+            questions.shift()
+          }
         } 
 
         let scoreChance

@@ -17,7 +17,7 @@ const desirabilityAnswersSchema = Joi.object({
   fruitStorage: Joi.string().allow(null),
   productsProcessed: Joi.string().allow(null),
   howAddingValue: Joi.string().allow(null),
-  projectImpact: Joi.array().items(Joi.string()).allow(null),
+  projectImpact: Joi.array().items(Joi.string().allow(null)),
   manualLabour: Joi.string().allow(null),
   futureCustomers: Joi.array().items(Joi.string()),
   collaboration: Joi.string(),
