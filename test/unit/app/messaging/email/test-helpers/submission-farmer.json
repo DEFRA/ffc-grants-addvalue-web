@@ -63,6 +63,7 @@
     "manualLabour": "",
     "mechanisationScore": "Weak",
     "isMechanisationYes": false,
-    "howAddingValue": "Introducing a new product to your farm"
+    "howAddingValue": "Introducing a new product to your farm",
+    "storage": "Yes, we will need storage facilities"
 
 }
