@@ -1521,7 +1521,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Manual Labour'
+            title: 'Mechanisation'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
