@@ -98,17 +98,11 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(56, 'Grant amount requested', submission.calculatedGrant),
     generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
     generateRow(346, 'Planning Permission Status', submission.planningPermission),
-    generateRow(386, 'Products To Be Processed', submission.productsProcessed ?? ''),
-    generateRow(387, 'How add value to products', submission.howAddingValue ?? ''),
-    generateRow(388, 'AV Project Impact', submission.projectImpact ? [submission.projectImpact].flat().join('|') : ''),
-    generateRow(389, 'AV Target Customers', [submission.futureCustomers].flat().join('|') ?? ''),
-    generateRow(390, 'AV Farmer Collaborate', submission.collaboration ?? ''),
-    generateRow(393, 'AV Improve Environment', [submission.environmentalImpact].flat().join('|') ?? ''),
     generateRow(394, 'AV Business Type', submission.applicantBusiness ?? ' '),
     generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI ?? ''),
     generateRow(365, 'OA score', desirabilityScore.desirability.overallRating.band),
     generateRow(366, 'Date of OA decision', ''),
-    generateRow(395, 'Storage Facilities', submission.storage.split(',')[0]),
+    generateRow(395, 'Storage Facilities', submission.storage ? submission.storage.split(',')[0] : ''),
     generateRow(42, 'Project name', submission.businessDetails.projectName),
     generateRow(4, 'Single business identifier (SBI)', submission.businessDetails.sbi || '000000000'), // sbi is '' if not set so use || instead of ??
     generateRow(7, 'Business name', submission.businessDetails.businessName),
@@ -137,7 +131,19 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(370, 'Status', 'Pending RPA review'),
     generateRow(85, 'Full Application Submission Date', (new Date(today.setMonth(today.getMonth() + 6))).toLocaleDateString('en-GB')),
     generateRow(375, 'OA percent', String(desirabilityScore.desirability.overallRating.score)),
-    ...addAgentDetails(submission.agentsDetails)
+    ...addAgentDetails(submission.agentsDetails),
+    ...doraScoringQuestions(submission)
+  ]
+}
+
+const doraScoringQuestions = (submission) => {
+  return [
+    generateRow(386, 'Products To Be Processed', submission.productsProcessed ?? ''),
+    generateRow(387, 'How add value to products', submission.howAddingValue ?? ''),
+    generateRow(388, 'AV Project Impact', submission.projectImpact ? [submission.projectImpact].flat().join('|') : ''),
+    generateRow(389, 'AV Target Customers', [submission.futureCustomers].flat().join('|')),
+    generateRow(390, 'AV Farmer Collaborate', submission.collaboration),
+    generateRow(393, 'AV Improve Environment', [submission.environmentalImpact].flat().join('|'))
   ]
 }
 // refactor alongside laying hens version for sonar complexity reduction
@@ -184,15 +190,15 @@ function getScoreChance (rating) {
   }
 }
 
-function scoreQuestions(submission, desirabilityScore) {
+function scoreQuestions(submission, desirabilityScore, skipThreeScoringQuestionYes) {
   const isMechanisationYes = submission.mechanisation === getQuestionAnswer('mechanisation', 'mechanisation-A1', ALL_QUESTIONS)
   return {
     scoreDate: new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }),
-    productsProcessed: submission.productsProcessed,
-    productsProcessedScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'products-processed'),
-    howAddingValue: submission.howAddingValue,
-    projectImpact: [submission.projectImpact].join(', '),
-    projectImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'project-impact'),
+    productsProcessed: skipThreeScoringQuestionYes ? submission.productsProcessed : '',
+    productsProcessedScore: skipThreeScoringQuestionYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'products-processed') : '',
+    howAddingValue: skipThreeScoringQuestionYes ? submission.howAddingValue : '',
+    projectImpact: skipThreeScoringQuestionYes ? [submission.projectImpact].join(', ') : '',
+    projectImpactScore: skipThreeScoringQuestionYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'project-impact') : '',
     futureCustomers: [submission.futureCustomers].flat().join(', '),
     futureCustomersScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'future-customers'),
     collaboration: submission.collaboration,
@@ -200,7 +206,7 @@ function scoreQuestions(submission, desirabilityScore) {
     environmentalImpact: [submission.environmentalImpact].flat().join(', '),
     environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
     mechanisation: submission.mechanisation,
-    mechanisationScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manualLabour') : 'Weak',
+    mechanisationScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manual-labour-amount') : 'Weak',
     manualLabour: isMechanisationYes ? submission.manualLabour : '',
     isMechanisationYes: isMechanisationYes
   }
@@ -231,7 +237,9 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
   const email = isAgentEmail ? submission.agentsDetails.emailAddress : submission.farmerDetails.emailAddress
   const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
   const isFruitStorageTrue = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A2', ALL_QUESTIONS)
-  const IsSmallerAbattoir = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
+  const isFruitStarageNo = submission.fruitStorage === getQuestionAnswer('fruit-storage', 'fruit-storage-A2', ALL_QUESTIONS)
+  const IsSmallerAbattoirYes = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
+  const skipThreeScoringQuestionYes = IsSmallerAbattoirYes || (isFruitStorageTrue && isFruitStarageNo)
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
@@ -251,20 +259,21 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
       isFruitStorageTrue: isFruitStorageTrue,
       fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
-      storageNeeded: submission.storage,
+      storage: skipThreeScoringQuestionYes ? submission.storage : '',
       projectCost: getCurrencyFormat(submission.projectCost),
       potentialFunding: getCurrencyFormat(submission.calculatedGrant),
       remainingCost: getCurrencyFormat(submission.remainingCost),
       smallerAbattoir: submission.smallerAbattoir,
-      otherFarmers: submission.otherFarmers ?? '',
-      IsSmallerAbattoir: IsSmallerAbattoir,
+      IsSmallerAbattoirYes: IsSmallerAbattoirYes,
+      otherFarmers: IsSmallerAbattoirYes ? submission.otherFarmers : '',
+      skipThreeScoringQuestionYes: skipThreeScoringQuestionYes,
       isSolarPVSystemYes: isSolarPVSystemYes,
       solarPVSystem: submission.solarPVSystem,
       solarGrantRate: isSolarPVSystemYes ? `Up to ${GRANT_PERCENTAGE_SOLAR}%` : '',
       grantRate: `Up to ${GRANT_PERCENTAGE}%`,
       solarPVCost: isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, ''))) : '',
       ...businesQuestion(submission, isAgentEmail),
-      ...scoreQuestions(submission, desirabilityScore)
+      ...scoreQuestions(submission, desirabilityScore, skipThreeScoringQuestionYes)
     }
   }
 }
