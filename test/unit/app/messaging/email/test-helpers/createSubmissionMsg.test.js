@@ -1,5 +1,6 @@
 const agentSubmission = require('./submission-agent.json')
 const farmerSubmission = require('./submission-farmer.json')
+const fruitStorageSubmission = require('./submission-fruit-storage.json')
 const desirabilityScore = require('./desirability-score.json')
 const { commonFunctionsMock } = require('./../../../../../session-mock')
 
@@ -42,9 +43,7 @@ describe('Create submission message', () => {
   })
 
   test('Farmer submission generates correct message payload', () => {
-    farmerSubmission['smallerAbattoir'] = 'Yes'
-    farmerSubmission['fruitStorage'] = ''
-    const msg = createMsg(farmerSubmission, desirabilityScore)
+    const msg = createMsg(fruitStorageSubmission, desirabilityScore)
 
     expect(msg).toHaveProperty('agentEmail')
     expect(msg).toHaveProperty('applicantEmail')
