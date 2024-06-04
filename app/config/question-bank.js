@@ -1827,7 +1827,7 @@ const questionBank = {
           baseUrl: 'business-details',
           backUrl: 'score',
           nextUrl: 'applying',
-          preValidationKeys: ['current-score'],
+          // preValidationKeys: ['current-score'],
           ga: [
             { dimension: 'cd2', value: { type: 'score' } },
             { dimension: 'cm1', value: { type: 'journey-time' } }
@@ -1940,7 +1940,7 @@ const questionBank = {
               validate: [
                 {
                   type: 'NOT_EMPTY',
-                  error: 'Enter the business turnover'
+                  error: 'Enter your annual business turnover, in pounds'
                 },
                 {
                   type: 'REGEX',

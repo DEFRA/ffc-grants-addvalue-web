@@ -41,7 +41,7 @@ describe('Page: /business-details', () => {
     }
 
     valList.businessTurnover = {
-      error: 'Enter the business turnover',
+      error: 'Enter your annual business turnover, in pounds',
       return: false
     }
     const postOptions = {
@@ -56,7 +56,7 @@ describe('Page: /business-details', () => {
     expect(postResponse.payload).toContain('Enter a project name')
     expect(postResponse.payload).toContain('Enter a business name')
     expect(postResponse.payload).toContain('Enter the number of employees')
-    expect(postResponse.payload).toContain('Enter the business turnover')
+    expect(postResponse.payload).toContain('Enter your annual business turnover, in pounds')
   })
 
   it('user came from \'CHECK DETAILS\' page -> display <Back to details> button', async () => {
