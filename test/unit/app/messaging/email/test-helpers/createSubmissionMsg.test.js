@@ -49,7 +49,7 @@ describe('Create submission message', () => {
     expect(msg).toHaveProperty('applicantEmail')
     expect(msg).toHaveProperty('rpaEmail')
     expect(msg).toHaveProperty('spreadsheet')
-    expect(msg.applicantEmail.emailAddress).toBe(farmerSubmission.farmerDetails.emailAddress)
+    expect(msg.applicantEmail.emailAddress).toBe(fruitStorageSubmission.farmerDetails.emailAddress)
     expect(msg.rpaEmail.emailAddress).toBe('FTF@rpa.gov.uk')
     expect(msg.agentEmail).toBe(null)
   })
