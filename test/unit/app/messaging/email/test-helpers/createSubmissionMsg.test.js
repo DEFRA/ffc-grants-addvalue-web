@@ -42,7 +42,7 @@ describe('Create submission message', () => {
     expect(msg.agentEmail).toBe(null)
   })
 
-  test('Farmer submission generates correct message payload', () => {
+  test('fruit storage submission generates correct message payload', () => {
     const msg = createMsg(fruitStorageSubmission, desirabilityScore)
 
     expect(msg).toHaveProperty('agentEmail')
@@ -87,7 +87,9 @@ describe('Create submission message', () => {
       'technology', 'itemsCost', 'potentialFunding', 'remainingCost',
       'projectStarted', 'planningPermission', 'projectName', 'businessName',
       'farmerName', 'farmerSurname', 'agentName', 'agentSurname', 'farmerEmail', 'agentEmail',
-      'contactConsent', 'scoreDate', 'projectCost'
+      'contactConsent', 'scoreDate', 'projectCost', 'productsProcessed', 'storage', 'howAddingValue',
+      'mechanisation', 'projectItems', 'collaboration', 'productsProcessed', 'environmentalImpact', 'futureCustomers',
+      'projectImpact', 'smallerAbattoir', 'fruitStorage'
     )
   })
   test('Under 10 employees results in micro business definition', () => {
