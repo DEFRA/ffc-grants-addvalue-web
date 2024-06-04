@@ -41,6 +41,20 @@ describe('Create submission message', () => {
     expect(msg.agentEmail).toBe(null)
   })
 
+  test('Farmer submission generates correct message payload', () => {
+    farmerSubmission['smallerAbattoir'] = 'Yes'
+    farmerSubmission['fruitStorage'] = ''
+    const msg = createMsg(farmerSubmission, desirabilityScore)
+
+    expect(msg).toHaveProperty('agentEmail')
+    expect(msg).toHaveProperty('applicantEmail')
+    expect(msg).toHaveProperty('rpaEmail')
+    expect(msg).toHaveProperty('spreadsheet')
+    expect(msg.applicantEmail.emailAddress).toBe(farmerSubmission.farmerDetails.emailAddress)
+    expect(msg.rpaEmail.emailAddress).toBe('FTF@rpa.gov.uk')
+    expect(msg.agentEmail).toBe(null)
+  })
+
   test('Farmer submission generates message payload without RPA email when config is Flase', () => {
     jest.mock('../../../../../../app/messaging/email/config/spreadsheet', () => ({
       hideEmptyRows: true,

@@ -56,7 +56,6 @@
     "consentOptional": true,
     "solarPVCost": "",
     "smallerAbattoir": "No",
-    "fruitStorage": "No",
     "fruitStorage": "Yes",
     "IsSmallerAbattoirYes": false,
     "isMechanisationYes": true,

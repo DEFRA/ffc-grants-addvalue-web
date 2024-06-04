@@ -22,8 +22,6 @@
     "projectStart": "Yes, preparatory work",
     "tenancy": "No",
     "projectResponsibility" : "Yes",
-    "smallerAbattoir": "Yes",
-    "smallerAbattoir": "No",
     "skipThreeScoringQuestionYes": true,
     "IsSmallerAbattoirYes": true,
     "isFruitStorageTrue": false,
@@ -43,8 +41,7 @@
         "calvingSystem":"Year round",
         "calvesNumber":30
     },
-    "fruitStorage": "",
-    "fruitStorage": "Yes",
+    "smallerAbattoir": "No",
     "fruitStorage": "No",
     "applicantType": "Beef (including calf rearing)",
     "projectType": "",
