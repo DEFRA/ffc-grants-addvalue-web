@@ -1465,7 +1465,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Mechanisation'
+            title: 'Mechanisation' 
           },
           eliminationAnswerKeys: '',
           fundingPriorities: '',
@@ -1519,7 +1519,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Manual Labour'
+            title: 'Mechanisation'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
