@@ -416,14 +416,19 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
 
 }
 
+gaVarCheck = (request, baseUrl) => {
+  if (baseUrl !== 'score') {
+    setYarValue(request, 'onScorePage', false)
+  }
+}
+
+
 const showPostPage = (currentQuestion, request, h) => {
   const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, dependantNextUrl, title, type } = currentQuestion
   const NOT_ELIGIBLE = { ...ineligibleContent, backUrl: baseUrl }
   const payload = request.payload
 
-  if (baseUrl !== 'score') {
-    setYarValue(request, 'onScorePage', false)
-  }
+  gaVarCheck(request, baseUrl)
 
   let thisAnswer
   let dataObject
