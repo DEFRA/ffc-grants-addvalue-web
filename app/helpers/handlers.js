@@ -416,7 +416,7 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
 
 }
 
-gaVarCheck = (request, baseUrl) => {
+const gaVarCheck = (request, baseUrl) => {
   if (baseUrl !== 'score') {
     setYarValue(request, 'onScorePage', false)
   }
