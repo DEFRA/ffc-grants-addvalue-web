@@ -11,6 +11,8 @@ const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOpt
 const { notUniqueSelection, uniqueSelection, getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
+const gapiService = require('../services/gapi-service')
+
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
@@ -158,19 +160,6 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
       const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
       await senders.sendDesirabilitySubmitted(emailData, request.yar.id) 
       
-      // gapi to be updated here?
-      // await gapiService.sendDimensionOrMetrics(request, [{
-      //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
-      //   value: confirmationId
-      // }, {
-      //   dimensionOrMetric: gapiService.dimensions.FINALSCORE,
-      //   value: getYarValue(request, 'current-score')
-      // },
-      // {
-      //   dimensionOrMetric: gapiService.metrics.CONFIRMATION,
-      //   value: 'TIME'
-      // }
-      // ])
     } catch (err) {
       console.log('ERROR: ', err)
     }
@@ -331,6 +320,7 @@ const getPage = async (question, request, h) => {
   }
 
   const confirmationId = ''
+  await processGA(question, request)
 
   if (question.maybeEligible) {
     return maybeEligibleGet(request, confirmationId, question, url, nextUrl, backUrl, h)
@@ -426,10 +416,20 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
 
 }
 
+const gaVarCheck = (request, baseUrl) => {
+  if (baseUrl !== 'score') {
+    setYarValue(request, 'onScorePage', false)
+  }
+}
+
+
 const showPostPage = (currentQuestion, request, h) => {
   const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, dependantNextUrl, title, type } = currentQuestion
   const NOT_ELIGIBLE = { ...ineligibleContent, backUrl: baseUrl }
   const payload = request.payload
+
+  gaVarCheck(request, baseUrl)
+
   let thisAnswer
   let dataObject
   if (yarKey === 'consentOptional' && !Object.keys(payload).includes(yarKey)) {
@@ -454,14 +454,15 @@ const showPostPage = (currentQuestion, request, h) => {
 
   const errors = checkErrors(payload, currentQuestion, h, request)
   if (errors) {
-    // gapiService.sendValidationDimension(request)
     return errors
   }
 
   if (thisAnswer?.notEligible ||
       (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
   ) {
-    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+
+    gapiService.sendGAEvent(request,
+      { name: gapiService.eventTypes.ELIMINATION, params: {} })
 
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
@@ -481,6 +482,18 @@ const getHandler = (question) => {
 const getPostHandler = (currentQuestion) => {
   return (request, h) => {
     return showPostPage(currentQuestion, request, h)
+  }
+}
+
+const processGA = async (question, request) => {
+  if (question.ga) {
+    if (question.ga.journeyStart) {
+      setYarValue(request, 'journey-start-time', Date.now())
+      console.log('[JOURNEY STARTED] ')
+    } else {
+      console.log(request.url.pathname, 'hhhhhhh')
+      await gapiService.sendGAEvent(request, question.ga)
+    }
   }
 }
 
