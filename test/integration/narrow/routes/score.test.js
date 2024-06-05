@@ -25,10 +25,7 @@ describe('Score page', () => {
 
 	const newSender = require('../../../../app/messaging/application')
 	const createMsg = require('../../../../app/messaging/create-msg')
-	// const gapiService = require('../../../../app/services/gapi-service')
-	// const sendGAEvent = jest.spyOn(gapiService, 'sendGAEvent').mockImplementation(() => {
-	// 		Promise.resolve()
-	// 	})
+
 	const getDesirabilityAnswersSpy = jest.spyOn(createMsg, 'getDesirabilityAnswers').mockImplementation(() => {
 		return {
 			test: 'test'

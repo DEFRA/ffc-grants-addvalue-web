@@ -128,10 +128,11 @@ module.exports = [{
         throw new Error('Score not received.')
       }
     } catch (error) {
-      request.log(error)
+      console.log(error)
+      await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.EXCEPTION, params: { error: error.message } })
+
     }
-    request.log(err)
-    await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.EXCEPTION, params: { error: error.message } })
+    console.log(err)
 
     return h.view('500')
   }
