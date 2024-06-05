@@ -1467,7 +1467,7 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Mechanisation'
+            title: 'Mechanisation' 
           },
           eliminationAnswerKeys: '',
           fundingPriorities: '',
