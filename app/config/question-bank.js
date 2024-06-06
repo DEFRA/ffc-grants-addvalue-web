@@ -1475,11 +1475,6 @@ const questionBank = {
             preValidationRule: 'OR',
             preValidationUrls: ['project-impact', 'remaining-costs']
           },
-          score: {
-            isScore: true,
-            isDisplay: true,
-            title: 'Mechanisation' 
-          },
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
