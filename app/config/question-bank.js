@@ -399,7 +399,7 @@ const questionBank = {
           preValidationKeys: ['planningPermission'],
           maybeEligibleContent: {
             messageHeader: 'You may be able to apply for this grant',
-            messageContent: 'Any planning permission must be in place by 31 January 2024.'
+            messageContent: 'Any planning permission must be in place by 31 May 2025.'
           }
         },
         {
