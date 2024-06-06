@@ -873,7 +873,7 @@ const questionBank = {
             html: `You have the option to buy and install a solar PV system with this grant.</br></br>
             The solar PV panels must be installed on the roof of an existing or new building related to your project.</br></br>
             You cannot buy a solar PV system with this grant if:
-            <ul class="govuk-list govuk-list--bullet">
+            <ul class="govuk-list--bullet">
               <li>the building’s roof only faces north or is heavily shaded</li>
               <li>you are only buying portable items</li>
             </ul>`,
