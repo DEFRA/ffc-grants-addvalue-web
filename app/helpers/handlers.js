@@ -13,10 +13,11 @@ const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
 const gapiService = require('../services/gapi-service')
 
+const { startPageUrl, serviceEndDate, serviceEndTime } = require('./../config/server')
+
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
-const { startPageUrl } = require('../config/server')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 
 const getConfirmationId = (guid) => {
@@ -312,9 +313,11 @@ const handleUrlCases = (data, question, request, conditionalHtml, h, backUrl, ne
 }
 
 const getPage = async (question, request, h) => {
-  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
+  const { url, backUrl, dependantNextUrl, type, title, yarKey } = question
+  const preValidationObject = question.preValidationObject ?? question.preValidationKeys
   const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
-  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
+  const isRedirect = guardPage(request, preValidationObject, startPageUrl, serviceEndDate, serviceEndTime, ALL_QUESTIONS)
+
   if (isRedirect) {
     return h.redirect(startPageUrl)
   }

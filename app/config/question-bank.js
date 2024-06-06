@@ -532,12 +532,12 @@ const questionBank = {
           baseUrl: 'project-responsibility',
           backUrl: 'tenancy',
           nextUrl: 'smaller-abattoir',
-          // preValidationObject: {
-          //   preValidationKeys: ['tenancy'],
-          //   preValidationAnswer: ['tenancy-A2'],
-          //   preValidationRule: 'AND',
-          //   preValidationUrls: ['tenancy']
-          // },
+          preValidationObject: {
+            preValidationKeys: ['tenancy'],
+            preValidationAnswer: ['tenancy-A2'],
+            preValidationRule: 'AND',
+            preValidationUrls: ['tenancy']
+          },
           fundingPriorities: '',
           type: 'single-answer',
           minAnswercount: 1,
@@ -596,12 +596,12 @@ const questionBank = {
             }
           },
           nextUrl: 'other-farmers',
-          // preValidationObject: {
-          //   preValidationKeys: ['tenancy', 'projectResponsibility'],
-          //   preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1', 'project-responsibility-A2'],
-          //   preValidationRule: 'OR',
-          //   preValidationUrls: ['tenancy', 'project-responsibility']
-          // },
+          preValidationObject: {
+            preValidationKeys: ['tenancy', 'projectResponsibility'],
+            preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1', 'project-responsibility-A2'],
+            preValidationRule: 'OR',
+            preValidationUrls: ['tenancy', 'project-responsibility']
+          },
           type: 'single-answer',
           minAnswerCount: 1,
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
@@ -637,7 +637,12 @@ const questionBank = {
           baseUrl: 'fruit-storage',
           backUrl: 'smaller-abattoir',
           nextUrl: 'solar-PV-system',
-          preValidationKeys: [],
+          preValidationObject: {
+            preValidationKeys: ['smallerAbattoir'],
+            preValidationAnswer: ['smaller-abattoir-A2',],
+            preValidationRule: 'AND',
+            preValidationUrls: ['smaller-abattoir']
+          },
           type: 'single-answer',
           minAnswerCount: 1,
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
@@ -660,8 +665,7 @@ const questionBank = {
             }
           ],
           yarKey: 'fruitStorage'
-        },
-        
+        },   
         {
           key: 'other-farmers',
           order: 68,
@@ -674,12 +678,12 @@ const questionBank = {
           baseUrl: 'other-farmers',
           backUrl: 'smaller-abattoir',
           nextUrl: 'project-items',
-          // preValidationObject: {
-          //   preValidationKeys: ['smallerAbattoir'],
-          //   preValidationAnswer: ['smaller-abattoir-A1'],
-          //   preValidationRule: 'AND',
-          //   preValidationUrls: ['smaller-abattoir']
-          // }, 
+          preValidationObject: {
+            preValidationKeys: ['smallerAbattoir'], 
+            preValidationAnswer: ['smaller-abattoir-A1'],
+            preValidationRule: 'AND',
+            preValidationUrls: ['smaller-abattoir']
+          }, 
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
@@ -743,8 +747,12 @@ const questionBank = {
           },
           nextUrl: 'storage',
           fundingPriorities: '',
-          //To add otherFarmers later as well 
-          preValidationKeys: ['projectStart', 'tenancy', 'smallerAbattoir'],
+          preValidationObject: {
+            preValidationKeys: ['otherFarmers', 'fruitStorage'],
+            preValidationAnswer: ['other-farmers-A1', 'fruit-storage-A2'],
+            preValidationRule: 'OR',
+            preValidationUrls: ['other-farmers', 'fruit-storage']
+          },
           type: 'multi-answer',
           minAnswerCount: 1,
           validate: [
@@ -855,7 +863,12 @@ const questionBank = {
             }
           },
           nextUrl: 'project-cost',
-          // preValidationKeys: ['storage'],
+          preValidationObject: {
+            preValidationKeys: ['storage', 'fruitStorage'],
+            preValidationAnswer: ['storage-A1', 'storage-A2','fruit-storage-A1',],
+            preValidationRule: 'OR',
+            preValidationUrls: ['storage', 'fruit-storage'],
+          },
           hint: {
             html: `You have the option to buy and install a solar PV system with this grant.</br></br>
             The solar PV panels must be installed on the roof of an existing or new building related to your project.</br></br>
@@ -909,7 +922,7 @@ const questionBank = {
               elseUrl: 'potential-amount'
             }
           },
-          // preValidationKeys: ['storage'],
+          preValidationKeys: ['solarPVSystem'],
           classes: 'govuk-input--width-10',
           id: 'projectCost',
           name: 'projectCost',
@@ -1003,7 +1016,7 @@ const questionBank = {
           baseUrl: 'solar-PV-cost',
           backUrl: 'project-cost',
           nextUrl: 'potential-amount-solar',
-          // preValidationKeys: ['projectCost'],
+          preValidationKeys: ['projectCost'],
           type: 'input',
           prefix: {
             text: '£'
@@ -1123,6 +1136,7 @@ const questionBank = {
             }   
           },
           ga: { name: 'eligibility_passed', params: {} },
+          preValidationKeys: ['projectCost'],
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
@@ -1455,13 +1469,12 @@ const questionBank = {
             }
           },
           nextUrl: 'future-customers',
-          // preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
-          // preValidationObject: {
-          //   preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
-          //   preValidationAnswer: ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4', 'remaining-costs-A1'],
-          //   preValidationRule: 'OR',
-          //   preValidationUrls: ['project-impact', 'remaining-costs']
-          // },
+          preValidationObject: {
+            preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
+            preValidationAnswer: ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4', 'remaining-costs-A1'],
+            preValidationRule: 'OR',
+            preValidationUrls: ['project-impact', 'remaining-costs']
+          },
           score: {
             isScore: true,
             isDisplay: true,
