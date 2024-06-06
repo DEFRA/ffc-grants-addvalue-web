@@ -656,7 +656,7 @@ const questionBank = {
             {
               key: 'fruit-storage-A1',
               value: 'Yes',
-              yarKeysReset: ['projectItems', 'productsProcessed', 'howAddingValue', 'projectImpact']
+              yarKeysReset: ['projectItems', 'productsProcessed', 'howAddingValue', 'projectImpact', 'storage']
             },
             {
               key: 'fruit-storage-A2',
