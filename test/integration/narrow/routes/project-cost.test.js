@@ -31,7 +31,7 @@ describe('Page: /project-cost', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('What is the total estimated cost of the items?')
+    expect(response.payload).toContain('What is the estimated cost of the items?')
     expect(response.payload).toContain('Do not include the solar PV')
     expect(response.payload).toContain('Enter cost of the items, for example 695,000')
   })
@@ -47,7 +47,7 @@ describe('Page: /project-cost', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('What is the total estimated cost of the items?')
+    expect(response.payload).toContain('What is the estimated cost of the items?')
     expect(response.payload).toContain('Enter cost of the items, for example 695,000')
     expect(response.payload).toContain('Selected items')
     expect(response.payload).toContain('Constructing or improving buildings for processing')
@@ -65,7 +65,7 @@ describe('Page: /project-cost', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('What is the total estimated cost of the items?')
+    expect(response.payload).toContain('What is the estimated cost of the items?')
     expect(response.payload).toContain('Do not include VAT')
     expect(response.payload).toContain('Enter cost of the items, for example 695,000')
   })
