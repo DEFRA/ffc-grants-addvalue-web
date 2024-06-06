@@ -747,8 +747,12 @@ const questionBank = {
           },
           nextUrl: 'storage',
           fundingPriorities: '',
-          //To add otherFarmers later as well 
-          preValidationKeys: ['smallerAbattoir'],
+          preValidationObject: {
+            preValidationKeys: ['otherFarmers', 'fruitStorage'],
+            preValidationAnswer: ['other-farmers-A1', 'fruit-storage-A2'],
+            preValidationRule: 'OR',
+            preValidationUrls: ['other-farmers', 'fruit-storage']
+          },
           type: 'multi-answer',
           minAnswerCount: 1,
           validate: [
@@ -1467,7 +1471,6 @@ const questionBank = {
             }
           },
           nextUrl: 'future-customers',
-          preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
           preValidationObject: {
             preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
             preValidationAnswer: ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4', 'remaining-costs-A1'],
@@ -1837,7 +1840,7 @@ const questionBank = {
           baseUrl: 'business-details',
           backUrl: 'score',
           nextUrl: 'applying',
-          preValidationKeys: ['score'],
+          preValidationKeys: ['current-score'],
           ga: [
             { dimension: 'cd2', value: { type: 'score' } },
             { dimension: 'cm1', value: { type: 'journey-time' } }
