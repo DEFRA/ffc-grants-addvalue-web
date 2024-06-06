@@ -1140,15 +1140,14 @@ const questionBank = {
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
-            <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
-            insertText: {
-              html: `For example, you can use:
-              <ul class="govuk-list--bullet">
+            <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.
+            <p class="govuk-body">For example, you can use:</p>
+              <ul class="govuk-list govuk-list--bullet">
                 <li>loans</li>
                 <li>overdrafts</li>
                 <li>delinked payments</li>
               </ul>`
-            },
+            ,
             messageLink: {
               url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
               title: 'See other grants you may be eligible for'
