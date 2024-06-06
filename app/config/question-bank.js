@@ -936,7 +936,7 @@ const questionBank = {
             cappedGrant: true
           },
           label: {
-            text: 'What is the total estimated cost of the items?',
+            text: 'What is the estimated cost of the items?',
             classes: 'govuk-label--l',
             isPageHeading: true
           },
