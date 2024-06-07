@@ -1540,7 +1540,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: 'RPA wants to fund projects that use mechanisation of manual labour due to the shortage of workers.',
+          fundingPriorities: 'Use mechanisation instead of manual labour due to the shortage of workers',
           type: 'single-answer',
           minAnswerCount: 1,
           validate: [
