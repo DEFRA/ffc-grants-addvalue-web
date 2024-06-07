@@ -1035,7 +1035,7 @@ const questionBank = {
             for: 'solarPVCost'
           },
           hint: {
-            html: `
+            html: `<p>Do not include VAT</p>
                   <p>Enter solar PV system costs, for example 135,000</p>`
           },
           validate: [
