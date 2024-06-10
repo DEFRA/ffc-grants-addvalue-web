@@ -8,6 +8,16 @@
       }
     }
   ],
+  "fruitStorage": [
+    {
+      "key": "fruit-storage",
+      "title": "Do you want to build new controlled atmosphere storage for top fruit?",
+      "answers": {
+        "fruit-storage-A1": "Yes",
+        "fruit-storage-A2": "No"
+      }
+    }
+  ],
   "productsProcessed": [
     {
       "key": "products-processed",

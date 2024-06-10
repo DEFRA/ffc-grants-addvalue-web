@@ -19,6 +19,8 @@ describe('Page: /solar-PV-cost', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('What is the estimated cost of buying and installing the solar PV system?')
+    expect(response.payload).toContain('Do not include VAT')
+    expect(response.payload).toContain('Enter solar PV system costs, for example 135,000')
   })
 
   it('no option selected -> show error message  ', async () => {

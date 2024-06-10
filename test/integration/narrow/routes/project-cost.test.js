@@ -4,7 +4,9 @@ const { commonFunctionsMock } = require('./../../../session-mock')
 describe('Page: /project-cost', () => {
   const varList = { 
     storage: 'randomData',
-    solarPVSystem: 'Yes' 
+    solarPVSystem: 'Yes' ,
+    fruitStorage: 'Yes',
+    projectItems: ['random']
   }
 
   let valList = {}
@@ -12,7 +14,11 @@ describe('Page: /project-cost', () => {
   const utilsList = {
     'solar-PV-system-A1': 'Yes',
     'solar-PV-system-A2': 'No',
-    
+    'project-items-A1': 'Constructing or improving buildings for processing',
+    'project-items-A2': 'Processing equipment or machinery',
+    'project-items-A3': 'Retail facilities',
+    'storage-A1': 'Yes',
+    'fruit-storage-A1': 'Yes'
   }
 
   commonFunctionsMock(varList, null, utilsList, valList)
@@ -25,9 +31,29 @@ describe('Page: /project-cost', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('What is the total estimated cost of the items?')
+    expect(response.payload).toContain('What is the estimated cost of the items?')
     expect(response.payload).toContain('Do not include the solar PV')
     expect(response.payload).toContain('Enter cost of the items, for example 695,000')
+  })
+
+  it('page loads successfully, with correct sidebar items', async () => {
+    varList.projectItems = ['Constructing or improving buildings for processing', 'Processing equipment or machinery', 'Retail facilities'],
+    varList.fruitStorage = 'Yes'
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-cost`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('What is the estimated cost of the items?')
+    expect(response.payload).toContain('Enter cost of the items, for example 695,000')
+    expect(response.payload).toContain('Selected items')
+    expect(response.payload).toContain('Constructing or improving buildings for processing')
+    expect(response.payload).toContain('Processing equipment or machinery')
+    expect(response.payload).toContain('Retail facilities')
+    expect(response.payload).toContain('Controlled atmosphere storage for top fruit')
   })
 
   it('page loads successfully, with all the options', async () => {
@@ -39,7 +65,7 @@ describe('Page: /project-cost', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('What is the total estimated cost of the items?')
+    expect(response.payload).toContain('What is the estimated cost of the items?')
     expect(response.payload).toContain('Do not include VAT')
     expect(response.payload).toContain('Enter cost of the items, for example 695,000')
   })

@@ -149,7 +149,7 @@ describe('Page: /business-details', () => {
 
   it('should validate business turnover - maximum value is 999999999', async () => {
     valList.businessTurnover = {
-      error: 'Number must be between 1-999999999',
+      error: 'Enter your annual business turnover, in pounds',
       return: false
     }
     const postOptions = {
@@ -164,7 +164,7 @@ describe('Page: /business-details', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Number must be between 1-999999999')
+    expect(postResponse.payload).toContain('Enter your annual business turnover, in pounds')
   })
 
   it('should validate SBI, if entered - only digits', async () => {

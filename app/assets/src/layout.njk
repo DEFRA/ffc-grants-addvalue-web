@@ -6,7 +6,7 @@
 {% set urlPrefix = "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>" %}
 {% set assetPath = urlPrefix + "/assets" %}
 {% set timeoutPath = urlPrefix + "/session-timeout" %}
-{% set siteTitle = "Check if you can apply for a Farming Transformation Fund Adding Value Grant" %}
+{% set siteTitle = "Check if you can apply for a Farming Investment Fund Adding Value Grant" %}
 
 {% block pageTitle %}
   {{ siteTitle }}
@@ -28,8 +28,8 @@
 
     {{
       govukHeader({
-        homepageUrl: urlPrefix + "/start",
-        serviceName: "Check if you can apply for a Farming Transformation Fund Adding Value Grant",
+        homepageUrl: "https://www.gov.uk/",
+        serviceName: "Check if you can apply for a Farming Investment Fund Adding Value Grant",
         serviceUrl: urlPrefix + "/start"
       })
     }}

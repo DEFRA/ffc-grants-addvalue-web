@@ -4,6 +4,7 @@ const { ALL_QUESTIONS } = require('../config/question-bank')
 const { getYarValue, setYarValue } = require('ffc-grants-common-functionality').session
 const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { addSummaryRow } = require('../helpers/score-helpers')
+const gapiService = require('../services/gapi-service')
 
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')
 
@@ -73,7 +74,7 @@ module.exports = [{
             desirabilityQuestion.answers[0].input[0].value = 'Yes, ' + desirabilityQuestion.answers[0].input[0].value.toLowerCase()
           }
 
-          if (desirabilityQuestion.key != 'other-farmers') {
+          if (desirabilityQuestion.key != 'other-farmers' && desirabilityQuestion.key != 'fruit-storage') {
             const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
             desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
             desirabilityQuestion.desc = bankQuestion.desc ?? ''
@@ -88,8 +89,16 @@ module.exports = [{
 
         if (getYarValue(request, 'otherFarmers')) {
           questions.shift() // first item is non-scoring q so undefined. Thus removing here
+        } 
 
-        }
+        if (getYarValue(request, 'fruitStorage')) {
+          questions.shift()
+          if (getYarValue(request, 'fruitStorage') === 'Yes'){
+            questions.sort((a, b) => a.order - b.order)
+            questions.shift()
+            questions.shift()
+          }
+        } 
 
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {
@@ -105,14 +114,10 @@ module.exports = [{
         }
 
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
-        // await gapiService.sendDimensionOrMetrics(request, [{
-        //   dimensionOrMetric: gapiService.dimensions.SCORE,
-        //   value: msgData.desirability.overallRating.band
-        // },
-        // {
-        //   dimensionOrMetric: gapiService.metrics.SCORE,
-        //   value: 'TIME'
-        // }])
+
+        await gapiService.sendGAEvent(request, { name: 'score', params: { score_presented: msgData.desirability.overallRating.band } })
+        setYarValue(request, 'onScorePage', true)
+
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
@@ -123,9 +128,12 @@ module.exports = [{
         throw new Error('Score not received.')
       }
     } catch (error) {
-      request.log(error)
+      console.log(error)
+      await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.EXCEPTION, params: { error: error.message } })
+
     }
-    request.log(err)
+    console.log(err)
+
     return h.view('500')
   }
 },

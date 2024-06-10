@@ -62,6 +62,7 @@ async function createServer () {
       propertySettings: [
         {
           id: config.googleTagManagerServerKey,
+          key: config.analyticsPropertyApi,
           hitTypes: ['pageview']
         }
       ],
@@ -142,7 +143,8 @@ async function createServer () {
       govukAssetpath: '/assets',
       serviceName: 'FFC Grants Service',
       pageTitle: 'FFC Grants Service',
-      googleTagManagerKey: config.googleTagManagerKey
+      googleTagManagerKey: config.googleTagManagerKey,
+      analyticsTagKey: config.analyticsTagKey
     }
   })
 

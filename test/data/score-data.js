@@ -7,6 +7,26 @@ const msgData = {
   desirability: {
     questions: [
       {
+        key: 'fruit-storage',
+        answers: [
+          {
+            key: 'fruit-storage',
+            title: 'Store the fruit pls',
+            input: [
+              {
+                key: 'fruit-storage-A1',
+                value: 'Here'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 4,
+          band: 'Strong',
+          importance: null
+        }
+      },
+      {
         key: 'other-farmers',
         answers: [
           {

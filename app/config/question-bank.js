@@ -95,7 +95,7 @@ const questionBank = {
           type: 'single-answer',
           fundingPriorities: '',
           minAnswerCount: 1,
-          ga: [{ journeyStart: true }],
+          ga: { journeyStart: true },
           hint: {
             text: 'Select one option'
           },
@@ -399,7 +399,7 @@ const questionBank = {
           preValidationKeys: ['planningPermission'],
           maybeEligibleContent: {
             messageHeader: 'You may be able to apply for this grant',
-            messageContent: 'Any planning permission must be in place by 31 January 2024.'
+            messageContent: 'Any planning permission must be in place by 31 May 2025.'
           }
         },
         {
@@ -532,12 +532,12 @@ const questionBank = {
           baseUrl: 'project-responsibility',
           backUrl: 'tenancy',
           nextUrl: 'smaller-abattoir',
-          // preValidationObject: {
-          //   preValidationKeys: ['tenancy'],
-          //   preValidationAnswer: ['tenancy-A2'],
-          //   preValidationRule: 'AND',
-          //   preValidationUrls: ['tenancy']
-          // },
+          preValidationObject: {
+            preValidationKeys: ['tenancy'],
+            preValidationAnswer: ['tenancy-A2'],
+            preValidationRule: 'AND',
+            preValidationUrls: ['tenancy']
+          },
           fundingPriorities: '',
           type: 'single-answer',
           minAnswercount: 1,
@@ -596,12 +596,12 @@ const questionBank = {
             }
           },
           nextUrl: 'other-farmers',
-          // preValidationObject: {
-          //   preValidationKeys: ['tenancy', 'projectResponsibility'],
-          //   preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1', 'project-responsibility-A2'],
-          //   preValidationRule: 'OR',
-          //   preValidationUrls: ['tenancy', 'project-responsibility']
-          // },
+          preValidationObject: {
+            preValidationKeys: ['tenancy', 'projectResponsibility'],
+            preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1', 'project-responsibility-A2'],
+            preValidationRule: 'OR',
+            preValidationUrls: ['tenancy', 'project-responsibility']
+          },
           type: 'single-answer',
           minAnswerCount: 1,
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
@@ -637,7 +637,12 @@ const questionBank = {
           baseUrl: 'fruit-storage',
           backUrl: 'smaller-abattoir',
           nextUrl: 'solar-PV-system',
-          preValidationKeys: [],
+          preValidationObject: {
+            preValidationKeys: ['smallerAbattoir'],
+            preValidationAnswer: ['smaller-abattoir-A2',],
+            preValidationRule: 'AND',
+            preValidationUrls: ['smaller-abattoir']
+          },
           type: 'single-answer',
           minAnswerCount: 1,
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
@@ -651,7 +656,7 @@ const questionBank = {
             {
               key: 'fruit-storage-A1',
               value: 'Yes',
-              yarKeysReset: ['projectItems']
+              yarKeysReset: ['projectItems', 'productsProcessed', 'howAddingValue', 'projectImpact', 'storage']
             },
             {
               key: 'fruit-storage-A2',
@@ -660,8 +665,7 @@ const questionBank = {
             }
           ],
           yarKey: 'fruitStorage'
-        },
-        
+        },   
         {
           key: 'other-farmers',
           order: 68,
@@ -674,12 +678,12 @@ const questionBank = {
           baseUrl: 'other-farmers',
           backUrl: 'smaller-abattoir',
           nextUrl: 'project-items',
-          // preValidationObject: {
-          //   preValidationKeys: ['smallerAbattoir'],
-          //   preValidationAnswer: ['smaller-abattoir-A1'],
-          //   preValidationRule: 'AND',
-          //   preValidationUrls: ['smaller-abattoir']
-          // }, 
+          preValidationObject: {
+            preValidationKeys: ['smallerAbattoir'], 
+            preValidationAnswer: ['smaller-abattoir-A1'],
+            preValidationRule: 'AND',
+            preValidationUrls: ['smaller-abattoir']
+          }, 
           eliminationAnswerKeys: '',
           fundingPriorities: '',
           type: 'single-answer',
@@ -743,8 +747,12 @@ const questionBank = {
           },
           nextUrl: 'storage',
           fundingPriorities: '',
-          //To add otherFarmers later as well 
-          preValidationKeys: ['projectStart', 'tenancy', 'smallerAbattoir'],
+          preValidationObject: {
+            preValidationKeys: ['otherFarmers', 'fruitStorage'],
+            preValidationAnswer: ['other-farmers-A1', 'fruit-storage-A2'],
+            preValidationRule: 'OR',
+            preValidationUrls: ['other-farmers', 'fruit-storage']
+          },
           type: 'multi-answer',
           minAnswerCount: 1,
           validate: [
@@ -855,12 +863,17 @@ const questionBank = {
             }
           },
           nextUrl: 'project-cost',
-          // preValidationKeys: ['storage'],
+          preValidationObject: {
+            preValidationKeys: ['storage', 'fruitStorage'],
+            preValidationAnswer: ['storage-A1', 'storage-A2','fruit-storage-A1',],
+            preValidationRule: 'OR',
+            preValidationUrls: ['storage', 'fruit-storage'],
+          },
           hint: {
             html: `You have the option to buy and install a solar PV system with this grant.</br></br>
             The solar PV panels must be installed on the roof of an existing or new building related to your project.</br></br>
             You cannot buy a solar PV system with this grant if:
-            <ul class="govuk-list govuk-list--bullet">
+            <ul class="govuk-list--bullet">
               <li>the building’s roof only faces north or is heavily shaded</li>
               <li>you are only buying portable items</li>
             </ul>`,
@@ -909,7 +922,7 @@ const questionBank = {
               elseUrl: 'potential-amount'
             }
           },
-          // preValidationKeys: ['storage'],
+          preValidationKeys: ['solarPVSystem'],
           classes: 'govuk-input--width-10',
           id: 'projectCost',
           name: 'projectCost',
@@ -923,7 +936,7 @@ const questionBank = {
             cappedGrant: true
           },
           label: {
-            text: 'What is the total estimated cost of the items?',
+            text: 'What is the estimated cost of the items?',
             classes: 'govuk-label--l',
             isPageHeading: true
           },
@@ -935,6 +948,15 @@ const questionBank = {
             htmlNoSolar: `
             Do not include VAT<br/><br/>
             Enter cost of the items, for example 695,000`
+          },
+          sidebar: {
+            values: [{
+              heading: 'Selected items',
+              content: [{
+                items: []
+              }]
+            }],
+            dependentQuestionKeys: ['projectItems', 'fruitStorage', 'storage']
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
@@ -994,7 +1016,7 @@ const questionBank = {
           baseUrl: 'solar-PV-cost',
           backUrl: 'project-cost',
           nextUrl: 'potential-amount-solar',
-          // preValidationKeys: ['projectCost'],
+          preValidationKeys: ['projectCost'],
           type: 'input',
           prefix: {
             text: '£'
@@ -1013,7 +1035,7 @@ const questionBank = {
             for: 'solarPVCost'
           },
           hint: {
-            html: `
+            html: `<p>Do not include VAT</p>
                   <p>Enter solar PV system costs, for example 135,000</p>`
           },
           validate: [
@@ -1113,18 +1135,19 @@ const questionBank = {
               nonDependentUrl: 'produce-processed'
             }   
           },
+          ga: { name: 'eligibility_passed', params: {} },
+          preValidationKeys: ['projectCost'],
           eliminationAnswerKeys: '',
           ineligibleContent: {
             messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
-            <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.`,
-            insertText: {
-              html: `For example, you can use:
-              <ul class="govuk-list--bullet">
+            <br/><br/>You also cannot use money from a producer organisation under the Fresh Fruit and Vegetable Aid Scheme.
+            <p class="govuk-body">For example, you can use:</p>
+              <ul class="govuk-list govuk-list--bullet">
                 <li>loans</li>
                 <li>overdrafts</li>
                 <li>delinked payments</li>
               </ul>`
-            },
+            ,
             messageLink: {
               url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
               title: 'See other grants you may be eligible for'
@@ -1369,9 +1392,6 @@ const questionBank = {
           eliminationAnswerKeys: '',
           preValidationKeys: ['howAddingValue'],
           ineligibleContent: {},
-          ga: [
-            { dimension: 'cm2', value: { type: 'journey-time' } }
-          ],
           sidebar: {
             values: [{
               heading: 'Funding priorities',
@@ -1448,17 +1468,11 @@ const questionBank = {
             }
           },
           nextUrl: 'future-customers',
-          // preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
-          // preValidationObject: {
-          //   preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
-          //   preValidationAnswer: ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4', 'remaining-costs-A1'],
-          //   preValidationRule: 'OR',
-          //   preValidationUrls: ['project-impact', 'remaining-costs']
-          // },
-          score: {
-            isScore: true,
-            isDisplay: true,
-            title: 'Mechanisation'
+          preValidationObject: {
+            preValidationKeys: ['projectImpact', 'canPayRemainingCost'],
+            preValidationAnswer: ['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4', 'remaining-costs-A1'],
+            preValidationRule: 'OR',
+            preValidationUrls: ['project-impact', 'remaining-costs']
           },
           eliminationAnswerKeys: '',
           fundingPriorities: '',
@@ -1512,14 +1526,11 @@ const questionBank = {
           score: {
             isScore: true,
             isDisplay: true,
-            title: 'Manual Labour'
+            title: 'Mechanisation'
           },
           eliminationAnswerKeys: '',
           preValidationKeys: ['mechanisation'],
           ineligibleContent: {},
-          ga: [
-            { dimension: 'cm2', value: { type: 'journey-time' } }
-          ],
           sidebar: {
             values: [{
               heading: 'Funding priorities',
@@ -1529,7 +1540,7 @@ const questionBank = {
               }]
             }]
           },
-          fundingPriorities: 'RPA wants to fund projects that use mechanisation of manual labour due to the shortage of workers.',
+          fundingPriorities: 'Use mechanisation instead of manual labour due to the shortage of workers',
           type: 'single-answer',
           minAnswerCount: 1,
           validate: [
@@ -1773,7 +1784,7 @@ const questionBank = {
               key: 'environmental-impact-A3',
               value: 'Water efficiency',
               hint: {
-                text: 'For example, majority of water for theproject is harvested or recycled on site'
+                text: 'For example, majority of water for the project is harvested or recycled on site'
               }
             },
             {
@@ -1819,10 +1830,6 @@ const questionBank = {
           backUrl: 'score',
           nextUrl: 'applying',
           preValidationKeys: ['current-score'],
-          ga: [
-            { dimension: 'cd2', value: { type: 'score' } },
-            { dimension: 'cm1', value: { type: 'journey-time' } }
-          ],
           eliminationAnswerKeys: '',
           ineligibleContent: {},
           fundingPriorities: '',
@@ -1942,7 +1949,7 @@ const questionBank = {
                   type: 'MIN_MAX',
                   min: 0,
                   max: 999999999,
-                  error: 'Number must be between 1-999999999'
+                  error: 'Enter your annual business turnover, in pounds'
                 }
               ]
             },
@@ -2027,7 +2034,6 @@ const questionBank = {
           type: 'multi-input',
           minAnswerCount: '',
           maxAnswerCount: '',
-          ga: [{ dimension: 'cd3', value: { type: 'yar', key: 'applying' } }],
           allFields: [
             {
               yarKey: 'firstName',
@@ -2715,11 +2721,7 @@ const questionBank = {
           url: 'confirmation',
           baseUrl: 'confirmation',
           preValidationKeys: ['consentOptional'],
-          ga: [
-            { dimension: 'cd2', value: { type: 'score' } },
-            { dimension: 'cd5', value: { type: 'confirmationId' } },
-            { dimension: 'cm1', value: { type: 'journey-time' } }
-          ],
+          ga: { name: 'confirmation', params: {} },
           maybeEligible: true,
           maybeEligibleContent: {
             reference: {
@@ -2728,10 +2730,11 @@ const questionBank = {
               surveyLink: process.env.SURVEY_LINK
             },
             messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
-            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme:
+            If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme.
+            {{_extraText_}}
             <h1 class="govuk-heading-m">RPA helpline</h1>
             <h2 class="govuk-heading-s">Telephone</h2>
-            Telephone: 03000 200 301<br/>
+            Telephone: 0300 0200 301<br/>
             Monday to Friday, 9am to 5pm (except public holidays)<br/>
             <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges</a></p>
             <h2 class="govuk-heading-s">Email</h2>
@@ -2753,12 +2756,12 @@ const questionBank = {
               <li>get quotes from suppliers</li>
               <li>apply for planning permission</li>
             </ul>
-            <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
             `,
             addText: false,
             conditionalInsertText: {
               text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.`
             },
+            surveyLinkBody: `<p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service? (opens in a new tab)</a></p>`
           },
         }
       ]

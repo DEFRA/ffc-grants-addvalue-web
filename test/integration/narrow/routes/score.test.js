@@ -25,10 +25,7 @@ describe('Score page', () => {
 
 	const newSender = require('../../../../app/messaging/application')
 	const createMsg = require('../../../../app/messaging/create-msg')
-	// const gapiService = require('../../../../app/services/gapi-service')
-	// const sendGAEvent = jest.spyOn(gapiService, 'sendGAEvent').mockImplementation(() => {
-	// 		Promise.resolve()
-	// 	})
+
 	const getDesirabilityAnswersSpy = jest.spyOn(createMsg, 'getDesirabilityAnswers').mockImplementation(() => {
 		return {
 			test: 'test'
@@ -136,6 +133,7 @@ describe('Score page', () => {
 		expect(getUserScoreSpy).toHaveBeenCalledTimes(1)
 	})
 	it('should load page with success Average', async () => {
+		varList.fruitStorage = 'No'
 		varList.mechanisation = 'Yes'
 		varList.otherFarmers = 'hi'
 		const options = {
@@ -161,6 +159,8 @@ describe('Score page', () => {
 		expect(getUserScoreSpy).toHaveBeenCalledTimes(1)
 	})
 	it('should load page with sucess Weak', async () => {
+		varList.fruitStorage = 'Yes'
+
 		const options = {
 			method: 'GET',
 			url: `${global.__URLPREFIX__}/score`

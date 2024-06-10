@@ -11,10 +11,13 @@ const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOpt
 const { notUniqueSelection, uniqueSelection, getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
+const gapiService = require('../services/gapi-service')
+
+const { startPageUrl, serviceEndDate, serviceEndTime } = require('./../config/server')
+
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
-const { startPageUrl } = require('../config/server')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 
 const getConfirmationId = (guid) => {
@@ -97,88 +100,87 @@ function replaceVariablesInContent(request, maybeEligibleContent) {
 }
 
 const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl, backUrl, h) => {
-  if (question.maybeEligible) {
-    let { maybeEligibleContent } = question
-    maybeEligibleContent.title = question.title
-    let consentOptionalData
+  if (!question.maybeEligible) {
+    return
+  }
 
-    maybeEligibleContent = handlePotentialAmount(request, maybeEligibleContent, url)
+  let { maybeEligibleContent } = question
+  maybeEligibleContent.title = question.title
+  let consentOptionalData
 
-    if (url === 'confirm') {
-      const consentOptional = getYarValue(request, 'consentOptional')
-      consentOptionalData = {
-        hiddenInput: {
-          id: 'consentMain',
-          name: 'consentMain',
-          value: 'true',
-          type: 'hidden'
-        },
-        idPrefix: 'consentOptional',
-        name: 'consentOptional',
-        items: setOptionsLabel(consentOptional,
-          [{
-            value: 'CONSENT_OPTIONAL',
-            text: '(Optional) I consent to being contacted by Defra or a third party about service improvements'
-          }]
-        )
-      }
+  maybeEligibleContent = handlePotentialAmount(request, maybeEligibleContent, url)
+
+  if (url === 'confirm') {
+    const consentOptional = getYarValue(request, 'consentOptional')
+    consentOptionalData = {
+      hiddenInput: {
+        id: 'consentMain',
+        name: 'consentMain',
+        value: 'true',
+        type: 'hidden'
+      },
+      idPrefix: 'consentOptional',
+      name: 'consentOptional',
+      items: setOptionsLabel(consentOptional,
+        [{
+          value: 'CONSENT_OPTIONAL',
+          text: '(Optional) I consent to being contacted by Defra or a third party about service improvements'
+        }]
+      )
     }
+  }
 
-    if (url === 'confirmation' && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+  if (url === 'confirmation') {  
+    if (getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
       maybeEligibleContent = {
         ...maybeEligibleContent,
         addText: true
       }
     }
 
-    maybeEligibleContent = replaceVariablesInContent(request, maybeEligibleContent)
-
-    if (maybeEligibleContent.reference) {
-      if (!getYarValue(request, 'consentMain')) {
-        return h.redirect(startPageUrl)
-      }
-      confirmationId = getConfirmationId(request.yar.id)
-      try {
-        const overAllScore = getYarValue(request, 'overAllScore')
-        const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
-        await senders.sendDesirabilitySubmitted(emailData, request.yar.id) 
-        
-        // gapi to be updated here?
-        // await gapiService.sendDimensionOrMetrics(request, [{
-        //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
-        //   value: confirmationId
-        // }, {
-        //   dimensionOrMetric: gapiService.dimensions.FINALSCORE,
-        //   value: getYarValue(request, 'current-score')
-        // },
-        // {
-        //   dimensionOrMetric: gapiService.metrics.CONFIRMATION,
-        //   value: 'TIME'
-        // }
-        // ])
-      } catch (err) {
-        console.log('ERROR: ', err)
-      }
-      maybeEligibleContent = {
-        ...maybeEligibleContent,
-        reference: {
-          ...maybeEligibleContent.reference,
-          html: maybeEligibleContent.reference.html.replace(
-            SELECT_VARIABLE_TO_REPLACE, (_ignore, confirmatnId) => (
-              confirmationId
-            )
-          )
-        }
-      }
-      request.yar.reset()
+    const extraTextForConfirmation = getYarValue(request, 'fruitStorage') === getQuestionAnswer('fruit-storage', 'fruit-storage-A1', ALL_QUESTIONS) ? '<br></br>You can <a class="govuk-link" href="start">check if you can apply for another Adding Value project</a> in addition to top fruit storage.' : ''
+    maybeEligibleContent = {
+      ...maybeEligibleContent,
+        messageContent: maybeEligibleContent.messageContent.replace(
+          SELECT_VARIABLE_TO_REPLACE,
+          (_ignore, additionalYarKeyName) =>
+            extraTextForConfirmation
+        )
     }
-
-    const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
-    return h.view('maybe-eligible', MAYBE_ELIGIBLE)
   }
 
-}
+  maybeEligibleContent = replaceVariablesInContent(request, maybeEligibleContent)
 
+  if (maybeEligibleContent.reference) {
+    if (!getYarValue(request, 'consentMain')) {
+      return h.redirect(startPageUrl)
+    }
+    confirmationId = getConfirmationId(request.yar.id)
+    try {
+      const overAllScore = getYarValue(request, 'overAllScore')
+      const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
+      await senders.sendDesirabilitySubmitted(emailData, request.yar.id) 
+      
+    } catch (err) {
+      console.log('ERROR: ', err)
+    }
+    maybeEligibleContent = {
+      ...maybeEligibleContent,
+      reference: {
+        ...maybeEligibleContent.reference,
+        html: maybeEligibleContent.reference.html.replace(
+          SELECT_VARIABLE_TO_REPLACE, (_ignore, confirmatnId) => (
+            confirmationId
+          )
+        )
+      }
+    }
+    request.yar.reset()
+  }
+
+  const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
+  return h.view('maybe-eligible', MAYBE_ELIGIBLE)
+}
 
 const titleCheck = (question, title, url, request) => {
   if (title?.includes('{{_')) {
@@ -311,14 +313,17 @@ const handleUrlCases = (data, question, request, conditionalHtml, h, backUrl, ne
 }
 
 const getPage = async (question, request, h) => {
-  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
+  const { url, backUrl, dependantNextUrl, type, title, yarKey } = question
+  const preValidationObject = question.preValidationObject ?? question.preValidationKeys
   const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
-  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
+  const isRedirect = guardPage(request, preValidationObject, startPageUrl, serviceEndDate, serviceEndTime, ALL_QUESTIONS)
+
   if (isRedirect) {
     return h.redirect(startPageUrl)
   }
 
   const confirmationId = ''
+  await processGA(question, request)
 
   if (question.maybeEligible) {
     return maybeEligibleGet(request, confirmationId, question, url, nextUrl, backUrl, h)
@@ -414,10 +419,20 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
 
 }
 
+const gaVarCheck = (request, baseUrl) => {
+  if (baseUrl !== 'score') {
+    setYarValue(request, 'onScorePage', false)
+  }
+}
+
+
 const showPostPage = (currentQuestion, request, h) => {
   const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, dependantNextUrl, title, type } = currentQuestion
   const NOT_ELIGIBLE = { ...ineligibleContent, backUrl: baseUrl }
   const payload = request.payload
+
+  gaVarCheck(request, baseUrl)
+
   let thisAnswer
   let dataObject
   if (yarKey === 'consentOptional' && !Object.keys(payload).includes(yarKey)) {
@@ -442,14 +457,15 @@ const showPostPage = (currentQuestion, request, h) => {
 
   const errors = checkErrors(payload, currentQuestion, h, request)
   if (errors) {
-    // gapiService.sendValidationDimension(request)
     return errors
   }
 
   if (thisAnswer?.notEligible ||
       (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
   ) {
-    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+
+    gapiService.sendGAEvent(request,
+      { name: gapiService.eventTypes.ELIMINATION, params: {} })
 
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
@@ -469,6 +485,18 @@ const getHandler = (question) => {
 const getPostHandler = (currentQuestion) => {
   return (request, h) => {
     return showPostPage(currentQuestion, request, h)
+  }
+}
+
+const processGA = async (question, request) => {
+  if (question.ga) {
+    if (question.ga.journeyStart) {
+      setYarValue(request, 'journey-start-time', Date.now())
+      console.log('[JOURNEY STARTED] ')
+    } else {
+      console.log(request.url.pathname, 'hhhhhhh')
+      await gapiService.sendGAEvent(request, question.ga)
+    }
   }
 }
 
