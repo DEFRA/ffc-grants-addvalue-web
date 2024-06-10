@@ -98,7 +98,7 @@ function replaceVariablesInContent(request, maybeEligibleContent) {
     } : '',
     surveyLink: maybeEligibleContent?.surveyLink ? maybeEligibleContent.surveyLink.replace(
       SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-        formatUKCurrency(getYarValue(request, additionalYarKeyName))
+        getYarValue(request, additionalYarKeyName)
       )
     ) : '',
   }
