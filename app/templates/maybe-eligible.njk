@@ -75,8 +75,8 @@
         {{ govukInsetText(conditionalInsertText) }}
       {% endif %}
 
-       {% if surveyLink %} 
-          <p class="govuk-body">{{ surveyLink | safe}}</p>
+       {% if surveyLinkBody %} 
+          <p class="govuk-body">{{ surveyLinkBody | safe }}</p>
       {% endif %}
       
       {% if not consentOptionalData and not reference %}
