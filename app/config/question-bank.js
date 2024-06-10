@@ -2756,12 +2756,12 @@ const questionBank = {
               <li>get quotes from suppliers</li>
               <li>apply for planning permission</li>
             </ul>
-            <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
             `,
             addText: false,
             conditionalInsertText: {
               text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.`
             },
+            surveyLinkBody: `<p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service? (opens in a new tab)</a></p>`
           },
         }
       ]
