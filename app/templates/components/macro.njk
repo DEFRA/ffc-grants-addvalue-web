@@ -1,6 +1,6 @@
 {% macro crumbToken(crumb) %}
-{% from "govuk/components/details/macro.njk" import govukDetails %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "dist/govuk/components/details/macro.njk" import govukDetails %}
+{% from "dist/govuk/components/button/macro.njk" import govukButton %}
 
   <input type="hidden" name="crumb" id="crumb"
     value="{{ crumb }}"  autocomplete="off" />
