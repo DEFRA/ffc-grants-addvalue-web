@@ -260,7 +260,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       isFruitStorageTrue: isFruitStorageTrue,
       fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
       storage: skipThreeScoringQuestionYes ? submission.storage : '',
-      projectCost: getCurrencyFormat(submission.projectCost),
+      projectCost: getCurrencyFormat(Number(submission.projectCost.toString().replace(/,/g, ''))),
       potentialFunding: getCurrencyFormat(submission.calculatedGrant),
       remainingCost: getCurrencyFormat(submission.remainingCost),
       smallerAbattoir: submission.smallerAbattoir,
