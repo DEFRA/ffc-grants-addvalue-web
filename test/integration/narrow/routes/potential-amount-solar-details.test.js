@@ -4,11 +4,11 @@ const { GRANT_PERCENTAGE } = require('../../../../app/helpers/grant-details')
 
 describe('Page: /potential-amount-solar-details', () => {
   const varList = {
-    totalCalculatedGrant: 75000,
+    totalCalculatedGrant: 60000,
     totalProjectCost: 240000,
-    calculatedGrant: 37500,
+    calculatedGrant: 30000,
     projectCost: 75000,
-    cappedCalculatedSolarGrant: 37500,
+    cappedCalculatedSolarGrant: 30000,
     solarPVCost: 165000
   }
 
@@ -24,21 +24,21 @@ describe('Page: /potential-amount-solar-details', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('Potential grant funding')
-    expect(response.payload).toContain('You may be able to apply for a grant of up to £75,000, based on the total estimated cost of £240,000.')
+    expect(response.payload).toContain('You may be able to apply for a grant of up to £60,000, based on the total estimated cost of £240,000.')
     expect(response.payload).toContain('This grant amount combines:')
-    expect(response.payload).toContain('£37,500 for project costs (50% of £75,000)')
-    expect(response.payload).toContain('£37,500 for solar PV system costs')
+    expect(response.payload).toContain('£30,000 for project costs (40% of £75,000)')
+    expect(response.payload).toContain('£30,000 for solar PV system costs')
     expect(response.payload).toContain('How is the solar PV system grant funding calculated?')
-    expect(response.payload).toContain('As your project grant funding is £37,500, you can apply for £37,500 for solar PV system costs.')
+    expect(response.payload).toContain('As your project grant funding is £30,000, you can apply for £30,000 for solar PV system costs.')
     expect(response.payload).toContain('There’s no guarantee the project will receive a grant.')
   })
 
   it('page loads successfully, with all the Eligible options', async () => {
     varList.totalCalculatedGrant = 500000
-    varList.totalProjectCost = 1250000
-    varList.calculatedGrant = 450000
-    varList.projectCost = 900000
-    varList.cappedCalculatedSolarGrant = 50000
+    varList.totalProjectCost = 1550000
+    varList.calculatedGrant = 480000
+    varList.projectCost = 1200000
+    varList.cappedCalculatedSolarGrant = 20000
     varList.solarPVCost = 350000
     const options = {
       method: 'GET',
@@ -48,10 +48,10 @@ describe('Page: /potential-amount-solar-details', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('Potential grant funding')
-    expect(response.payload).toContain('You may be able to apply for a grant of up to £500,000, based on the total estimated cost of £1,250,000.')
+    expect(response.payload).toContain('You may be able to apply for a grant of up to £500,000, based on the total estimated cost of £1,550,000.')
     expect(response.payload).toContain('This grant amount combines:')
-    expect(response.payload).toContain('£450,000 for project costs (50% of £900,000)')
-    expect(response.payload).toContain('£50,000 for solar PV system costs')
+    expect(response.payload).toContain('£480,000 for project costs (40% of £1,200,000)')
+    expect(response.payload).toContain('£20,000 for solar PV system costs')
     expect(response.payload).toContain('How is the solar PV system grant funding calculated?')
     expect(response.payload).toContain('The maximum grant you can apply for is £500,000.')
     expect(response.payload).toContain('There’s no guarantee the project will receive a grant.')
@@ -72,9 +72,9 @@ describe('Page: /potential-amount-solar-details', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('Potential grant funding')
-    expect(response.payload).toContain('You may be able to apply for a grant of up to £375,000, based on the total estimated cost of £1,000,000.')
+    expect(response.payload).toContain('You may be able to apply for a grant of up to £320,000, based on the total estimated cost of £1,000,000.')
     expect(response.payload).toContain('This grant amount combines:')
-    expect(response.payload).toContain('£275,000 for project costs (50% of £550,000)')
+    expect(response.payload).toContain('£220,000 for project costs (40% of £550,000)')
     expect(response.payload).toContain('£100,000 for solar PV system costs')
     expect(response.payload).toContain('How is the solar PV system grant funding calculated?')
     expect(response.payload).toContain('You can apply for a maximum of £100,000 for solar PV system costs.')

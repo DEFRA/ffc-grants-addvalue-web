@@ -9,10 +9,10 @@ const utilsList = {
 describe('Page: /potential-amount', () => {
   const varList = {
     projectCost: 100000,
-    calculatedGrant: 50000,
+    calculatedGrant: 40000,
     solarPVSystem: 'No',
   }
-  let eligiblePageText = 'You may be able to apply for grant funding of up to £50,000 (50% of £100,000).'
+  let eligiblePageText = 'You may be able to apply for grant funding of up to £40,000 (40% of £100,000).'
 
   commonFunctionsMock(varList, undefined, utilsList, {})
   

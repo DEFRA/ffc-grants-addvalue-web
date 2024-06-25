@@ -126,7 +126,7 @@ describe('Page: /project-cost', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
-    expect(postResponse.payload).toContain('The minimum grant you can apply for is £20,000 (50% of £40,000).')
+    expect(postResponse.payload).toContain('The minimum grant you can apply for is £25,000 (40% of £62,500).')
   })
 
   it('user types in a valid value (eg £62500) -> store user response and redirect to /solar-PV-cost', async () => {
