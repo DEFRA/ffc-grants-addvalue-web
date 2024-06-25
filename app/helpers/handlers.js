@@ -361,18 +361,12 @@ const checkYarKeyReset = (thisAnswer, request) => {
 }
 
 const calculatedSolarFunc = (calculatedGrant, request) => {
-  console.log("yar value is", getYarValue(request, 'calculatedSolarGrant'))
-  // if (calculatedGrant > 300000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 400000){
-  //   console.log("i was here")
-  //   return 100000;
-  // } else {
     const halfCalculatedSolarGrant = getYarValue(request, 'calculatedSolarGrant')
     if (halfCalculatedSolarGrant >= 100000) {
       return 100000
     } else {
       return halfCalculatedSolarGrant
     }
-  // }
 }
 
 const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dependantNextUrl, nextUrl, h) => {
@@ -381,28 +375,16 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
 
     setYarValue(request, 'calculatedGrant', calculatedGrant)
     setYarValue(request, 'remainingCost', remainingCost)
-    console.log("calculatedGrant", calculatedGrant)
-    // if(calculatedGrant >= 400000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
-    //   return  h.redirect('/adding-value/potential-amount')
-    // }
   } else if (yarKey === 'solarPVCost') {
     const calculatedGrant = getYarValue(request, 'calculatedGrant')
     setYarValue(request, 'calculatedSolarGrant', Number(getYarValue(request, 'solarPVCost').toString().replace(/,/g, '')) / 4)
-    console.log("yar calculated solar grant", getYarValue(request, 'calculatedSolarGrant'))
-
-
     let calculatedSolarGrant = calculatedSolarFunc(calculatedGrant, request)
-    console.log('calculatedSolarGrant', calculatedSolarGrant)
 
 
     setYarValue(request, 'cappedCalculatedSolarGrant', calculatedSolarGrant > calculatedGrant ? calculatedGrant  : calculatedSolarGrant)
-    console.log('cappedCalculatedSolarGrant', getYarValue(request, 'cappedCalculatedSolarGrant'))
     const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') >= 100000 || (calculatedGrant > 300000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 400000)
     const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
-
-    console.log('isSolarCapped', isSolarCapped)
-    console.log('isSolarCappedGreaterThanCalculatedGrant', isSolarCappedGreaterThanCalculatedGrant)
 
     setYarValue(request, 'isSolarCapped', isSolarCapped)
     setYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant', isSolarCappedGreaterThanCalculatedGrant)
