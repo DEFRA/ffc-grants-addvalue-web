@@ -40,25 +40,19 @@ const saveValuesToArray = (yarKey, fields) => {
 }
 
 const handlePotentialAmount = (request, maybeEligibleContent, url) => {
-  if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
+  if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 750000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
-      messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
-      additionalSentence: 'The maximum grant you can apply for is £500,000.',
-      insertText: { text: 'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for project items.' },
+      messageContent: 'You may be able to apply for grant funding of up to £300,000, based on the estimated project items cost of £{{_projectCost_}}.',
+      insertText: { text: 'The maximum grant you can apply for is £300,000.' },
     }
-  } else if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
-    return {
-      ...maybeEligibleContent,
-      messageContent: 'You may be able to apply for grant funding of up to £500,000, based on the estimated project items cost of £{{_projectCost_}}.',
-      insertText: { text: 'The maximum grant you can apply for is £500,000.' },
-    }
-  } else if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
+  } else if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) < 750000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
       messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}}).`,
     }
-  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000){
+  
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000 && getYarValue(request, 'calculatedGrant') < 300000){
     return {
       ...maybeEligibleContent,
       detailsText: {
@@ -66,13 +60,21 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
         html: 'You can apply for a maximum of £100,000 for solar PV system costs.'
       },
     }
-  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') < 100000 && getYarValue(request, 'calculatedGrant') > 400000){
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000 && getYarValue(request, 'calculatedGrant') >= 300000){
     return {
       ...maybeEligibleContent,
       detailsText: {
         summaryText: 'How is the solar PV system grant funding calculated?',
-        html: `The maximum grant you can apply for is £500,000.</br></br>
-        As project item costs take priority, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
+        html: `You can apply for a maximum of £300,000 for project costs.</br></br>
+              You can apply for a maximum of £100,000 for solar PV system costs.`
+      },
+    }
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') < 100000 && getYarValue(request, 'calculatedGrant') >= 300000){
+    return {
+      ...maybeEligibleContent,
+      detailsText: {
+        summaryText: 'How is the solar PV system grant funding calculated?',
+        html: 'You can apply for a maximum of £300,000 for project costs.'
       },
     }
   }
@@ -211,7 +213,7 @@ const projectCostPageModel = (data, question, request, conditionalHtml) => {
 
 const remainingCostsPageModel = (data, question, request, conditionalHtml) => {
   if (getYarValue(request, 'solarPVSystem') === 'Yes') {
-    if (Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000) {
+    if (Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 750000) {
       question.backUrl = 'potential-amount'
     } else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')) {
       question.backUrl = 'potential-amount-solar-details'
@@ -368,16 +370,12 @@ const checkYarKeyReset = (thisAnswer, request) => {
 }
 
 const calculatedSolarFunc = (calculatedGrant, request) => {
-  if (calculatedGrant > 400000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 500000){
-    return 500000 - calculatedGrant;
-  } else {
     const halfCalculatedSolarGrant = getYarValue(request, 'calculatedSolarGrant')
     if (halfCalculatedSolarGrant >= 100000) {
       return 100000
     } else {
       return halfCalculatedSolarGrant
     }
-  }
 }
 
 const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dependantNextUrl, nextUrl, h) => {
@@ -386,18 +384,14 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
 
     setYarValue(request, 'calculatedGrant', calculatedGrant)
     setYarValue(request, 'remainingCost', remainingCost)
-
-    if(calculatedGrant >= 500000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
-      return  h.redirect('/adding-value/potential-amount')
-    }
   } else if (yarKey === 'solarPVCost') {
     const calculatedGrant = getYarValue(request, 'calculatedGrant')
     setYarValue(request, 'calculatedSolarGrant', Number(getYarValue(request, 'solarPVCost').toString().replace(/,/g, '')) / 4)
-
     let calculatedSolarGrant = calculatedSolarFunc(calculatedGrant, request)
 
+
     setYarValue(request, 'cappedCalculatedSolarGrant', calculatedSolarGrant > calculatedGrant ? calculatedGrant  : calculatedSolarGrant)
-    const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || (calculatedGrant > 400000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 500000)
+    const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') >= 100000 || (calculatedGrant > 300000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 400000)
     const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
 
@@ -408,7 +402,7 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
     setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'cappedCalculatedSolarGrant') + calculatedGrant)
     setYarValue(request, 'remainingCost', getYarValue(request, 'totalProjectCost') - getYarValue(request, 'totalCalculatedGrant'))
 
-    if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
+    if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped || calculatedGrant >= 300000)){
       return h.redirect('/adding-value/potential-amount-solar-details')
     }else{
       return h.redirect('/adding-value/potential-amount-solar')

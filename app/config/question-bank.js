@@ -959,7 +959,7 @@ const questionBank = {
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
-            messageContent: `The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).`,
+            messageContent: `The minimum grant you can apply for is £25,000 (${GRANT_PERCENTAGE}% of £62,500).`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for'
