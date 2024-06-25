@@ -51,7 +51,8 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
       ...maybeEligibleContent,
       messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}}).`,
     }
-  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000){
+  
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000 && getYarValue(request, 'calculatedGrant') < 300000){
     return {
       ...maybeEligibleContent,
       detailsText: {
@@ -59,13 +60,21 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
         html: 'You can apply for a maximum of £100,000 for solar PV system costs.'
       },
     }
-  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000 && getYarValue(request, 'calculatedGrant') > 300000){
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000 && getYarValue(request, 'calculatedGrant') >= 300000){
     return {
       ...maybeEligibleContent,
       detailsText: {
         summaryText: 'How is the solar PV system grant funding calculated?',
-        html: `The maximum grant you can apply for is £400,000.</br></br>
-        As project item costs take priority, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
+        html: `You can apply for a maximum of £300,000 for project costs.</br></br>
+              You can apply for a maximum of £100,000 for solar PV system costs.`
+      },
+    }
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') < 100000 && getYarValue(request, 'calculatedGrant') >= 300000){
+    return {
+      ...maybeEligibleContent,
+      detailsText: {
+        summaryText: 'How is the solar PV system grant funding calculated?',
+        html: 'You can apply for a maximum of £300,000 for project costs.'
       },
     }
   }
@@ -393,7 +402,7 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
     setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'cappedCalculatedSolarGrant') + calculatedGrant)
     setYarValue(request, 'remainingCost', getYarValue(request, 'totalProjectCost') - getYarValue(request, 'totalCalculatedGrant'))
 
-    if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
+    if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped || calculatedGrant >= 300000)){
       return h.redirect('/adding-value/potential-amount-solar-details')
     }else{
       return h.redirect('/adding-value/potential-amount-solar')
