@@ -195,7 +195,7 @@ const questionBank = {
               title: 'See other grants you may be eligible for'
             },
             warning: {
-              text: 'Other types of business may be supported in future schemes',
+              text: 'Other types of business may be supported in future schemes.',
               iconFallbackText: 'Warning'
             }
           },
@@ -294,8 +294,8 @@ const questionBank = {
             messageContent: 'This grant is only for projects in England.',
             insertText: { text: 'Scotland, Wales and Northern Ireland have other grants available.' },
             messageLink: {
-              url: '',
-              title: ''
+              url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+              title: 'See other grants you may be eligible for'
             }
           },
           fundingPriorities: '',
@@ -523,8 +523,7 @@ const questionBank = {
           order: 65,
           title: 'Will you take full responsibility for your project?',
           hint: {
-            html: `If you are on a short tenancy, you can ask your landlord to underwrite your agreement. This means they will take over your agreement if your tenancy ends. For example, your landlord could pass the agreed 
-            project to the new tenant.<br/><br/>
+            html: `If you are on a short tenancy, you can ask your landlord to underwrite your agreement. This means they will take over your agreement if your tenancy ends.<br/><br/>
             This approach is optional and we will only ask for details at full application.`
           },
           pageTitle: '',
@@ -960,7 +959,7 @@ const questionBank = {
           },
           eliminationAnswerKeys: '',
           ineligibleContent: {
-            messageContent: `The minimum grant you can apply for is £20,000 (${GRANT_PERCENTAGE}% of £40,000).`,
+            messageContent: `The minimum grant you can apply for is £25,000 (${GRANT_PERCENTAGE}% of £62,500).`,
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for'
@@ -1535,7 +1534,7 @@ const questionBank = {
             values: [{
               heading: 'Funding priorities',
               content: [{
-                para: 'RPA wants to fund projects that use mechanisation of manual labour due to the shortage of workers.',
+                para: 'RPA wants to fund projects that use mechanisation instead of manual labour due to the shortage of workers.',
                 items: []
               }]
             }]
@@ -1956,10 +1955,10 @@ const questionBank = {
             {
               yarKey: 'sbi',
               type: 'text',
-              title: 'Single Business Identifier (SBI) (Optional)',
+              title: 'Single Business Identifier (SBI) (optional)',
               classes: 'govuk-input govuk-input--width-10',
               label: {
-                text: 'Single Business Identifier (SBI) (Optional)',
+                text: 'Single Business Identifier (SBI) (optional)',
                 classes: 'govuk-label'
               },
               hint: {
@@ -2747,7 +2746,7 @@ const questionBank = {
             </ol>
             `,
             warning: {
-              text: 'You must not start the project'
+              text: 'You must not start the project.'
             },
             extraMessageContent: `
             <p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
