@@ -10,7 +10,7 @@
 {% from "dist/govuk/components/details/macro.njk" import govukDetails %}
 
 {% block pageTitle %}
-  {{siteTitle}}
+  {{messageHeader}}{{reference.titleText}} - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}  
