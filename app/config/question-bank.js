@@ -802,7 +802,8 @@ const questionBank = {
             {
               key: 'project-items-A4',
               value: 'None of the above',
-              notEligible: true
+              notEligible: true,
+              behaviour: 'exclusive'
             }
           ],
           yarKey: 'projectItems'
@@ -1591,14 +1592,6 @@ const questionBank = {
             html: `For example, you will now sell directly to retailers 
                   <br/><br/>Select all that apply`
           },
-          ineligibleContent: {
-            messageContent: '',
-            insertText: { text: '' },
-            messageLink: {
-              url: '',
-              title: ''
-            }
-          },
           sidebar: {
             values: [{
               heading: 'Funding priorities',
@@ -1648,7 +1641,8 @@ const questionBank = {
             },
             {
               key: 'future-customers-A5',
-              value: 'No change'
+              value: 'No change',
+              behaviour: 'exclusive'
             }
           ],
           yarKey: 'futureCustomers'
@@ -1812,7 +1806,8 @@ const questionBank = {
             },
             {
               key: 'environmental-impact-A7',
-              value: 'My project will not improve the environment'
+              value: 'My project will not improve the environment',
+              behaviour: 'exclusive'
             }
           ],
           yarKey: 'environmentalImpact'
@@ -2731,8 +2726,8 @@ const questionBank = {
             messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
             If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Investment Fund scheme.
             {{_extraText_}}
-            <h1 class="govuk-heading-m">RPA helpline</h1>
-            <h2 class="govuk-heading-s">Telephone</h2>
+            <h2 class="govuk-heading-m">RPA helpline</h2>
+            <h3 class="govuk-heading-s">Telephone</h3>
             Telephone: 0300 0200 301<br/>
             Monday to Friday, 9am to 5pm (except public holidays)<br/>
             <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges</a></p>
