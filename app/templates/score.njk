@@ -75,9 +75,9 @@
       <table class="govuk-table govuk-body govuk-!-font-size-16">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Answers</th>
-            <th scope="col" class="govuk-table__header ">Score</th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Funding priorities</th>
+            <th scope="col" class="govuk-table__header">Topic</th>
+            <th scope="col" class="govuk-table__header">Your answer</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Your score</th>
             <th scope="col" class="govuk-table__header">Change</th>
           </tr>
         </thead>
@@ -88,19 +88,22 @@
           <th scope="row" class="govuk-table__header">
             {% for answer in question.answers %}
               {{question.title}}
-              <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
-                {% for selectedAns in answer.input %}
-                <li>{{selectedAns.value}} {{question.unit}}</li>
-                {% endfor %}
-              </ul>
             {% endfor %}
           </th>
 
       <td class="govuk-table__cell ">
-        {{ question.rating.band }}
+        <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
+          {% for answer in question.answers %}
+                {% for selectedAns in answer.input %}
+                <li>{{selectedAns.value}} {{question.unit}}</li>
+                {% endfor %}
+            {% endfor %}
+              </ul>
       </td>
       <td class="govuk-table__cell">
-        {{question.fundingPriorities | safe}}
+        <strong class="govuk-tag govuk-tag--light-blue">{{ question.rating.band }} </strong>
+        <p>Our funding priorities: </p>
+        <p>{{question.fundingPriorities | safe}}</p>
       </td>
       <td class="govuk-table__cell ">
           <a class="govuk-link" href="{{question.url}}" title="Change {{question.answers[0].title}}">
