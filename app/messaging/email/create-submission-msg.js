@@ -207,7 +207,7 @@ function scoreQuestions(submission, desirabilityScore, skipThreeScoringQuestionY
     environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
     mechanisation: submission.mechanisation,
     mechanisationScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manual-labour-amount') : 'Weak',
-    manualLabour: isMechanisationYes ? submission.manualLabour : '',
+    manualLabour: isMechanisationYes ? submission.manualLabour : 'No',
     isMechanisationYes: isMechanisationYes
   }
 }
