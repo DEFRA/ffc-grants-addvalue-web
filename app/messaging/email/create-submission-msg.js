@@ -255,7 +255,6 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       projectStart: submission.projectStart,
       tenancy: submission.tenancy,
       isNotTenancy: submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS),
-      projectResponsibility: submission.projectResponsibility ?? '',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
       isFruitStorageTrue: isFruitStorageTrue,
       fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
