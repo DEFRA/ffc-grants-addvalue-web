@@ -22,6 +22,7 @@
     "planningPermission": "Not needed",
     "projectStart": "Yes, preparatory work",
     "tenancy": "No",
+    "tenancyLength" : "Yes",
     "skipThreeScoringQuestionYes": true,
     "IsSmallerAbattoirYes": true,
     "isFruitStorageTrue": false,
