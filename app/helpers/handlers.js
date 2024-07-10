@@ -133,13 +133,6 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
   }
 
   if (url === 'confirmation') {  
-    if (getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
-      maybeEligibleContent = {
-        ...maybeEligibleContent,
-        addText: true
-      }
-    }
-
     const extraTextForConfirmation = getYarValue(request, 'fruitStorage') === getQuestionAnswer('fruit-storage', 'fruit-storage-A1', ALL_QUESTIONS) ? '<br></br>You can <a class="govuk-link" href="start">check if you can apply for another Adding Value project</a> in addition to top fruit storage.' : ''
     maybeEligibleContent = {
       ...maybeEligibleContent,

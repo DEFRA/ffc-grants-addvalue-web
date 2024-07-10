@@ -250,7 +250,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       projectSubject: submission.projectSubject,
       legalStatus: submission.legalStatus,
       projectPostcode: submission.farmerDetails.projectPostcode,
-      location: submission.inEngland,
+      location: submission.inEngland ?? 'England',
       planningPermission: submission.planningPermission,
       projectStart: submission.projectStart,
       tenancy: submission.tenancy,
