@@ -75,6 +75,10 @@ module.exports = [{
             desirabilityQuestion.answers[0].title = getQuestionByKey('mechanisation', ALL_QUESTIONS).title
           }
 
+          if (desirabilityQuestion.key === 'manual-labour-amount' && getYarValue(request, 'mechanisation')) {
+            desirabilityQuestion.answers[0].title = getQuestionByKey('mechanisation', ALL_QUESTIONS).title
+          }
+
           if (desirabilityQuestion.key !== 'other-farmers' && desirabilityQuestion.key !== 'fruit-storage') {
             const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
             desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
