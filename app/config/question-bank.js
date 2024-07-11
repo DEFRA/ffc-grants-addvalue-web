@@ -1840,6 +1840,11 @@ const questionBank = {
                   min: 0,
                   max: 30,
                   error: 'Project name must be 30 characters or fewer'
+                },
+                {
+                  type: 'REGEX',
+                  regex: /^[a-zA-Z0-9,' -]*$/,
+                  error: 'Project name must only include letters, numbers, hyphens, spaces and apostrophes'
                 }
               ]
             },
@@ -1864,6 +1869,11 @@ const questionBank = {
                   min: 0,
                   max: 30,
                   error: 'Business name must be 30 characters or fewer'
+                },
+                {
+                  type: 'REGEX',
+                  regex: /^[a-zA-Z0-9,' -]*$/,
+                  error: 'Project name must only include letters, numbers, hyphens, spaces and apostrophes'
                 }
               ]
             },

@@ -74,7 +74,7 @@ module.exports = [{
             desirabilityQuestion.answers[0].input[0].value = 'Yes, ' + desirabilityQuestion.answers[0].input[0].value.toLowerCase()
           }
 
-          if (desirabilityQuestion.key != 'other-farmers' && desirabilityQuestion.key != 'fruit-storage') {
+          if (desirabilityQuestion.key !== 'other-farmers' && desirabilityQuestion.key !== 'fruit-storage') {
             const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
             desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
             desirabilityQuestion.desc = bankQuestion.desc ?? ''
