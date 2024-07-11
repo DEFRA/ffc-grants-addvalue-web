@@ -72,7 +72,6 @@ module.exports = [{
 
           if (desirabilityQuestion.key === 'manual-labour-amount' && getYarValue(request, 'mechanisation') === getQuestionAnswer('mechanisation', 'mechanisation-A1', ALL_QUESTIONS)) {
             desirabilityQuestion.answers[0].input[0].value = 'Yes, ' + desirabilityQuestion.answers[0].input[0].value.toLowerCase()
-            desirabilityQuestion.answers[0].title = getQuestionByKey('mechanisation', ALL_QUESTIONS).title
           }
 
           if (desirabilityQuestion.key === 'manual-labour-amount' && getYarValue(request, 'mechanisation')) {
