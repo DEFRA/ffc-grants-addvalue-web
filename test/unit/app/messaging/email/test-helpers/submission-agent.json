@@ -48,19 +48,17 @@
         "projectName": "Test Project",
         "businessName": "Test Business"
     },
-    "projectType": "",
+    "projectType": null,
     "project": "Building new calf housing",
     "projectCost": "2000000",
     "potentialFunding": "40000.00",
     "remainingCost": "60000.00",
     "consentOptional": true,
-    "storage": "boop",
     "solarPVCost": null,
     "smallerAbattoir": "No",
-    "IsSmallerAbattoir": false,
+    "fruitStorage": "Yes",
     "isMechanisationYes": true,
     "isFruitStorageTrue": true,
-    "fruitStorage": "Yes",
     "otherFarmers": null,
     "solarPVSystem": "No",
     "isSolarPVSystemYes": false,
@@ -68,6 +66,14 @@
     "grantRate": "up to 40%",
     "applicantBusiness": "why",
     "mechanisation": "Yes",
-    "manualLabour": "Up to 5% of workforce"
+    "manualLabour": "Up to 5% of workforce",
+    "howAddingValue" : null,
+    "productsProcessed" : null,
+    "projectImpact" : null,
+    "projectItems": null,
+    "skipThreeScoringQuestionYes": false,
+    "mechanisationScore": null,
+    "storage": null
+
 
 }

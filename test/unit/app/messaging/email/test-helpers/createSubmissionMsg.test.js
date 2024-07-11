@@ -1,5 +1,6 @@
 const agentSubmission = require('./submission-agent.json')
 const farmerSubmission = require('./submission-farmer.json')
+const fruitStorageSubmission = require('./submission-fruit-storage.json')
 const desirabilityScore = require('./desirability-score.json')
 const { commonFunctionsMock } = require('./../../../../../session-mock')
 
@@ -7,7 +8,15 @@ describe('Create submission message', () => {
   const mockPassword = 'mock-pwd'
 
   const varList = {}
-  commonFunctionsMock(varList, undefined)
+  const utilsList = {
+    'solar-PV-system-A1': 'Yes',
+    'smaller-abattoir-A2': 'No',
+    'fruit-storage-A2': 'No',
+    'smaller-abattoir-A1': 'Yes',
+    'tenancy-A2': 'No',
+    'mechanisation-A1': 'Yes'
+  }
+  commonFunctionsMock(varList, undefined, utilsList, {})
 
 
   jest.mock('../../../../../../app/messaging/email/config/email', () => ({
@@ -37,6 +46,18 @@ describe('Create submission message', () => {
     expect(msg).toHaveProperty('rpaEmail')
     expect(msg).toHaveProperty('spreadsheet')
     expect(msg.applicantEmail.emailAddress).toBe(farmerSubmission.farmerDetails.emailAddress)
+    expect(msg.rpaEmail.emailAddress).toBe('FTF@rpa.gov.uk')
+    expect(msg.agentEmail).toBe(null)
+  })
+
+  test('fruit storage submission generates correct message payload', () => {
+    const msg = createMsg(fruitStorageSubmission, desirabilityScore)
+
+    expect(msg).toHaveProperty('agentEmail')
+    expect(msg).toHaveProperty('applicantEmail')
+    expect(msg).toHaveProperty('rpaEmail')
+    expect(msg).toHaveProperty('spreadsheet')
+    expect(msg.applicantEmail.emailAddress).toBe(fruitStorageSubmission.farmerDetails.emailAddress)
     expect(msg.rpaEmail.emailAddress).toBe('FTF@rpa.gov.uk')
     expect(msg.agentEmail).toBe(null)
   })
@@ -74,7 +95,9 @@ describe('Create submission message', () => {
       'technology', 'itemsCost', 'potentialFunding', 'remainingCost',
       'projectStarted', 'planningPermission', 'projectName', 'businessName',
       'farmerName', 'farmerSurname', 'agentName', 'agentSurname', 'farmerEmail', 'agentEmail',
-      'contactConsent', 'scoreDate', 'projectCost'
+      'contactConsent', 'scoreDate', 'projectCost', 'productsProcessed', 'storage', 'howAddingValue',
+      'mechanisation', 'projectItems', 'collaboration', 'productsProcessed', 'environmentalImpact', 'futureCustomers',
+      'projectImpact', 'smallerAbattoir', 'fruitStorage'
     )
   })
   test('Under 10 employees results in micro business definition', () => {

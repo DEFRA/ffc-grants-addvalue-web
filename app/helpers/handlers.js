@@ -11,10 +11,13 @@ const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOpt
 const { notUniqueSelection, uniqueSelection, getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
+const gapiService = require('../services/gapi-service')
+
+const { startPageUrl, serviceEndDate, serviceEndTime } = require('./../config/server')
+
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
-const { startPageUrl } = require('../config/server')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 
 const getConfirmationId = (guid) => {
@@ -37,25 +40,19 @@ const saveValuesToArray = (yarKey, fields) => {
 }
 
 const handlePotentialAmount = (request, maybeEligibleContent, url) => {
-  if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
+  if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 750000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
-      messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
-      additionalSentence: 'The maximum grant you can apply for is £500,000.',
-      insertText: { text: 'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for project items.' },
+      messageContent: 'You may be able to apply for grant funding of up to £300,000, based on the estimated project items cost of £{{_projectCost_}}.',
+      insertText: { text: 'The maximum grant you can apply for is £300,000.' },
     }
-  } else if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
-    return {
-      ...maybeEligibleContent,
-      messageContent: 'You may be able to apply for grant funding of up to £500,000, based on the estimated project items cost of £{{_projectCost_}}.',
-      insertText: { text: 'The maximum grant you can apply for is £500,000.' },
-    }
-  } else if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) < 1000000 && getYarValue(request, 'solarPVSystem') === 'No'){
+  } else if (url === 'potential-amount' && Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) < 750000 && getYarValue(request, 'solarPVSystem') === 'No'){
     return {
       ...maybeEligibleContent,
       messageContent: `You may be able to apply for grant funding of up to £{{_calculatedGrant_}} (${GRANT_PERCENTAGE}% of £{{_projectCost_}}).`,
     }
-  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000){
+  
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000 && getYarValue(request, 'calculatedGrant') < 300000){
     return {
       ...maybeEligibleContent,
       detailsText: {
@@ -63,13 +60,21 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
         html: 'You can apply for a maximum of £100,000 for solar PV system costs.'
       },
     }
-  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') < 100000 && getYarValue(request, 'calculatedGrant') > 400000){
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') == 100000 && getYarValue(request, 'calculatedGrant') >= 300000){
     return {
       ...maybeEligibleContent,
       detailsText: {
         summaryText: 'How is the solar PV system grant funding calculated?',
-        html: `The maximum grant you can apply for is £500,000.</br></br>
-        As project item costs take priority, you can apply for £{{_cappedCalculatedSolarGrant_}} for solar PV system costs.`
+        html: `You can apply for a maximum of £300,000 for project costs.</br></br>
+              You can apply for a maximum of £100,000 for solar PV system costs.`
+      },
+    }
+  } else if(url === 'potential-amount-solar-details' && getYarValue(request, 'cappedCalculatedSolarGrant') < 100000 && getYarValue(request, 'calculatedGrant') >= 300000){
+    return {
+      ...maybeEligibleContent,
+      detailsText: {
+        summaryText: 'How is the solar PV system grant funding calculated?',
+        html: 'You can apply for a maximum of £300,000 for project costs.'
       },
     }
   }
@@ -158,19 +163,6 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
       const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
       await senders.sendDesirabilitySubmitted(emailData, request.yar.id) 
       
-      // gapi to be updated here?
-      // await gapiService.sendDimensionOrMetrics(request, [{
-      //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
-      //   value: confirmationId
-      // }, {
-      //   dimensionOrMetric: gapiService.dimensions.FINALSCORE,
-      //   value: getYarValue(request, 'current-score')
-      // },
-      // {
-      //   dimensionOrMetric: gapiService.metrics.CONFIRMATION,
-      //   value: 'TIME'
-      // }
-      // ])
     } catch (err) {
       console.log('ERROR: ', err)
     }
@@ -221,7 +213,7 @@ const projectCostPageModel = (data, question, request, conditionalHtml) => {
 
 const remainingCostsPageModel = (data, question, request, conditionalHtml) => {
   if (getYarValue(request, 'solarPVSystem') === 'Yes') {
-    if (Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 1000000) {
+    if (Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 750000) {
       question.backUrl = 'potential-amount'
     } else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')) {
       question.backUrl = 'potential-amount-solar-details'
@@ -323,14 +315,17 @@ const handleUrlCases = (data, question, request, conditionalHtml, h, backUrl, ne
 }
 
 const getPage = async (question, request, h) => {
-  const { url, backUrl, dependantNextUrl, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
+  const { url, backUrl, dependantNextUrl, type, title, yarKey } = question
+  const preValidationObject = question.preValidationObject ?? question.preValidationKeys
   const nextUrl = getUrl(dependantNextUrl, question.nextUrl, request)
-  const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
+  const isRedirect = guardPage(request, preValidationObject, startPageUrl, serviceEndDate, serviceEndTime, ALL_QUESTIONS)
+
   if (isRedirect) {
     return h.redirect(startPageUrl)
   }
 
   const confirmationId = ''
+  await processGA(question, request)
 
   if (question.maybeEligible) {
     return maybeEligibleGet(request, confirmationId, question, url, nextUrl, backUrl, h)
@@ -375,16 +370,12 @@ const checkYarKeyReset = (thisAnswer, request) => {
 }
 
 const calculatedSolarFunc = (calculatedGrant, request) => {
-  if (calculatedGrant > 400000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 500000){
-    return 500000 - calculatedGrant;
-  } else {
     const halfCalculatedSolarGrant = getYarValue(request, 'calculatedSolarGrant')
     if (halfCalculatedSolarGrant >= 100000) {
       return 100000
     } else {
       return halfCalculatedSolarGrant
     }
-  }
 }
 
 const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dependantNextUrl, nextUrl, h) => {
@@ -393,18 +384,14 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
 
     setYarValue(request, 'calculatedGrant', calculatedGrant)
     setYarValue(request, 'remainingCost', remainingCost)
-
-    if(calculatedGrant >= 500000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
-      return  h.redirect('/adding-value/potential-amount')
-    }
   } else if (yarKey === 'solarPVCost') {
     const calculatedGrant = getYarValue(request, 'calculatedGrant')
     setYarValue(request, 'calculatedSolarGrant', Number(getYarValue(request, 'solarPVCost').toString().replace(/,/g, '')) / 4)
-
     let calculatedSolarGrant = calculatedSolarFunc(calculatedGrant, request)
 
+
     setYarValue(request, 'cappedCalculatedSolarGrant', calculatedSolarGrant > calculatedGrant ? calculatedGrant  : calculatedSolarGrant)
-    const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') > 100000 || (calculatedGrant > 400000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 500000)
+    const isSolarCapped = getYarValue(request, 'calculatedSolarGrant') >= 100000 || (calculatedGrant > 300000 && calculatedGrant + getYarValue(request, 'calculatedSolarGrant') > 400000)
     const isSolarCappedGreaterThanCalculatedGrant = calculatedSolarGrant > calculatedGrant
     const solarPVSystem = getYarValue(request, 'solarPVSystem')
 
@@ -415,7 +402,7 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
     setYarValue(request, 'totalCalculatedGrant', getYarValue(request, 'cappedCalculatedSolarGrant') + calculatedGrant)
     setYarValue(request, 'remainingCost', getYarValue(request, 'totalProjectCost') - getYarValue(request, 'totalCalculatedGrant'))
 
-    if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped)){
+    if(solarPVSystem === 'Yes' && (isSolarCappedGreaterThanCalculatedGrant || isSolarCapped || calculatedGrant >= 300000)){
       return h.redirect('/adding-value/potential-amount-solar-details')
     }else{
       return h.redirect('/adding-value/potential-amount-solar')
@@ -426,10 +413,20 @@ const handleSolarCostRedirects = (request, currentQuestion, payload, yarKey, dep
 
 }
 
+const gaVarCheck = (request, baseUrl) => {
+  if (baseUrl !== 'score') {
+    setYarValue(request, 'onScorePage', false)
+  }
+}
+
+
 const showPostPage = (currentQuestion, request, h) => {
   const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, dependantNextUrl, title, type } = currentQuestion
   const NOT_ELIGIBLE = { ...ineligibleContent, backUrl: baseUrl }
   const payload = request.payload
+
+  gaVarCheck(request, baseUrl)
+
   let thisAnswer
   let dataObject
   if (yarKey === 'consentOptional' && !Object.keys(payload).includes(yarKey)) {
@@ -454,14 +451,15 @@ const showPostPage = (currentQuestion, request, h) => {
 
   const errors = checkErrors(payload, currentQuestion, h, request)
   if (errors) {
-    // gapiService.sendValidationDimension(request)
     return errors
   }
 
   if (thisAnswer?.notEligible ||
       (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)
   ) {
-    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+
+    gapiService.sendGAEvent(request,
+      { name: gapiService.eventTypes.ELIMINATION, params: {} })
 
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
@@ -481,6 +479,18 @@ const getHandler = (question) => {
 const getPostHandler = (currentQuestion) => {
   return (request, h) => {
     return showPostPage(currentQuestion, request, h)
+  }
+}
+
+const processGA = async (question, request) => {
+  if (question.ga) {
+    if (question.ga.journeyStart) {
+      setYarValue(request, 'journey-start-time', Date.now())
+      console.log('[JOURNEY STARTED] ')
+    } else {
+      console.log(request.url.pathname, 'hhhhhhh')
+      await gapiService.sendGAEvent(request, question.ga)
+    }
   }
 }
 

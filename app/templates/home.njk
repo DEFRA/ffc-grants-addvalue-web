@@ -1,9 +1,9 @@
 {% extends '.layout.njk' %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "dist/govuk/components/button/macro.njk" import govukButton %}
+{% from "dist/govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "dist/govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "dist/govuk/components/input/macro.njk" import govukInput %}
+{% from "dist/govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% block pageTitle %}
   {{ siteTitle }} - Start
 {% endblock %}
@@ -11,7 +11,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds govuk-body">
-      <h1 class="govuk-heading-l">Check if you can apply for a Farming Transformation Fund Adding Value Grant</h1>
+      <h1 class="govuk-heading-l">Check if you can apply for a Farming Investment Fund Adding Value Grant</h1>
       <p>Use this service to check:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>if you are eligible to apply for a grant for your project (takes about 5 minutes)</li>
@@ -27,7 +27,8 @@
       </ul>
       <p class="govuk-body">You must do the grant-funded work in England.</p>
       <p class="govuk-body">You can apply for up to {{ grantPercentage }}% of the estimated cost of project items. You have the option to apply for up to {{ grantSolarPercentage }}% of the estimated cost of buying and installing a solar PV system.</p>
-      <p class="govuk-body">The minimum grant for project items is £20,000 ({{ grantPercentage }}% of £40,000). The maximum grant you can apply for, including solar, is £500,000.</p>
+      <p class="govuk-body">The minimum grant for project costs is £25,000 ({{ grantPercentage }}% of £62,500). The maximum grant you can apply for is £300,000.</p>
+      <p class="govuk-body">You can apply for up to an additional £100,000 for solar PV systems costs.</p>
 
       {{ govukInsetText({
         text: "If your project is eligible, you will be able to submit your online application to the Rural Payments Agency (RPA)."
@@ -57,7 +58,7 @@
       <span>If you have any problems using the online service, call the RPA and follow the options for the Farming Investment Fund scheme.</span>
 
       <br><br><h3 class="govuk-heading-s">Telephone</h3>
-      <p>Telephone: <a href="tel:0300 0200 301">0300 0200 301</a></p>
+      <p>Telephone: <a class="govuk-link" href="tel:0300 0200 301"><span class="govuk-visually-hidden">Call the Rural Agency payment Agency on</span>0300 0200 301</a></p>
       <span>Monday to Friday, 9am to 5pm (except public holidays) </span><br/>
       <a class="govuk-link" target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/call-charges">Find out about call charges (opens in new tab)</a><br/>
       
