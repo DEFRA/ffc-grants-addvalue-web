@@ -8,7 +8,6 @@ describe('Reference number page', () => {
   let valList = {}
 
   const utilsList = {
-    'project-responsibility-A2': 'No, I plan to ask my landlord to underwrite my agreement',
     'fruit-storage-A1': 'Yes'
   }
     
@@ -67,8 +66,7 @@ describe('Reference number page', () => {
     expect(response.payload).toContain('If your application is successful, you’ll be sent a funding agreement and can begin work on the project.')
   })
 
-  it('page loads successfully, with all the options - project-responsibility answer is No', async () => {
-    varList.projectResponsibility = 'No, I plan to ask my landlord to underwrite my agreement'
+  it('page loads successfully, with all the options', async () => {
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/confirmation`,
@@ -91,7 +89,6 @@ describe('Reference number page', () => {
     expect(response.payload).toContain('apply for planning permission')
     expect(response.payload).toContain('What do you think of this service?')
     expect(response.payload).toContain('If your application is successful, you’ll be sent a funding agreement and can begin work on the project.')
-    expect(response.payload).toContain(`If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.`)
   })
 
   // it('consent is not given -> redirect to /adding-value/start', async () => {

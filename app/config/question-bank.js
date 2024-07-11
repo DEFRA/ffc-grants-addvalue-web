@@ -104,7 +104,7 @@ const questionBank = {
             <span>This grant is for businesses who:</span>
             <ul class="govuk-body">
               <li>are agricultural or horticultural growers or producers</li>
-              <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
+              <li>are processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
               <li>produce wild venison products as part of woodland management</li>
             </ul>`,
             messageLink: {
@@ -118,19 +118,6 @@ const questionBank = {
               error: 'Select the option that applies to your business'
             }
           ],
-          sidebar: {
-            values: [{
-              heading: 'Eligibility',
-              content: [{
-                para: 'This grant is for businesses who:',
-                items: [
-                  'are agricultural or horticultural growers or producers',
-                  `are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers`,
-                  'produce wild venison products as part of woodland management'
-                ]
-              }]
-            }]
-          },
           validations: [],
           answers: [
             {
@@ -342,7 +329,7 @@ const questionBank = {
           nextUrl: 'project-start',
           preValidationKeys: ['inEngland'],
           ineligibleContent: {
-            messageContent: 'Any planning permission must be in place by 31 May 2025.',
+            messageContent: 'You must have secured planning permission before you submit a full application.',
             messageLink: {
               url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
               title: 'See other grants you may be eligible for'
@@ -399,7 +386,7 @@ const questionBank = {
           preValidationKeys: ['planningPermission'],
           maybeEligibleContent: {
             messageHeader: 'You may be able to apply for this grant',
-            messageContent: 'Any planning permission must be in place by 31 May 2025.'
+            messageContent: 'You must have secured planning permission before you submit a full application. The application deadline is 31 May 2025.'
           }
         },
         {
@@ -478,10 +465,6 @@ const questionBank = {
           key: 'tenancy',
           order: 60,
           title: 'Is the planned project on land the business owns?',
-          hint: {
-            text: 'The site where the work will happen'
-          },
-          pageTitle: '',
           url: 'tenancy',
           baseUrl: 'tenancy',
           backUrl: 'project-start',
@@ -495,7 +478,7 @@ const questionBank = {
             values: [{
               heading: 'Eligibility',
               content: [{
-                para: 'If you are a tenant, you have the option to ask your landlord to underwrite your agreement.'
+                para: 'You must own the land or have a tenancy in place for 5 years after the final grant payment.'
               }]
             }]
           },
@@ -508,74 +491,76 @@ const questionBank = {
           answers: [
             {
               key: 'tenancy-A1',
-              value: 'Yes'
+              value: 'Yes',
+              yarKeysReset: ['tenancyLength']
             },
             {
               key: 'tenancy-A2',
               value: 'No',
-              redirectUrl: 'project-responsibility'
+              redirectUrl: 'tenancy-length'
             }
           ],
           yarKey: 'tenancy'
         },
         {
-          key: 'project-responsibility',
-          order: 65,
-          title: 'Will you take full responsibility for your project?',
-          hint: {
-            html: `If you are on a short tenancy, you can ask your landlord to underwrite your agreement. This means they will take over your agreement if your tenancy ends.<br/><br/>
-            This approach is optional and we will only ask for details at full application.`
-          },
-          pageTitle: '',
-          url: 'project-responsibility',
-          baseUrl: 'project-responsibility',
+          key: 'tenancy-length',
+          order: 61,
+          title: 'Do you have a tenancy agreement for 5 years after the final grant payment?',
+          url: 'tenancy-length',
+          baseUrl: 'tenancy-length',
           backUrl: 'tenancy',
+          preValidationKeys: ['tenancy'],
           nextUrl: 'smaller-abattoir',
-          preValidationObject: {
-            preValidationKeys: ['tenancy'],
-            preValidationAnswer: ['tenancy-A2'],
-            preValidationRule: 'AND',
-            preValidationUrls: ['tenancy']
-          },
-          fundingPriorities: '',
           type: 'single-answer',
-          minAnswercount: 1,
+          minAnswerCount: 1,
+          classes: 'govuk-radios--inline govuk-fieldset__legend--l',
           sidebar: {
-            values: [
-              {
-                heading: 'Eligibility',
-                content: [
-                  {
-                    para: 'You must complete your project and keep the grant-funded items fit for purpose for 5 years after the date you receive your final grant payment.',
-                    items: []
-                  }
-                ],
-              }
-            ]
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'You must own the land or have a tenancy in place for 5 years after the final grant payment.',
+                items: []
+              }]
+            }]
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select yes if you will take full responsibility for your project'
+              error: 'Select yes if the land has a tenancy agreement in place for 5 years after the final grant payment.'
             }
           ],
           answers: [
             {
-              key: 'project-responsibility-A1',
-              value: 'Yes, I plan to take full responsibility for my project'
+              key: 'tenancy-length-A1',
+              value: 'Yes'
             },
             {
-              key: 'project-responsibility-A2',
-              value: 'No, I plan to ask my landlord to underwrite my agreement'
+              key: 'tenancy-length-A2',
+              value: 'No',
+              redirectUrl: 'tenancy-length-condition'
             }
           ],
-          yarKey: 'projectResponsibility'
+          yarKey: 'tenancyLength'
+        },
+        {
+          key: 'tenancy-length-condition',
+          title: 'You may be able to apply for a grant from this scheme',
+          order: 62,
+          url: 'tenancy-length-condition',
+          backUrl: 'tenancy-length',
+          preValidationKeys: ['tenancyLength'],
+          nextUrl: 'smaller-abattoir',
+          maybeEligible: true,
+          maybeEligibleContent: {
+            messageHeader: 'You may be able to apply for a grant from this scheme',
+            messageContent: 'You will need to extend your tenancy agreement for 5 years after the final grant payment.'
+          }
         },
         {
           key: 'smaller-abattoir',
           order: 67,
           title: 'Do you want to build a new smaller abattoir?',
-          pageTitle: '',
+          preValidationKeys: ['tenancy'],
           hint: {
             html: `
               <p>A smaller abattoir is a:</p>
@@ -587,23 +572,26 @@ const questionBank = {
           url: 'smaller-abattoir',
           baseUrl: 'smaller-abattoir',
           backUrlObject: {
-            dependentQuestionYarKey: 'tenancy',
-            dependentAnswerKeysArray: ['tenancy-A1'],
+            dependentQuestionYarKey: 'tenancyLength',
+            dependentAnswerKeysArray: ['tenancy-length-A1'],
             urlOptions: {
-              thenUrl: 'tenancy',
-              elseUrl: 'project-responsibility'
+              thenUrl: 'tenancy-length',
+              elseUrl: 'tenancy-length-condition',
+              nonDependentUrl: 'tenancy'
             }
           },
           nextUrl: 'other-farmers',
-          preValidationObject: {
-            preValidationKeys: ['tenancy', 'projectResponsibility'],
-            preValidationAnswer: ['tenancy-A1', 'project-responsibility-A1', 'project-responsibility-A2'],
-            preValidationRule: 'OR',
-            preValidationUrls: ['tenancy', 'project-responsibility']
-          },
           type: 'single-answer',
           minAnswerCount: 1,
           classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+          sidebar: {
+            values: [{
+              heading: 'Eligibility',
+              content: [{
+                para: 'For this type of project you, must stun all animals before slaughter.'
+              }]
+            }]
+          },
           validate: [
             {
               type: 'NOT_EMPTY',
@@ -1253,7 +1241,7 @@ const questionBank = {
               key: 'products-processed-A2',
               value: 'Wild venison meat produce',
               hint: {
-                text: 'For example, culling, processing and packing wild venison meat'
+                text: 'For example, processing and packing wild venison meat'
               }
             },
             {
@@ -1347,7 +1335,7 @@ const questionBank = {
               key: 'how-adding-value-A1',
               value: 'Introducing a new product to your farm',
               hint: {
-                text: 'For example, slaughtering, cut and packed meat, yogurt to cheese, brewing or distilling'
+                text: 'For example, cut and packed meat, dairy products, brewed or distilled products'
               }
             },
             {
@@ -1855,8 +1843,8 @@ const questionBank = {
                 },
                 {
                   type: 'REGEX',
-                  regex: NAME_ONLY_REGEX,
-                  error: 'Project name must only include letters, hyphens, spaces and apostrophes'
+                  regex: /^[a-zA-Z0-9,' -]*$/,
+                  error: 'Project name must only include letters, numbers, hyphens, spaces and apostrophes'
                 }
               ]
             },
@@ -1884,8 +1872,8 @@ const questionBank = {
                 },
                 {
                   type: 'REGEX',
-                  regex: NAME_ONLY_REGEX,
-                  error: 'Business name must only include letters, hyphens, spaces and apostrophes'
+                  regex: /^[a-zA-Z0-9,' -]*$/,
+                  error: 'Project name must only include letters, numbers, hyphens, spaces and apostrophes'
                 }
               ]
             },
@@ -2751,10 +2739,6 @@ const questionBank = {
               <li>apply for planning permission</li>
             </ul>
             `,
-            addText: false,
-            conditionalInsertText: {
-              text: `If you want your landlord to underwrite your project, you should agree this with them before you begin your full application. Your landlord will need to complete a form at full application. This will confirm that they agree to take over your project, including conditions in your Grant Funding Agreement, if your tenancy ends.`
-            },
             surveyLinkBody: `<p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service? (opens in a new tab)</a></p>`
           },
         }

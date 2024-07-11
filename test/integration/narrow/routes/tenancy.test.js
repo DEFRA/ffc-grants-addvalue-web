@@ -53,7 +53,7 @@ describe('Page: /tenancy', () => {
     expect(postResponse.headers.location).toBe('smaller-abattoir')
   })
 
-  it('user selects \'No\' -> store user response and redirect to /project-responsibility', async () => {
+  it('user selects \'No\' -> store user response and redirect to /tenancy-length', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/tenancy`,
@@ -63,6 +63,6 @@ describe('Page: /tenancy', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('project-responsibility')
+    expect(postResponse.headers.location).toBe('tenancy-length')
   })
 })

@@ -207,7 +207,7 @@ function scoreQuestions(submission, desirabilityScore, skipThreeScoringQuestionY
     environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
     mechanisation: submission.mechanisation,
     mechanisationScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manual-labour-amount') : 'Weak',
-    manualLabour: isMechanisationYes ? submission.manualLabour : '',
+    manualLabour: isMechanisationYes ? submission.manualLabour : 'No',
     isMechanisationYes: isMechanisationYes
   }
 }
@@ -240,6 +240,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
   const isFruitStarageNo = submission.fruitStorage === getQuestionAnswer('fruit-storage', 'fruit-storage-A2', ALL_QUESTIONS)
   const IsSmallerAbattoirYes = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
   const skipThreeScoringQuestionYes = IsSmallerAbattoirYes || (isFruitStorageTrue && isFruitStarageNo)
+  const isNotTenancy = submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS)
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
@@ -250,12 +251,12 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       projectSubject: submission.projectSubject,
       legalStatus: submission.legalStatus,
       projectPostcode: submission.farmerDetails.projectPostcode,
-      location: submission.inEngland,
+      location: submission.inEngland ? 'England' : '',
       planningPermission: submission.planningPermission,
       projectStart: submission.projectStart,
       tenancy: submission.tenancy,
-      isNotTenancy: submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS),
-      projectResponsibility: submission.projectResponsibility ?? '',
+      isNotTenancy: isNotTenancy,
+      tenancyLength: isNotTenancy ? submission.tenancyLength : '',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
       isFruitStorageTrue: isFruitStorageTrue,
       fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
