@@ -2031,11 +2031,6 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your first name'
                 },
-                // {
-                //   type: 'REGEX',
-                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-                //   error: 'First name must include letters'
-                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
@@ -2063,11 +2058,6 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your last name'
                 },
-                // {
-                //   type: 'REGEX',
-                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-                //   error: 'Last name must include letters'
-                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
@@ -2355,11 +2345,6 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your first name'
                 },
-                // {
-                //   type: 'REGEX',
-                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-                //   error: 'First name must include letters'
-                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
@@ -2386,11 +2371,6 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your last name'
                 },
-                // {
-                //   type: 'REGEX',
-                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-                //   error: 'First name must include letters'
-                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
