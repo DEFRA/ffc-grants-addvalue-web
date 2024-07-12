@@ -13,7 +13,8 @@ const {
   EMAIL_REGEX,
   MIN_3_LETTERS,
   MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-  ONLY_TEXT_REGEX
+  ONLY_TEXT_REGEX,
+  NAME_AND_NUMBER_REGEX
 } = require('ffc-grants-common-functionality').regex
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
@@ -1335,7 +1336,7 @@ const questionBank = {
               key: 'how-adding-value-A1',
               value: 'Introducing a new product to your farm',
               hint: {
-                text: 'For example, cut and packed meat, dairy products, brewed or distilled products'
+                text: 'For example, processing of meat to burgers, milk to cheese, cereals to beer or spirits'
               }
             },
             {
@@ -1843,7 +1844,7 @@ const questionBank = {
                 },
                 {
                   type: 'REGEX',
-                  regex: /^[a-zA-Z0-9,' -]*$/,
+                  regex: NAME_AND_NUMBER_REGEX,
                   error: 'Project name must only include letters, numbers, hyphens, spaces and apostrophes'
                 }
               ]
@@ -1872,7 +1873,7 @@ const questionBank = {
                 },
                 {
                   type: 'REGEX',
-                  regex: /^[a-zA-Z0-9,' -]*$/,
+                  regex: NAME_AND_NUMBER_REGEX,
                   error: 'Project name must only include letters, numbers, hyphens, spaces and apostrophes'
                 }
               ]
@@ -2030,11 +2031,6 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your first name'
                 },
-                // {
-                //   type: 'REGEX',
-                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-                //   error: 'First name must include letters'
-                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
@@ -2062,11 +2058,6 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your last name'
                 },
-                // {
-                //   type: 'REGEX',
-                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-                //   error: 'Last name must include letters'
-                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
@@ -2354,11 +2345,6 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your first name'
                 },
-                // {
-                //   type: 'REGEX',
-                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-                //   error: 'First name must include letters'
-                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
@@ -2385,11 +2371,6 @@ const questionBank = {
                   type: 'NOT_EMPTY',
                   error: 'Enter your last name'
                 },
-                // {
-                //   type: 'REGEX',
-                //   regex: MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-                //   error: 'First name must include letters'
-                // },
                 {
                   type: 'REGEX',
                   regex: NAME_ONLY_REGEX,
