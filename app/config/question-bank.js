@@ -1335,7 +1335,7 @@ const questionBank = {
               key: 'how-adding-value-A1',
               value: 'Introducing a new product to your farm',
               hint: {
-                text: 'For example, cut and packed meat, dairy products, brewed or distilled products'
+                text: 'For example, processing of meat to burgers, milk to cheese, cereals to beer or spirits'
               }
             },
             {
