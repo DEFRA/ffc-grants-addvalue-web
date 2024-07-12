@@ -13,7 +13,8 @@ const {
   EMAIL_REGEX,
   MIN_3_LETTERS,
   MIN_2_LETTERS_TO_USE_SPECIAL_CHARACTER,
-  ONLY_TEXT_REGEX
+  ONLY_TEXT_REGEX,
+  NAME_AND_NUMBER_REGEX
 } = require('ffc-grants-common-functionality').regex
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
@@ -1843,7 +1844,7 @@ const questionBank = {
                 },
                 {
                   type: 'REGEX',
-                  regex: /^[a-zA-Z0-9,' -]*$/,
+                  regex: NAME_AND_NUMBER_REGEX,
                   error: 'Project name must only include letters, numbers, hyphens, spaces and apostrophes'
                 }
               ]
@@ -1872,7 +1873,7 @@ const questionBank = {
                 },
                 {
                   type: 'REGEX',
-                  regex: /^[a-zA-Z0-9,' -]*$/,
+                  regex: NAME_AND_NUMBER_REGEX,
                   error: 'Project name must only include letters, numbers, hyphens, spaces and apostrophes'
                 }
               ]
