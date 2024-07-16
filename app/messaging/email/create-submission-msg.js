@@ -80,7 +80,8 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
   const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
   const projectCostGrantValue = Number(submission.projectCost.toString().replace(/,/g, '')) * (GRANT_PERCENTAGE / 100)
   const solarPVCostGrantValue = isSolarPVSystemYes ? Number(submission.solarPVCost.toString().replace(/,/g, '')) * (GRANT_PERCENTAGE_SOLAR / 100) : 0
-  const totalProjectExpenditure = String(Number(submission.solarPVCost.toString().replace(/,/g, '')) + Number(submission.projectCost.toString().replace(/,/g, '') || 0))
+  const solarPVCost =  isSolarPVSystemYes ? Number(submission.solarPVCost.toString().replace(/,/g, '')) : 0
+  const totalProjectExpenditure = solarPVCost  + Number(submission.projectCost.toString().replace(/,/g, ''))
   return [
     generateRow(1, 'Field Name', 'Field Value', true),
     generateRow(2, 'FA or OA', 'Outline Application'),
@@ -97,7 +98,7 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(342, 'Land owned by Farm', submission.tenancy),
     generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
     generateRow(53, 'Business type', getBusinessTypeC53(submission.applicantBusiness)),
-    generateRow(55, 'Total project expenditure', totalProjectExpenditure),
+    generateRow(55, 'Total project expenditure', String(totalProjectExpenditure)),
     generateRow(57, 'Grant rate', '40'),
     generateRow(56, 'Grant amount requested', String(projectCostGrantValue + solarPVCostGrantValue)),
     generateRow(445, 'Solar Cost', isSolarPVSystemYes ? submission.solarPVCost : ''),
