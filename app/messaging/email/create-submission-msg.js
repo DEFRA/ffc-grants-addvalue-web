@@ -242,6 +242,21 @@ const businesQuestion = (submission, isAgentEmail) => {
   
 }
 
+const eligibilityQuestions = (submission) => {
+  const isNotTenancy = submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS)
+  return {
+    projectSubject: submission.projectSubject,
+    legalStatus: submission.legalStatus,
+    projectPostcode: submission.farmerDetails.projectPostcode,
+    location: submission.inEngland ? 'England' : '',
+    planningPermission: submission.planningPermission,
+    projectStart: submission.projectStart,
+    tenancy: submission.tenancy,
+    isNotTenancy: isNotTenancy,
+    tenancyLength: isNotTenancy ? submission.tenancyLength : '',
+  }
+}
+
 // same here
 function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail = false) {
   const email = isAgentEmail ? submission.agentsDetails.emailAddress : submission.farmerDetails.emailAddress
@@ -250,7 +265,6 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
   const isFruitStarageNo = submission.fruitStorage === getQuestionAnswer('fruit-storage', 'fruit-storage-A2', ALL_QUESTIONS)
   const IsSmallerAbattoirYes = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
   const skipThreeScoringQuestionYes = IsSmallerAbattoirYes || (isFruitStorageTrue && isFruitStarageNo)
-  const isNotTenancy = submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS)
   const projectCostGrantValue = Number(submission.projectCost.toString().replace(/,/g, '')) * (GRANT_PERCENTAGE / 100)
   const solarPVCostGrantValue = isSolarPVSystemYes ? Number(submission.solarPVCost.toString().replace(/,/g, '')) * (GRANT_PERCENTAGE_SOLAR / 100) : 0
   const totalGrant = isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, '')) + Number(submission.projectCost.toString().replace(/,/g, ''))) : ''
@@ -262,15 +276,6 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       referenceNumber: submission.confirmationId,
       overallRating: desirabilityScore.desirability.overallRating.band,
       scoreChance: getScoreChance(desirabilityScore.desirability.overallRating.band),
-      projectSubject: submission.projectSubject,
-      legalStatus: submission.legalStatus,
-      projectPostcode: submission.farmerDetails.projectPostcode,
-      location: submission.inEngland ? 'England' : '',
-      planningPermission: submission.planningPermission,
-      projectStart: submission.projectStart,
-      tenancy: submission.tenancy,
-      isNotTenancy: isNotTenancy,
-      tenancyLength: isNotTenancy ? submission.tenancyLength : '',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
       isFruitStorageTrue: isFruitStorageTrue,
       fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
@@ -290,6 +295,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       projectCostGrant: getCurrencyFormat(projectCostGrantValue),
       solarGrant: isSolarPVSystemYes ? getCurrencyFormat(solarPVCostGrantValue) : '',
       totalGrant: totalGrant,
+      ...eligibilityQuestions(submission),
       ...businesQuestion(submission, isAgentEmail),
       ...scoreQuestions(submission, desirabilityScore, skipThreeScoringQuestionYes)
     }
