@@ -77,6 +77,10 @@ function getProjectItems (projectItems, storage) {
 }
 
 function generateDoraRows (submission, subScheme, todayStr, today, desirabilityScore) {
+  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
+  const projectCostGrantValue = Number(submission.projectCost.toString().replace(/,/g, '')) * (GRANT_PERCENTAGE / 100)
+  const solarPVCostGrantValue = isSolarPVSystemYes ? Number(submission.solarPVCost.toString().replace(/,/g, '')) * (GRANT_PERCENTAGE_SOLAR / 100) : 0
+  const totalProjectExpenditure = String(Number(submission.solarPVCost.toString().replace(/,/g, '')) + Number(submission.projectCost.toString().replace(/,/g, '') || 0))
   return [
     generateRow(1, 'Field Name', 'Field Value', true),
     generateRow(2, 'FA or OA', 'Outline Application'),
@@ -93,10 +97,16 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(342, 'Land owned by Farm', submission.tenancy),
     generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
     generateRow(53, 'Business type', getBusinessTypeC53(submission.applicantBusiness)),
-    generateRow(55, 'Total project expenditure', String(submission.projectCost).replace(/,/g, '')),
+    generateRow(55, 'Total project expenditure', totalProjectExpenditure),
     generateRow(57, 'Grant rate', '40'),
-    generateRow(56, 'Grant amount requested', submission.calculatedGrant),
+    generateRow(56, 'Grant amount requested', String(projectCostGrantValue + solarPVCostGrantValue)),
+    generateRow(445, 'Solar Cost', isSolarPVSystemYes ? submission.solarPVCost : ''),
+    generateRow(446, 'Solar Grant Amount', String(solarPVCostGrantValue)),
+    generateRow(527, 'Project items cost', String(submission.projectCost)),
+    generateRow(528, 'Project items grant amount ', String(projectCostGrantValue)),
     generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
+    generateRow(342, 'Land owned by Farm', submission.tenancy),
+    generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
     generateRow(346, 'Planning Permission Status', submission.planningPermission),
     generateRow(394, 'AV Business Type', submission.applicantBusiness ?? ' '),
     generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI ?? ''),
