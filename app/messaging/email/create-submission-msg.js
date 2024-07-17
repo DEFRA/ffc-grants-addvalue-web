@@ -77,6 +77,7 @@ function getProjectItems (projectItems, storage) {
 }
 
 function generateDoraRows (submission, subScheme, todayStr, today, desirabilityScore) {
+  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
   return [
     generateRow(1, 'Field Name', 'Field Value', true),
     generateRow(2, 'FA or OA', 'Outline Application'),
@@ -93,10 +94,16 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(342, 'Land owned by Farm', submission.tenancy),
     generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
     generateRow(53, 'Business type', getBusinessTypeC53(submission.applicantBusiness)),
-    generateRow(55, 'Total project expenditure', String(submission.projectCost).replace(/,/g, '')),
+    generateRow(55, 'Total project expenditure', String(submission.totalProjectCost)),
     generateRow(57, 'Grant rate', '40'),
-    generateRow(56, 'Grant amount requested', submission.calculatedGrant),
+    generateRow(56, 'Grant amount requested', isSolarPVSystemYes ? String(submission.totalCalculatedGrant) : String(submission.calculatedGrant)),
+    generateRow(445, 'Solar Cost', submission.solarPVCost ?? ''),
+    generateRow(446, 'Solar Grant Amount', String(submission.calculatedSolarGrant)),
+    generateRow(527, 'Project items cost', String(submission.projectCost)),
+    generateRow(528, 'Project items grant amount ', String(submission.calculatedGrant)),
     generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
+    generateRow(342, 'Land owned by Farm', submission.tenancy),
+    generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
     generateRow(346, 'Planning Permission Status', submission.planningPermission),
     generateRow(394, 'AV Business Type', submission.applicantBusiness ?? ' '),
     generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI ?? ''),
@@ -250,14 +257,11 @@ const eligibilityQuestions = (submission) => {
 // same here
 function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail = false) {
   const email = isAgentEmail ? submission.agentsDetails.emailAddress : submission.farmerDetails.emailAddress
-  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
+  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && Number(submission.projectCost.toString().replace(/,/g, '')) < 1000000
   const isFruitStorageTrue = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A2', ALL_QUESTIONS)
   const isFruitStarageNo = submission.fruitStorage === getQuestionAnswer('fruit-storage', 'fruit-storage-A2', ALL_QUESTIONS)
   const IsSmallerAbattoirYes = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
   const skipThreeScoringQuestionYes = IsSmallerAbattoirYes || (isFruitStorageTrue && isFruitStarageNo)
-  const projectCostGrantValue = Number(submission.projectCost.toString().replace(/,/g, '')) * (GRANT_PERCENTAGE / 100)
-  const solarPVCostGrantValue = isSolarPVSystemYes ? Number(submission.solarPVCost.toString().replace(/,/g, '')) * (GRANT_PERCENTAGE_SOLAR / 100) : 0
-  const totalGrant = isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, '')) + Number(submission.projectCost.toString().replace(/,/g, ''))) : ''
 
   return {
     notifyTemplate: emailConfig.notifyTemplate,
@@ -271,7 +275,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
       storage: skipThreeScoringQuestionYes ? submission.storage : '',
       projectCost: getCurrencyFormat(Number(submission.projectCost.toString().replace(/,/g, ''))),
-      potentialFunding:  getCurrencyFormat(projectCostGrantValue + solarPVCostGrantValue),
+      potentialFunding: isSolarPVSystemYes ? getCurrencyFormat(submission.totalCalculatedGrant) : getCurrencyFormat(submission.calculatedGrant),
       remainingCost: getCurrencyFormat(submission.remainingCost),
       smallerAbattoir: submission.smallerAbattoir,
       IsSmallerAbattoirYes: IsSmallerAbattoirYes,
@@ -281,10 +285,10 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       solarPVSystem: submission.solarPVSystem,
       solarGrantRate: isSolarPVSystemYes ? `Up to ${GRANT_PERCENTAGE_SOLAR}%` : '',
       grantRate: `Up to ${GRANT_PERCENTAGE}%`,
+      projectCostGrant: getCurrencyFormat(submission.calculatedGrant),
       solarPVCost: isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, ''))) : '',
-      projectCostGrant: getCurrencyFormat(projectCostGrantValue),
-      solarGrant: isSolarPVSystemYes ? getCurrencyFormat(solarPVCostGrantValue) : '',
-      totalGrant: totalGrant,
+      solarGrant: isSolarPVSystemYes ? getCurrencyFormat(submission.calculatedSolarGrant) : '',
+      totalExpenditure: isSolarPVSystemYes ? getCurrencyFormat(submission.totalProjectCost) : '',
       ...eligibilityQuestions(submission),
       ...businesQuestion(submission, isAgentEmail),
       ...scoreQuestions(submission, desirabilityScore, skipThreeScoringQuestionYes)
