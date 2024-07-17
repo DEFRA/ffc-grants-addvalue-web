@@ -77,7 +77,6 @@ function getProjectItems (projectItems, storage) {
 }
 
 function generateDoraRows (submission, subScheme, todayStr, today, desirabilityScore) {
-  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
   return [
     generateRow(1, 'Field Name', 'Field Value', true),
     generateRow(2, 'FA or OA', 'Outline Application'),
@@ -96,7 +95,7 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(53, 'Business type', getBusinessTypeC53(submission.applicantBusiness)),
     generateRow(55, 'Total project expenditure', String(submission.totalProjectCost)),
     generateRow(57, 'Grant rate', '40'),
-    generateRow(56, 'Grant amount requested', isSolarPVSystemYes ? String(submission.totalCalculatedGrant) : String(submission.calculatedGrant)),
+    generateRow(56, 'Grant amount requested', Math.max(submission.totalCalculatedGrant, submission.calculatedGrant)),
     generateRow(445, 'Solar Cost', submission.solarPVCost ?? ''),
     generateRow(446, 'Solar Grant Amount', String(submission.calculatedSolarGrant)),
     generateRow(527, 'Project items cost', String(submission.projectCost)),
@@ -275,7 +274,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
       storage: skipThreeScoringQuestionYes ? submission.storage : '',
       projectCost: getCurrencyFormat(Number(submission.projectCost.toString().replace(/,/g, ''))),
-      potentialFunding: isSolarPVSystemYes ? getCurrencyFormat(submission.totalCalculatedGrant) : getCurrencyFormat(submission.calculatedGrant),
+      potentialFunding: getCurrencyFormat(Math.max(submission.totalCalculatedGrant, submission.calculatedGrant)),
       remainingCost: getCurrencyFormat(submission.remainingCost),
       smallerAbattoir: submission.smallerAbattoir,
       IsSmallerAbattoirYes: IsSmallerAbattoirYes,
