@@ -97,7 +97,7 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(55, 'Total project expenditure', String(submission.totalProjectCost)),
     generateRow(57, 'Grant rate', '40'),
     generateRow(56, 'Grant amount requested', isSolarPVSystemYes ? String(submission.totalCalculatedGrant) : String(submission.calculatedGrant)),
-    generateRow(445, 'Solar Cost', String(submission.solarPVCost) ?? ''),
+    generateRow(445, 'Solar Cost', submission.solarPVCost ?? ''),
     generateRow(446, 'Solar Grant Amount', String(submission.calculatedSolarGrant)),
     generateRow(527, 'Project items cost', String(submission.projectCost)),
     generateRow(528, 'Project items grant amount ', String(submission.calculatedGrant)),
@@ -262,7 +262,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
   const isFruitStarageNo = submission.fruitStorage === getQuestionAnswer('fruit-storage', 'fruit-storage-A2', ALL_QUESTIONS)
   const IsSmallerAbattoirYes = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
   const skipThreeScoringQuestionYes = IsSmallerAbattoirYes || (isFruitStorageTrue && isFruitStarageNo)
-  
+
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
