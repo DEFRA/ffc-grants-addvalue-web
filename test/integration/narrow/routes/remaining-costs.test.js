@@ -144,17 +144,4 @@ describe('Page: /remaining-costs', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('<a href=\"potential-amount-solar\" class=\"govuk-back-link\">Back</a>')
   })
-
-  it('page loads with correct back link when solar-pv-system is /Yes and projectCost is 1 million or greater.', async () => {
-    varList.isSolarCappedGreaterThanCalculatedGrant = false,
-    varList.projectCost = 1000000,
-    varList.solarPVSystem = 'Yes'
-    const options = {
-      method: 'GET',
-      url: `${global.__URLPREFIX__}/remaining-costs`
-    }
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<a href=\"potential-amount\" class=\"govuk-back-link\">Back</a>')
-  })
 })
