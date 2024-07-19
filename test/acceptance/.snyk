@@ -5,11 +5,11 @@ ignore:
   SNYK-JS-INFLIGHT-6095116:
     - '*':
         reason: None Given
-        expires: 2024-07-20T15:00:06.266Z
+        expires: 2024-08-20T15:00:06.266Z
         created: 2024-06-20T15:00:06.270Z
   SNYK-JS-ANSIREGEX-1583908:
     - '*':
         reason: None Given
-        expires: 2024-05-15T14:22:06.330Z
+        expires: 2024-08-15T14:22:06.330Z
         created: 2024-04-15T14:22:06.334Z
 patch: {}
