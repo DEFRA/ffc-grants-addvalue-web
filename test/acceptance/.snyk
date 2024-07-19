@@ -12,11 +12,6 @@ ignore:
         reason: None Given
         expires: 2024-08-06T13:15:58.255Z
         created: 2024-05-07T13:15:58.261Z
-  SNYK-JS-AXIOS-6124857:
-    - '*':
-        reason: None Given
-        expires: 2024-01-13T13:29:32.127Z
-        created: 2023-12-14T13:29:32.130Z
   SNYK-JS-FOLLOWREDIRECTS-6141137:
     - '*':
         reason: None Given
