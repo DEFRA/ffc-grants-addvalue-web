@@ -104,11 +104,17 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(342, 'Land owned by Farm', submission.tenancy),
     generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
     generateRow(53, 'Business type', getBusinessTypeC53(submission.applicantBusiness)),
-    generateRow(55, 'Total project expenditure', String(submission.projectCost).replace(/,/g, '')),
+    generateRow(55, 'Total project expenditure', String(submission.totalProjectCost)),
     generateRow(57, 'Grant rate', '40'),
-    generateRow(56, 'Grant amount requested', submission.calculatedGrant),
+    generateRow(56, 'Grant amount requested', Math.max(submission.totalCalculatedGrant, submission.calculatedGrant)),
+    generateRow(445, 'Solar Cost', submission.solarPVCost ?? ''),
+    generateRow(446, 'Solar Grant Amount', String(submission.calculatedSolarGrant)),
+    generateRow(527, 'Project items cost', String(submission.projectCost)),
+    generateRow(528, 'Project items grant amount ', String(submission.calculatedGrant)),
     generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
     generateRow(346, 'Planning Permission Status', getPlanningPermissionDoraValue(submission.planningPermission)),
+    generateRow(342, 'Land owned by Farm', submission.tenancy),
+    generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
     generateRow(394, 'AV Business Type', submission.applicantBusiness ?? ' '),
     generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI ?? ''),
     generateRow(365, 'OA score', desirabilityScore.desirability.overallRating.band),
@@ -218,7 +224,7 @@ function scoreQuestions(submission, desirabilityScore, skipThreeScoringQuestionY
     environmentalImpactScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'environmental-impact'),
     mechanisation: submission.mechanisation,
     mechanisationScore: isMechanisationYes ? getQuestionScoreBand(desirabilityScore.desirability.questions, 'manual-labour-amount') : 'Weak',
-    manualLabour: isMechanisationYes ? submission.manualLabour : '',
+    manualLabour: isMechanisationYes ? submission.manualLabour : 'No',
     isMechanisationYes: isMechanisationYes
   }
 }
@@ -243,14 +249,30 @@ const businesQuestion = (submission, isAgentEmail) => {
   
 }
 
+const eligibilityQuestions = (submission) => {
+  const isNotTenancy = submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS)
+  return {
+    projectSubject: submission.projectSubject,
+    legalStatus: submission.legalStatus,
+    projectPostcode: submission.farmerDetails.projectPostcode,
+    location: submission.inEngland ? 'England' : '',
+    planningPermission: submission.planningPermission,
+    projectStart: submission.projectStart,
+    tenancy: submission.tenancy,
+    isNotTenancy: isNotTenancy,
+    tenancyLength: isNotTenancy ? submission.tenancyLength : '',
+  }
+}
+
 // same here
 function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail = false) {
   const email = isAgentEmail ? submission.agentsDetails.emailAddress : submission.farmerDetails.emailAddress
-  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && submission.projectCost < 1000000
+  const isSolarPVSystemYes = submission.solarPVSystem === getQuestionAnswer('solar-PV-system', 'solar-PV-system-A1', ALL_QUESTIONS) && Number(submission.projectCost.toString().replace(/,/g, '')) < 1000000
   const isFruitStorageTrue = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A2', ALL_QUESTIONS)
   const isFruitStarageNo = submission.fruitStorage === getQuestionAnswer('fruit-storage', 'fruit-storage-A2', ALL_QUESTIONS)
   const IsSmallerAbattoirYes = submission.smallerAbattoir === getQuestionAnswer('smaller-abattoir', 'smaller-abattoir-A1', ALL_QUESTIONS)
   const skipThreeScoringQuestionYes = IsSmallerAbattoirYes || (isFruitStorageTrue && isFruitStarageNo)
+
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
@@ -258,21 +280,12 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       referenceNumber: submission.confirmationId,
       overallRating: desirabilityScore.desirability.overallRating.band,
       scoreChance: getScoreChance(desirabilityScore.desirability.overallRating.band),
-      projectSubject: submission.projectSubject,
-      legalStatus: submission.legalStatus,
-      projectPostcode: submission.farmerDetails.projectPostcode,
-      location: submission.inEngland,
-      planningPermission: submission.planningPermission,
-      projectStart: submission.projectStart,
-      tenancy: submission.tenancy,
-      isNotTenancy: submission.tenancy === getQuestionAnswer('tenancy', 'tenancy-A2', ALL_QUESTIONS),
-      projectResponsibility: submission.projectResponsibility ?? '',
       projectItems: submission.projectItems ? [submission.projectItems].flat().join(', ') : '',
       isFruitStorageTrue: isFruitStorageTrue,
       fruitStorage: isFruitStorageTrue ? submission.fruitStorage : '',
       storage: skipThreeScoringQuestionYes ? submission.storage : '',
       projectCost: getCurrencyFormat(Number(submission.projectCost.toString().replace(/,/g, ''))),
-      potentialFunding: getCurrencyFormat(submission.calculatedGrant),
+      potentialFunding: getCurrencyFormat(Math.max(submission.totalCalculatedGrant, submission.calculatedGrant)),
       remainingCost: getCurrencyFormat(submission.remainingCost),
       smallerAbattoir: submission.smallerAbattoir,
       IsSmallerAbattoirYes: IsSmallerAbattoirYes,
@@ -282,7 +295,11 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       solarPVSystem: submission.solarPVSystem,
       solarGrantRate: isSolarPVSystemYes ? `Up to ${GRANT_PERCENTAGE_SOLAR}%` : '',
       grantRate: `Up to ${GRANT_PERCENTAGE}%`,
+      projectCostGrant: getCurrencyFormat(submission.calculatedGrant),
       solarPVCost: isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, ''))) : '',
+      solarGrant: isSolarPVSystemYes ? getCurrencyFormat(submission.calculatedSolarGrant) : '',
+      totalExpenditure: isSolarPVSystemYes ? getCurrencyFormat(submission.totalProjectCost) : '',
+      ...eligibilityQuestions(submission),
       ...businesQuestion(submission, isAgentEmail),
       ...scoreQuestions(submission, desirabilityScore, skipThreeScoringQuestionYes)
     }

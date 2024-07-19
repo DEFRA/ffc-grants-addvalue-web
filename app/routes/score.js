@@ -2,7 +2,7 @@ const createMsg = require('../messaging/create-msg')
 const { getUserScore } = require('../messaging/application')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 const { getYarValue, setYarValue } = require('ffc-grants-common-functionality').session
-const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
+const { getQuestionAnswer, getQuestionByKey } = require('ffc-grants-common-functionality').utils
 const { addSummaryRow } = require('../helpers/score-helpers')
 const gapiService = require('../services/gapi-service')
 
@@ -74,7 +74,11 @@ module.exports = [{
             desirabilityQuestion.answers[0].input[0].value = 'Yes, ' + desirabilityQuestion.answers[0].input[0].value.toLowerCase()
           }
 
-          if (desirabilityQuestion.key != 'other-farmers' && desirabilityQuestion.key != 'fruit-storage') {
+          if (desirabilityQuestion.key === 'manual-labour-amount' && getYarValue(request, 'mechanisation')) {
+            desirabilityQuestion.answers[0].title = getQuestionByKey('mechanisation', ALL_QUESTIONS).title
+          }
+
+          if (desirabilityQuestion.key !== 'other-farmers' && desirabilityQuestion.key !== 'fruit-storage') {
             const bankQuestion = ALL_QUESTIONS.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
             desirabilityQuestion.title = bankQuestion?.score?.title ?? bankQuestion.title
             desirabilityQuestion.desc = bankQuestion.desc ?? ''

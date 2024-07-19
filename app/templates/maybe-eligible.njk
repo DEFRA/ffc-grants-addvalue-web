@@ -71,11 +71,8 @@
         <p class="govuk-body">{{ extraMessageContent | safe}}</p>
       {% endif %}
 
-      {% if addText %} 
-        {{ govukInsetText(conditionalInsertText) }}
-      {% endif %}
 
-       {% if surveyLinkBody %} 
+      {% if surveyLinkBody %} 
           <p class="govuk-body">{{ surveyLinkBody | safe }}</p>
       {% endif %}
       

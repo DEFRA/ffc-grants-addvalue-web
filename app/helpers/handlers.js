@@ -133,13 +133,6 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
   }
 
   if (url === 'confirmation') {  
-    if (getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
-      maybeEligibleContent = {
-        ...maybeEligibleContent,
-        addText: true
-      }
-    }
-
     const extraTextForConfirmation = getYarValue(request, 'fruitStorage') === getQuestionAnswer('fruit-storage', 'fruit-storage-A1', ALL_QUESTIONS) ? '<br></br>You can <a class="govuk-link" href="start">check if you can apply for another Adding Value project</a> in addition to top fruit storage.' : ''
     maybeEligibleContent = {
       ...maybeEligibleContent,
@@ -213,9 +206,7 @@ const projectCostPageModel = (data, question, request, conditionalHtml) => {
 
 const remainingCostsPageModel = (data, question, request, conditionalHtml) => {
   if (getYarValue(request, 'solarPVSystem') === 'Yes') {
-    if (Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) >= 750000) {
-      question.backUrl = 'potential-amount'
-    } else if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped')) {
+    if (getYarValue(request, 'isSolarCappedGreaterThanCalculatedGrant') || getYarValue(request, 'isSolarCapped') || getYarValue(request, 'calculatedGrant') >= 300000) {
       question.backUrl = 'potential-amount-solar-details'
     } else {
       question.backUrl = 'potential-amount-solar'
@@ -223,9 +214,7 @@ const remainingCostsPageModel = (data, question, request, conditionalHtml) => {
   } else {
     question.backUrl = 'potential-amount'
   }
-
   return pageModelFormat(data, question, request, conditionalHtml)
-  
 }
 
 const handleUrlCases = (data, question, request, conditionalHtml, h, backUrl, nextUrl) => {

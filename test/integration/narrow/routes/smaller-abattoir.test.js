@@ -70,7 +70,7 @@ describe('Page: /smaller-abattoir', () => {
     expect(postResponse.headers.location).toBe('fruit-storage')
   })
 
-  it('page loads with correct back link - /tenancy - if user selected \'Yes\' on /tenancy', async () => {
+  it('page loads with correct back link - /tenancy-length-condition - if user selected \'Yes\' on /tenancy', async () => {
     varList.tenancy = "Yes"
     
     const options = {
@@ -80,11 +80,12 @@ describe('Page: /smaller-abattoir', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<a href=\"tenancy\" class=\"govuk-back-link\">Back</a>')
+    expect(response.payload).toContain('<a href=\"tenancy-length-condition\" class=\"govuk-back-link\">Back</a>')
   })
 
-  it('page loads with correct back link - /project-responsibility - if user selected \'No\' on /tenancy', async () => {
+  it('page loads with correct back link - /tenancy-length - if user selected \'No\' on /tenancy', async () => {
     varList.tenancy = "No"
+    varList.tenancyLength = "Yes"
     
     const options = {
       method: 'GET',
@@ -93,6 +94,6 @@ describe('Page: /smaller-abattoir', () => {
     
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<a href=\"project-responsibility\" class=\"govuk-back-link\">Back</a>')
+    expect(response.payload).toContain('<a href=\"tenancy-length\" class=\"govuk-back-link\">Back</a>')
   })
 })
