@@ -286,7 +286,7 @@ function getEmailDetails(submission, desirabilityScore, rpaEmail, isAgentEmail =
       grantRate: `Up to ${GRANT_PERCENTAGE}%`,
       projectCostGrant: getCurrencyFormat(submission.calculatedGrant),
       solarPVCost: isSolarPVSystemYes ? getCurrencyFormat(Number(submission.solarPVCost.toString().replace(/,/g, ''))) : '',
-      solarGrant: isSolarPVSystemYes ? getCurrencyFormat(submission.calculatedSolarGrant) : '',
+      solarGrant: isSolarPVSystemYes ? getCurrencyFormat(Math.min(submission.calculatedSolarGrant, submission.cappedCalculatedSolarGrant)) : '',
       totalExpenditure: isSolarPVSystemYes ? getCurrencyFormat(submission.totalProjectCost) : '',
       ...eligibilityQuestions(submission),
       ...businesQuestion(submission, isAgentEmail),
