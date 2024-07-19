@@ -108,7 +108,7 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(57, 'Grant rate', '40'),
     generateRow(56, 'Grant amount requested', Math.max(submission.totalCalculatedGrant, submission.calculatedGrant)),
     generateRow(445, 'Solar Cost', submission.solarPVCost ?? ''),
-    generateRow(446, 'Solar Grant Amount', String(submission.calculatedSolarGrant)),
+    generateRow(446, 'Solar Grant Amount', Math.min(submission.calculatedSolarGrant, submission.cappedCalculatedSolarGrant)),
     generateRow(527, 'Project items cost', String(submission.projectCost)),
     generateRow(528, 'Project items grant amount ', String(submission.calculatedGrant)),
     generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
