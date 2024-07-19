@@ -108,6 +108,13 @@ describe('Create submission message', () => {
     expect(msg.spreadsheet.worksheets[0].rows.find(r => r.row === 20).values[2]).toBe('Micro')
   })
 
+  test('planning permission to Approved', () => {
+    farmerSubmission.planningPermission = 'Secured'
+    const msg = createMsg(farmerSubmission, desirabilityScore)
+
+    expect(msg.spreadsheet.worksheets[0].rows.find(r => r.row === 346).values[2]).toBe('Approved')
+  })
+
   test('Under 50 employees results in small business definition', () => {
     farmerSubmission.businessDetails.numberEmployees = 10
     farmerSubmission.businessDetails.businessTurnover = 2500000
