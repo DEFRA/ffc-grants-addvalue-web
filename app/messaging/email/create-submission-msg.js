@@ -57,6 +57,17 @@ function addAgentDetails(agentsDetails) {
   ]
 }
 
+const getPlanningPermissionDoraValue = (planningPermission) => {
+  switch (planningPermission) {
+    case 'Should be in place by the time I make my full application':
+      return 'Applied for'
+    case 'Not needed':
+      return 'Not needed'
+    default:
+      return 'Approved'
+  }
+}
+
 function generateExcelFilename (scheme, projectName, businessName, referenceNumber, today) {
   const dateTime = new Intl.DateTimeFormat('en-GB', {
     timeStyle: 'short',
@@ -97,7 +108,7 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(57, 'Grant rate', '40'),
     generateRow(56, 'Grant amount requested', submission.calculatedGrant),
     generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
-    generateRow(346, 'Planning Permission Status', submission.planningPermission),
+    generateRow(346, 'Planning Permission Status', getPlanningPermissionDoraValue(submission.planningPermission)),
     generateRow(394, 'AV Business Type', submission.applicantBusiness ?? ' '),
     generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI ?? ''),
     generateRow(365, 'OA score', desirabilityScore.desirability.overallRating.band),
