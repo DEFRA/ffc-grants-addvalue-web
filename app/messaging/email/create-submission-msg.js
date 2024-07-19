@@ -60,7 +60,7 @@ function addAgentDetails(agentsDetails) {
 const getPlanningPermissionDoraValue = (planningPermission) => {
   switch (planningPermission) {
     case 'Should be in place by the time I make my full application':
-      return 'Applied for'
+      return 'Not yet applied for'
     case 'Not needed':
       return 'Not needed'
     default:
