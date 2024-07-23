@@ -167,7 +167,7 @@ const doraScoringQuestions = (submission) => {
 function getSpreadsheetDetails (submission, desirabilityScore) {
   const today = new Date()
   const todayStr = today.toLocaleDateString('en-GB')
-  const schemeName = 'Adding Value'
+  const schemeName = 'Adding Value Round 2'
   const subScheme = `FTF-${schemeName}`
 
   return {
