@@ -105,7 +105,7 @@ function generateDoraRows (submission, subScheme, todayStr, today, desirabilityS
     generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
     generateRow(53, 'Business type', getBusinessTypeC53(submission.applicantBusiness)),
     generateRow(55, 'Total project expenditure', String(submission.totalProjectCost)),
-    generateRow(57, 'Grant rate', '40'),
+    generateRow(57, 'Grant rate', submission.solarPVCost ? Number((submission.totalCalculatedGrant / submission.totalProjectCost) * 100).toFixed(2) : GRANT_PERCENTAGE), // if no soalr, 40. If solar, calculated grant / total cost * 100
     generateRow(56, 'Grant amount requested', Math.max(submission.totalCalculatedGrant, submission.calculatedGrant)),
     generateRow(445, 'Solar Cost', submission.solarPVCost ?? ''),
     generateRow(446, 'Solar Grant Amount', Math.min(submission.calculatedSolarGrant, submission.cappedCalculatedSolarGrant)),
