@@ -130,4 +130,3 @@ Feature: Common Eligibility Checking and Elimination
         Then the user should be at URL "tenancy-length"
         When the user goes back
         Then the user should be at URL "tenancy"
-        When the user continues
