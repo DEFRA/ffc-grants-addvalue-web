@@ -19,11 +19,15 @@ Then(/^(?:the user should|should) see heading "([^"]*)?"$/, async (text) => {
     if (text.indexOf("'") > -1) {
         text = text.substring(0, text.indexOf("'"))
     }
-    await expect($("//h1[contains(text(),\"" + text + "\")]")).toBeDisplayed();
+    await expect($(`//h1[contains(text(),"${text}")]`)).toBeDisplayed();
 });
 
 Then(/^(?:the user should|should) see heading label "([^"]*)?"$/, async (text) => {
-    await expect($("//h1/label[contains(text(),'" + text + "')]")).toBeDisplayed();
+    await expect($(`//h1/label[contains(text(),'${text}')]`)).toBeDisplayed();
+});
+
+Then(/^(?:the user should|should) see hint text "([^"]*)?"$/, async (text) => {
+    await expect($(`//div[@class="govuk-hint" and contains(text(),'${text}')]`)).toBeDisplayed();
 });
 
 Then(/^(?:the user should|should) see "([^"]*)?" for their project score$/, async (expectedScore) => {

@@ -3,7 +3,7 @@ const { browser } = require("@wdio/globals");
 const scoreResultsPage = require("../pages/scoreResultsPage");
 
 When(/^(?:the user clicks|clicks) on "([^"]*)?"$/, async (text) => {
-    await $("//*[contains(text(),'" + text + "')]").click();
+    await $(`//*[contains(text(),'${text}')]`).click();
 });
 
 When(/^(?:the user continues|continues)$/, async () => {
@@ -27,14 +27,14 @@ When(/^(?:the user confirms|confirms) and sends$/, async () => {
 });
 
 When(/^the user selects "([^"]*)?"$/, async (text) => {
-    const element = await $("//input[contains(@value,'" + text + "')]");
+    const element = await $(`//input[contains(@value,'${text}')]`);
     if (!await element.isSelected()) {
         await element.click();
     }});
 
 When(/^the user selects the following$/, async (dataTable) => {
     for (const row of dataTable.raw()) {
-        const element = await $("//input[@type='checkbox' and contains(@value,'" + row[0] + "')]");
+        const element = await $(`//input[@type='checkbox' and contains(@value,'${row[0]}')]`);
         if (!await element.isSelected()) {
             await element.click();
         }
@@ -42,12 +42,12 @@ When(/^the user selects the following$/, async (dataTable) => {
 });
 
 When(/^(?:the user enters|enters) "([^"]*)?" in "([^"]*)?"$/, async (text, id) => {
-    await $("//input[@id='" + id + "']").setValue(text);
+    await $(`//input[@id='${id}']`).setValue(text);
 });
 
 When(/^the user enters the following$/, async (dataTable) => {
     for (const row of dataTable.hashes()) {
-        const element = await $("//*[@id='" + row["ID"] + "']");
+        const element = await $(`//*[@id='${row["ID"]}']`);
         const tag = await element.getTagName();
         if (tag == "select") {
             await element.selectByVisibleText(row["VALUE"]);
