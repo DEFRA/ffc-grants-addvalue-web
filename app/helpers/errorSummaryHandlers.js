@@ -2,8 +2,9 @@ const { getModel } = require('../helpers/models')
 const { getHtml } = require('../helpers/conditionalHTML')
 const { ALL_QUESTIONS } = require('../config/question-bank')
 const { getYarValue } = require('ffc-grants-common-functionality').session
-const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
+const { getQuestionByKey, getAnswersKeys } = require('ffc-grants-common-functionality').utils
 const { validateAnswerField, checkInputError } = require('ffc-grants-common-functionality').errorHelpers
+const { Set, is } = require('immutable');
 
 const customiseErrorText = (value, currentQuestion, errorList, h, request) => {
   const { yarKey, type, conditionalKey, conditionalLabelData } = currentQuestion
@@ -90,32 +91,20 @@ const checkErrors = (payload, currentQuestion, h, request) => {
   if (validate) {
     placeholderInputError = checkInputError(validate, isconditionalAnswer, payload, yarKey, ALL_QUESTIONS)
 
-    if (placeholderInputError?.type === 'COMBINATION_ANSWER' && placeholderInputError?.combinationErrorsList?.length > 0) {
-      const selectedAnswer = payload[yarKey]
-      let errorText
+    if (placeholderInputError?.type === 'COMBINATION_ANSWER' && placeholderInputError?.combinationErrorsMap) {
+      const selectedAnswers = payload[yarKey]
       const {
-        combinationErrorsList,
+        combinationErrorsMap,
         combinationObject: {
           questionKey
         }
       } = placeholderInputError
 
-      combinationErrorsList.forEach((error, index) => {
-        if (selectedAnswer.length === error.length) {
-          if (selectedAnswer.every((answer, idx) => answer === getQuestionAnswer(questionKey, error[idx], ALL_QUESTIONS))) {
-            if (index === 0 || index === 3) {
-              errorText = "Select either 'Starting to make added-value products for the first time' or 'Increasing volume'"
-            } else if (index === 1 || index === 4) {
-              errorText = "Select either 'Starting to make added-value products for the first time' or 'Increasing range'"
-            } else if (index === 2 || index === 5) {
-              errorText = "Select either 'Starting to make added-value products for the first time' or 'Increasing volume' and 'Increasing range'"
-            } 
-            errorHrefList.push({
-              text: errorText,
-              href: `#${placeholderInputError.dependentKey ?? yarKey}`
-            })
-          }
-        }
+      const answersKeysSet = Set(getAnswersKeys(questionKey, selectedAnswers, ALL_QUESTIONS))
+      const errorText = combinationErrorsMap.get(answersKeysSet)
+      errorHrefList.push({
+        text: errorText,
+        href: `#${placeholderInputError.dependentKey ?? yarKey}`
       })
 
     } else if (placeholderInputError) {

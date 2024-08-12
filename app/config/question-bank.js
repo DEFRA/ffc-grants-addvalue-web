@@ -1,3 +1,4 @@
+const { Map, Set } = require('immutable');
 const { ADDRESS_REGEX } = require('ffc-grants-common-functionality/lib/regex')
 
 const {
@@ -1402,9 +1403,14 @@ const questionBank = {
             {
               type: 'COMBINATION_ANSWER',
               error: '',
-              combinationErrorsList: [['project-impact-A2', 'project-impact-A1'], ['project-impact-A3', 'project-impact-A1'],
-              ['project-impact-A3', 'project-impact-A2', 'project-impact-A1'], ['project-impact-A2', 'project-impact-A4', 'project-impact-A1'],
-              ['project-impact-A3', 'project-impact-A4', 'project-impact-A1'], ['project-impact-A3', 'project-impact-A2', 'project-impact-A4', 'project-impact-A1']],
+              combinationErrorsMap: Map([
+                [Set(['project-impact-A1', 'project-impact-A2']), "Select either 'Starting to make added-value products for the first time' or 'Increasing volume'"],
+                [Set(['project-impact-A1', 'project-impact-A3']), "Select either 'Starting to make added-value products for the first time' or 'Increasing range'"],
+                [Set(['project-impact-A1', 'project-impact-A2', 'project-impact-A3']), "Select either 'Starting to make added-value products for the first time' or 'Increasing volume' and 'Increasing range'"],
+                [Set(['project-impact-A1', 'project-impact-A2', 'project-impact-A4']), "Select either 'Starting to make added-value products for the first time' or 'Increasing volume'"],
+                [Set(['project-impact-A1', 'project-impact-A3', 'project-impact-A4']), "Select either 'Starting to make added-value products for the first time' or 'Increasing range'"],
+                [Set(['project-impact-A1', 'project-impact-A2', 'project-impact-A3', 'project-impact-A4']), "Select either 'Starting to make added-value products for the first time' or 'Increasing volume' and 'Increasing range'"],
+              ]),
               combinationObject: {
                 questionKey: 'project-impact',
                 combinationAnswerKeys: ['project-impact-A1', 'project-impact-A4']
