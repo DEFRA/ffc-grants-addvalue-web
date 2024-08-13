@@ -65,7 +65,6 @@ Feature: Smaller Abattoir Journey
         # project-items
         Then the user should be at URL "project-items"
         And should see heading "What eligible items does your project need?"
-        And should see hint text "Storage facilities will only be funded as part of a bigger project and cannot be more than 40% of the total grant funding."
         When the user selects the following
             | Constructing or improving buildings for processing |
         And continues

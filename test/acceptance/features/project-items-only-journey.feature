@@ -1,7 +1,8 @@
-@RunInCI
+@RunInCI @InProgress
 Feature: Project Items-Only Journey
 
     Scenario: Successfully apply for a grant on the Project Items-only journey
+        - checking storage percentage
         - receiving an average score
         - as the applicant
 
@@ -63,6 +64,7 @@ Feature: Project Items-Only Journey
         # project-items
         Then the user should be at URL "project-items"
         And should see heading "What eligible items does your project need?"
+        And should see hint "Storage facilities will only be funded as part of a bigger project and cannot be more than 40% of the total grant funding."
         When the user selects the following
             | Constructing or improving buildings for processing |
             | Processing equipment or machinery                  |
@@ -72,6 +74,7 @@ Feature: Project Items-Only Journey
         # storage
         Then the user should be at URL "storage"
         And should see heading "Does your project also need storage facilities?"
+        And should see warning "Storage facilities cannot be more than 40% of the total grant funding."
         When the user selects "No"
         And continues
 
