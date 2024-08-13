@@ -1,4 +1,4 @@
-@RunInCI @InProgress
+@RunInCI
 Feature: Project Items-Only Journey
 
     Scenario: Successfully apply for a grant on the Project Items-only journey

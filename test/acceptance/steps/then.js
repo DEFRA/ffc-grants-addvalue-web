@@ -34,6 +34,10 @@ Then(/^(?:the user should|should) see warning "([^"]*)?"$/, async (text) => {
     await expect($(`//div[@class='govuk-warning-text']//strong[text()[contains(.,'${text}')]]`)).toBeDisplayed();
 });
 
+Then(/^(?:the user should|should) see body "([^"]*)?"$/, async (text) => {
+    await expect($(`//p[@class='govuk-body' and contains(text(),'${text}')]`)).toBeDisplayed();
+});
+
 Then(/^(?:the user should|should) see "([^"]*)?" for their project score$/, async (expectedScore) => {
     const actualScore = await new scoreResultsPage().getScore();
     await expect(actualScore).toEqual(expectedScore);

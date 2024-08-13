@@ -2,8 +2,8 @@
 Feature: Smaller Abattoir Journey
 
     Scenario: Successfully apply for a grant on the Smaller Abattoir journey
-        - buying a solar PV system, leading to solar-PV-cost
-        - using mechanisation, leading to manual-labour-amount
+        - buying a solar PV system
+        - using mechanisation
         - receiving a strong score
         - as the applicant
 

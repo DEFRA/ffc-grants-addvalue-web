@@ -1,5 +1,5 @@
 @RunInCI
-Feature: Adding Value Specific Eligibility Checking and Elimination
+Feature: Adding Value Specific Eligibility and Elimination
 
     Background:
         # login/start
@@ -45,7 +45,7 @@ Feature: Adding Value Specific Eligibility Checking and Elimination
         When the user selects "Yes"
         And continues
 
-    Scenario: Explore Smaller Abattoir eligibility questions and elimination route
+    Scenario: Explore Smaller Abattoir eligibility questions and elimination
         # smaller-abattoir navigate back
         Then the user should be at URL "smaller-abattoir"
         When the user goes back
@@ -72,7 +72,7 @@ Feature: Adding Value Specific Eligibility Checking and Elimination
         Then the user should be at URL "other-farmers"
         And should see heading "You cannot apply for a grant from this scheme"
 
-    Scenario: Explore Project Items-only eligibility questions and elimination route
+    Scenario: Explore Project Items-only eligibility questions and elimination
         # smaller-abattoir
         Then the user should be at URL "smaller-abattoir"
         And should see heading "Do you want to build a new smaller abattoir?"

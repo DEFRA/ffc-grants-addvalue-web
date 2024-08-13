@@ -1,5 +1,5 @@
 @RunInCI
-Feature: Common Eligibility Checking and Elimination
+Feature: Common Eligibility and Elimination
 
     Scenario: Explore all common eligibility questions and elimination routes
         # login/start

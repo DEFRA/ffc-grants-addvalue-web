@@ -2,8 +2,8 @@
 Feature: Top Fruit Journey
 
     Scenario: Successfully apply for a grant on the Top Fruit journey
-        - while still awaiting planning permission, leading to planning-required-condition
-        - on land business doesn't own, leading to tenancy-length
+        - while awaiting planning permission
+        - on land business doesn't own
         - receiving an average score
         - as an agent
 
