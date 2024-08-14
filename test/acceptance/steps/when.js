@@ -30,9 +30,19 @@ When(/^the user selects "([^"]*)?"$/, async (text) => {
     const element = await $(`//input[contains(@value,'${text}')]`);
     if (!await element.isSelected()) {
         await element.click();
-    }});
+     }
+});
 
-When(/^the user selects the following$/, async (dataTable) => {
+When(/^the user unselects any previous selection$/, async () => {
+    const elements = await $$(`//input[@type='checkbox']`);
+    for (const element of elements) {
+        if (await element.isSelected()) {
+            await element.click();
+        }
+    }
+}); 
+
+When(/^(?:the user selects|selects) the following$/, async (dataTable) => {
     for (const row of dataTable.raw()) {
         const element = await $(`//input[@type='checkbox' and contains(@value,'${row[0]}')]`);
         if (!await element.isSelected()) {
