@@ -93,7 +93,7 @@ Feature: Project Items-Only Journey
         # potential-amount
         Then the user should be at URL "potential-amount"
         And should see heading "Potential grant funding"
-        ## TODO: check calculations
+        And should see body "You may be able to apply for grant funding of up to £50,000 (40% of £125,000)." 
         And continues
 
         # remaining-costs

@@ -96,7 +96,9 @@ Feature: Smaller Abattoir Journey
         # potential-amount-solar
         Then the user should be at URL "potential-amount-solar"
         And should see heading "Potential grant funding"
-        ## TODO: check calculations
+        And should see body "You may be able to apply for a grant of up to £52,500, based on the total estimated cost of £150,000."
+        And should see bullet point "£40,000 for building costs (40% of £100,000)"
+        And should see bullet point "£12,500 for solar PV system costs (25% of £50,000)"
         And continues
 
         # remaining-costs
