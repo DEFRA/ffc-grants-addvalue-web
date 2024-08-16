@@ -1,4 +1,4 @@
-@RunInCI
+@eligibility
 Feature: Project Costs Specific Eligibility and Elimination
 
     Background:

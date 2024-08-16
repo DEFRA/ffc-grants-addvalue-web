@@ -15,6 +15,10 @@ Docker is used to create containers for both the tests themselves (`wdio-cucumbe
 
 ```
 TEST_ENVIRONMENT_ROOT_URL
+
+LOGIN_USERNAME
+LOGIN_PASSWORD
+
 SHAREPOINT_TENANT_ID
 SHAREPOINT_CLIENT_ID
 SHAREPOINT_CLIENT_SECRET
@@ -39,7 +43,7 @@ CHANGES TO..
 
 3. If running against `localhost` ensure the application container is running with `docker-compose up --build` from the root folder of this repository.
 
-4. From the `/test/acceptance` directory run `docker-compose run --build --rm wdio-cucumber`. This will run all acceptance tests tagged `@RunInCI`.
+4. From the `/test/acceptance` directory run `docker-compose run --build --rm wdio-cucumber`. This will run all acceptance tests.
 
 5. HTML reports will be output to `./reports`.
 
@@ -54,7 +58,12 @@ exports.config = {
 ```
 2. Run `npm run test`, this will execute the following script defined in `package.json`:
 ```pwsh
-npx wdio run ./wdio.conf.js --cucumberOpts.tags=@RunInCI
+npx wdio run ./wdio.conf.js
+```
+
+3. Run a specific test or tests with a tag:
+```pwsh
+npx wdio run ./wdio.conf.js --cucumberOpts.tags=@tag
 ```
 
 ## Running tests in parallel

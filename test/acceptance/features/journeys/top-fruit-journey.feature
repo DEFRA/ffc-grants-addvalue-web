@@ -1,4 +1,4 @@
-@RunInCI
+@journey
 Feature: Top Fruit Journey
 
     Scenario: Successfully apply for a grant on the Top Fruit journey
@@ -88,7 +88,7 @@ Feature: Top Fruit Journey
         # potential-amount
         Then the user should be at URL "potential-amount"
         And should see heading "Potential grant funding"
-        And should see body "You may be able to apply for grant funding of up to £100,000 (40% of £250,000)." 
+        And should see body "You may be able to apply for grant funding of up to £100,000 (40% of £250,000)."
         And continues
 
         # remaining-costs
@@ -175,19 +175,19 @@ Feature: Top Fruit Journey
         Then the user should be at URL "applicant-details"
         And should see heading "Applicant's details"
         When the user enters the following
-            | FIELD                 | VALUE                          | ID                  |
-            | First name            | James                          | firstName           |
-            | Last name             | Farmer                         | lastName            |
-            | Email address         | andrew.deacon@equalexperts.com | emailAddress        |
-            | Confirm email address | andrew.deacon@equalexperts.com | confirmEmailAddress |
-            | Mobile phone number   | 07777 123456                   | mobileNumber        |
-            | Landline number       | 01234 123456                   | landlineNumber      |
-            | Address line 1        | Home Farm                      | address1            |
-            | Address line 2        | Cogenhoe                       | address2            |
-            | Town                  | Northampton                    | town                |
-            | County                | Northamptonshire               | county              |
-            | Postcode              | NN7 1NN                        | postcode            |
-            | Project postcode      | NN7 2NN                        | projectPostcode     |
+            | FIELD                 | VALUE                                                                | ID                  |
+            | First name            | James                                                                | firstName           |
+            | Last name             | Farmer                                                               | lastName            |
+            | Email address         | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | emailAddress        |
+            | Confirm email address | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | confirmEmailAddress |
+            | Mobile phone number   | 07777 123456                                                         | mobileNumber        |
+            | Landline number       | 01234 123456                                                         | landlineNumber      |
+            | Address line 1        | Home Farm                                                            | address1            |
+            | Address line 2        | Cogenhoe                                                             | address2            |
+            | Town                  | Northampton                                                          | town                |
+            | County                | Northamptonshire                                                     | county              |
+            | Postcode              | NN7 1NN                                                              | postcode            |
+            | Project postcode      | NN7 2NN                                                              | projectPostcode     |
         And continues
 
         # check-details
@@ -205,77 +205,77 @@ Feature: Top Fruit Journey
         And should see heading "Details submitted"
         And should see a reference number for their application
         Then a spreadsheet should be generated with the following values
-            | FIELD NAME                                           | FIELD VALUE                                                   | DATA TYPE        |
-            | FA or OA                                             | Outline Application                                           |                  |
-            | Single business identifier (SBI)                     | 123456789                                                     |                  |
-            | Surname                                              | Farmer                                                        |                  |
-            | Forename                                             | James                                                         |                  |
-            | Business name                                        | Home Farm Ltd                                                 |                  |
-            | Address line 1                                       | Home Farm                                                     |                  |
-            | Address line 2                                       | Cogenhoe                                                      |                  |
-            | Address line 3                                       |                                                               |                  |
-            | Address line 4 (town)                                | Northampton                                                   |                  |
-            | Address line 5 (county)                              | Northamptonshire                                              |                  |
-            | Postcode (use capitals)                              | NN7 1NN                                                       |                  |
-            | Landline number                                      | 01234 123456                                                  |                  |
-            | Mobile number                                        | 07777 123456                                                  |                  |
-            | Email                                                | andrew.deacon@equalexperts.com                                |                  |
-            | Business size                                        | Small                                                         |                  |
-            | Employees                                            | 15                                                            |                  |
-            | Status of applicant                                  | Limited company                                               |                  |
-            | Agent Surname                                        | Agent                                                         |                  |
-            | Agent Forename                                       | John                                                          |                  |
-            | Agent Business Name                                  | Farm Agency Ltd                                               |                  |
-            | Agent Address line 1                                 | High Street                                                   |                  |
-            | Agent Address line 2                                 | Denton                                                        |                  |
-            | Agent Address line 4 (town)                          | Northampton                                                   |                  |
-            | Agent Address line 5 (County)                        | Northamptonshire                                              |                  |
-            | Agent Postcode (use capitals)                        | NN7 3NN                                                       |                  |
-            | Agent Landline number                                | 01604 654321                                                  |                  |
-            | Agent Mobile number                                  | 07777 654321                                                  |                  |
-            | Agent Email                                          | test@equalexperts.com                                         |                  |
-            | Sub scheme                                           | FTF-Adding Value Round 2                                      |                  |
-            | Scheme                                               | Farming Transformation Fund                                   |                  |
-            | Owner                                                | RD                                                            |                  |
-            | Project name                                         | Top Fruit Project                                             |                  |
-            | Theme                                                | Adding Value                                                  |                  |
-            | Adding Value Project Items                           |                                                               |                  |
-            | Location of project (postcode)                       | NN7 2NN                                                       |                  |
-            | Site of Special Scientific Interest (SSSI)           |                                                               |                  |
-            | Business type                                        | producer                                                      |                  |
-            | Electronic OA received date                          | ?                                                             | CURRENT-DATE     |
-            | Total project expenditure                            | null                                                          |                  |
-            | Grant amount requested                               | 100000                                                        | INTEGER          |
-            | Grant rate                                           | 40                                                            |                  |
-            | Full Application Submission Date                     | ?                                                             | DATE-IN-6-MONTHS |
-            | Customer Marketing Indicator                         | No                                                            |                  |
-            | Project type                                         | Adding Value                                                  |                  |
-            | Are you an AGENT applying on behalf of your customer | Yes                                                           |                  |
-            | RAG rating                                           | Green                                                         |                  |
-            | RAG date reviewed                                    | ?                                                             | CURRENT-DATE     |
-            | Current location of file                             | NA Automated                                                  |                  |
-            | Grant Launch Date                                    |                                                               |                  |
-            | Land owned by Farm                                   | No                                                            |                  |
-            | Tenancy for next 5 years                             | Yes                                                           |                  |
-            | Remaining Cost to Farmer                             | 150000.00                                                     |                  |
-            | Planning Permission Status                           | Not yet applied for                                           |                  |
-            | OA score                                             | Average                                                       |                  |
-            | Date of OA decision                                  |                                                               |                  |
-            | Annual Turnover                                      | 7500000                                                       |                  |
-            | Date ready for QC or decision                        | ?                                                             | CURRENT-DATE     |
-            | Eligibility Reference No.                            | ?                                                             | REFERENCE-NUMBER |
-            | Status                                               | Pending RPA review                                            |                  |
-            | OA percent                                           | 37.5                                                          |                  |
-            | Project Started                                      | Yes, preparatory work                                         |                  |
-            | Products To Be Processed                             |                                                               |                  |
-            | How add value to products                            |                                                               |                  |
-            | AV Project Impact                                    |                                                               |                  |
-            | AV Target Customers                                  | No change                                                     |                  |
-            | AV Farmer Collaborate                                | No                                                            |                  |
-            | AV Improve Environment                               | My project will not improve the environment                   |                  |
-            | AV Business Type                                     | A grower or producer of agricultural or horticultural produce |                  |
-            | Storage Facilities                                   |                                                               |                  |
-            | Solar Cost                                           |                                                               |                  |
-            | Solar Grant Amount                                   | 0                                                             | INTEGER          |
-            | Project items cost                                   | 250000                                                        |                  |
-            | Project items grant amount                           | 100000                                                        |                  |
+            | FIELD NAME                                           | FIELD VALUE                                                          | DATA TYPE        |
+            | FA or OA                                             | Outline Application                                                  |                  |
+            | Single business identifier (SBI)                     | 123456789                                                            |                  |
+            | Surname                                              | Farmer                                                               |                  |
+            | Forename                                             | James                                                                |                  |
+            | Business name                                        | Home Farm Ltd                                                        |                  |
+            | Address line 1                                       | Home Farm                                                            |                  |
+            | Address line 2                                       | Cogenhoe                                                             |                  |
+            | Address line 3                                       |                                                                      |                  |
+            | Address line 4 (town)                                | Northampton                                                          |                  |
+            | Address line 5 (county)                              | Northamptonshire                                                     |                  |
+            | Postcode (use capitals)                              | NN7 1NN                                                              |                  |
+            | Landline number                                      | 01234 123456                                                         |                  |
+            | Mobile number                                        | 07777 123456                                                         |                  |
+            | Email                                                | cl-defra-tactical-grants-test-email-service-account@equalexperts.com |                  |
+            | Business size                                        | Small                                                                |                  |
+            | Employees                                            | 15                                                                   |                  |
+            | Status of applicant                                  | Limited company                                                      |                  |
+            | Agent Surname                                        | Agent                                                                |                  |
+            | Agent Forename                                       | John                                                                 |                  |
+            | Agent Business Name                                  | Farm Agency Ltd                                                      |                  |
+            | Agent Address line 1                                 | High Street                                                          |                  |
+            | Agent Address line 2                                 | Denton                                                               |                  |
+            | Agent Address line 4 (town)                          | Northampton                                                          |                  |
+            | Agent Address line 5 (County)                        | Northamptonshire                                                     |                  |
+            | Agent Postcode (use capitals)                        | NN7 3NN                                                              |                  |
+            | Agent Landline number                                | 01604 654321                                                         |                  |
+            | Agent Mobile number                                  | 07777 654321                                                         |                  |
+            | Agent Email                                          | test@equalexperts.com                                                |                  |
+            | Sub scheme                                           | FTF-Adding Value Round 2                                             |                  |
+            | Scheme                                               | Farming Transformation Fund                                          |                  |
+            | Owner                                                | RD                                                                   |                  |
+            | Project name                                         | Top Fruit Project                                                    |                  |
+            | Theme                                                | Adding Value                                                         |                  |
+            | Adding Value Project Items                           |                                                                      |                  |
+            | Location of project (postcode)                       | NN7 2NN                                                              |                  |
+            | Site of Special Scientific Interest (SSSI)           |                                                                      |                  |
+            | Business type                                        | producer                                                             |                  |
+            | Electronic OA received date                          | ?                                                                    | CURRENT-DATE     |
+            | Total project expenditure                            | null                                                                 |                  |
+            | Grant amount requested                               | 100000                                                               | INTEGER          |
+            | Grant rate                                           | 40                                                                   |                  |
+            | Full Application Submission Date                     | ?                                                                    | DATE-IN-6-MONTHS |
+            | Customer Marketing Indicator                         | No                                                                   |                  |
+            | Project type                                         | Adding Value                                                         |                  |
+            | Are you an AGENT applying on behalf of your customer | Yes                                                                  |                  |
+            | RAG rating                                           | Green                                                                |                  |
+            | RAG date reviewed                                    | ?                                                                    | CURRENT-DATE     |
+            | Current location of file                             | NA Automated                                                         |                  |
+            | Grant Launch Date                                    |                                                                      |                  |
+            | Land owned by Farm                                   | No                                                                   |                  |
+            | Tenancy for next 5 years                             | Yes                                                                  |                  |
+            | Remaining Cost to Farmer                             | 150000.00                                                            |                  |
+            | Planning Permission Status                           | Not yet applied for                                                  |                  |
+            | OA score                                             | Average                                                              |                  |
+            | Date of OA decision                                  |                                                                      |                  |
+            | Annual Turnover                                      | 7500000                                                              |                  |
+            | Date ready for QC or decision                        | ?                                                                    | CURRENT-DATE     |
+            | Eligibility Reference No.                            | ?                                                                    | REFERENCE-NUMBER |
+            | Status                                               | Pending RPA review                                                   |                  |
+            | OA percent                                           | 37.5                                                                 |                  |
+            | Project Started                                      | Yes, preparatory work                                                |                  |
+            | Products To Be Processed                             |                                                                      |                  |
+            | How add value to products                            |                                                                      |                  |
+            | AV Project Impact                                    |                                                                      |                  |
+            | AV Target Customers                                  | No change                                                            |                  |
+            | AV Farmer Collaborate                                | No                                                                   |                  |
+            | AV Improve Environment                               | My project will not improve the environment                          |                  |
+            | AV Business Type                                     | A grower or producer of agricultural or horticultural produce        |                  |
+            | Storage Facilities                                   |                                                                      |                  |
+            | Solar Cost                                           |                                                                      |                  |
+            | Solar Grant Amount                                   | 0                                                                    | INTEGER          |
+            | Project items cost                                   | 250000                                                               |                  |
+            | Project items grant amount                           | 100000                                                               |                  |

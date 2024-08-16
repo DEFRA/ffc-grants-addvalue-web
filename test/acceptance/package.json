@@ -1,10 +1,10 @@
 {
   "name": "acceptance",
   "version": "1.0.0",
-  "description": "> Adult Cattle Housing Acceptance Tests",
+  "description": "Adding Value Acceptance Tests",
   "main": "index.js",
   "scripts": {
-    "test": "npx wdio run ./wdio.conf.js --cucumberOpts.tags=@RunInCI"
+    "test": "npx wdio run ./wdio.conf.js"
   },
   "keywords": [],
   "author": "",

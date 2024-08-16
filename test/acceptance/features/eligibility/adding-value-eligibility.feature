@@ -1,4 +1,4 @@
-@RunInCI
+@eligibility
 Feature: Adding Value Specific Eligibility and Elimination
 
     Background:

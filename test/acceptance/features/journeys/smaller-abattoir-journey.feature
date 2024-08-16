@@ -1,4 +1,4 @@
-@RunInCI
+@journey
 Feature: Smaller Abattoir Journey
 
     Scenario: Successfully apply for a grant on the Smaller Abattoir journey
@@ -200,19 +200,19 @@ Feature: Smaller Abattoir Journey
         Then the user should be at URL "applicant-details"
         And should see heading "Applicant's details"
         When the user enters the following
-            | FIELD                 | VALUE                          | ID                  |
-            | First name            | Andrew                         | firstName           |
-            | Last name             | Deacon                         | lastName            |
-            | Email address         | andrew.deacon@equalexperts.com | emailAddress        |
-            | Confirm email address | andrew.deacon@equalexperts.com | confirmEmailAddress |
-            | Mobile phone number   | 07777 123456                   | mobileNumber        |
-            | Landline number       | 01234 123456                   | landlineNumber      |
-            | Address line 1        | Home Farm                      | address1            |
-            | Address line 2        | Market Weston                  | address2            |
-            | Town                  | Oakham                         | town                |
-            | County                | Rutland                        | county              |
-            | Postcode              | LE1 1LE                        | postcode            |
-            | Project postcode      | LE1 2LE                        | projectPostcode     |
+            | FIELD                 | VALUE                                                                | ID                  |
+            | First name            | Andrew                                                               | firstName           |
+            | Last name             | Deacon                                                               | lastName            |
+            | Email address         | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | emailAddress        |
+            | Confirm email address | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | confirmEmailAddress |
+            | Mobile phone number   | 07777 123456                                                         | mobileNumber        |
+            | Landline number       | 01234 123456                                                         | landlineNumber      |
+            | Address line 1        | Home Farm                                                            | address1            |
+            | Address line 2        | Market Weston                                                        | address2            |
+            | Town                  | Oakham                                                               | town                |
+            | County                | Rutland                                                              | county              |
+            | Postcode              | LE1 1LE                                                              | postcode            |
+            | Project postcode      | LE1 2LE                                                              | projectPostcode     |
         And continues
 
         # check-details
@@ -244,7 +244,7 @@ Feature: Smaller Abattoir Journey
             | Postcode (use capitals)                              | LE1 1LE                                                                             |                  |
             | Landline number                                      | 01234 123456                                                                        |                  |
             | Mobile number                                        | 07777 123456                                                                        |                  |
-            | Email                                                | andrew.deacon@equalexperts.com                                                      |                  |
+            | Email                                                | cl-defra-tactical-grants-test-email-service-account@equalexperts.com                |                  |
             | Business size                                        | Small                                                                               |                  |
             | Employees                                            | 5                                                                                   |                  |
             | Status of applicant                                  | Sole trader                                                                         |                  |

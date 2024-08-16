@@ -1,4 +1,4 @@
-@RunInCI
+@journey
 Feature: Project Items-Only Journey
 
     Scenario: Successfully apply for a grant on the Project Items-only journey
@@ -93,7 +93,7 @@ Feature: Project Items-Only Journey
         # potential-amount
         Then the user should be at URL "potential-amount"
         And should see heading "Potential grant funding"
-        And should see body "You may be able to apply for grant funding of up to £50,000 (40% of £125,000)." 
+        And should see body "You may be able to apply for grant funding of up to £50,000 (40% of £125,000)."
         And continues
 
         # remaining-costs
@@ -197,19 +197,19 @@ Feature: Project Items-Only Journey
         Then the user should be at URL "applicant-details"
         And should see heading "Applicant's details"
         When the user enters the following
-            | FIELD                 | VALUE                          | ID                  |
-            | First name            | James                          | firstName           |
-            | Last name             | Farmer                         | lastName            |
-            | Email address         | andrew.deacon@equalexperts.com | emailAddress        |
-            | Confirm email address | andrew.deacon@equalexperts.com | confirmEmailAddress |
-            | Mobile phone number   | 07777 123456                   | mobileNumber        |
-            | Landline number       | 01234 123456                   | landlineNumber      |
-            | Address line 1        | Home Farm                      | address1            |
-            | Address line 2        | Cogenhoe                       | address2            |
-            | Town                  | Northampton                    | town                |
-            | County                | Northamptonshire               | county              |
-            | Postcode              | NN7 1NN                        | postcode            |
-            | Project postcode      | NN7 2NN                        | projectPostcode     |
+            | FIELD                 | VALUE                                                                | ID                  |
+            | First name            | James                                                                | firstName           |
+            | Last name             | Farmer                                                               | lastName            |
+            | Email address         | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | emailAddress        |
+            | Confirm email address | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | confirmEmailAddress |
+            | Mobile phone number   | 07777 123456                                                         | mobileNumber        |
+            | Landline number       | 01234 123456                                                         | landlineNumber      |
+            | Address line 1        | Home Farm                                                            | address1            |
+            | Address line 2        | Cogenhoe                                                             | address2            |
+            | Town                  | Northampton                                                          | town                |
+            | County                | Northamptonshire                                                     | county              |
+            | Postcode              | NN7 1NN                                                              | postcode            |
+            | Project postcode      | NN7 2NN                                                              | projectPostcode     |
         And continues
 
         # check-details
@@ -241,7 +241,7 @@ Feature: Project Items-Only Journey
             | Postcode (use capitals)                              | NN7 1NN                                                                                                                            |                  |
             | Landline number                                      | 01234 123456                                                                                                                       |                  |
             | Mobile number                                        | 07777 123456                                                                                                                       |                  |
-            | Email                                                | andrew.deacon@equalexperts.com                                                                                                     |                  |
+            | Email                                                | cl-defra-tactical-grants-test-email-service-account@equalexperts.com                                                               |                  |
             | Business size                                        | Medium                                                                                                                             |                  |
             | Employees                                            | 100                                                                                                                                |                  |
             | Status of applicant                                  | Co-operative society (Co-Op)                                                                                                       |                  |

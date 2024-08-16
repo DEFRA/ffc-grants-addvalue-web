@@ -1,4 +1,4 @@
-@RunInCI
+@eligibility
 Feature: Common Eligibility and Elimination
 
     Scenario: Explore all common eligibility questions and elimination routes
