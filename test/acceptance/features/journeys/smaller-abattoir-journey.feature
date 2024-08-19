@@ -229,77 +229,77 @@ Feature: Smaller Abattoir Journey
         And should see heading "Details submitted"
         And should see a reference number for their application
         Then a spreadsheet should be generated with the following values
-            | FIELD NAME                                           | FIELD VALUE                                                                         | DATA TYPE        |
-            | FA or OA                                             | Outline Application                                                                 |                  |
-            | Single business identifier (SBI)                     | 123456789                                                                           |                  |
-            | Surname                                              | Deacon                                                                              |                  |
-            | Forename                                             | Andrew                                                                              |                  |
-            | Business name                                        | Home Farm Ltd                                                                       |                  |
-            | Address line 1                                       | Home Farm                                                                           |                  |
-            | Address line 2                                       | Market Weston                                                                       |                  |
-            | Address line 3                                       |                                                                                     |                  |
-            | Address line 4 (town)                                | Oakham                                                                              |                  |
-            | Address line 5 (county)                              | Rutland                                                                             |                  |
-            | Postcode (use capitals)                              | LE1 1LE                                                                             |                  |
-            | Landline number                                      | 01234 123456                                                                        |                  |
-            | Mobile number                                        | 07777 123456                                                                        |                  |
-            | Email                                                | cl-defra-tactical-grants-test-email-service-account@equalexperts.com                |                  |
-            | Business size                                        | Small                                                                               |                  |
-            | Employees                                            | 5                                                                                   |                  |
-            | Status of applicant                                  | Sole trader                                                                         |                  |
-            | Agent Surname                                        |                                                                                     |                  |
-            | Agent Forename                                       |                                                                                     |                  |
-            | Agent Business Name                                  |                                                                                     |                  |
-            | Agent Address line 1                                 |                                                                                     |                  |
-            | Agent Address line 2                                 |                                                                                     |                  |
-            | Agent Address line 4 (town)                          |                                                                                     |                  |
-            | Agent Address line 5 (County)                        |                                                                                     |                  |
-            | Agent Postcode (use capitals)                        |                                                                                     |                  |
-            | Agent Landline number                                |                                                                                     |                  |
-            | Agent Mobile number                                  |                                                                                     |                  |
-            | Agent Email                                          |                                                                                     |                  |
-            | Sub scheme                                           | FTF-Adding Value Round 2                                                            |                  |
-            | Scheme                                               | Farming Transformation Fund                                                         |                  |
-            | Owner                                                | RD                                                                                  |                  |
-            | Project name                                         | Smaller Abattoir Project                                                            |                  |
-            | Theme                                                | Adding Value                                                                        |                  |
-            | Adding Value Project Items                           | Constructing or improving buildings for processing\|Storage Facilities              |                  |
-            | Location of project (postcode)                       | LE1 2LE                                                                             |                  |
-            | Site of Special Scientific Interest (SSSI)           |                                                                                     |                  |
-            | Business type                                        | producer                                                                            |                  |
-            | Electronic OA received date                          | ?                                                                                   | CURRENT-DATE     |
-            | Total project expenditure                            | 150000                                                                              |                  |
-            | Grant amount requested                               | 52500                                                                               | INTEGER          |
-            | Grant rate                                           | 35.00                                                                               |                  |
-            | Full Application Submission Date                     | ?                                                                                   | DATE-IN-6-MONTHS |
-            | Customer Marketing Indicator                         | No                                                                                  |                  |
-            | Project type                                         | Adding Value                                                                        |                  |
-            | Are you an AGENT applying on behalf of your customer | No                                                                                  |                  |
-            | RAG rating                                           | Green                                                                               |                  |
-            | RAG date reviewed                                    | ?                                                                                   | CURRENT-DATE     |
-            | Current location of file                             | NA Automated                                                                        |                  |
-            | Grant Launch Date                                    |                                                                                     |                  |
-            | Land owned by Farm                                   | Yes                                                                                 |                  |
-            | Tenancy for next 5 years                             |                                                                                     |                  |
-            | Remaining Cost to Farmer                             | 97500                                                                               | INTEGER          |
-            | Planning Permission Status                           | Approved                                                                            |                  |
-            | OA score                                             | Strong                                                                              |                  |
-            | Date of OA decision                                  |                                                                                     |                  |
-            | Annual Turnover                                      | 2000000                                                                             |                  |
-            | Date ready for QC or decision                        | ?                                                                                   | CURRENT-DATE     |
-            | Eligibility Reference No.                            | ?                                                                                   | REFERENCE-NUMBER |
-            | Status                                               | Pending RPA review                                                                  |                  |
-            | OA percent                                           | 72.33                                                                               |                  |
-            | Project Started                                      | No, we have not done any work on this project yet                                   |                  |
-            | Products To Be Processed                             | Wild venison meat produce                                                           |                  |
-            | How add value to products                            | Introducing a new product to your farm                                              |                  |
-            | AV Project Impact                                    | Increasing range of added-value products\|Increasing volume of added-value products |                  |
-            | AV Target Customers                                  | Processors\|Wholesalers                                                             |                  |
-            | AV Farmer Collaborate                                | Yes                                                                                 |                  |
-            | AV Improve Environment                               | Renewable energy\|Energy efficiency                                                 |                  |
-            | AV Business Type                                     | A grower or producer of agricultural or horticultural produce                       |                  |
-            | Storage Facilities                                   | Yes                                                                                 |                  |
-            | Solar Cost                                           | 50000                                                                               |                  |
-            | Solar Grant Amount                                   | 12500                                                                               | INTEGER          |
-            | Project items cost                                   | 100000                                                                              |                  |
-            | Project items grant amount                           | 40000                                                                               |                  |
+            | ROW NO | FIELD NAME                                           | FIELD VALUE                                                                         | DATA TYPE        |
+            | 2      | FA or OA                                             | Outline Application                                                                 |                  |
+            | 4      | Single business identifier (SBI)                     | 123456789                                                                           |                  |
+            | 5      | Surname                                              | Deacon                                                                              |                  |
+            | 6      | Forename                                             | Andrew                                                                              |                  |
+            | 7      | Business name                                        | Home Farm Ltd                                                                       |                  |
+            | 8      | Address line 1                                       | Home Farm                                                                           |                  |
+            | 9      | Address line 2                                       | Market Weston                                                                       |                  |
+            | 10     | Address line 3                                       |                                                                                     |                  |
+            | 11     | Address line 4 (town)                                | Oakham                                                                              |                  |
+            | 12     | Address line 5 (county)                              | Rutland                                                                             |                  |
+            | 13     | Postcode (use capitals)                              | LE1 1LE                                                                             |                  |
+            | 16     | Landline number                                      | 01234 123456                                                                        |                  |
+            | 17     | Mobile number                                        | 07777 123456                                                                        |                  |
+            | 18     | Email                                                | cl-defra-tactical-grants-test-email-service-account@equalexperts.com                |                  |
+            | 20     | Business size                                        | Small                                                                               |                  |
+            | 22     | Employees                                            | 5                                                                                   |                  |
+            | 23     | Status of applicant                                  | Sole trader                                                                         |                  |
+            | 26     | Agent Surname                                        |                                                                                     |                  |
+            | 27     | Agent Forename                                       |                                                                                     |                  |
+            | 28     | Agent Business Name                                  |                                                                                     |                  |
+            | 29     | Agent Address line 1                                 |                                                                                     |                  |
+            | 30     | Agent Address line 2                                 |                                                                                     |                  |
+            | 32     | Agent Address line 4 (town)                          |                                                                                     |                  |
+            | 33     | Agent Address line 5 (County)                        |                                                                                     |                  |
+            | 34     | Agent Postcode (use capitals)                        |                                                                                     |                  |
+            | 35     | Agent Landline number                                |                                                                                     |                  |
+            | 36     | Agent Mobile number                                  |                                                                                     |                  |
+            | 37     | Agent Email                                          |                                                                                     |                  |
+            | 39     | Sub scheme                                           | FTF-Adding Value Round 2                                                            |                  |
+            | 40     | Scheme                                               | Farming Transformation Fund                                                         |                  |
+            | 41     | Owner                                                | RD                                                                                  |                  |
+            | 42     | Project name                                         | Smaller Abattoir Project                                                            |                  |
+            | 43     | Theme                                                | Adding Value                                                                        |                  |
+            | 44     | Adding Value Project Items                           | Constructing or improving buildings for processing\|Storage Facilities              |                  |
+            | 45     | Location of project (postcode)                       | LE1 2LE                                                                             |                  |
+            | 49     | Site of Special Scientific Interest (SSSI)           |                                                                                     |                  |
+            | 53     | Business type                                        | producer                                                                            |                  |
+            | 54     | Electronic OA received date                          | ?                                                                                   | CURRENT-DATE     |
+            | 55     | Total project expenditure                            | 150000                                                                              |                  |
+            | 56     | Grant amount requested                               | 52500                                                                               | INTEGER          |
+            | 57     | Grant rate                                           | 35.00                                                                               |                  |
+            | 85     | Full Application Submission Date                     | ?                                                                                   | DATE-IN-6-MONTHS |
+            | 89     | Customer Marketing Indicator                         | No                                                                                  |                  |
+            | 90     | Project type                                         | Adding Value                                                                        |                  |
+            | 91     | Are you an AGENT applying on behalf of your customer | No                                                                                  |                  |
+            | 92     | RAG rating                                           | Green                                                                               |                  |
+            | 93     | RAG date reviewed                                    | ?                                                                                   | CURRENT-DATE     |
+            | 94     | Current location of file                             | NA Automated                                                                        |                  |
+            | 341    | Grant Launch Date                                    |                                                                                     |                  |
+            | 342    | Land owned by Farm                                   | Yes                                                                                 |                  |
+            | 343    | Tenancy for next 5 years                             |                                                                                     |                  |
+            | 345    | Remaining Cost to Farmer                             | 97500                                                                               | INTEGER          |
+            | 346    | Planning Permission Status                           | Approved                                                                            |                  |
+            | 365    | OA score                                             | Strong                                                                              |                  |
+            | 366    | Date of OA decision                                  |                                                                                     |                  |
+            | 367    | Annual Turnover                                      | 2000000                                                                             |                  |
+            | 368    | Date ready for QC or decision                        | ?                                                                                   | CURRENT-DATE     |
+            | 369    | Eligibility Reference No.                            | ?                                                                                   | REFERENCE-NUMBER |
+            | 370    | Status                                               | Pending RPA review                                                                  |                  |
+            | 375    | OA percent                                           | 72.33                                                                               |                  |
+            | 376    | Project Started                                      | No, we have not done any work on this project yet                                   |                  |
+            | 386    | Products To Be Processed                             | Wild venison meat produce                                                           |                  |
+            | 387    | How add value to products                            | Introducing a new product to your farm                                              |                  |
+            | 388    | AV Project Impact                                    | Increasing range of added-value products\|Increasing volume of added-value products |                  |
+            | 389    | AV Target Customers                                  | Processors\|Wholesalers                                                             |                  |
+            | 390    | AV Farmer Collaborate                                | Yes                                                                                 |                  |
+            | 393    | AV Improve Environment                               | Renewable energy\|Energy efficiency                                                 |                  |
+            | 394    | AV Business Type                                     | A grower or producer of agricultural or horticultural produce                       |                  |
+            | 395    | Storage Facilities                                   | Yes                                                                                 |                  |
+            | 445    | Solar Cost                                           | 50000                                                                               |                  |
+            | 446    | Solar Grant Amount                                   | 12500                                                                               | INTEGER          |
+            | 527    | Project items cost                                   | 100000                                                                              |                  |
+            | 528    | Project items grant amount                           | 40000                                                                               |                  |

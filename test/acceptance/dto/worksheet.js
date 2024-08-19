@@ -6,9 +6,14 @@ class worksheet {
 }
 
 class worksheetField {
-    constructor(name, value) {
+    constructor(rowNo, name, value) {
+        this.rowNo = rowNo;
         this.name = name;
         this.value = value;
+    }
+
+    hasName() {
+        return this.name !== "";
     }
 }
 

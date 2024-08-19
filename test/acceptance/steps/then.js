@@ -109,7 +109,7 @@ Then(/^a spreadsheet should be generated with the following values$/, async (exp
                     break;
             }
 
-            return new worksheetField(row["FIELD NAME"], fieldValue);
+            return new worksheetField(Number.parseInt(row["ROW NO"]), row["FIELD NAME"], fieldValue);
         });
 
     const actualFields = (await sharePoint.getWorksheetFor(referenceNumber)).fields;

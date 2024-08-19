@@ -80,8 +80,8 @@ class sharePoint {
     );
     
     const fields = response.payload.values
-      .filter(row => row[0] !== "" || row[1] !== "" || row[2] !== "")
-      .map(row => new worksheetField(row[1].trim(), row[2]));
+      .map((row, index) => new worksheetField(index + 1, row[1].trim(), row[2]))
+      .filter(field => field.hasName());
 
     return new worksheet(worksheetName, fields);
   }
