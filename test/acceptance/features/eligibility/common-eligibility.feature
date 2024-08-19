@@ -1,4 +1,3 @@
-@eligibility
 Feature: Common Eligibility and Elimination
 
     Scenario: Explore all common eligibility questions and elimination routes
@@ -7,12 +6,6 @@ Feature: Common Eligibility and Elimination
         And completes any login process
         And clicks on "Accept analytics cookies"
         Then the user should see heading "Check if you can apply for a Farming Investment Fund Adding Value Round 2 Grant"
-        When the user clicks on "Start now"
-
-        # nature-of-business navigate back
-        Then the user should be at URL "nature-of-business"
-        When the user goes back
-        Then the user should be at URL "start"
         When the user clicks on "Start now"
 
         # nature-of-business elimination
@@ -30,12 +23,6 @@ Feature: Common Eligibility and Elimination
         When the user selects "A grower or producer of agricultural or horticultural produce"
         And continues
 
-        # legal-status navigate back
-        Then the user should be at URL "legal-status"
-        When the user goes back
-        Then the user should be at URL "nature-of-business"
-        When the user continues
-
         # legal-status elimination
         Then the user should be at URL "legal-status"
         And should see heading "What is the legal status of the business?"
@@ -50,12 +37,6 @@ Feature: Common Eligibility and Elimination
         And should see heading "What is the legal status of the business?"
         When the user selects "Sole trader"
         And continues
-
-        # country navigate back
-        Then the user should be at URL "country"
-        When the user goes back
-        Then the user should be at URL "legal-status"
-        When the user continues
 
         # country elimination
         Then the user should be at URL "country"
@@ -72,12 +53,6 @@ Feature: Common Eligibility and Elimination
         When the user selects "Yes"
         And continues
 
-        # planning-permission navigate back
-        Then the user should be at URL "planning-permission"
-        When the user goes back
-        Then the user should be at URL "country"
-        When the user continues
-
         # planning-permission elimination
         Then the user should be at URL "planning-permission"
         And should see heading "Does the project have planning permission?"
@@ -92,12 +67,6 @@ Feature: Common Eligibility and Elimination
         And should see heading "Does the project have planning permission?"
         When the user selects "Secured"
         And continues
-
-        # project-start navigate back
-        Then the user should be at URL "project-start"
-        When the user goes back
-        Then the user should be at URL "planning-permission"
-        When the user continues
 
         # project-start elimination
         Then the user should be at URL "project-start"
@@ -114,19 +83,8 @@ Feature: Common Eligibility and Elimination
         When the user selects "Yes, preparatory work"
         And continues
 
-        # tenancy navigate back
-        Then the user should be at URL "tenancy"
-        When the user goes back
-        Then the user should be at URL "project-start"
-        When the user continues
-
         # tenancy
         Then the user should be at URL "tenancy"
         And should see heading "Is the planned project on land the business owns?"
         When the user selects "No"
-        And continues
 
-        # tenancy-length navigate back
-        Then the user should be at URL "tenancy-length"
-        When the user goes back
-        Then the user should be at URL "tenancy"

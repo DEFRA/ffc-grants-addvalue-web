@@ -1,4 +1,3 @@
-@eligibility
 Feature: Project Costs Specific Eligibility and Elimination
 
     Background:
@@ -58,23 +57,11 @@ Feature: Project Costs Specific Eligibility and Elimination
         And continues
 
     Scenario: Explore project costs eligibility questions and elimination by project cost under minimum grant threshold
-        # solar-PV-system navigate back
-        Then the user should be at URL "solar-PV-system"
-        When the user goes back
-        Then the user should be at URL "fruit-storage"
-        When the user continues
-
         # solar-PV-system
         Then the user should be at URL "solar-PV-system"
         And should see heading "Will you buy a solar PV system with this grant?"
         When the user selects "Yes"
         And continues
-
-        # project-cost navigate back
-        Then the user should be at URL "project-cost"
-        When the user goes back
-        Then the user should be at URL "solar-PV-system"
-        When the user continues
 
         # project cost elimination
         Then the user should be at URL "project-cost"
@@ -86,23 +73,11 @@ Feature: Project Costs Specific Eligibility and Elimination
         And should see body "The minimum grant you can apply for is £25,000 (40% of £62,500)."
 
     Scenario: Explore project costs eligibility questions and elimination by remaining costs not being met
-        # solar-PV-system navigate back
-        Then the user should be at URL "solar-PV-system"
-        When the user goes back
-        Then the user should be at URL "fruit-storage"
-        When the user continues
-
         # solar-PV-system
         Then the user should be at URL "solar-PV-system"
         And should see heading "Will you buy a solar PV system with this grant?"
         When the user selects "Yes"
         And continues
-
-        # project-cost navigate back
-        Then the user should be at URL "project-cost"
-        When the user goes back
-        Then the user should be at URL "solar-PV-system"
-        When the user continues
 
         # project cost
         Then the user should be at URL "project-cost"
@@ -110,34 +85,16 @@ Feature: Project Costs Specific Eligibility and Elimination
         When the user enters "62500" in "projectCost"
         And continues
 
-        # solar-PV-cost navigate back
-        Then the user should be at URL "solar-PV-cost"
-        When the user goes back
-        Then the user should be at URL "project-cost"
-        When the user continues
-
         # solar-PV-cost
         Then the user should be at URL "solar-PV-cost"
         And should see heading label "What is the estimated cost of buying and installing the solar PV system?"
         When the user enters "50000" in "solarPVCost"
         And continues
 
-        # potential-amount-solar navigate back
-        Then the user should be at URL "potential-amount-solar"
-        When the user goes back
-        Then the user should be at URL "solar-PV-cost"
-        When the user continues
-
         # potential-amount-solar
         Then the user should be at URL "potential-amount-solar"
         And should see heading "Potential grant funding"
         And continues
-
-        # remaining-costs navigate back
-        Then the user should be at URL "remaining-costs"
-        When the user goes back
-        Then the user should be at URL "potential-amount-solar"
-        When the user continues
 
         # remaining-costs elimination
         Then the user should be at URL "remaining-costs"

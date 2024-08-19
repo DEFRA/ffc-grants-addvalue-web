@@ -1,4 +1,3 @@
-@journey
 Feature: Top Fruit Journey
 
     Scenario: Successfully apply for a grant on the Top Fruit journey

@@ -1,4 +1,3 @@
-@journey
 Feature: Smaller Abattoir Journey
 
     Scenario: Successfully apply for a grant on the Smaller Abattoir journey

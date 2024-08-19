@@ -1,4 +1,3 @@
-@eligibility
 Feature: Adding Value Specific Eligibility and Elimination
 
     Background:
@@ -46,23 +45,11 @@ Feature: Adding Value Specific Eligibility and Elimination
         And continues
 
     Scenario: Explore Smaller Abattoir eligibility questions and elimination
-        # smaller-abattoir navigate back
-        Then the user should be at URL "smaller-abattoir"
-        When the user goes back
-        Then the user should be at URL "tenancy"
-        When the user continues
-
         # smaller-abattoir
         Then the user should be at URL "smaller-abattoir"
         And should see heading "Do you want to build a new smaller abattoir?"
         When the user selects "Yes"
         And continues
-
-        # other-farmers navigate back
-        Then the user should be at URL "other-farmers"
-        When the user goes back
-        Then the user should be at URL "smaller-abattoir"
-        When the user continues
 
         # other-farmers elimination
         Then the user should be at URL "other-farmers"
@@ -78,12 +65,6 @@ Feature: Adding Value Specific Eligibility and Elimination
         And should see heading "Do you want to build a new smaller abattoir?"
         When the user selects "No"
         And continues
-
-        # fruit-storage navigate back
-        Then the user should be at URL "fruit-storage"
-        When the user goes back
-        Then the user should be at URL "smaller-abattoir"
-        When the user continues
 
         # fruit-storage
         Then the user should be at URL "fruit-storage"

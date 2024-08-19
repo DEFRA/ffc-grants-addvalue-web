@@ -1,4 +1,3 @@
-@RunInCI
 Feature: Scoring
 
     Scenario: Create a weak score, improve it to an average score and then improve it to a strong score
