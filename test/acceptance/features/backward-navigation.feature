@@ -1,4 +1,4 @@
-Feature: Back Navigation
+Feature: Backward Navigation
 
     Scenario: Explore all backward navigation options
         # login/start
@@ -8,7 +8,7 @@ Feature: Back Navigation
         Then the user should see heading "Check if you can apply for a Farming Investment Fund Adding Value Round 2 Grant"
         When the user clicks on "Start now"
 
-        # nature-of-business back navigation
+        # nature-of-business backward navigation
         Then the user should be at URL "nature-of-business"
         When the user goes back
         Then the user should be at URL "start"
@@ -20,7 +20,7 @@ Feature: Back Navigation
         When the user selects "A grower or producer of agricultural or horticultural produce"
         And continues
 
-        # legal-status back navigation
+        # legal-status backward navigation
         Then the user should be at URL "legal-status"
         When the user goes back
         Then the user should be at URL "nature-of-business"
@@ -32,7 +32,7 @@ Feature: Back Navigation
         When the user selects "Sole trader"
         And continues
 
-        # country back navigation
+        # country backward navigation
         Then the user should be at URL "country"
         When the user goes back
         Then the user should be at URL "legal-status"
@@ -44,7 +44,7 @@ Feature: Back Navigation
         When the user selects "Yes"
         And continues
 
-        # planning-permission back navigation
+        # planning-permission backward navigation
         Then the user should be at URL "planning-permission"
         When the user goes back
         Then the user should be at URL "country"
@@ -56,7 +56,7 @@ Feature: Back Navigation
         When the user selects "Not needed"
         And continues
 
-        # project-start back navigation
+        # project-start backward navigation
         Then the user should be at URL "project-start"
         When the user goes back
         Then the user should be at URL "planning-permission"
@@ -68,7 +68,7 @@ Feature: Back Navigation
         When the user selects "Yes, preparatory work"
         And continues
 
-        # tenancy back navigation
+        # tenancy backward navigation
         Then the user should be at URL "tenancy"
         When the user goes back
         Then the user should be at URL "project-start"
@@ -80,7 +80,7 @@ Feature: Back Navigation
         When the user selects "No"
         And continues
 
-        # tenancy-length back navigation
+        # tenancy-length backward navigation
         Then the user should be at URL "tenancy-length"
         When the user goes back
         Then the user should be at URL "tenancy"
@@ -92,7 +92,7 @@ Feature: Back Navigation
         When the user selects "Yes"
         And continues
 
-        # smaller-abattoir back navigation
+        # smaller-abattoir backward navigation
         Then the user should be at URL "smaller-abattoir"
         When the user goes back
         Then the user should be at URL "tenancy-length"
@@ -106,7 +106,7 @@ Feature: Back Navigation
         When the user selects "Yes"
         And continues
 
-        # other-farmers back navigation
+        # other-farmers backward navigation
         Then the user should be at URL "other-farmers"
         When the user goes back
 
@@ -118,7 +118,7 @@ Feature: Back Navigation
         When the user selects "No"
         And continues
 
-        # fruit-storage back navigation
+        # fruit-storage backward navigation
         Then the user should be at URL "fruit-storage"
         When the user goes back
         Then the user should be at URL "smaller-abattoir"
@@ -130,7 +130,7 @@ Feature: Back Navigation
         When the user selects "Yes"
         And continues
 
-        # solar-PV-system back navigation
+        # solar-PV-system backward navigation
         Then the user should be at URL "solar-PV-system"
         And should see heading "Will you buy a solar PV system with this grant?"
         When the user goes back
@@ -143,7 +143,7 @@ Feature: Back Navigation
         When the user selects "No"
         And continues
 
-        # project-items back navigation
+        # project-items backward navigation
         Then the user should be at URL "project-items"
         When the user goes back
         Then the user should be at URL "top-fruit"
@@ -156,7 +156,7 @@ Feature: Back Navigation
             | Constructing or improving buildings for processing |
         And continues
 
-        # storage back navigation
+        # storage backward navigation
         Then the user should be at URL "storage"
         When the user goes back
         Then the user should be at URL "project-items"
@@ -168,7 +168,7 @@ Feature: Back Navigation
         When the user selects "Yes, we will need storage facilities"
         And continues
 
-        # solar-PV-system back navigation
+        # solar-PV-system backward navigation
         Then the user should be at URL "solar-PV-system"
         When the user goes back
         Then the user should be at URL "storage"
@@ -180,7 +180,7 @@ Feature: Back Navigation
         When the user selects "Yes"
         And continues
 
-        # project-cost back navigation
+        # project-cost backward navigation
         Then the user should be at URL "project-cost"
         When the user goes back
         Then the user should be at URL "solar-PV-system"
@@ -192,7 +192,7 @@ Feature: Back Navigation
         When the user enters "62500" in "projectCost"
         And continues
 
-        # solar-PV-cost back navigation
+        # solar-PV-cost backward navigation
         Then the user should be at URL "solar-PV-cost"
         When the user goes back
         Then the user should be at URL "project-cost"
@@ -204,7 +204,7 @@ Feature: Back Navigation
         When the user enters "50000" in "solarPVCost"
         And continues
 
-        # potential-amount-solar back navigation
+        # potential-amount-solar backward navigation
         Then the user should be at URL "potential-amount-solar"
         When the user goes back
         Then the user should be at URL "solar-PV-cost"
@@ -215,7 +215,7 @@ Feature: Back Navigation
         And should see heading "Potential grant funding"
         And continues
 
-        # remaining-costs back navigation
+        # remaining-costs backward navigation
         Then the user should be at URL "remaining-costs"
         When the user goes back
         Then the user should be at URL "potential-amount-solar"
@@ -227,7 +227,7 @@ Feature: Back Navigation
         When the user selects "Yes"
         And continues
 
-        # produce-processed back navigation
+        # produce-processed backward navigation
         Then the user should be at URL "produce-processed"
         When the user goes back
         Then the user should be at URL "remaining-costs"
@@ -239,7 +239,7 @@ Feature: Back Navigation
         When the user selects "Arable produce"
         And continues
 
-        # how-adding-value back navigation
+        # how-adding-value backward navigation
         Then the user should be at URL "how-adding-value"
         When the user goes back
         Then the user should be at URL "produce-processed"
@@ -251,7 +251,7 @@ Feature: Back Navigation
         When the user selects "Introducing a new product to your farm"
         And continues
 
-        # project-impact back navigation
+        # project-impact backward navigation
         Then the user should be at URL "project-impact"
         When the user goes back
         Then the user should be at URL "how-adding-value"
@@ -264,7 +264,7 @@ Feature: Back Navigation
             | Increasing range of added-value products |
         And continues
 
-        # mechanisation back navigation
+        # mechanisation backward navigation
         Then the user should be at URL "mechanisation"
         When the user goes back
         Then the user should be at URL "project-impact"
@@ -276,7 +276,7 @@ Feature: Back Navigation
         When the user selects "Yes"
         And continues
 
-        # manual-labour-amount back navigation
+        # manual-labour-amount backward navigation
         Then the user should be at URL "manual-labour-amount"
         When the user goes back
         Then the user should be at URL "mechanisation"
@@ -288,7 +288,7 @@ Feature: Back Navigation
         When the user selects "More than 10%"
         And continues
 
-        # future-customers back navigation
+        # future-customers backward navigation
         Then the user should be at URL "future-customers"
         When the user goes back
         Then the user should be at URL "manual-labour-amount"
@@ -301,7 +301,7 @@ Feature: Back Navigation
             | Processors |
         And continues
 
-        # collaboration back navigation
+        # collaboration backward navigation
         Then the user should be at URL "collaboration"
         When the user goes back
         Then the user should be at URL "future-customers"
@@ -313,7 +313,7 @@ Feature: Back Navigation
         When the user selects "Yes"
         And continues
 
-        # environmental-impact back navigation
+        # environmental-impact backward navigation
         Then the user should be at URL "environmental-impact"
         When the user goes back
         Then the user should be at URL "collaboration"
@@ -326,7 +326,7 @@ Feature: Back Navigation
             | Renewable energy  |
         And continues to their score
 
-        # score back navigation
+        # score backward navigation
         Then the user should be at URL "score"
         When the user goes back
         Then the user should be at URL "environmental-impact"
@@ -336,7 +336,7 @@ Feature: Back Navigation
         Then the user should be at URL "score"
         When the user continues
 
-        # business-details back navigation
+        # business-details backward navigation
         Then the user should be at URL "business-details"
         When the user goes back
         Then the user should be at URL "score"
@@ -347,14 +347,14 @@ Feature: Back Navigation
         And should see heading "Business details"
         When the user enters the following
             | FIELD                            | VALUE                   | ID               |
-            | Project name                     | Back Navigation Project | projectName      |
+            | Project name                     | backward navigation Project | projectName      |
             | Business name                    | Home Farm Ltd           | businessName     |
             | Number of employees              | 100                     | numberEmployees  |
             | Annual business turnover (£)     | 20000000                | businessTurnover |
             | Single Business Identifier (SBI) | 123456789               | sbi              |
         And continues
 
-        # applying back navigation
+        # applying backward navigation
         Then the user should be at URL "applying"
         When the user goes back
         Then the user should be at URL "business-details"
@@ -366,7 +366,7 @@ Feature: Back Navigation
         When the user selects "Agent"
         And continues
 
-        # agent-details back navigation
+        # agent-details backward navigation
         Then the user should be at URL "agent-details"
         When the user goes back
         Then the user should be at URL "applying"
@@ -391,7 +391,7 @@ Feature: Back Navigation
             | Postcode              | NN7 3NN               | postcode            |
         And continues
 
-        # applicant-details back navigation
+        # applicant-details backward navigation
         Then the user should be at URL "applicant-details"
         When the user goes back
         Then the user should be at URL "agent-detail"
@@ -416,7 +416,7 @@ Feature: Back Navigation
             | Project postcode      | NN7 2NN                                                              | projectPostcode     |
         And continues
 
-        # check-details back navigation
+        # check-details backward navigation
         Then the user should be at URL "check-details"
         When the user goes back
         Then the user should be at URL "applicant-details"
@@ -427,7 +427,7 @@ Feature: Back Navigation
         And should see heading "Check your details"
         And continues
 
-        # confirm back navigation
+        # confirm backward navigation
         Then the user should be at URL "confirm"
         When the user goes back
         Then the user should be at URL "check-details"
