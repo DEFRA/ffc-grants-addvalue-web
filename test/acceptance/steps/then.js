@@ -12,7 +12,7 @@ let referenceNumber = null;
 
 Then(/^(?:the user should|should) be at URL "([^"]*)?"$/, async (urlPath) => {
     const fullUrl = await browser.getUrl();
-    expect(fullUrl.endsWith(urlPath));
+    await expect(fullUrl.endsWith(urlPath)).toBe(true);
 });
 
 Then(/^(?:the user should|should) see heading "([^"]*)?"$/, async (text) => {
@@ -28,6 +28,17 @@ Then(/^(?:the user should|should) see heading label "([^"]*)?"$/, async (text) =
 
 Then(/^(?:the user should|should) see hint "([^"]*)?"$/, async (text) => {
     await expect($(`//div[@class="govuk-hint" and contains(text(),'${text}')]`)).toBeDisplayed();
+});
+
+Then(/^(?:the user should|should) see error "([^"]*)?"$/, async (text) => {
+    await expect($(`//div[@class="govuk-error-summary"]//a[contains(text(),'${text}')]`)).toBeDisplayed();
+});
+
+Then(/^(?:the user should|should) see the following errors$/, async (dataTable) => {
+    for (const row of dataTable.raw()) {
+        let expectedError = row[0];
+        await expect($(`//div[@class="govuk-error-summary"]//a[contains(text(),'${expectedError}')]`)).toBeDisplayed();
+    }
 });
 
 Then(/^(?:the user should|should) see warning "([^"]*)?"$/, async (text) => {

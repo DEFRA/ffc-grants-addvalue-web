@@ -152,7 +152,7 @@ Feature: Top Fruit Journey
         And continues
 
         # agent-details
-        Then the user should be at URL "agent-details"
+        Then the user should be at URL "agents-details"
         And should see heading "Agent's details"
         When the user enters the following
             | FIELD                 | VALUE                 | ID                  |
