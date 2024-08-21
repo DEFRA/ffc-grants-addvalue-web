@@ -151,7 +151,7 @@ Feature: Top Fruit Journey
         When the user selects "Agent"
         And continues
 
-        # agent-details
+        # agents-details
         Then the user should be at URL "agents-details"
         And should see heading "Agent's details"
         When the user enters the following
