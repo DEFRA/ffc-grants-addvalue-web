@@ -20,6 +20,7 @@ data:
   ANALYTICS_PROPERTY_API: {{ .Values.container.analyticsPropertyApi | quote }}
   ANALYTICS_TAG_KEY: {{ .Values.container.analyticsTagKey | quote }}
   START_PAGE_URL: {{ .Values.container.startPageUrl | quote }}
+  STORAGE_FACILITIES_PERCENTAGE: {{ .Values.container.storageFacilitiesPercentage | quote }}
   GRANT_PERCENTAGE: {{ .Values.container.grantPercentage | quote }}
   GRANT_PERCENTAGE_SOLAR: {{ .Values.container.grantPercentageSolar | quote }}
   SERVICE_END_DATE : {{ .Values.container.serviceEndDate | quote }}

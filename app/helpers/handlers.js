@@ -56,7 +56,7 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
     return {
       ...maybeEligibleContent,
       detailsText: {
-        summaryText: 'How is the solar PV system grant funding calculated?',
+        ...maybeEligibleContent.detailsText,
         html: 'You can apply for a maximum of £100,000 for solar PV system costs.'
       },
     }
@@ -64,7 +64,7 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
     return {
       ...maybeEligibleContent,
       detailsText: {
-        summaryText: 'How is the solar PV system grant funding calculated?',
+        ...maybeEligibleContent.detailsText,
         html: `You can apply for a maximum of £300,000 for project costs.</br></br>
               You can apply for a maximum of £100,000 for solar PV system costs.`
       },
@@ -73,7 +73,7 @@ const handlePotentialAmount = (request, maybeEligibleContent, url) => {
     return {
       ...maybeEligibleContent,
       detailsText: {
-        summaryText: 'How is the solar PV system grant funding calculated?',
+        ...maybeEligibleContent.detailsText,
         html: 'You can apply for a maximum of £300,000 for project costs.'
       },
     }
