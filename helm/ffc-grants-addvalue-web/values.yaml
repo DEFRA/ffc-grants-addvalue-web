@@ -73,6 +73,7 @@ container:
   rpaEmail: FTF@rpa.gov.uk
   worksheetHideEmptyRows: false
   excelUploadEnvironment: dummy
+  storageFacilitiesPercentage: dummy
   grantPercentage: dummy
   grantPercentageSolar: dummy
 
