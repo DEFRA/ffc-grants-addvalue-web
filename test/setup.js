@@ -1,4 +1,7 @@
 // const gapiService = require('../app/services/gapi-service')
+process.env.STORAGE_FACILITIES_PERCENTAGE = 50
+process.env.GRANT_PERCENTAGE = 40
+process.env.GRANT_PERCENTAGE_SOLAR = 25
 
 beforeEach(async () => {
   // ...

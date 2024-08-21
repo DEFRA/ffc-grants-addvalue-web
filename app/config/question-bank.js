@@ -23,6 +23,7 @@ const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
 const {
   MIN_GRANT,
   MAX_GRANT,
+  STORAGE_FACILITIES_PERCENTAGE,
   GRANT_PERCENTAGE,
   GRANT_PERCENTAGE_SOLAR
 } = require('../helpers/grant-details')
@@ -720,7 +721,7 @@ const questionBank = {
           pageTitle: '',
           hint: {
             html: `
-            Storage facilities will only be funded as part of a bigger project and cannot be more than ${GRANT_PERCENTAGE}% of the total grant funding.<br/><br/>
+            Storage facilities will only be funded as part of a bigger project and cannot be more than ${STORAGE_FACILITIES_PERCENTAGE}% of the total grant funding.<br/><br/>
             Select all the items your project needs
           `
           },
@@ -812,7 +813,7 @@ const questionBank = {
             text: 'For example, cold stores or controlled atmosphere storage'
           },
           warning: {
-            text: `Storage facilities cannot be more than ${GRANT_PERCENTAGE}% of the total grant funding.`,
+            text: `Storage facilities cannot be more than ${STORAGE_FACILITIES_PERCENTAGE}% of the total grant funding.`,
             iconFallbackText: 'Warning'
           },
           fundingPriorities: '',
