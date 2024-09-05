@@ -1,7 +1,7 @@
 Feature: Project Items-Only Journey
-
+@runme
     Scenario: Successfully apply for a grant on the Project Items-only journey
-        - checking storage percentage
+        - checking storage facilities percentage
         - receiving an average score
         - as the applicant
 
@@ -63,7 +63,7 @@ Feature: Project Items-Only Journey
         # project-items
         Then the user should be at URL "project-items"
         And should see heading "What eligible items does your project need?"
-        And should see hint "Storage facilities will only be funded as part of a bigger project and cannot be more than 40% of the total grant funding."
+        And should see hint "Storage facilities will only be funded as part of a bigger project and cannot be more than 50% of the total grant funding."
         When the user selects the following
             | Constructing or improving buildings for processing |
             | Processing equipment or machinery                  |
@@ -73,7 +73,7 @@ Feature: Project Items-Only Journey
         # storage
         Then the user should be at URL "storage"
         And should see heading "Does your project also need storage facilities?"
-        And should see warning "Storage facilities cannot be more than 40% of the total grant funding."
+        And should see warning "Storage facilities cannot be more than 50% of the total grant funding."
         When the user selects "No"
         And continues
 
@@ -180,8 +180,8 @@ Feature: Project Items-Only Journey
         When the user enters the following
             | FIELD                            | VALUE                      | ID               |
             | Project name                     | Project Items-only Project | projectName      |
-            | Business name                    | Home Farm Ltd              | businessName     |
-            | Number of employees              | 100                        | numberEmployees  |
+            | Business name                    | Test Farm Ltd              | businessName     |
+            | Number of employees              | 10                         | numberEmployees  |
             | Annual business turnover (£)     | 20000000                   | businessTurnover |
             | Single Business Identifier (SBI) | 123456789                  | sbi              |
         And continues
@@ -196,19 +196,19 @@ Feature: Project Items-Only Journey
         Then the user should be at URL "applicant-details"
         And should see heading "Applicant's details"
         When the user enters the following
-            | FIELD                 | VALUE                                                                | ID                  |
-            | First name            | James                                                                | firstName           |
-            | Last name             | Farmer                                                               | lastName            |
-            | Email address         | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | emailAddress        |
-            | Confirm email address | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | confirmEmailAddress |
-            | Mobile phone number   | 07777 123456                                                         | mobileNumber        |
-            | Landline number       | 01234 123456                                                         | landlineNumber      |
-            | Address line 1        | Home Farm                                                            | address1            |
-            | Address line 2        | Cogenhoe                                                             | address2            |
-            | Town                  | Northampton                                                          | town                |
-            | County                | Northamptonshire                                                     | county              |
-            | Postcode              | NN7 1NN                                                              | postcode            |
-            | Project postcode      | NN7 2NN                                                              | projectPostcode     |
+            | FIELD                 | VALUE                                                          | ID                  |
+            | First name            | James                                                          | firstName           |
+            | Last name             | Test-Farmer                                                    | lastName            |
+            | Email address         | cl-defra-tactical-grants-test-applicant-email@equalexperts.com | emailAddress        |
+            | Confirm email address | cl-defra-tactical-grants-test-applicant-email@equalexperts.com | confirmEmailAddress |
+            | Mobile phone number   | 07777 123456                                                   | mobileNumber        |
+            | Landline number       | 01234 123456                                                   | landlineNumber      |
+            | Address line 1        | Test Farm                                                      | address1            |
+            | Address line 2        | Cogenhoe                                                       | address2            |
+            | Town                  | Northampton                                                    | town                |
+            | County                | Northamptonshire                                               | county              |
+            | Postcode              | NN7 1NN                                                        | postcode            |
+            | Project postcode      | NN7 2NN                                                        | projectPostcode     |
         And continues
 
         # check-details
@@ -231,8 +231,8 @@ Feature: Project Items-Only Journey
             | 4      | Single business identifier (SBI)                     | 123456789                                                                                                                          |                  |
             | 5      | Surname                                              | Farmer                                                                                                                             |                  |
             | 6      | Forename                                             | James                                                                                                                              |                  |
-            | 7      | Business name                                        | Home Farm Ltd                                                                                                                      |                  |
-            | 8      | Address line 1                                       | Home Farm                                                                                                                          |                  |
+            | 7      | Business name                                        | Test Farm Ltd                                                                                                                      |                  |
+            | 8      | Address line 1                                       | Test Farm                                                                                                                          |                  |
             | 9      | Address line 2                                       | Cogenhoe                                                                                                                           |                  |
             | 10     | Address line 3                                       |                                                                                                                                    |                  |
             | 11     | Address line 4 (town)                                | Northampton                                                                                                                        |                  |
@@ -240,9 +240,9 @@ Feature: Project Items-Only Journey
             | 13     | Postcode (use capitals)                              | NN7 1NN                                                                                                                            |                  |
             | 16     | Landline number                                      | 01234 123456                                                                                                                       |                  |
             | 17     | Mobile number                                        | 07777 123456                                                                                                                       |                  |
-            | 18     | Email                                                | cl-defra-tactical-grants-test-email-service-account@equalexperts.com                                                               |                  |
+            | 18     | Email                                                | cl-defra-tactical-grants-test-applicant-email@equalexperts.com                                                                     |                  |
             | 20     | Business size                                        | Medium                                                                                                                             |                  |
-            | 22     | Employees                                            | 100                                                                                                                                |                  |
+            | 22     | Employees                                            | 10                                                                                                                                 |                  |
             | 23     | Status of applicant                                  | Co-operative society (Co-Op)                                                                                                       |                  |
             | 26     | Agent Surname                                        |                                                                                                                                    |                  |
             | 27     | Agent Forename                                       |                                                                                                                                    |                  |

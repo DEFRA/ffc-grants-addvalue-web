@@ -183,7 +183,7 @@ Feature: Smaller Abattoir Journey
         When the user enters the following
             | FIELD                            | VALUE                    | ID               |
             | Project name                     | Smaller Abattoir Project | projectName      |
-            | Business name                    | Home Farm Ltd            | businessName     |
+            | Business name                    | Test Farm Ltd            | businessName     |
             | Number of employees              | 5                        | numberEmployees  |
             | Annual business turnover (£)     | 2000000                  | businessTurnover |
             | Single Business Identifier (SBI) | 123456789                | sbi              |
@@ -199,19 +199,19 @@ Feature: Smaller Abattoir Journey
         Then the user should be at URL "applicant-details"
         And should see heading "Applicant's details"
         When the user enters the following
-            | FIELD                 | VALUE                                                                | ID                  |
-            | First name            | Andrew                                                               | firstName           |
-            | Last name             | Deacon                                                               | lastName            |
-            | Email address         | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | emailAddress        |
-            | Confirm email address | cl-defra-tactical-grants-test-email-service-account@equalexperts.com | confirmEmailAddress |
-            | Mobile phone number   | 07777 123456                                                         | mobileNumber        |
-            | Landline number       | 01234 123456                                                         | landlineNumber      |
-            | Address line 1        | Home Farm                                                            | address1            |
-            | Address line 2        | Market Weston                                                        | address2            |
-            | Town                  | Oakham                                                               | town                |
-            | County                | Rutland                                                              | county              |
-            | Postcode              | LE1 1LE                                                              | postcode            |
-            | Project postcode      | LE1 2LE                                                              | projectPostcode     |
+            | FIELD                 | VALUE                                                          | ID                  |
+            | First name            | James                                                          | firstName           |
+            | Last name             | Test-Farmer                                                    | lastName            |
+            | Email address         | cl-defra-tactical-grants-test-applicant-email@equalexperts.com | emailAddress        |
+            | Confirm email address | cl-defra-tactical-grants-test-applicant-email@equalexperts.com | confirmEmailAddress |
+            | Mobile phone number   | 07777 123456                                                   | mobileNumber        |
+            | Landline number       | 01604 123456                                                   | landlineNumber      |
+            | Address line 1        | Test Farm                                                      | address1            |
+            | Address line 2        | Cogenhoe                                                       | address2            |
+            | Town                  | Northampton                                                    | town                |
+            | County                | Northamptonshire                                               | county              |
+            | Postcode              | NN7 1NN                                                        | postcode            |
+            | Project postcode      | NN7 2NN                                                        | projectPostcode     |
         And continues
 
         # check-details
@@ -232,18 +232,18 @@ Feature: Smaller Abattoir Journey
             | ROW NO | FIELD NAME                                           | FIELD VALUE                                                                         | DATA TYPE        |
             | 2      | FA or OA                                             | Outline Application                                                                 |                  |
             | 4      | Single business identifier (SBI)                     | 123456789                                                                           |                  |
-            | 5      | Surname                                              | Deacon                                                                              |                  |
-            | 6      | Forename                                             | Andrew                                                                              |                  |
-            | 7      | Business name                                        | Home Farm Ltd                                                                       |                  |
-            | 8      | Address line 1                                       | Home Farm                                                                           |                  |
-            | 9      | Address line 2                                       | Market Weston                                                                       |                  |
+            | 5      | Surname                                              | Test-Farmer                                                                         |                  |
+            | 6      | Forename                                             | James                                                                               |                  |
+            | 7      | Business name                                        | Test Farm Ltd                                                                       |                  |
+            | 8      | Address line 1                                       | Test Farm                                                                           |                  |
+            | 9      | Address line 2                                       | Cogenhoe                                                                            |                  |
             | 10     | Address line 3                                       |                                                                                     |                  |
-            | 11     | Address line 4 (town)                                | Oakham                                                                              |                  |
-            | 12     | Address line 5 (county)                              | Rutland                                                                             |                  |
-            | 13     | Postcode (use capitals)                              | LE1 1LE                                                                             |                  |
+            | 11     | Address line 4 (town)                                | Northampton                                                                         |                  |
+            | 12     | Address line 5 (county)                              | Northamptonshire                                                                    |                  |
+            | 13     | Postcode (use capitals)                              | NN7 1NN                                                                             |                  |
             | 16     | Landline number                                      | 01234 123456                                                                        |                  |
             | 17     | Mobile number                                        | 07777 123456                                                                        |                  |
-            | 18     | Email                                                | cl-defra-tactical-grants-test-email-service-account@equalexperts.com                |                  |
+            | 18     | Email                                                | cl-defra-tactical-grants-test-applicant-email@equalexperts.com                      |                  |
             | 20     | Business size                                        | Small                                                                               |                  |
             | 22     | Employees                                            | 5                                                                                   |                  |
             | 23     | Status of applicant                                  | Sole trader                                                                         |                  |
@@ -264,7 +264,7 @@ Feature: Smaller Abattoir Journey
             | 42     | Project name                                         | Smaller Abattoir Project                                                            |                  |
             | 43     | Theme                                                | Adding Value                                                                        |                  |
             | 44     | Adding Value Project Items                           | Constructing or improving buildings for processing\|Storage Facilities              |                  |
-            | 45     | Location of project (postcode)                       | LE1 2LE                                                                             |                  |
+            | 45     | Location of project (postcode)                       | NN7 2NN                                                                             |                  |
             | 49     | Site of Special Scientific Interest (SSSI)           |                                                                                     |                  |
             | 53     | Business type                                        | producer                                                                            |                  |
             | 54     | Electronic OA received date                          | ?                                                                                   | CURRENT-DATE     |
