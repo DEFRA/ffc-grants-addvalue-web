@@ -180,8 +180,8 @@ Feature: Top Fruit Journey
             | Email address         | cl-defra-tactical-grants-test-applicant-email@equalexperts.com | emailAddress        |
             | Confirm email address | cl-defra-tactical-grants-test-applicant-email@equalexperts.com | confirmEmailAddress |
             | Mobile phone number   | 07777 123456                                                   | mobileNumber        |
-            | Landline number       | 01234 123456                                                   | landlineNumber      |
-            | Address line 1        | Home Farm                                                      | address1            |
+            | Landline number       | 01604 123456                                                   | landlineNumber      |
+            | Address line 1        | Test Farm                                                      | address1            |
             | Address line 2        | Cogenhoe                                                       | address2            |
             | Town                  | Northampton                                                    | town                |
             | County                | Northamptonshire                                               | county              |
@@ -216,7 +216,7 @@ Feature: Top Fruit Journey
             | 11     | Address line 4 (town)                                | Northampton                                                    |                  |
             | 12     | Address line 5 (county)                              | Northamptonshire                                               |                  |
             | 13     | Postcode (use capitals)                              | NN7 1NN                                                        |                  |
-            | 16     | Landline number                                      | 01234 123456                                                   |                  |
+            | 16     | Landline number                                      | 01604 123456                                                   |                  |
             | 17     | Mobile number                                        | 07777 123456                                                   |                  |
             | 18     | Email                                                | cl-defra-tactical-grants-test-applicant-email@equalexperts.com |                  |
             | 20     | Business size                                        | Small                                                          |                  |

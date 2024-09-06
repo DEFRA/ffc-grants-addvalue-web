@@ -241,7 +241,7 @@ Feature: Smaller Abattoir Journey
             | 11     | Address line 4 (town)                                | Northampton                                                                         |                  |
             | 12     | Address line 5 (county)                              | Northamptonshire                                                                    |                  |
             | 13     | Postcode (use capitals)                              | NN7 1NN                                                                             |                  |
-            | 16     | Landline number                                      | 01234 123456                                                                        |                  |
+            | 16     | Landline number                                      | 01604 123456                                                                        |                  |
             | 17     | Mobile number                                        | 07777 123456                                                                        |                  |
             | 18     | Email                                                | cl-defra-tactical-grants-test-applicant-email@equalexperts.com                      |                  |
             | 20     | Business size                                        | Small                                                                               |                  |

@@ -1,5 +1,5 @@
 Feature: Project Items-Only Journey
-@runme
+    @runme
     Scenario: Successfully apply for a grant on the Project Items-only journey
         - checking storage facilities percentage
         - receiving an average score
@@ -229,7 +229,7 @@ Feature: Project Items-Only Journey
             | ROW NO | FIELD NAME                                           | FIELD VALUE                                                                                                                        | DATA TYPE        |
             | 2      | FA or OA                                             | Outline Application                                                                                                                |                  |
             | 4      | Single business identifier (SBI)                     | 123456789                                                                                                                          |                  |
-            | 5      | Surname                                              | Farmer                                                                                                                             |                  |
+            | 5      | Surname                                              | Test-Farmer                                                                                                                        |                  |
             | 6      | Forename                                             | James                                                                                                                              |                  |
             | 7      | Business name                                        | Test Farm Ltd                                                                                                                      |                  |
             | 8      | Address line 1                                       | Test Farm                                                                                                                          |                  |
