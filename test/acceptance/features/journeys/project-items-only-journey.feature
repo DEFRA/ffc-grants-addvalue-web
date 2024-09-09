@@ -1,7 +1,8 @@
 Feature: Project Items-Only Journey
-    @runme
+
     Scenario: Successfully apply for a grant on the Project Items-only journey
         - checking storage facilities percentage
+        - with storage facilities
         - receiving an average score
         - as the applicant
 
@@ -74,7 +75,7 @@ Feature: Project Items-Only Journey
         Then the user should be at URL "storage"
         And should see heading "Does your project also need storage facilities?"
         And should see warning "Storage facilities cannot be more than 50% of the total grant funding."
-        When the user selects "No"
+        When the user selects "Yes"
         And continues
 
         # solar-PV-system
@@ -260,7 +261,7 @@ Feature: Project Items-Only Journey
             | 41     | Owner                                                | RD                                                                                                                                 |                  |
             | 42     | Project name                                         | Project Items-only Project                                                                                                         |                  |
             | 43     | Theme                                                | Adding Value                                                                                                                       |                  |
-            | 44     | Adding Value Project Items                           | Constructing or improving buildings for processing\|Processing equipment or machinery\|Retail facilities                           |                  |
+            | 44     | Adding Value Project Items                           | Constructing or improving buildings for processing\|Processing equipment or machinery\|Retail facilities\|Storage Facilities       |                  |
             | 45     | Location of project (postcode)                       | NN7 2NN                                                                                                                            |                  |
             | 49     | Site of Special Scientific Interest (SSSI)           |                                                                                                                                    |                  |
             | 53     | Business type                                        | processor                                                                                                                          |                  |
@@ -295,7 +296,7 @@ Feature: Project Items-Only Journey
             | 390    | AV Farmer Collaborate                                | No                                                                                                                                 |                  |
             | 393    | AV Improve Environment                               | Renewable energy\|Energy efficiency\|Water efficiency                                                                              |                  |
             | 394    | AV Business Type                                     | A business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers |                  |
-            | 395    | Storage Facilities                                   | No                                                                                                                                 |                  |
+            | 395    | Storage Facilities                                   | Yes                                                                                                                                |                  |
             | 445    | Solar Cost                                           |                                                                                                                                    |                  |
             | 446    | Solar Grant Amount                                   | 0                                                                                                                                  | INTEGER          |
             | 527    | Project items cost                                   | 125000                                                                                                                             |                  |
