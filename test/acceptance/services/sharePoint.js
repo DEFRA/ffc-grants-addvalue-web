@@ -60,17 +60,24 @@ class sharePoint {
   }
 
   static async #getFileIdFor(accessToken, driveId, uploadFolder, partialFileName) {
-    const response = await wreck.get(
-      `https://graph.microsoft.com/v1.0/drives/${driveId}/root:/${encodeURIComponent(uploadFolder)}:/children?$select=id,name`,
-      { headers: { Authorization: `Bearer ${accessToken}` }, json: true }
-    );
+    let url = `https://graph.microsoft.com/v1.0/drives/${driveId}/root:/${encodeURIComponent(uploadFolder)}:/children?$select=id,name`;
 
-    const file = response.payload.value.find(file => file.name.includes(partialFileName));
-    if (file === undefined) {
-      throw new Error(`File matching ${partialFileName} not found`);
-    }
+    do {
+      const response = await wreck.get(
+        url,
+        { headers: { Authorization: `Bearer ${accessToken}` }, json: true }
+      );
+  
+      const file = response.payload.value.find(file => file.name.includes(partialFileName));
+      if (file) {
+        return file.id;
+      }
 
-    return file.id;
+      url = response.payload["@odata.nextLink"];  
+  
+    } while (url);
+
+    throw new Error(`File matching ${partialFileName} not found`);
   }
 
   static async #getWorksheet(accessToken, driveId, fileId, worksheetName) {
