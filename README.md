@@ -40,7 +40,7 @@ This application requires the following to be run locally:
 
 ### Environment Variables
 
-There are many required Environment Variables needed for this project, which would be saved in a .env file. The following is a list of all of these, with a brief description of what they are needed/used for:
+There are many required Environment Variables needed for this project, which would be saved in a .env file. All of these values can be found in either the Azure App Configurations for the SND environment, or the Azure Service Bus for the SND environment. This requires being added to the AZD-FFC-SND1 && AZD-FFC-DEV1 subscriptions, and the DefraCloudDev directory. See https://eaflood.atlassian.net/wiki/spaces/GRA/pages/4853007336/Developer+QA+Access+and+setup. The following is a list of all of these, with a brief description of what they are needed/used for:
 
 Environment Variable Name | Brief Description | Example (if needed)
 --- | --- | ---
@@ -81,16 +81,13 @@ GOOGLE_TAG_MANAGER_SERVER_KEY | The server key needed to connect to Google Tag M
 ANALYTICS_PROPERTY_API | The API key needed for connecting to Google Analytics (Optional, only required if needing to send analytics to Google Analytics) | N/A
 ANALYTICS_TAG_KEY | The key needed to send analytics to Google Analytics (Optional, only required if needing to send analytics to Google Analytics) | N/A
 
-All of these values can be found in either the Azure App Configurations for the SND environment, or the Azure Service Bus for the SND environment.
-
-
 ## Starting the application
 
-Before starting the application, make sure to run 'npm install' from the root of the application to install all of the necessary dependencies.
+Before starting the application, make sure to run ```npm install``` from the root of the application to install all of the necessary dependencies.
 
 ### Running the application
 
-Once all the dependencies have been installed, start up Docker and then run the command 'docker-compose up --build'. This will build the application using the .env variables specified, and then will run and host the application on the localhost port specified in the .env file.
+Once all the dependencies have been installed, start up Docker and then run the command ```npm run run:local```. This will build the application using the .env variables specified, and then will run and host the application on the localhost port specified in the .env file.
 
 Once the Docker application is running, the frontend application can be accessed by entering the localhost port in any web browser, followed by **/adding-value/start**
 
@@ -106,7 +103,7 @@ In order to stop the frontendapplication, press **CTRL + C** in the docker termi
 
 ### Running unit tests
 
-To run unit tests in this application, run 'npm run test' in the terminal from the root of the application.
+To run unit tests in this application, run ```npm run test``` in the terminal from the root of the application.
 
-Please note: Some Mac users have not been able to run this in the terminal successfully. Instead, these users would run 'scripts/test', which also runs all of the unit tests. The only difference between using this command is that all of the tests are run via docker instead of node.
+Please note: Some Mac users have not been able to run this in the terminal successfully. Instead, these users would run ```npm run test:docker```, which also runs all of the unit tests. The only difference between using this command is that all of the tests are run via docker instead of node.
 
