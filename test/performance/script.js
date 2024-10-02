@@ -23,7 +23,7 @@ export default function () {
         response = response.clickLink({ selector: `a:contains('${text}')` });
     }
 
-    let response = http.get('https://ffc-grants-frontend-test.azure.defra.cloud/adding-value/start');
+    let response = http.get(`${__ENV.TEST_ENVIRONMENT_ROOT_URL}/adding-value/start`);
 
     // start
     if (response.url.endsWith('login')) {

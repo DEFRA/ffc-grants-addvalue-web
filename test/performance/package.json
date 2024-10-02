@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "test": "k6 run script.js"
+    "test": "k6 run -e TEST_ENVIRONMENT_ROOT_URL=https://ffc-grants-frontend-test.azure.defra.cloud script.js"
   },
   "keywords": [],
   "author": "",
