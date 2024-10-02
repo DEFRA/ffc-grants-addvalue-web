@@ -11,33 +11,26 @@ export const options = {
 };
 
 export default function () {
-    let response = null;
-    let crumb = null;
-
     const submitJourneyForm = function(fields) {
-        sleep(2); // mimic human behaviour
-        let fieldsWithCrumb = { crumb: crumb };
-        if (fields) {
-            for (const [key, value] of Object.entries(fields)) {
-                fieldsWithCrumb[key] = value;
-            }
-        }
-        response = response.submitForm({ formSelector: `form[method='POST']`, fields: fieldsWithCrumb });
-        check(response, { 'is status 200': (r) => r.status === 200});
+        sleep(3); // mimic human behaviour
+        fields = fields ?? {};
+        fields['crumb'] = crumb;
+        response = response.submitForm({ formSelector: `form[method='POST']`, fields: fields });
+        check(response, { 'is http response status 200': (r) => r.status === 200 });
     }
 
     const followLinkWithText = function(text) {
         response = response.clickLink({ selector: `a:contains('${text}')` });
     }
 
-    response = http.get('https://ffc-grants-frontend-test.azure.defra.cloud/adding-value/start');
+    let response = http.get('https://ffc-grants-frontend-test.azure.defra.cloud/adding-value/start');
 
     // start
     if (response.url.endsWith('login')) {
         response = response.submitForm({ fields: { username: 'grants', password: 'grants2021' }});
     }
     followLinkWithText('Start now');
-    crumb = response.html().find('#crumb').attr('value');
+    let crumb = response.html().find('#crumb').attr('value');
 
     // nature-of-business
     submitJourneyForm({ applicantBusiness: 'applicantBusiness' });
@@ -110,6 +103,4 @@ export default function () {
      submitJourneyForm();
      // confirm
      submitJourneyForm();
-
-    console.warn("URL is: " + response.url);
 }
