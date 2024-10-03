@@ -2,8 +2,8 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export const options = {
-    vus: 50,
-    duration: '2m',
+    vus: 50, // 50 virtual users
+    duration: '2m', // run default function for 2 mins
     thresholds: {
       http_req_failed: ['rate<0.01'], // http errors should be less than 1%
       http_req_duration: ['p(95)<1500'], // 95% of requests should be below 1500ms
@@ -16,7 +16,7 @@ export default function () {
         fields = fields ?? {};
         fields['crumb'] = crumb;
         response = response.submitForm({ formSelector: `form[method='POST']`, fields: fields });
-        check(response, { 'is http response status 200': (r) => r.status === 200 });
+        check(response, { 'is http response status 200': (r) => r.status === 200 }); // build a check of response status codes
     }
 
     const followLinkWithText = function(text) {
@@ -25,7 +25,7 @@ export default function () {
 
     let response = http.get(`${__ENV.TEST_ENVIRONMENT_ROOT_URL}/adding-value/start`);
 
-    // start
+    // start page
     if (response.url.endsWith('login')) {
         response = response.submitForm({ fields: { username: 'grants', password: 'grants2021' }});
     }
