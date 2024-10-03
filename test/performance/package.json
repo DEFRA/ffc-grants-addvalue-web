@@ -8,7 +8,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Adding Value Performance Test",
   "devDependencies": {
     "@types/k6": "^0.54.0"
   }

@@ -101,6 +101,6 @@ export default function () {
      });
      // check-details
      submitJourneyForm();
-     // confirm
+     // confirm and generate spreadsheet
      submitJourneyForm();
 }
