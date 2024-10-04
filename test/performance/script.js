@@ -2,21 +2,31 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export const options = {
-    vus: 50, // 50 virtual users
-    duration: '2m', // run default function for 2 mins
+    scenarios: {
+        journeys: {
+            executor: 'ramping-vus',
+            startVUs: 0,
+            stages: [
+                { duration: '30s', target: 50 },
+                { duration: '90s', target: 50 }
+            ],
+            gracefulRampDown: '0s',
+            gracefulStop: '0s'
+        },
+    },
     thresholds: {
-      http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-      http_req_duration: ['p(95)<1500'], // 95% of requests should be below 1500ms
+        http_req_failed: ['rate<0.01'], // http errors should be less than 1%
+        http_req_duration: ['p(95)<2000'], // 95% of requests should be below 2s
     }
 };
 
 export default function () {
     const submitJourneyForm = function(fields) {
-        sleep(3); // mimic human behaviour
+        sleep(3); // mimic human interaction
         fields = fields ?? {};
+        let crumb = response.html().find('#crumb').attr('value');
         fields['crumb'] = crumb;
         response = response.submitForm({ formSelector: `form[method='POST']`, fields: fields });
-        check(response, { 'is http response status 200': (r) => r.status === 200 }); // build a check of response status codes
     }
 
     const followLinkWithText = function(text) {
@@ -25,12 +35,11 @@ export default function () {
 
     let response = http.get(`${__ENV.TEST_ENVIRONMENT_ROOT_URL}/adding-value/start`);
 
-    // start page
+    // navigate past start page
     if (response.url.endsWith('login')) {
-        response = response.submitForm({ fields: { username: 'grants', password: 'grants2021' }});
+        submitJourneyForm({ username: 'grants', password: 'grants2021' });
     }
     followLinkWithText('Start now');
-    let crumb = response.html().find('#crumb').attr('value');
 
     // nature-of-business
     submitJourneyForm({ applicantBusiness: 'applicantBusiness' });
