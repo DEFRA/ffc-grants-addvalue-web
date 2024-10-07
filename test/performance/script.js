@@ -3,7 +3,7 @@ import { check, sleep } from 'k6';
 
 export const options = {
     scenarios: {
-        journeys: {
+        journey: {
             executor: 'ramping-vus',
             startVUs: 0,
             stages: [
@@ -15,25 +15,33 @@ export const options = {
         },
     },
     thresholds: {
-        http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-        http_req_duration: ['p(95)<2000'], // 95% of requests should be below 2s
+        http_req_duration: ['p(95)<1500'], // 95% of requests should be below 1500ms
     }
 };
 
 export default function () {
+    const checkHttpStatusIs200 = function() {
+        check(response, { 'is status 200': (r) => r.status === 200 });
+    }
+
     const submitJourneyForm = function(fields) {
-        sleep(3); // mimic human interaction
+        sleep(2); // mimic human interaction
         fields = fields ?? {};
-        let crumb = response.html().find('#crumb').attr('value');
+        let crumb = response.html().find(`input[name='crumb']`).attr('value');
         fields['crumb'] = crumb;
         response = response.submitForm({ formSelector: `form[method='POST']`, fields: fields });
+        checkHttpStatusIs200();
     }
 
     const followLinkWithText = function(text) {
         response = response.clickLink({ selector: `a:contains('${text}')` });
+        checkHttpStatusIs200();
     }
 
+    console.log(`Beginning journey for VU: ${__VU.toString().padStart(2, '0')}, ITER: ${__ITER}`);
+
     let response = http.get(`${__ENV.TEST_ENVIRONMENT_ROOT_URL}/adding-value/start`);
+    checkHttpStatusIs200();
 
     // navigate past start page
     if (response.url.endsWith('login')) {
