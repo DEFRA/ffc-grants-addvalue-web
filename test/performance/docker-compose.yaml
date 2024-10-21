@@ -1,0 +1,6 @@
+services:
+  perf-test:
+    build: .
+    image: perf-test
+    environment:
+      TEST_ENVIRONMENT_ROOT_URL: https://ffc-grants-frontend-test.azure.defra.cloud
