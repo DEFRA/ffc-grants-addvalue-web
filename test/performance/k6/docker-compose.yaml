@@ -1,0 +1,8 @@
+services:
+  perf-test:
+    build: .
+    image: k6-perf-test
+    environment:
+      TEST_ENVIRONMENT_ROOT_URL: ${TEST_ENVIRONMENT_ROOT_URL}
+      LOGIN_USERNAME: ${LOGIN_USERNAME}
+      LOGIN_PASSWORD: ${LOGIN_PASSWORD}

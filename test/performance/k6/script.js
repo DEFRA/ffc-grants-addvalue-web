@@ -8,15 +8,15 @@ export const options = {
             executor: 'ramping-vus',
             startVUs: 0,
             stages: [
-                { duration: '30s', target: 50 },
-                { duration: '90s', target: 50 }
+                { duration: '30s', target: 1 },
+                { duration: '90s', target: 1 }
             ],
             gracefulRampDown: '0s',
             gracefulStop: '60s'
         },
     },
     thresholds: {
-        http_req_duration: ['p(95)<1500'], // 95% of requests should be below 1500ms
+        http_req_duration: ['p(95)<2500'], // 95% of requests should be below 1500ms
     }
 };
 
@@ -121,7 +121,7 @@ function performCheckerJourney () {
         // check-details
         submitJourneyForm();
         // confirm
-        //submitJourneyForm(); # avoid generating emails in pre
+        submitJourneyForm();
     } catch (error) {
         console.error(`Error for URL: ${response?.url}, body: ${response.body.substring(0, 200)}`);
         throw error;

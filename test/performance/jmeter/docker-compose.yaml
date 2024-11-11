@@ -1,0 +1,11 @@
+services:
+  perf-test:
+    build: .
+    image: jmeter-perf-test
+    volumes:
+      - ./logs:/logs
+      - ./html-reports:/html-reports
+    environment:
+      TEST_ENVIRONMENT_ROOT_URL: ${TEST_ENVIRONMENT_ROOT_URL}
+      LOGIN_USERNAME: ${LOGIN_USERNAME}
+      LOGIN_PASSWORD: ${LOGIN_PASSWORD}

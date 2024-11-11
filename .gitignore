@@ -6,3 +6,5 @@ helm/**/*.lock
 .vscode
 .env
 reports
+html-reports
+logs
