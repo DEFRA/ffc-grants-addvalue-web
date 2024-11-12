@@ -16,7 +16,7 @@ export const options = {
         },
     },
     thresholds: {
-        http_req_duration: ['p(95)<2500'], // 95% of requests should be below 1500ms
+        http_req_duration: ['p(99)<1500'], // 99% of requests should be below 1500ms
     }
 };
 
