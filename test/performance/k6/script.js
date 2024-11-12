@@ -8,8 +8,8 @@ export const options = {
             executor: 'ramping-vus',
             startVUs: 0,
             stages: [
-                { duration: '30s', target: 1 },
-                { duration: '90s', target: 1 }
+                { duration: '15s', target: 50 },
+                { duration: '45s', target: 50 }
             ],
             gracefulRampDown: '0s',
             gracefulStop: '60s'
@@ -25,7 +25,7 @@ export default function () {
 }
 
 function performCheckerJourney () {
-    const submitJourneyForm = function(fields) {
+    const submitForm = function(fields) {
         sleep(3); // mimic human interaction
         fields = fields ?? {};
         let crumb = response.html().find(`input[name='crumb']`).attr('value');
@@ -34,7 +34,7 @@ function performCheckerJourney () {
         expect(response.status).to.equal(200);
     }
 
-    const followLinkWithText = function(text) {
+    const followLink = function(text) {
         response = response.clickLink({ selector: `a:contains('${text}')` });
         expect(response.status).to.equal(200);
     }
@@ -47,64 +47,64 @@ function performCheckerJourney () {
 
         // navigate past start page
         if (response.url.endsWith('login')) {
-            submitJourneyForm({ username: 'grants', password: 'grants2021' });
+            submitForm({ username: 'grants', password: 'grants2021' });
         }
-        followLinkWithText('Start now');
+        followLink('Start now');
 
         // nature-of-business
-        submitJourneyForm({ applicantBusiness: 'applicantBusiness' });
+        submitForm({ applicantBusiness: 'A grower or producer of agricultural or horticultural produce' });
         // legal-status
-        submitJourneyForm({ legalStatus: 'Sole trader' });    
+        submitForm({ legalStatus: 'Sole trader' });    
         // country
-        submitJourneyForm({ inEngland: 'Yes' });
+        submitForm({ inEngland: 'Yes' });
         // planning-permission
-        submitJourneyForm({ planningPermission: 'Secured' });
+        submitForm({ planningPermission: 'Secured' });
         // project-start
-        submitJourneyForm({ projectStart: 'No, we have not done any work on this project yet'} );
+        submitForm({ projectStart: 'No, we have not done any work on this project yet'} );
         // tenancy
-        submitJourneyForm({ tenancy: 'Yes'});
+        submitForm({ tenancy: 'Yes'});
         // smaller-abattoir
-        submitJourneyForm({ smallerAbattoir: 'Yes'});
+        submitForm({ smallerAbattoir: 'Yes'});
         // other-farmers
-        submitJourneyForm({ otherFarmers: 'Yes' });
+        submitForm({ otherFarmers: 'Yes' });
         // project-items
-        submitJourneyForm({ projectItems: 'Constructing or improving buildings for processing' });
+        submitForm({ projectItems: 'Constructing or improving buildings for processing' });
         // storage
-        submitJourneyForm({ storage: 'Yes, we will need storage facilities' });
+        submitForm({ storage: 'Yes, we will need storage facilities' });
         // solar-PV-system
-        submitJourneyForm({ solarPVSystem: 'Yes' });
+        submitForm({ solarPVSystem: 'Yes' });
         // project-cost
-        submitJourneyForm({ projectCost: '100000' });
+        submitForm({ projectCost: '100000' });
         // solar-PV-cost
-        submitJourneyForm({ solarPVCost: '50000' });
+        submitForm({ solarPVCost: '50000' });
         // potential-amount-solar
-        followLinkWithText('Continue');
+        followLink('Continue');
         // remaining-costs
-        submitJourneyForm({ canPayRemainingCost: 'Yes' });
+        submitForm({ canPayRemainingCost: 'Yes' });
         // produce-processed
-        submitJourneyForm({ productsProcessed: 'Wild venison meat produce' });
+        submitForm({ productsProcessed: 'Wild venison meat produce' });
         // how-adding-value
-        submitJourneyForm({ howAddingValue: 'Introducing a new product to your farm' });
+        submitForm({ howAddingValue: 'Introducing a new product to your farm' });
         // project-impact
-        submitJourneyForm({ projectImpact: ['Increasing range of added-value products', 'Increasing volume of added-value products'] });
+        submitForm({ projectImpact: ['Introducing a new product to your farm', 'Increasing volume of added-value products'] });
         // mechanisation
-        submitJourneyForm({ mechanisation: 'Yes' });
+        submitForm({ mechanisation: 'Yes' });
         // manual-labour-amount
-        submitJourneyForm({ manualLabour: 'More than 10%' });
+        submitForm({ manualLabour: 'More than 10%' });
         // future-customers
-        submitJourneyForm({ futureCustomers: ['Processors', 'Wholesalers'] });
+        submitForm({ futureCustomers: ['Processors', 'Wholesalers'] });
         // collaboration
-        submitJourneyForm({ collaboration: 'Yes' });
+        submitForm({ collaboration: 'Yes' });
         // environmental-impact
-        submitJourneyForm({ environmentalImpact: ['Renewable energy', 'Energy efficiency'] });
+        submitForm({ environmentalImpact: ['Renewable energy', 'Energy efficiency'] });
         // score
-        submitJourneyForm();
+        submitForm();
         // business-details
-        submitJourneyForm({ projectName: 'Smaller Abattoir Project', businessName: 'Test Farm Ltd', numberEmployees: '5', businessTurnover: '2000000', sbi: '123456789' });
+        submitForm({ projectName: 'Smaller Abattoir Project', businessName: 'Test Farm Ltd', numberEmployees: '5', businessTurnover: '2000000', sbi: '123456789' });
         // applying
-        submitJourneyForm({ applying: 'Applicant' });
+        submitForm({ applying: 'Applicant' });
         // applicant-details
-        submitJourneyForm({
+        submitForm({
             firstName: 'James',
             lastName: 'Test-Farmer',
             emailAddress: 'cl-defra-tactical-grants-test-applicant-email@equalexperts.com',
@@ -119,9 +119,9 @@ function performCheckerJourney () {
             projectPostcode: 'NN7 2NN'
         });
         // check-details
-        submitJourneyForm();
+        submitForm();
         // confirm
-        submitJourneyForm();
+        submitForm({ consentMain: 'true' });
     } catch (error) {
         console.error(`Error for URL: ${response?.url}, body: ${response.body.substring(0, 200)}`);
         throw error;

@@ -1,5 +1,4 @@
 html-reports
-logs
 .dockerignore
 .env
 docker-compose.yaml

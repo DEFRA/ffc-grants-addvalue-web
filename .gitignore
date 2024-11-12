@@ -7,4 +7,3 @@ helm/**/*.lock
 .env
 reports
 html-reports
-logs
