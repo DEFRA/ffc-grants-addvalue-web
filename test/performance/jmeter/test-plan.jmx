@@ -76,7 +76,7 @@
         </ConstantTimer>
         <hashTree/>
         <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Response Time Assertion">
-          <stringProp name="DurationAssertion.duration">5000</stringProp>
+          <stringProp name="DurationAssertion.duration">1500</stringProp>
         </DurationAssertion>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Navigate to /adding-value/start " enabled="true">
