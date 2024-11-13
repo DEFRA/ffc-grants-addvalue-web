@@ -1,0 +1,6 @@
+services:
+  perf-test:
+    build: .
+    image: jmeter-perf-test
+    volumes:
+      - ./html-reports:/html-reports
