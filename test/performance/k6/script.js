@@ -102,7 +102,22 @@ function performCheckerJourney () {
         // business-details
         submitForm({ projectName: 'Smaller Abattoir Project', businessName: 'Test Farm Ltd', numberEmployees: '5', businessTurnover: '2000000', sbi: '123456789' });
         // applying
-        submitForm({ applying: 'Applicant' });
+        submitForm({ applying: 'Agent' });
+        // agents-details
+        submitForm({
+            firstName: 'John',
+            lastName: 'Test-Agent',
+            businessName: "Test Agency Ltd",
+            emailAddress: 'cl-defra-tactical-grants-test-agent-email@equalexperts.com',
+            confirmEmailAddress: 'cl-defra-tactical-grants-test-agent-email@equalexperts.com',
+            mobileNumber: '07777 654321',
+            landlineNumber: '01604 654321',
+            address1: 'High Street',
+            address2: 'Denton',
+            town: 'Northampton',
+            county: 'Northamptonshire',
+            postcode: 'NN7 3NN'
+        });
         // applicant-details
         submitForm({
             firstName: 'James',
