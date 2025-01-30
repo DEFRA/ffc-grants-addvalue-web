@@ -8,10 +8,6 @@ labels: {}
 
 appInsights:
   key: not-a-real-key
-
-azureIdentity:
-  clientID: not-a-real-clientID
-  resourceID: not-a-real-resourceID
   
 containerConfigMap:
   name: ffc-grants-addvalue-web-config-map
