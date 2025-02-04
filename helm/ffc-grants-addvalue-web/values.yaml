@@ -22,7 +22,7 @@ deployment:
   minReadySeconds: 2
   redeployOnChange: update this field to force a change
   replicas: 0
-  minReplicas: 2
+  minReplicas: 0
   maxReplicas: 4
   cpuThreshold: 80
   memoryThreshold: 80
